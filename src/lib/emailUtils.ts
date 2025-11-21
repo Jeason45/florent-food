@@ -124,7 +124,7 @@ export async function sendEmail(params: SendEmailParams): Promise<SendEmailResul
         subject,
         to: Array.isArray(to) ? to.join(', ') : to,
         cc: cc ? (Array.isArray(cc) ? cc.join(', ') : cc) : null,
-        bcc: bcc ? (Array.isArray(cc) ? bcc.join(', ') : bcc) : null,
+        bcc: bcc ? (Array.isArray(bcc) ? bcc.join(', ') : bcc) : null,
         htmlContent,
         textContent,
         attachments: attachments || [],
