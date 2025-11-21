@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Newsletter Florent Food - Moderne Dynamique</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0a0e1a 0%, #1a1f2e 100%);
+      padding: 20px;
+    }
+    .container {
+      max-width: 650px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    .header {
+      background: linear-gradient(135deg, #D4AF37 0%, #C77A4E 100%);
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 300px;
+      height: 300px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 50%;
+    }
+    .header-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      font-size: 28px;
+      font-weight: 900;
+      color: #000;
+      letter-spacing: -0.5px;
+    }
+    .date-badge {
+      background: rgba(0,0,0,0.2);
+      backdrop-filter: blur(10px);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 11px;
+      color: #000;
+      font-weight: 600;
+    }
+    .hero-message {
+      padding: 50px 40px;
+      background: linear-gradient(180deg, #fafafa 0%, #fff 100%);
+    }
+    .hero-tag {
+      display: inline-block;
+      background: #D4AF37;
+      color: #000;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .hero-title {
+      font-size: 36px;
+      font-weight: 900;
+      color: #1a1a1a;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+    .hero-text {
+      font-size: 16px;
+      color: #666;
+      line-height: 1.7;
+    }
+    .recipes-grid {
+      padding: 20px;
+      background: #f8f8f8;
+    }
+    .recipe-card {
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .recipe-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(212,175,55,0.2);
+    }
+    .recipe-image-wrapper {
+      position: relative;
+      height: 240px;
+      overflow: hidden;
+    }
+    .recipe-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .recipe-badge {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(10px);
+      color: #D4AF37;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .recipe-content {
+      padding: 28px;
+    }
+    .recipe-meta {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .recipe-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: #999;
+    }
+    .recipe-title {
+      font-size: 24px;
+      font-weight: 800;
+      color: #1a1a1a;
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+    .recipe-description {
+      font-size: 14px;
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .recipe-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #D4AF37 0%, #C77A4E 100%);
+      color: #000;
+      padding: 12px 24px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      transition: all 0.3s;
+    }
+    .recipe-button:hover {
+      transform: translateX(4px);
+    }
+    .tip-card {
+      background: linear-gradient(135deg, #D4AF37 0%, #C77A4E 100%);
+      margin: 20px;
+      padding: 40px;
+      border-radius: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .tip-card::before {
+      content: '💡';
+      position: absolute;
+      right: -20px;
+      bottom: -20px;
+      font-size: 120px;
+      opacity: 0.15;
+    }
+    .tip-label {
+      display: inline-block;
+      background: rgba(0,0,0,0.2);
+      color: #000;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .tip-text {
+      font-size: 18px;
+      color: #000;
+      line-height: 1.6;
+      font-weight: 500;
+    }
+    .premium-card {
+      margin: 20px;
+      background: #1a1a1a;
+      border-radius: 16px;
+      padding: 50px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .premium-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #D4AF37 0%, #C77A4E 100%);
+    }
+    .premium-icon {
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+    .premium-title {
+      font-size: 28px;
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+    .premium-text {
+      font-size: 15px;
+      color: #999;
+      line-height: 1.6;
+      margin-bottom: 30px;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .premium-price {
+      font-size: 40px;
+      font-weight: 900;
+      color: #D4AF37;
+      margin-bottom: 8px;
+    }
+    .premium-period {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 30px;
+    }
+    .premium-button {
+      display: inline-block;
+      background: linear-gradient(135deg, #D4AF37 0%, #C77A4E 100%);
+      color: #000;
+      padding: 16px 40px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      box-shadow: 0 8px 24px rgba(212,175,55,0.3);
+    }
+    .footer {
+      background: #fafafa;
+      padding: 40px;
+      text-align: center;
+    }
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .social-icon {
+      width: 40px;
+      height: 40px;
+      background: #fff;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-size: 18px;
+      transition: all 0.3s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .social-icon:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(212,175,55,0.3);
+    }
+    .footer-text {
+      font-size: 12px;
+      color: #999;
+      line-height: 1.8;
+    }
+    .footer-link {
+      color: #D4AF37;
+      text-decoration: none;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-content">
+        <div class="logo">Florent Food</div>
+        <div class="date-badge">21 Nov 2024</div>
+      </div>
+    </div>
+
+    <!-- Hero Message -->
+    <div class="hero-message">
+      <span class="hero-tag">Cette Semaine</span>
+      <h1 class="hero-title">3 Recettes Incontournables Pour Épater Vos Invités</h1>
+      <p class="hero-text">
+        Salut la team ! Cette semaine, je vous ai préparé un menu complet qui va faire sensation.
+        Du salé au sucré, on va tout déchirer ensemble 🔥
+      </p>
+    </div>
+
+    <!-- Recipes -->
+    <div class="recipes-grid">
+      <div class="recipe-card">
+        <div class="recipe-image-wrapper">
+          <img src="https://images.unsplash.com/photo-1612874742237-6526221588e3?w=800&h=600&fit=crop" alt="Carbonara" class="recipe-image">
+          <span class="recipe-badge">⭐ Populaire</span>
+        </div>
+        <div class="recipe-content">
+          <div class="recipe-meta">
+            <span class="recipe-meta-item">⏱️ 25 min</span>
+            <span class="recipe-meta-item">👨‍🍳 Moyen</span>
+          </div>
+          <h2 class="recipe-title">Carbonara Revisitée</h2>
+          <p class="recipe-description">
+            Ma version ultra crémeuse de la carbonara italienne. Le secret ?
+            Une technique infaillible pour des œufs parfaitement cuits.
+          </p>
+          <a href="#" class="recipe-button">
+            Voir la recette
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="recipe-card">
+        <div class="recipe-image-wrapper">
+          <img src="https://images.unsplash.com/photo-1519915212116-7cfef71f1d3e?w=800&h=600&fit=crop" alt="Tarte Tatin" class="recipe-image">
+          <span class="recipe-badge">🔥 Nouveauté</span>
+        </div>
+        <div class="recipe-content">
+          <div class="recipe-meta">
+            <span class="recipe-meta-item">⏱️ 45 min</span>
+            <span class="recipe-meta-item">👨‍🍳 Facile</span>
+          </div>
+          <h2 class="recipe-title">Tarte Tatin Express</h2>
+          <p class="recipe-description">
+            Le dessert français par excellence, simplifié pour toi.
+            Caramel parfait et pommes fondantes garantis !
+          </p>
+          <a href="#" class="recipe-button">
+            Voir la recette
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="recipe-card">
+        <div class="recipe-image-wrapper">
+          <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=800&h=600&fit=crop" alt="Mousse" class="recipe-image">
+          <span class="recipe-badge">💎 Premium</span>
+        </div>
+        <div class="recipe-content">
+          <div class="recipe-meta">
+            <span class="recipe-meta-item">⏱️ 15 min</span>
+            <span class="recipe-meta-item">👨‍🍳 Facile</span>
+          </div>
+          <h2 class="recipe-title">Mousse au Chocolat Intense</h2>
+          <p class="recipe-description">
+            Une mousse ultra aérienne avec mon chocolat préféré.
+            Texture parfaite en seulement 15 minutes chrono !
+          </p>
+          <a href="#" class="recipe-button">
+            Voir la recette
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tip -->
+    <div class="tip-card">
+      <span class="tip-label">Astuce de Chef</span>
+      <p class="tip-text">
+        Pour une carbonara parfaite, retire TOUJOURS la poêle du feu avant d'ajouter
+        les œufs. La chaleur résiduelle suffit pour créer cette sauce crémeuse magique !
+      </p>
+    </div>
+
+    <!-- Premium CTA -->
+    <div class="premium-card">
+      <div class="premium-icon">🌟</div>
+      <h3 class="premium-title">Passe en Premium</h3>
+      <p class="premium-text">
+        Accède à toutes mes recettes exclusives, vidéos HD en 4K,
+        PDF téléchargeables, et bien plus encore !
+      </p>
+      <div class="premium-price">12€</div>
+      <div class="premium-period">par mois · sans engagement</div>
+      <a href="#" class="premium-button">Devenir Premium</a>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <div class="social-links">
+        <a href="#" class="social-icon">📸</a>
+        <a href="#" class="social-icon">🎬</a>
+        <a href="#" class="social-icon">👨‍🍳</a>
+      </div>
+      <p class="footer-text">
+        Florent Food · Cuisine & Passion<br>
+        <a href="#" class="footer-link">Se désinscrire</a> · <a href="#" class="footer-link">Gérer mes préférences</a>
+      </p>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Templates Recettes - Florent Food</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0a0e1a 0%, #1a1f2e 100%);
+      padding: 60px 20px;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    h1 {
+      text-align: center;
+      color: #fff;
+      font-size: 48px;
+      font-weight: 900;
+      margin-bottom: 16px;
+      letter-spacing: -1px;
+    }
+    .subtitle {
+      text-align: center;
+      color: rgba(255,255,255,0.6);
+      font-size: 18px;
+      margin-bottom: 60px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 20px;
+      overflow: hidden;
+      transition: all 0.3s;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+      cursor: pointer;
+    }
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 60px rgba(212,175,55,0.3);
+    }
+    .card-header {
+      padding: 30px;
+      background: linear-gradient(135deg, #D4AF37 0%, #C77A4E 100%);
+      position: relative;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .card-title {
+      font-size: 24px;
+      color: #000;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .card-body {
+      padding: 30px;
+    }
+    .features {
+      margin-bottom: 24px;
+    }
+    .feature {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+      font-size: 14px;
+      color: #666;
+      line-height: 1.6;
+    }
+    .feature-icon {
+      width: 24px;
+      height: 24px;
+      background: linear-gradient(135deg, #D4AF37 0%, #C77A4E 100%);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      flex-shrink: 0;
+      color: #000;
+      font-weight: 700;
+    }
+    .button {
+      display: block;
+      width: 100%;;
+      padding: 16px;
+      background: linear-gradient(135deg, #D4AF37 0%, #C77A4E 100%);
+      color: #000;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      transition: all 0.3s;
+    }
+    .button:hover {
+      transform: scale(1.02);
+      box-shadow: 0 8px 24px rgba(212,175,55,0.4);
+    }
+    .preview-badge {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: #000;
+      color: #D4AF37;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🍳 Templates Recettes</h1>
+    <p class="subtitle">Choisis le style qui te correspond le mieux</p>
+
+    <div class="grid">
+      <!-- Template 1 -->
+      <div class="card" onclick="window.open('template-1-magazine-luxe.html', '_blank')">
+        <div class="card-header" style="background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);">
+          <div>
+            <div class="preview-badge">PREMIUM</div>
+            <h2 class="card-title" style="color: #D4AF37;">Magazine Luxe</h2>
+            <p style="color: rgba(255,255,255,0.7); font-size: 14px;">Noir & Or, style éditorial</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="features">
+            <div class="feature">
+              <div class="feature-icon">✓</div>
+              Hero full-width avec image immersive
+            </div>
+            <div class="feature">
+              <div class="feature-icon">✓</div>
+              Typographie bold et contrastes forts
+            </div>
+            <div class="feature">
+              <div class="feature-icon">✓</div>
+              Fond noir avec accents dorés
+            </div>
+            <div class="feature">
+              <div class="feature-icon">✓</div>
+              Layout type Vogue/Kinfolk
+            </div>
+            <div class="feature">
+              <div class="feature-icon">✓</div>
+              Cohérent avec ta newsletter
+            </div>
+          </div>
+          <a href="template-1-magazine-luxe.html" target="_blank" class="button">
+            Voir le Template
+          </a>
+        </div>
+      </div>
+
+      <!-- Template 2 -->
+      <div class="card" onclick="window.open('template-2-minimal-scandinave.html', '_blank')">
+        <div class="card-header" style="background: linear-gradient(135deg, #f7f7f5 0%, #ffffff 100%);">
+          <div>
+            <h2 class="card-title">Minimal Scandinave</h2>
+            <p style="color: #666; font-size: 14px;">Blanc épuré, élégant</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="features">
+            <div class="feature">
+              <div class="feature-icon">✓</div>
+              Design ultra-minimaliste et zen
+            </div>
+            <div class="feature">
+              <div class="feature-icon">✓</div>
+              Beaucoup de blanc et d'espace
+            </div>
+            <div class="feature">
+              <div class="feature-icon">✓</div>
+              Typographie légère et aérée
+            </div>
+            <div class="feature">
+              <div class="feature-icon">✓</div>
+              Touches d'or très subtiles
+            </div>
+            <div class="feature">
+              <div class="feature-icon">✓</div>
+              Style nordique raffiné
+            </div>
+          </div>
+          <a href="template-2-minimal-scandinave.html" target="_blank" class="button">
+            Voir le Template
+          </a>
+        </div>
+      </div>
+
+      <!-- Template 3 -->
+      <div class="card" onclick="window.open('template-3-moderne-instagram.html', '_blank')">
+        <div class="card-header" style="background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);">
+          <div>
+            <h2 class="card-title" style="color: #fff;">Moderne Instagram</h2>
+            <p style="color: rgba(255,255,255,0.9); font-size: 14px;">Coloré, dynamique</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="features">
+            <div class="feature">
+              <div class="feature-icon">✓</div>
+              Cards colorées avec gradients
+            </div>
+            <div class="feature">
+              <div class="feature-icon">✓</div>
+              Style social media friendly
+            </div>
+            <div class="feature">
+              <div class="feature-icon">✓</div>
+              Icons et badges modernes
+            </div>
+            <div class="feature">
+              <div class="feature-icon">✓</div>
+              Hover effects et animations
+            </div>
+            <div class="feature">
+              <div class="feature-icon">✓</div>
+              Optimisé pour le partage
+            </div>
+          </div>
+          <a href="template-3-moderne-instagram.html" target="_blank" class="button">
+            Voir le Template
+          </a>
+        </div>
+      </div>
+
+      <!-- Template 4 -->
+      <div class="card" onclick="window.open('template-4-editorial-blog.html', '_blank')">
+        <div class="card-header" style="background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);">
+          <div>
+            <h2 class="card-title">Editorial Blog</h2>
+            <p style="color: #666; font-size: 14px;">Classique, lisible</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="features">
+            <div class="feature">
+              <div class="feature-icon">✓</div>
+              Typographie serif élégante
+            </div>
+            <div class="feature">
+              <div class="feature-icon">✓</div>
+              Layout blog classique centré
+            </div>
+            <div class="feature">
+              <div class="feature-icon">✓</div>
+              Facile à lire et digeste
+            </div>
+            <div class="feature">
+              <div class="feature-icon">✓</div>
+              Sidebar avec infos pratiques
+            </div>
+            <div class="feature">
+              <div class="feature-icon">✓</div>
+              Style New York Times
+            </div>
+          </div>
+          <a href="template-4-editorial-blog.html" target="_blank" class="button">
+            Voir le Template
+          </a>
+        </div>
+      </div>
+
+      <!-- Template 5 - NOUVEAU -->
+      <div class="card" onclick="window.open('template-5-magazine-luxe-light.html', '_blank')" style="border: 2px solid #D4AF37;">
+        <div class="card-header" style="background: linear-gradient(135deg, #000 0%, #fff 100%);">
+          <div>
+            <div class="preview-badge" style="background: #D4AF37; color: #000;">NOUVEAU ✨</div>
+            <h2 class="card-title" style="color: #D4AF37;">Magazine Luxe Light</h2>
+            <p style="color: #666; font-size: 14px;">Le meilleur des deux mondes</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="features">
+            <div class="feature">
+              <div class="feature-icon">✓</div>
+              Hero sombre dramatique avec image
+            </div>
+            <div class="feature">
+              <div class="feature-icon">✓</div>
+              Contenu sur fond BLANC lisible
+            </div>
+            <div class="feature">
+              <div class="feature-icon">✓</div>
+              Accents dorés et typographie bold
+            </div>
+            <div class="feature">
+              <div class="feature-icon">✓</div>
+              Mix parfait élégance/confort
+            </div>
+            <div class="feature">
+              <div class="feature-icon">✓</div>
+              Cohérent avec ta newsletter
+            </div>
+          </div>
+          <a href="template-5-magazine-luxe-light.html" target="_blank" class="button">
+            Voir le Template
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 60px; color: rgba(255,255,255,0.5); font-size: 14px;">
+      <p>Florent Food · Templates Recettes 2024</p>
+    </div>
+  </div>
+</body>
+</html>

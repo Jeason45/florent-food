@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carbonara Traditionnelle - Florent Food</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+
+    /* Header */
+    .header {
+      padding: 40px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      text-align: center;
+      color: #fff;
+    }
+    .header-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .header-title {
+      font-size: 42px;
+      font-weight: 900;
+      margin-bottom: 16px;
+      letter-spacing: -1px;
+    }
+    .header-description {
+      font-size: 16px;
+      opacity: 0.9;
+      line-height: 1.6;
+    }
+
+    /* Image */
+    .recipe-image {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+    }
+
+    /* Content */
+    .content {
+      padding: 40px;
+    }
+
+    /* Meta Cards */
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    .meta-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 24px;
+      border-radius: 16px;
+      text-align: center;
+      color: #fff;
+    }
+    .meta-value {
+      font-size: 32px;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+    .meta-label {
+      font-size: 12px;
+      opacity: 0.9;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 600;
+    }
+
+    /* Section */
+    .section-title {
+      font-size: 24px;
+      font-weight: 900;
+      color: #1a1a1a;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    /* Ingredients */
+    .ingredients-grid {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+    .ingredient-card {
+      background: #f8f9fa;
+      padding: 16px 20px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: all 0.3s;
+    }
+    .ingredient-card:hover {
+      background: #e9ecef;
+      transform: translateX(4px);
+    }
+    .ingredient-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 900;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    .ingredient-text {
+      font-size: 15px;
+      color: #333;
+      font-weight: 500;
+    }
+
+    /* Steps */
+    .step-card {
+      background: #f8f9fa;
+      padding: 24px;
+      border-radius: 16px;
+      margin-bottom: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .step-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+    }
+    .step-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+    .step-number {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 900;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    .step-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1a1a1a;
+    }
+    .step-description {
+      font-size: 15px;
+      line-height: 1.7;
+      color: #666;
+      padding-left: 64px;
+    }
+
+    /* Quote */
+    .quote-box {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 40px;
+      border-radius: 16px;
+      margin: 40px 0;
+      text-align: center;
+      color: #fff;
+    }
+    .quote-icon {
+      font-size: 40px;
+      opacity: 0.5;
+      margin-bottom: 20px;
+    }
+    .quote-text {
+      font-size: 18px;
+      line-height: 1.7;
+      font-style: italic;
+      margin-bottom: 20px;
+    }
+    .quote-author {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      opacity: 0.9;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 40px;
+      background: #f8f9fa;
+    }
+    .footer-logo {
+      font-size: 24px;
+      font-weight: 900;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 12px;
+    }
+    .footer-text {
+      font-size: 12px;
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="header-badge">🇮🇹 Italien</div>
+      <h1 class="header-title">Carbonara Traditionnelle</h1>
+      <p class="header-description">
+        Le classique romain revisité avec technique et passion
+      </p>
+    </div>
+
+    <img src="https://images.unsplash.com/photo-1612874742237-6526221588e3?w=1600&h=800&fit=crop&q=80" alt="Carbonara" class="recipe-image">
+
+    <div class="content">
+      <div class="meta-grid">
+        <div class="meta-card">
+          <div class="meta-value">25</div>
+          <div class="meta-label">Minutes</div>
+        </div>
+        <div class="meta-card">
+          <div class="meta-value">4</div>
+          <div class="meta-label">Personnes</div>
+        </div>
+        <div class="meta-card">
+          <div class="meta-value">★★</div>
+          <div class="meta-label">Niveau</div>
+        </div>
+      </div>
+
+      <h2 class="section-title">
+        <div class="section-icon">🛒</div>
+        Ingrédients
+      </h2>
+      <div class="ingredients-grid">
+        <div class="ingredient-card">
+          <div class="ingredient-icon">✓</div>
+          <div class="ingredient-text">400g de spaghetti de qualité</div>
+        </div>
+        <div class="ingredient-card">
+          <div class="ingredient-icon">✓</div>
+          <div class="ingredient-text">200g de guanciale</div>
+        </div>
+        <div class="ingredient-card">
+          <div class="ingredient-icon">✓</div>
+          <div class="ingredient-text">4 jaunes d'œufs extra-frais bio</div>
+        </div>
+        <div class="ingredient-card">
+          <div class="ingredient-icon">✓</div>
+          <div class="ingredient-text">100g de Pecorino Romano DOP</div>
+        </div>
+        <div class="ingredient-card">
+          <div class="ingredient-icon">✓</div>
+          <div class="ingredient-text">Poivre noir fraîchement moulu</div>
+        </div>
+        <div class="ingredient-card">
+          <div class="ingredient-icon">✓</div>
+          <div class="ingredient-text">Sel pour l'eau de cuisson</div>
+        </div>
+      </div>
+
+      <h2 class="section-title">
+        <div class="section-icon">👨‍🍳</div>
+        Préparation
+      </h2>
+
+      <div class="step-card">
+        <div class="step-header">
+          <div class="step-number">1</div>
+          <div class="step-title">Préparer le guanciale</div>
+        </div>
+        <p class="step-description">
+          Couper le guanciale en lardons de 5mm d'épaisseur. Dans une grande poêle froide,
+          faire fondre à feu doux pendant 10-12 minutes jusqu'à ce qu'il soit croustillant.
+        </p>
+      </div>
+
+      <div class="step-card">
+        <div class="step-header">
+          <div class="step-number">2</div>
+          <div class="step-title">Cuire les pâtes</div>
+        </div>
+        <p class="step-description">
+          Porter une grande casserole d'eau salée à ébullition. Cuire les spaghetti
+          1 minute de moins que le temps indiqué. Réserver 250ml d'eau de cuisson.
+        </p>
+      </div>
+
+      <div class="step-card">
+        <div class="step-header">
+          <div class="step-number">3</div>
+          <div class="step-title">Créer la sauce</div>
+        </div>
+        <p class="step-description">
+          Mélanger vigoureusement les jaunes d'œufs avec le pecorino et beaucoup de poivre noir
+          jusqu'à obtenir une crème épaisse. Ajouter progressivement l'eau de cuisson.
+        </p>
+      </div>
+
+      <div class="step-card">
+        <div class="step-header">
+          <div class="step-number">4</div>
+          <div class="step-title">L'assemblage final</div>
+        </div>
+        <p class="step-description">
+          Retirer la poêle du feu. Ajouter les pâtes avec le guanciale, verser la crème d'œufs
+          et mélanger énergiquement jusqu'à obtenir une sauce crémeuse. Servir immédiatement.
+        </p>
+      </div>
+
+      <div class="quote-box">
+        <div class="quote-icon">💡</div>
+        <p class="quote-text">
+          Le secret : retirez toujours la poêle du feu avant d'ajouter les œufs.
+          La chaleur résiduelle créera cette texture crémeuse parfaite.
+        </p>
+        <div class="quote-author">Conseil de Florent</div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="footer-logo">FLORENT FOOD</div>
+      <div class="footer-text">Haute Cuisine · Paris · 2024</div>
+    </div>
+  </div>
+</body>
+</html>

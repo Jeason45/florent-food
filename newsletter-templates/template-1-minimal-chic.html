@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Newsletter Florent Food - Minimal Chic</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Georgia', serif;
+      background: #fafafa;
+      padding: 40px 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #ffffff;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    }
+    .header {
+      padding: 60px 40px;
+      border-bottom: 1px solid #e8e8e8;
+      text-align: center;
+    }
+    .logo {
+      font-size: 14px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #D4AF37;
+      font-weight: 400;
+      margin-bottom: 8px;
+    }
+    .tagline {
+      font-size: 12px;
+      color: #999;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .intro {
+      padding: 50px 40px;
+      border-bottom: 1px solid #f5f5f5;
+    }
+    .greeting {
+      font-size: 13px;
+      color: #D4AF37;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+    .intro-text {
+      font-size: 16px;
+      line-height: 1.8;
+      color: #333;
+    }
+    .recipe-section {
+      padding: 0 40px 40px;
+    }
+    .recipe-card {
+      margin-top: 40px;
+      border-bottom: 1px solid #f5f5f5;
+      padding-bottom: 40px;
+    }
+    .recipe-card:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    .recipe-image {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      margin-bottom: 24px;
+    }
+    .recipe-title {
+      font-size: 24px;
+      color: #222;
+      margin-bottom: 12px;
+      font-weight: 400;
+    }
+    .recipe-description {
+      font-size: 14px;
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .recipe-link {
+      color: #D4AF37;
+      text-decoration: none;
+      font-size: 13px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      border-bottom: 1px solid #D4AF37;
+      padding-bottom: 2px;
+      transition: all 0.3s;
+    }
+    .tip-section {
+      margin: 40px 40px 0;
+      padding: 40px;
+      background: #fafafa;
+      border-left: 3px solid #D4AF37;
+    }
+    .tip-title {
+      font-size: 12px;
+      color: #D4AF37;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .tip-content {
+      font-size: 15px;
+      color: #444;
+      line-height: 1.7;
+      font-style: italic;
+    }
+    .cta-section {
+      margin: 40px 40px 0;
+      padding: 50px 40px;
+      background: linear-gradient(135deg, #f8f6f3 0%, #faf9f7 100%);
+      text-align: center;
+      border: 1px solid #e8e8e8;
+    }
+    .cta-badge {
+      display: inline-block;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #D4AF37;
+      border: 1px solid #D4AF37;
+      padding: 6px 16px;
+      margin-bottom: 20px;
+    }
+    .cta-title {
+      font-size: 26px;
+      color: #222;
+      margin-bottom: 16px;
+      font-weight: 400;
+    }
+    .cta-text {
+      font-size: 14px;
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+    .cta-button {
+      display: inline-block;
+      background: #D4AF37;
+      color: #000;
+      padding: 16px 40px;
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: all 0.3s;
+    }
+    .cta-button:hover {
+      background: #c49d2f;
+    }
+    .footer {
+      padding: 40px;
+      text-align: center;
+      border-top: 1px solid #e8e8e8;
+    }
+    .footer-text {
+      font-size: 12px;
+      color: #999;
+      line-height: 1.6;
+    }
+    .footer-link {
+      color: #D4AF37;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="logo">Florent Food</div>
+      <div class="tagline">Cuisine & Passion</div>
+    </div>
+
+    <!-- Intro -->
+    <div class="intro">
+      <div class="greeting">Bonjour Sophie,</div>
+      <p class="intro-text">
+        Cette semaine, je vous partage trois recettes qui incarnent parfaitement l'esprit de l'automne.
+        Des plats réconfortants, élégants, et étonnamment simples à réaliser.
+        Laissez-vous guider par ces saveurs authentiques.
+      </p>
+    </div>
+
+    <!-- Recipes -->
+    <div class="recipe-section">
+      <div class="recipe-card">
+        <img src="https://images.unsplash.com/photo-1612874742237-6526221588e3?w=800&h=600&fit=crop" alt="Carbonara" class="recipe-image">
+        <h2 class="recipe-title">Carbonara Revisitée</h2>
+        <p class="recipe-description">
+          Une interprétation contemporaine du grand classique italien. Guanciale croustillant,
+          pecorino affiné, et cette sauce onctueuse qui fait toute la différence.
+        </p>
+        <a href="#" class="recipe-link">Découvrir la recette →</a>
+      </div>
+
+      <div class="recipe-card">
+        <img src="https://images.unsplash.com/photo-1519915212116-7cfef71f1d3e?w=800&h=600&fit=crop" alt="Tarte Tatin" class="recipe-image">
+        <h2 class="recipe-title">Tarte Tatin aux Pommes Caramélisées</h2>
+        <p class="recipe-description">
+          Le dessert français par excellence. Des pommes fondantes, un caramel doré à la perfection,
+          et une pâte feuilletée maison qui fond en bouche.
+        </p>
+        <a href="#" class="recipe-link">Découvrir la recette →</a>
+      </div>
+
+      <div class="recipe-card">
+        <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=800&h=600&fit=crop" alt="Mousse" class="recipe-image">
+        <h2 class="recipe-title">Mousse au Chocolat Grand Cru</h2>
+        <p class="recipe-description">
+          L'élégance dans sa forme la plus pure. Un chocolat d'exception à 70% de cacao,
+          monté avec délicatesse pour une texture aérienne incomparable.
+        </p>
+        <a href="#" class="recipe-link">Découvrir la recette →</a>
+      </div>
+    </div>
+
+    <!-- Tip -->
+    <div class="tip-section">
+      <div class="tip-title">Le Conseil du Chef</div>
+      <p class="tip-content">
+        "Pour une carbonara parfaite, la température est essentielle. Retirez toujours la poêle
+        du feu avant d'incorporer les œufs. La chaleur résiduelle suffit à créer cette sauce
+        crémeuse sans cuire les œufs."
+      </p>
+    </div>
+
+    <!-- CTA Premium -->
+    <div class="cta-section">
+      <div class="cta-badge">Membre Premium</div>
+      <h3 class="cta-title">Accédez à l'Excellence Culinaire</h3>
+      <p class="cta-text">
+        Rejoignez notre cercle d'excellence et découvrez nos recettes exclusives,
+        vidéos haute définition, et fiches techniques professionnelles.
+        L'art culinaire à portée de main.
+      </p>
+      <a href="#" class="cta-button">Découvrir Premium</a>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p class="footer-text">
+        Florent Food · Cuisine & Passion<br>
+        <a href="#" class="footer-link">Se désinscrire</a> · <a href="#" class="footer-link">Préférences</a>
+      </p>
+    </div>
+  </div>
+</body>
+</html>

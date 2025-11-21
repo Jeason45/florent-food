@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Newsletter Florent Food - Magazine Luxe</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      background: #000;
+      padding: 0;
+    }
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      background: #000;
+    }
+    .hero {
+      position: relative;
+      height: 500px;
+      background: linear-gradient(135deg, #D4AF37 0%, #C77A4E 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 40px;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+    .hero-date {
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: rgba(0,0,0,0.6);
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+    .hero-title {
+      font-size: 52px;
+      color: #000;
+      font-weight: 900;
+      letter-spacing: -1px;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+    .hero-subtitle {
+      font-size: 16px;
+      color: rgba(0,0,0,0.7);
+      letter-spacing: 1px;
+    }
+    .intro {
+      background: #fff;
+      padding: 60px 50px;
+      border-left: 4px solid #D4AF37;
+    }
+    .intro-text {
+      font-size: 20px;
+      line-height: 1.7;
+      color: #1a1a1a;
+      font-weight: 300;
+    }
+    .intro-signature {
+      margin-top: 30px;
+      font-size: 14px;
+      color: #D4AF37;
+      font-style: italic;
+    }
+    .featured-recipe {
+      background: #fff;
+      margin-top: 2px;
+      padding: 0;
+      position: relative;
+    }
+    .featured-image {
+      width: 100%;
+      height: 450px;
+      object-fit: cover;
+    }
+    .featured-content {
+      padding: 50px;
+      background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.8) 100%);
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+    .featured-number {
+      font-size: 80px;
+      font-weight: 900;
+      color: #D4AF37;
+      line-height: 1;
+      margin-bottom: 10px;
+      opacity: 0.3;
+    }
+    .featured-title {
+      font-size: 38px;
+      color: #fff;
+      font-weight: 700;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: -0.5px;
+    }
+    .featured-description {
+      font-size: 16px;
+      color: rgba(255,255,255,0.9);
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    .featured-button {
+      display: inline-block;
+      background: #D4AF37;
+      color: #000;
+      padding: 14px 32px;
+      text-decoration: none;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .grid-recipes {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      background: #000;
+      margin-top: 2px;
+    }
+    .grid-recipe {
+      position: relative;
+      height: 350px;
+      overflow: hidden;
+    }
+    .grid-recipe-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s;
+    }
+    .grid-recipe:hover .grid-recipe-image {
+      transform: scale(1.05);
+    }
+    .grid-recipe-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 30px;
+      background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.9) 100%);
+    }
+    .grid-recipe-title {
+      font-size: 22px;
+      color: #fff;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .grid-recipe-link {
+      color: #D4AF37;
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .quote-section {
+      background: #1a1a1a;
+      padding: 80px 60px;
+      text-align: center;
+      margin-top: 2px;
+    }
+    .quote-icon {
+      font-size: 60px;
+      color: #D4AF37;
+      margin-bottom: 30px;
+      opacity: 0.5;
+    }
+    .quote-text {
+      font-size: 28px;
+      color: #fff;
+      line-height: 1.5;
+      font-weight: 300;
+      font-style: italic;
+      margin-bottom: 30px;
+    }
+    .quote-author {
+      font-size: 14px;
+      color: #D4AF37;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .premium-section {
+      background: linear-gradient(135deg, #D4AF37 0%, #C77A4E 100%);
+      padding: 70px 60px;
+      text-align: center;
+      margin-top: 2px;
+    }
+    .premium-badge {
+      display: inline-block;
+      background: #000;
+      color: #D4AF37;
+      padding: 8px 24px;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 30px;
+      font-weight: 700;
+    }
+    .premium-title {
+      font-size: 42px;
+      color: #000;
+      font-weight: 900;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: -1px;
+    }
+    .premium-text {
+      font-size: 16px;
+      color: rgba(0,0,0,0.8);
+      line-height: 1.6;
+      margin-bottom: 40px;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .premium-button {
+      display: inline-block;
+      background: #000;
+      color: #D4AF37;
+      padding: 18px 50px;
+      text-decoration: none;
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .footer {
+      background: #000;
+      padding: 50px;
+      text-align: center;
+      margin-top: 2px;
+      border-top: 1px solid #333;
+    }
+    .footer-logo {
+      font-size: 24px;
+      color: #D4AF37;
+      font-weight: 900;
+      margin-bottom: 20px;
+      letter-spacing: 2px;
+    }
+    .footer-text {
+      font-size: 11px;
+      color: #666;
+      line-height: 2;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .footer-link {
+      color: #D4AF37;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Hero -->
+    <div class="hero">
+      <div class="hero-content">
+        <div class="hero-date">Édition du 21 Novembre 2024</div>
+        <h1 class="hero-title">Saveurs<br>d'Automne</h1>
+        <div class="hero-subtitle">Trois Recettes d'Exception</div>
+      </div>
+    </div>
+
+    <!-- Intro -->
+    <div class="intro">
+      <p class="intro-text">
+        L'automne s'installe avec ses couleurs chaudes et ses saveurs réconfortantes.
+        Cette semaine, j'ai sélectionné pour vous trois créations qui capturent l'essence
+        même de cette saison généreuse. Des recettes pensées pour éveiller vos sens.
+      </p>
+      <div class="intro-signature">— Florent</div>
+    </div>
+
+    <!-- Featured Recipe -->
+    <div class="featured-recipe">
+      <img src="https://images.unsplash.com/photo-1612874742237-6526221588e3?w=1200&h=800&fit=crop" alt="Carbonara" class="featured-image">
+      <div class="featured-content">
+        <div class="featured-number">01</div>
+        <h2 class="featured-title">Carbonara<br>Revisitée</h2>
+        <p class="featured-description">
+          Une réinterprétation audacieuse du classique romain. Guanciale fumé,
+          pecorino artisanal, et cette technique secrète pour une sauce parfaite.
+        </p>
+        <a href="#" class="featured-button">Voir la Recette</a>
+      </div>
+    </div>
+
+    <!-- Grid Recipes -->
+    <div class="grid-recipes">
+      <div class="grid-recipe">
+        <img src="https://images.unsplash.com/photo-1519915212116-7cfef71f1d3e?w=600&h=600&fit=crop" alt="Tarte Tatin" class="grid-recipe-image">
+        <div class="grid-recipe-overlay">
+          <h3 class="grid-recipe-title">Tarte Tatin<br>Premium</h3>
+          <a href="#" class="grid-recipe-link">Découvrir →</a>
+        </div>
+      </div>
+      <div class="grid-recipe">
+        <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&h=600&fit=crop" alt="Mousse" class="grid-recipe-image">
+        <div class="grid-recipe-overlay">
+          <h3 class="grid-recipe-title">Mousse au<br>Chocolat Grand Cru</h3>
+          <a href="#" class="grid-recipe-link">Découvrir →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quote -->
+    <div class="quote-section">
+      <div class="quote-icon">"</div>
+      <p class="quote-text">
+        La cuisine, c'est quand les choses ont le goût de ce qu'elles sont.
+      </p>
+      <div class="quote-author">Curnonsky</div>
+    </div>
+
+    <!-- Premium CTA -->
+    <div class="premium-section">
+      <div class="premium-badge">Exclusif Premium</div>
+      <h3 class="premium-title">Rejoignez<br>l'Élite Culinaire</h3>
+      <p class="premium-text">
+        Accédez à notre bibliothèque complète de recettes d'exception,
+        masterclass en vidéo HD, et techniques de chef. Une expérience
+        gastronomique sans compromis.
+      </p>
+      <a href="#" class="premium-button">Devenir Membre Premium</a>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <div class="footer-logo">FLORENT FOOD</div>
+      <p class="footer-text">
+        Haute Cuisine · Paris<br>
+        <a href="#" class="footer-link">Se Désinscrire</a> · <a href="#" class="footer-link">Préférences</a>
+      </p>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section Ustensiles - Preview</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #fff;
+      padding: 60px 20px;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    h1 {
+      font-size: 32px;
+      font-weight: 900;
+      color: #1a1a1a;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+    .subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 60px;
+    }
+
+    /* Style du template */
+    .section-title {
+      font-size: 14px;
+      letter-spacing: 4px;
+      color: #D4AF37;
+      text-transform: uppercase;
+      margin-bottom: 40px;
+      font-weight: 700;
+    }
+
+    .divider {
+      height: 1px;
+      background: #e8e8e8;
+      margin: 60px 0;
+    }
+
+    /* Version 1 - Liste simple comme ingrédients */
+    .ustensiles-list {
+      list-style: none;
+      margin-bottom: 60px;
+    }
+    .ustensile-item {
+      padding: 16px 0 16px 32px;
+      font-size: 16px;
+      color: #333;
+      position: relative;
+      line-height: 1.6;
+    }
+    .ustensile-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 22px;
+      width: 8px;
+      height: 8px;
+      background: #D4AF37;
+      border-radius: 50%;
+    }
+
+    /* Version 2 - Cards compactes */
+    .ustensiles-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+      margin-bottom: 60px;
+    }
+    .ustensile-card {
+      background: #fafaf8;
+      padding: 16px 20px;
+      border-left: 3px solid #D4AF37;
+      font-size: 15px;
+      color: #333;
+    }
+
+    /* Version 3 - Inline tags */
+    .ustensiles-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 60px;
+    }
+    .ustensile-tag {
+      background: #fafaf8;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-size: 14px;
+      color: #333;
+      border: 1px solid #e8e8e8;
+    }
+
+    .option-label {
+      display: inline-block;
+      background: #D4AF37;
+      color: #000;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 30px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Section Ustensiles - Preview</h1>
+    <p class="subtitle">3 façons de présenter les ustensiles nécessaires</p>
+
+    <!-- Version 1 -->
+    <div class="option-label">OPTION 1 — LISTE MINIMALISTE</div>
+    <h2 class="section-title">Ustensiles Nécessaires</h2>
+    <ul class="ustensiles-list">
+      <li class="ustensile-item">Grande casserole pour les pâtes</li>
+      <li class="ustensile-item">Poêle large (28-30cm)</li>
+      <li class="ustensile-item">Grand bol pour la crème d'œufs</li>
+      <li class="ustensile-item">Fouet</li>
+      <li class="ustensile-item">Râpe fine pour le fromage</li>
+    </ul>
+
+    <div class="divider"></div>
+
+    <!-- Version 2 -->
+    <div class="option-label">OPTION 2 — CARDS COMPACTES</div>
+    <h2 class="section-title">Ustensiles Nécessaires</h2>
+    <div class="ustensiles-cards">
+      <div class="ustensile-card">Grande casserole pour les pâtes</div>
+      <div class="ustensile-card">Poêle large (28-30cm)</div>
+      <div class="ustensile-card">Grand bol pour la crème d'œufs</div>
+      <div class="ustensile-card">Fouet</div>
+      <div class="ustensile-card">Râpe fine pour le fromage</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Version 3 -->
+    <div class="option-label">OPTION 3 — TAGS INLINE</div>
+    <h2 class="section-title">Ustensiles Nécessaires</h2>
+    <div class="ustensiles-tags">
+      <span class="ustensile-tag">Grande casserole</span>
+      <span class="ustensile-tag">Poêle large 28-30cm</span>
+      <span class="ustensile-tag">Grand bol</span>
+      <span class="ustensile-tag">Fouet</span>
+      <span class="ustensile-tag">Râpe fine</span>
+    </div>
+
+    <div style="text-align: center; margin-top: 80px; padding: 40px; background: #fafaf8; border-radius: 16px;">
+      <h3 style="font-size: 20px; color: #1a1a1a; margin-bottom: 16px;">💭 Mon avis</h3>
+      <p style="color: #666; line-height: 1.7; max-width: 700px; margin: 0 auto;">
+        <strong>Avec ustensiles :</strong> Utile pour les débutants, montre que tu penses à tout<br>
+        <strong>Sans ustensiles :</strong> Plus épuré, évite de surcharger, les gens savent souvent ce qu'il faut<br><br>
+        <em>Pour un site premium/élégant, je dirais : <strong>sans ustensiles</strong> ou <strong>Option 1</strong> si tu veux vraiment les ajouter.</em>
+      </p>
+    </div>
+  </div>
+</body>
+</html>

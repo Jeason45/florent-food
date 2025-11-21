@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propositions Hero Buttons - Florent Food</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #1a1a1a;
+            padding: 40px 20px;
+            color: #fff;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 60px;
+            font-size: 2.5rem;
+            font-weight: 300;
+        }
+
+        .variant {
+            background: white;
+            border-radius: 20px;
+            padding: 60px 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .variant-title {
+            text-align: center;
+            color: #333;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Variante 1 - Boutons côte à côte actuels */
+        .v1-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .v1-btn {
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .v1-btn-outline {
+            background: transparent;
+            border-color: rgba(0,0,0,0.3);
+            color: #333;
+        }
+
+        .v1-btn-filled {
+            background: #E07A5F;
+            color: white;
+        }
+
+        /* Variante 2 - Cartes pricing côte à côte */
+        .v2-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .v2-card {
+            background: #FFFBF7;
+            border-radius: 16px;
+            padding: 30px;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .v2-card:hover {
+            border-color: #E07A5F;
+            transform: translateY(-5px);
+        }
+
+        .v2-card-premium {
+            background: linear-gradient(135deg, #E07A5F 0%, #D96A50 100%);
+            color: white;
+        }
+
+        .v2-price {
+            font-size: 2rem;
+            font-weight: 300;
+            margin: 15px 0;
+        }
+
+        .v2-features {
+            list-style: none;
+            margin-top: 20px;
+            font-size: 14px;
+            line-height: 2;
+        }
+
+        /* Variante 3 - Tableau comparatif */
+        .v3-table {
+            margin-top: 40px;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+        }
+
+        .v3-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .v3-cell {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .v3-header {
+            background: #f8f8f8;
+            font-weight: 600;
+        }
+
+        /* Variante 4 - Toggle switch entre plans */
+        .v4-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+            padding: 8px;
+            background: #f5f5f5;
+            border-radius: 50px;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .v4-option {
+            padding: 12px 30px;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .v4-option.active {
+            background: #E07A5F;
+            color: white;
+        }
+
+        /* Variante 5 - Style minimal avec détails */
+        .v5-container {
+            margin-top: 40px;
+        }
+
+        .v5-plan {
+            background: #FFFBF7;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .v5-plan:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .v5-info {
+            flex: 1;
+        }
+
+        .v5-btn {
+            padding: 12px 30px;
+            background: #E07A5F;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        /* Variante 6 - Un seul gros CTA avec sous-texte */
+        .v6-cta {
+            margin-top: 40px;
+        }
+
+        .v6-main-btn {
+            display: inline-block;
+            padding: 25px 60px;
+            background: #E07A5F;
+            color: white;
+            border-radius: 50px;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .v6-main-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(224, 122, 95, 0.4);
+        }
+
+        .v6-secondary {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Variante 7 - Pills horizontales */
+        .v7-pills {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .v7-pill {
+            padding: 15px 35px;
+            border-radius: 50px;
+            border: 2px solid #e0e0e0;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .v7-pill:hover {
+            border-color: #E07A5F;
+            background: #E07A5F;
+            color: white;
+        }
+
+        .v7-pill strong {
+            display: block;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .v7-pill span {
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        /* Variante 8 - Card unique avec choix radio */
+        .v8-card {
+            background: #FFFBF7;
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 40px;
+        }
+
+        .v8-options {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .v8-option {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .v8-option:hover {
+            border-color: #E07A5F;
+        }
+
+        .v8-option.selected {
+            border-color: #E07A5F;
+            background: rgba(224, 122, 95, 0.05);
+        }
+
+        .v8-radio {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ddd;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .v8-option.selected .v8-radio::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 10px;
+            height: 10px;
+            background: #E07A5F;
+            border-radius: 50%;
+        }
+
+        .v8-submit {
+            width: 100%;
+            padding: 18px;
+            background: #E07A5F;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Variante 9 - Style magazine luxe */
+        .v9-container {
+            margin-top: 50px;
+            text-align: left;
+        }
+
+        .v9-title {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #999;
+            margin-bottom: 30px;
+        }
+
+        .v9-plans {
+            display: flex;
+            gap: 2px;
+        }
+
+        .v9-plan {
+            flex: 1;
+            padding: 50px 30px;
+            background: #f8f8f8;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 3px solid transparent;
+        }
+
+        .v9-plan:hover {
+            background: #fff;
+            border-color: #E07A5F;
+        }
+
+        .v9-plan-name {
+            font-size: 24px;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        .v9-plan-price {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        /* Variante 10 - Dropdown elegant */
+        .v10-selector {
+            margin-top: 40px;
+        }
+
+        .v10-dropdown {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto 30px;
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            background: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .v10-details {
+            background: #FFFBF7;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .v10-subscribe {
+            padding: 18px 50px;
+            background: #E07A5F;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .v2-cards {
+                grid-template-columns: 1fr;
+            }
+            .v3-row {
+                grid-template-columns: 1fr;
+            }
+            .v7-pills {
+                flex-direction: column;
+            }
+            .v9-plans {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Propositions Hero Buttons - Newsletter</h1>
+
+        <!-- Variante 1 -->
+        <div class="variant">
+            <div class="variant-title">V1 - Boutons côte à côte (Actuel)</div>
+            <div class="hero-content">
+                <div class="v1-buttons">
+                    <button class="v1-btn v1-btn-outline">
+                        <strong>Gratuit</strong><br>
+                        <small>1 recette / semaine</small>
+                    </button>
+                    <button class="v1-btn v1-btn-filled">
+                        <strong>Premium 2,99€</strong><br>
+                        <small>7 recettes / semaine</small>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Variante 2 -->
+        <div class="variant">
+            <div class="variant-title">V2 - Cards Pricing Côte à Côte</div>
+            <div class="hero-content">
+                <div class="v2-cards">
+                    <div class="v2-card">
+                        <h3>Gratuit</h3>
+                        <div class="v2-price">0€</div>
+                        <ul class="v2-features">
+                            <li>✓ 1 recette par semaine</li>
+                            <li>✓ 25 recettes exclusives</li>
+                            <li>✓ Newsletter hebdomadaire</li>
+                        </ul>
+                    </div>
+                    <div class="v2-card v2-card-premium">
+                        <h3>Premium</h3>
+                        <div class="v2-price">2,99€/mois</div>
+                        <ul class="v2-features">
+                            <li>✓ 7 recettes par semaine</li>
+                            <li>✓ +150 recettes exclusives</li>
+                            <li>✓ Vidéos pas-à-pas</li>
+                            <li>✓ Communauté privée</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Variante 3 -->
+        <div class="variant">
+            <div class="variant-title">V3 - Tableau Comparatif</div>
+            <div class="hero-content">
+                <div class="v3-table">
+                    <div class="v3-row v3-header">
+                        <div class="v3-cell"></div>
+                        <div class="v3-cell">Gratuit</div>
+                        <div class="v3-cell">Premium</div>
+                    </div>
+                    <div class="v3-row">
+                        <div class="v3-cell">Recettes / semaine</div>
+                        <div class="v3-cell">1</div>
+                        <div class="v3-cell">7</div>
+                    </div>
+                    <div class="v3-row">
+                        <div class="v3-cell">Recettes exclusives</div>
+                        <div class="v3-cell">25</div>
+                        <div class="v3-cell">+150</div>
+                    </div>
+                    <div class="v3-row">
+                        <div class="v3-cell">Prix</div>
+                        <div class="v3-cell">0€</div>
+                        <div class="v3-cell">2,99€/mois</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Variante 4 -->
+        <div class="variant">
+            <div class="variant-title">V4 - Toggle Switch</div>
+            <div class="hero-content">
+                <div class="v4-toggle">
+                    <div class="v4-option active">Gratuit</div>
+                    <div class="v4-option">Premium 2,99€</div>
+                </div>
+                <div style="margin-top: 30px; padding: 30px; background: #FFFBF7; border-radius: 12px;">
+                    <h3>Plan Gratuit</h3>
+                    <p style="color: #666; margin-top: 10px;">1 recette / semaine • 25 recettes exclusives • Newsletter</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Variante 5 -->
+        <div class="variant">
+            <div class="variant-title">V5 - Liste Minimaliste</div>
+            <div class="hero-content">
+                <div class="v5-container">
+                    <div class="v5-plan">
+                        <div class="v5-info">
+                            <strong style="font-size: 20px;">Gratuit</strong>
+                            <div style="color: #666; font-size: 14px; margin-top: 5px;">1 recette / semaine</div>
+                        </div>
+                        <button class="v5-btn">S'inscrire</button>
+                    </div>
+                    <div class="v5-plan">
+                        <div class="v5-info">
+                            <strong style="font-size: 20px;">Premium - 2,99€</strong>
+                            <div style="color: #666; font-size: 14px; margin-top: 5px;">7 recettes / semaine</div>
+                        </div>
+                        <button class="v5-btn">Commencer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Variante 6 -->
+        <div class="variant">
+            <div class="variant-title">V6 - CTA Principal Unique</div>
+            <div class="hero-content">
+                <div class="v6-cta">
+                    <button class="v6-main-btn">Recevoir mes recettes</button>
+                    <div class="v6-secondary">
+                        Gratuit • 1 recette/semaine • ou passez Premium pour 2,99€/mois
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Variante 7 -->
+        <div class="variant">
+            <div class="variant-title">V7 - Pills Style</div>
+            <div class="hero-content">
+                <div class="v7-pills">
+                    <div class="v7-pill">
+                        <strong>Gratuit</strong>
+                        <span>1 recette / semaine</span>
+                    </div>
+                    <div class="v7-pill">
+                        <strong>2,99€</strong>
+                        <span>7 recettes / semaine</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Variante 8 -->
+        <div class="variant">
+            <div class="variant-title">V8 - Card avec Radio Buttons</div>
+            <div class="hero-content">
+                <div class="v8-card">
+                    <div class="v8-options">
+                        <div class="v8-option selected">
+                            <div class="v8-radio"></div>
+                            <div>
+                                <strong>Gratuit</strong> - 1 recette par semaine
+                            </div>
+                        </div>
+                        <div class="v8-option">
+                            <div class="v8-radio"></div>
+                            <div>
+                                <strong>Premium 2,99€</strong> - 7 recettes par semaine
+                            </div>
+                        </div>
+                    </div>
+                    <button class="v8-submit">Continuer</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Variante 9 -->
+        <div class="variant">
+            <div class="variant-title">V9 - Style Magazine Luxe</div>
+            <div class="hero-content">
+                <div class="v9-container">
+                    <div class="v9-title">Choisissez votre formule</div>
+                    <div class="v9-plans">
+                        <div class="v9-plan">
+                            <div class="v9-plan-name">Essentiel</div>
+                            <div class="v9-plan-price">Gratuit</div>
+                            <div style="color: #666; font-size: 14px;">1 recette / semaine</div>
+                        </div>
+                        <div class="v9-plan">
+                            <div class="v9-plan-name">Premium</div>
+                            <div class="v9-plan-price">2,99€</div>
+                            <div style="color: #666; font-size: 14px;">7 recettes / semaine</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Variante 10 -->
+        <div class="variant">
+            <div class="variant-title">V10 - Dropdown Selector</div>
+            <div class="hero-content">
+                <div class="v10-selector">
+                    <select class="v10-dropdown">
+                        <option>Gratuit - 1 recette / semaine</option>
+                        <option>Premium 2,99€ - 7 recettes / semaine</option>
+                    </select>
+                    <div class="v10-details">
+                        <strong>Plan sélectionné : Gratuit</strong>
+                        <p style="color: #666; margin-top: 10px;">Recevez 1 recette par semaine dans votre boîte mail</p>
+                    </div>
+                    <button class="v10-subscribe">S'abonner</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

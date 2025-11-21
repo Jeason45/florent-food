@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Newsletter Florent Food - Épuré Scandinave</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: #f7f7f5;
+      padding: 40px 20px;
+    }
+    .container {
+      max-width: 580px;
+      margin: 0 auto;
+      background: #ffffff;
+    }
+    .spacer {
+      height: 60px;
+    }
+    .spacer-small {
+      height: 30px;
+    }
+    .header {
+      padding: 0 50px;
+      text-align: center;
+    }
+    .logo-text {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .logo-line {
+      width: 60px;
+      height: 2px;
+      background: #D4AF37;
+      margin: 0 auto;
+    }
+    .intro {
+      padding: 0 50px;
+    }
+    .date {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 20px;
+    }
+    .title {
+      font-size: 32px;
+      font-weight: 300;
+      color: #1a1a1a;
+      line-height: 1.4;
+      margin-bottom: 24px;
+      letter-spacing: -0.5px;
+    }
+    .intro-text {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #666;
+      font-weight: 300;
+    }
+    .divider {
+      height: 1px;
+      background: #e8e8e8;
+      margin: 50px 50px;
+    }
+    .recipe-item {
+      padding: 0 50px;
+      margin-bottom: 50px;
+    }
+    .recipe-number {
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: #D4AF37;
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+    .recipe-image-container {
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .recipe-image {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      display: block;
+    }
+    .recipe-title {
+      font-size: 22px;
+      font-weight: 400;
+      color: #1a1a1a;
+      margin-bottom: 12px;
+      letter-spacing: -0.3px;
+    }
+    .recipe-description {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #666;
+      margin-bottom: 20px;
+      font-weight: 300;
+    }
+    .recipe-details {
+      display: flex;
+      gap: 24px;
+      font-size: 12px;
+      color: #999;
+      margin-bottom: 20px;
+    }
+    .recipe-link {
+      color: #1a1a1a;
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      border-bottom: 1px solid #1a1a1a;
+      padding-bottom: 2px;
+      display: inline-block;
+      font-weight: 500;
+    }
+    .insight-box {
+      margin: 0 50px;
+      padding: 40px;
+      background: #fafaf8;
+      border-left: 2px solid #D4AF37;
+    }
+    .insight-label {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #D4AF37;
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+    .insight-text {
+      font-size: 15px;
+      line-height: 1.7;
+      color: #444;
+      font-weight: 300;
+    }
+    .cta-section {
+      margin: 60px 50px;
+      padding: 50px 40px;
+      background: #1a1a1a;
+      text-align: center;
+    }
+    .cta-badge {
+      width: 40px;
+      height: 40px;
+      background: #D4AF37;
+      border-radius: 50%;
+      margin: 0 auto 24px;
+    }
+    .cta-title {
+      font-size: 24px;
+      font-weight: 300;
+      color: #fff;
+      margin-bottom: 16px;
+      letter-spacing: -0.3px;
+    }
+    .cta-text {
+      font-size: 13px;
+      line-height: 1.7;
+      color: #999;
+      margin-bottom: 32px;
+      font-weight: 300;
+    }
+    .cta-button {
+      display: inline-block;
+      background: #fff;
+      color: #1a1a1a;
+      padding: 14px 36px;
+      text-decoration: none;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+    .footer {
+      padding: 50px;
+      text-align: center;
+    }
+    .footer-logo {
+      width: 30px;
+      height: 2px;
+      background: #D4AF37;
+      margin: 0 auto 24px;
+    }
+    .footer-text {
+      font-size: 11px;
+      color: #999;
+      line-height: 2;
+      font-weight: 300;
+      letter-spacing: 0.5px;
+    }
+    .footer-link {
+      color: #1a1a1a;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="spacer"></div>
+
+    <!-- Header -->
+    <div class="header">
+      <div class="logo-text">Florent Food</div>
+      <div class="logo-line"></div>
+    </div>
+
+    <div class="spacer"></div>
+
+    <!-- Intro -->
+    <div class="intro">
+      <div class="date">21 Novembre 2024</div>
+      <h1 class="title">Trois Recettes Pour Célébrer l'Automne</h1>
+      <p class="intro-text">
+        Bonjour Sophie — Cette semaine, j'ai sélectionné trois recettes qui capturent
+        l'essence de la saison. Des plats simples, élégants, pensés pour être partagés.
+        Prenez le temps de les savourer.
+      </p>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Recipe 1 -->
+    <div class="recipe-item">
+      <div class="recipe-number">01 — PRIMO</div>
+      <div class="recipe-image-container">
+        <img src="https://images.unsplash.com/photo-1612874742237-6526221588e3?w=800&h=600&fit=crop" alt="Carbonara" class="recipe-image">
+      </div>
+      <h2 class="recipe-title">Carbonara Traditionnelle</h2>
+      <div class="recipe-details">
+        <span>25 minutes</span>
+        <span>4 personnes</span>
+        <span>Italien</span>
+      </div>
+      <p class="recipe-description">
+        Une interprétation fidèle du classique romain. Guanciale artisanal,
+        pecorino vieilli, et cette technique précise pour une sauce onctueuse
+        sans cuisson des œufs. L'authenticité dans sa forme la plus pure.
+      </p>
+      <a href="#" class="recipe-link">Voir la recette</a>
+    </div>
+
+    <!-- Recipe 2 -->
+    <div class="recipe-item">
+      <div class="recipe-number">02 — DOLCE</div>
+      <div class="recipe-image-container">
+        <img src="https://images.unsplash.com/photo-1519915212116-7cfef71f1d3e?w=800&h=600&fit=crop" alt="Tarte Tatin" class="recipe-image">
+      </div>
+      <h2 class="recipe-title">Tarte Tatin aux Pommes</h2>
+      <div class="recipe-details">
+        <span>45 minutes</span>
+        <span>6 personnes</span>
+        <span>Français</span>
+      </div>
+      <p class="recipe-description">
+        Le dessert français iconique. Pommes fondantes caramélisées
+        à la perfection, pâte feuilletée croustillante. Une harmonie
+        de textures et de saveurs qui traverse le temps.
+      </p>
+      <a href="#" class="recipe-link">Voir la recette</a>
+    </div>
+
+    <!-- Recipe 3 -->
+    <div class="recipe-item">
+      <div class="recipe-number">03 — FINALE</div>
+      <div class="recipe-image-container">
+        <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=800&h=600&fit=crop" alt="Mousse" class="recipe-image">
+      </div>
+      <h2 class="recipe-title">Mousse au Chocolat Grand Cru</h2>
+      <div class="recipe-details">
+        <span>15 minutes</span>
+        <span>4 personnes</span>
+        <span>Français</span>
+      </div>
+      <p class="recipe-description">
+        L'élégance minimaliste. Un chocolat d'exception à 70% de cacao,
+        monté avec précision pour obtenir cette texture aérienne incomparable.
+        La pureté du goût, sans artifice.
+      </p>
+      <a href="#" class="recipe-link">Voir la recette</a>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Insight -->
+    <div class="insight-box">
+      <div class="insight-label">Note du Chef</div>
+      <p class="insight-text">
+        "La carbonara est une question de timing. Retirez la poêle du feu
+        avant d'ajouter les œufs — la chaleur résiduelle créera cette sauce
+        crémeuse parfaite, sans cuisson. C'est cette attention aux détails
+        qui transforme un plat simple en chef-d'œuvre."
+      </p>
+    </div>
+
+    <div class="spacer"></div>
+
+    <!-- CTA -->
+    <div class="cta-section">
+      <div class="cta-badge"></div>
+      <h3 class="cta-title">Accès Premium</h3>
+      <p class="cta-text">
+        Rejoignez notre communauté exclusive et accédez à l'intégralité
+        de notre collection de recettes, masterclass vidéo, et techniques
+        professionnelles. Une expérience culinaire sans compromis.
+      </p>
+      <a href="#" class="cta-button">En savoir plus</a>
+    </div>
+
+    <div class="spacer"></div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <div class="footer-logo"></div>
+      <p class="footer-text">
+        Florent Food<br>
+        <a href="#" class="footer-link">Préférences</a> · <a href="#" class="footer-link">Se désinscrire</a>
+      </p>
+    </div>
+
+    <div class="spacer-small"></div>
+  </div>
+</body>
+</html>

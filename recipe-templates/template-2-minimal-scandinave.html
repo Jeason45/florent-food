@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carbonara Traditionnelle - Florent Food</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: #fafaf8;
+      color: #1a1a1a;
+      line-height: 1.6;
+    }
+
+    /* Hero */
+    .hero {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 100px 60px 60px;
+    }
+    .hero-category {
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: #D4AF37;
+      text-transform: uppercase;
+      margin-bottom: 30px;
+      font-weight: 600;
+    }
+    .hero-title {
+      font-size: 56px;
+      font-weight: 300;
+      letter-spacing: -1px;
+      line-height: 1.2;
+      margin-bottom: 30px;
+      color: #1a1a1a;
+    }
+    .hero-description {
+      font-size: 18px;
+      color: #666;
+      line-height: 1.8;
+      font-weight: 300;
+      margin-bottom: 50px;
+    }
+
+    /* Image */
+    .recipe-image {
+      width: 100%;
+      max-width: 900px;
+      height: 500px;
+      object-fit: cover;
+      margin: 0 auto 80px;
+      display: block;
+    }
+
+    /* Container */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 60px 100px;
+    }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: #e8e8e8;
+      margin: 80px 0;
+    }
+
+    /* Meta */
+    .meta-info {
+      display: flex;
+      gap: 60px;
+      margin-bottom: 80px;
+    }
+    .meta-item {
+      flex: 1;
+    }
+    .meta-label {
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: #999;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    .meta-value {
+      font-size: 28px;
+      font-weight: 300;
+      color: #1a1a1a;
+    }
+
+    /* Section */
+    .section-title {
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: #D4AF37;
+      text-transform: uppercase;
+      margin-bottom: 40px;
+      font-weight: 600;
+    }
+
+    /* Ingredients */
+    .ingredients-list {
+      list-style: none;
+      margin-bottom: 80px;
+    }
+    .ingredient-item {
+      padding: 20px 0;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 16px;
+      color: #444;
+      font-weight: 300;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .ingredient-check {
+      width: 20px;
+      height: 20px;
+      border: 1.5px solid #D4AF37;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* Steps */
+    .step-item {
+      margin-bottom: 60px;
+    }
+    .step-number {
+      font-size: 12px;
+      letter-spacing: 2px;
+      color: #D4AF37;
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+    .step-description {
+      font-size: 16px;
+      line-height: 1.9;
+      color: #444;
+      font-weight: 300;
+    }
+
+    /* Quote */
+    .chef-quote {
+      background: #f7f7f5;
+      padding: 60px;
+      margin: 80px 0;
+      border-left: 2px solid #D4AF37;
+    }
+    .quote-text {
+      font-size: 20px;
+      line-height: 1.8;
+      color: #444;
+      font-weight: 300;
+      font-style: italic;
+      margin-bottom: 20px;
+    }
+    .quote-author {
+      font-size: 11px;
+      color: #D4AF37;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 60px;
+      margin-top: 80px;
+      border-top: 1px solid #e8e8e8;
+    }
+    .footer-line {
+      width: 40px;
+      height: 2px;
+      background: #D4AF37;
+      margin: 0 auto 20px;
+    }
+    .footer-text {
+      font-size: 11px;
+      color: #999;
+      letter-spacing: 1px;
+      font-weight: 300;
+    }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <div class="hero-category">Italien · Plat Principal</div>
+    <h1 class="hero-title">Carbonara Traditionnelle</h1>
+    <p class="hero-description">
+      Une interprétation fidèle du classique romain. Guanciale artisanal, pecorino vieilli,
+      et cette technique précise pour une sauce onctueuse sans cuisson des œufs.
+      L'authenticité dans sa forme la plus pure.
+    </p>
+  </div>
+
+  <img src="https://images.unsplash.com/photo-1612874742237-6526221588e3?w=1800&h=1000&fit=crop&q=80" alt="Carbonara" class="recipe-image">
+
+  <div class="container">
+    <div class="meta-info">
+      <div class="meta-item">
+        <div class="meta-label">Temps</div>
+        <div class="meta-value">25 min</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Personnes</div>
+        <div class="meta-value">4</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Niveau</div>
+        <div class="meta-value">★★</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <h2 class="section-title">Ingrédients</h2>
+    <ul class="ingredients-list">
+      <li class="ingredient-item">
+        <div class="ingredient-check"></div>
+        400g de spaghetti de qualité (De Cecco ou Rummo)
+      </li>
+      <li class="ingredient-item">
+        <div class="ingredient-check"></div>
+        200g de guanciale (joue de porc italienne)
+      </li>
+      <li class="ingredient-item">
+        <div class="ingredient-check"></div>
+        4 jaunes d'œufs extra-frais bio
+      </li>
+      <li class="ingredient-item">
+        <div class="ingredient-check"></div>
+        100g de Pecorino Romano DOP râpé
+      </li>
+      <li class="ingredient-item">
+        <div class="ingredient-check"></div>
+        Poivre noir fraîchement moulu
+      </li>
+      <li class="ingredient-item">
+        <div class="ingredient-check"></div>
+        Sel (pour l'eau de cuisson uniquement)
+      </li>
+    </ul>
+
+    <div class="divider"></div>
+
+    <h2 class="section-title">Préparation</h2>
+
+    <div class="step-item">
+      <div class="step-number">01 — Guanciale</div>
+      <p class="step-description">
+        Couper le guanciale en lardons de 5mm d'épaisseur. Dans une grande poêle froide,
+        faire fondre à feu doux pendant 10-12 minutes jusqu'à ce qu'il soit croustillant
+        et ait rendu sa graisse. Réserver.
+      </p>
+    </div>
+
+    <div class="step-item">
+      <div class="step-number">02 — Cuisson</div>
+      <p class="step-description">
+        Porter une grande casserole d'eau salée à ébullition. Cuire les spaghetti
+        1 minute de moins que le temps indiqué (ils finiront de cuire dans la sauce).
+        Réserver 250ml d'eau de cuisson avant d'égoutter.
+      </p>
+    </div>
+
+    <div class="step-item">
+      <div class="step-number">03 — Sauce</div>
+      <p class="step-description">
+        Dans un grand bol, mélanger vigoureusement les jaunes d'œufs avec le pecorino
+        et beaucoup de poivre noir jusqu'à obtenir une crème épaisse et homogène.
+        Ajouter progressivement 100ml d'eau de cuisson en fouettant.
+      </p>
+    </div>
+
+    <div class="step-item">
+      <div class="step-number">04 — Assemblage</div>
+      <p class="step-description">
+        Retirer la poêle du feu. Ajouter les pâtes égouttées dans la poêle avec le guanciale.
+        Verser la crème d'œufs et mélanger énergiquement en ajoutant l'eau de cuisson petit
+        à petit jusqu'à obtenir une sauce crémeuse et brillante. Servir immédiatement.
+      </p>
+    </div>
+
+    <div class="chef-quote">
+      <p class="quote-text">
+        "Le secret d'une carbonara parfaite réside dans la température. Retirez toujours
+        la poêle du feu avant d'ajouter les œufs. La chaleur résiduelle des pâtes créera
+        cette texture crémeuse sans cuire les œufs."
+      </p>
+      <div class="quote-author">Conseil de Florent</div>
+    </div>
+
+    <div class="footer">
+      <div class="footer-line"></div>
+      <div class="footer-text">Florent Food · Haute Cuisine · Paris</div>
+    </div>
+  </div>
+</body>
+</html>

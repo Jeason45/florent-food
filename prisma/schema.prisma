@@ -1,0 +1,352 @@
+// Florent Food - Prisma Schema
+// Adapté depuis le schéma Supabase pour PostgreSQL local
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ==================================
+// 1. PROFILES (Utilisateurs)
+// ==================================
+model Profile {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  firstName String?  @map("first_name")
+  lastName  String?  @map("last_name")
+  avatarUrl String?  @map("avatar_url")
+  role      Role     @default(USER)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  recipes Recipe[]
+
+  @@index([email])
+  @@index([role])
+  @@map("profiles")
+}
+
+enum Role {
+  ADMIN @map("admin")
+  USER  @map("user")
+}
+
+// ==================================
+// 2. NEWSLETTER_SUBSCRIBERS
+// ==================================
+model NewsletterSubscriber {
+  id                 String                  @id @default(uuid())
+  email              String                  @unique
+  firstName          String?                 @map("first_name")
+  status             SubscriberStatus        @default(ACTIVE)
+  subscriptionType   SubscriptionType        @default(FREE) @map("subscription_type") // FREE ou PREMIUM
+  source             String?
+  preferences        Json                    @default("{}")
+  tags               String[]
+  confirmToken       String?                 @map("confirm_token")
+  confirmTokenExpiry DateTime?               @map("confirm_token_expiry")
+  confirmedAt        DateTime?               @map("confirmed_at")
+  totalOpens         Int                     @default(0) @map("total_opens")
+  totalClicks        Int                     @default(0) @map("total_clicks")
+  lastOpenedAt       DateTime?               @map("last_opened_at")
+  subscribedAt       DateTime                @default(now()) @map("subscribed_at")
+  unsubscribedAt     DateTime?               @map("unsubscribed_at")
+  createdAt          DateTime                @default(now()) @map("created_at")
+  updatedAt          DateTime                @updatedAt @map("updated_at")
+
+  // Relations
+  newsletterEvents NewsletterEvent[]
+  automationQueue  AutomationQueue[]
+  mailLogs         MailLog[]
+
+  @@index([email])
+  @@index([status])
+  @@index([subscriptionType])
+  @@index([source])
+  @@map("newsletter_subscribers")
+}
+
+enum SubscriptionType {
+  FREE    @map("free")
+  PREMIUM @map("premium")
+}
+
+enum SubscriberStatus {
+  PENDING      @map("pending")
+  ACTIVE       @map("active")
+  UNSUBSCRIBED @map("unsubscribed")
+  BOUNCED      @map("bounced")
+}
+
+// ==================================
+// 3. RECIPES
+// ==================================
+model Recipe {
+  id              String         @id @default(uuid())
+  title           String
+  slug            String         @unique
+  description     String?
+  imageUrl        String?        @map("image_url")
+  category        String[]
+  difficulty      Difficulty
+  prepTime        Int            @map("prep_time")
+  cookTime        Int            @map("cook_time")
+  totalTime       Int            @map("total_time")
+  servings        Int            @default(6)
+  ingredients     Json
+  steps           Json
+  videoUrl        String?        @map("video_url")
+  pdfUrl          String?        @map("pdf_url")
+  status          RecipeStatus   @default(DRAFT)
+  visibility      RecipeVisibility @default(FREE)
+  metaTitle       String?        @map("meta_title")
+  metaDescription String?        @map("meta_description")
+  tags            String[]
+  viewsCount      Int            @default(0) @map("views_count")
+  favoritesCount  Int            @default(0) @map("favorites_count")
+  completedCount  Int            @default(0) @map("completed_count")
+  authorId        String?        @map("author_id")
+  publishedAt     DateTime?      @map("published_at")
+  createdAt       DateTime       @default(now()) @map("created_at")
+  updatedAt       DateTime       @updatedAt @map("updated_at")
+
+  // Relations
+  author Profile? @relation(fields: [authorId], references: [id])
+
+  @@index([slug])
+  @@index([status])
+  @@index([visibility])
+  @@index([difficulty])
+  @@index([publishedAt])
+  @@map("recipes")
+}
+
+enum Difficulty {
+  DEBUTANT      @map("debutant")
+  INTERMEDIAIRE @map("intermediaire")
+  EXPERT        @map("expert")
+}
+
+enum RecipeStatus {
+  DRAFT     @map("draft")
+  PUBLISHED @map("published")
+}
+
+enum RecipeVisibility {
+  FREE    @map("free")
+  PREMIUM @map("premium")
+}
+
+// ==================================
+// 4. NEWSLETTERS (Campagnes)
+// ==================================
+model Newsletter {
+  id                String           @id @default(uuid())
+  subject           String
+  preheader         String?
+  content           Json
+  type              NewsletterType
+  segmentFilter     Json?            @map("segment_filter")
+  status            NewsletterStatus @default(DRAFT)
+  scheduledAt       DateTime?        @map("scheduled_at")
+  sentAt            DateTime?        @map("sent_at")
+  recipientsCount   Int              @default(0) @map("recipients_count")
+  opensCount        Int              @default(0) @map("opens_count")
+  clicksCount       Int              @default(0) @map("clicks_count")
+  unsubscribesCount Int              @default(0) @map("unsubscribes_count")
+  createdAt         DateTime         @default(now()) @map("created_at")
+  updatedAt         DateTime         @updatedAt @map("updated_at")
+
+  // Relations
+  newsletterEvents NewsletterEvent[]
+  mailLogs         MailLog[]
+
+  @@index([status])
+  @@index([type])
+  @@index([sentAt])
+  @@map("newsletters")
+}
+
+enum NewsletterType {
+  REGULAR          @map("regular")
+  WELCOME_SEQUENCE @map("welcome_sequence")
+  PROMOTIONAL      @map("promotional")
+}
+
+enum NewsletterStatus {
+  DRAFT     @map("draft")
+  SCHEDULED @map("scheduled")
+  SENT      @map("sent")
+}
+
+// ==================================
+// 5. NEWSLETTER_EVENTS (Tracking)
+// ==================================
+model NewsletterEvent {
+  id           String    @id @default(uuid())
+  newsletterId String?   @map("newsletter_id")
+  subscriberId String?   @map("subscriber_id")
+  eventType    EventType @map("event_type")
+  metadata     Json      @default("{}")
+  createdAt    DateTime  @default(now()) @map("created_at")
+
+  // Relations
+  newsletter Newsletter?           @relation(fields: [newsletterId], references: [id], onDelete: Cascade)
+  subscriber NewsletterSubscriber? @relation(fields: [subscriberId], references: [id], onDelete: Cascade)
+
+  @@index([newsletterId])
+  @@index([subscriberId])
+  @@index([eventType])
+  @@index([createdAt])
+  @@map("newsletter_events")
+}
+
+enum EventType {
+  SENT         @map("sent")
+  OPENED       @map("opened")
+  CLICKED      @map("clicked")
+  BOUNCED      @map("bounced")
+  UNSUBSCRIBED @map("unsubscribed")
+}
+
+// ==================================
+// 6. EMAIL_AUTOMATIONS (Séquences)
+// ==================================
+model EmailAutomation {
+  id          String              @id @default(uuid())
+  name        String
+  triggerType AutomationTrigger   @map("trigger_type")
+  sequence    Json
+  status      AutomationStatus    @default(ACTIVE)
+  createdAt   DateTime            @default(now()) @map("created_at")
+  updatedAt   DateTime            @updatedAt @map("updated_at")
+
+  // Relations
+  automationQueue AutomationQueue[]
+
+  @@index([triggerType])
+  @@index([status])
+  @@map("email_automations")
+}
+
+enum AutomationTrigger {
+  NEWSLETTER_SIGNUP  @map("newsletter_signup")
+  BOOK_PURCHASE      @map("book_purchase")
+  MEMBERSHIP_SIGNUP  @map("membership_signup")
+  PREMIUM_SIGNUP     @map("premium_signup")
+  RECIPE_VIEW        @map("recipe_view")
+  ABANDONED_CART     @map("abandoned_cart")
+}
+
+enum AutomationStatus {
+  ACTIVE @map("active")
+  PAUSED @map("paused")
+}
+
+// ==================================
+// 7. AUTOMATION_QUEUE (Files d'attente)
+// ==================================
+model AutomationQueue {
+  id           String       @id @default(uuid())
+  automationId String?      @map("automation_id")
+  subscriberId String?      @map("subscriber_id")
+  stepIndex    Int          @map("step_index")
+  status       QueueStatus  @default(PENDING)
+  scheduledFor DateTime     @map("scheduled_for")
+  sentAt       DateTime?    @map("sent_at")
+  error        String?
+  createdAt    DateTime     @default(now()) @map("created_at")
+  updatedAt    DateTime     @updatedAt @map("updated_at")
+
+  // Relations
+  automation EmailAutomation?      @relation(fields: [automationId], references: [id], onDelete: Cascade)
+  subscriber NewsletterSubscriber? @relation(fields: [subscriberId], references: [id], onDelete: Cascade)
+
+  @@index([status])
+  @@index([scheduledFor])
+  @@index([subscriberId])
+  @@map("automation_queue")
+}
+
+enum QueueStatus {
+  PENDING   @map("pending")
+  SENT      @map("sent")
+  FAILED    @map("failed")
+  CANCELLED @map("cancelled")
+}
+
+// ==================================
+// 8. ANALYTICS_DAILY (Métriques)
+// ==================================
+model AnalyticsDaily {
+  id               String   @id @default(uuid())
+  date             DateTime @unique @db.Date
+  newSubscribers   Int      @default(0) @map("new_subscribers")
+  totalSubscribers Int      @default(0) @map("total_subscribers")
+  unsubscribes     Int      @default(0)
+  uniqueVisitors   Int      @default(0) @map("unique_visitors")
+  pageViews        Int      @default(0) @map("page_views")
+  recipesViews     Int      @default(0) @map("recipes_views")
+  recipesFavorites Int      @default(0) @map("recipes_favorites")
+  createdAt        DateTime @default(now()) @map("created_at")
+
+  @@index([date(sort: Desc)])
+  @@map("analytics_daily")
+}
+
+// ==================================
+// 9. MAIL_LOGS (Email tracking)
+// ==================================
+model MailLog {
+  id          String   @id @default(uuid())
+
+  // Type de mail
+  type        String   // "newsletter_welcome", "newsletter_weekly", "newsletter_premium", etc.
+  subject     String
+
+  // Destinataire
+  to          String
+  cc          String?
+  bcc         String?
+
+  // Contenu
+  htmlContent String?  @db.Text @map("html_content")
+  textContent String?  @db.Text @map("text_content")
+
+  // Pièces jointes
+  attachments Json     @default("[]")
+
+  // Relations optionnelles
+  subscriberId String? @map("subscriber_id")
+  subscriber   NewsletterSubscriber? @relation(fields: [subscriberId], references: [id], onDelete: SetNull)
+
+  newsletterId String? @map("newsletter_id")
+  newsletter   Newsletter? @relation(fields: [newsletterId], references: [id], onDelete: SetNull)
+
+  // Tracking
+  sentAt      DateTime  @default(now()) @map("sent_at")
+  deliveredAt DateTime? @map("delivered_at")
+  openedAt    DateTime? @map("opened_at")
+  clickedAt   DateTime? @map("clicked_at")
+
+  // Statut
+  status      String    @default("sent") // "sent", "delivered", "opened", "clicked", "bounced", "failed"
+  error       String?
+
+  // Métadonnées
+  sentBy      String?   @map("sent_by")
+
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  @@index([type])
+  @@index([to])
+  @@index([subscriberId])
+  @@index([newsletterId])
+  @@index([sentAt])
+  @@map("mail_logs")
+}
