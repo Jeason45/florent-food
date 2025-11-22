@@ -116,7 +116,8 @@ model Recipe {
   updatedAt       DateTime       @updatedAt @map("updated_at")
 
   // Relations
-  author Profile? @relation(fields: [authorId], references: [id])
+  author            Profile?           @relation(fields: [authorId], references: [id])
+  newsletterRecipes NewsletterRecipe[]
 
   @@index([slug])
   @@index([status])
@@ -143,7 +144,28 @@ enum RecipeVisibility {
 }
 
 // ==================================
-// 4. NEWSLETTERS (Campagnes)
+// 4. NEWSLETTER_RECIPES (Relation Newsletter ↔ Recipe)
+// ==================================
+model NewsletterRecipe {
+  id           String @id @default(uuid())
+  newsletterId String @map("newsletter_id")
+  recipeId     String @map("recipe_id")
+  position     Int    // Ordre d'affichage (1 = featured, 2, 3, 4...)
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  // Relations
+  newsletter Newsletter @relation(fields: [newsletterId], references: [id], onDelete: Cascade)
+  recipe     Recipe     @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+
+  @@unique([newsletterId, recipeId]) // Une recette ne peut être qu'une fois par newsletter
+  @@unique([newsletterId, position]) // Une position ne peut être utilisée qu'une fois par newsletter
+  @@index([newsletterId])
+  @@index([recipeId])
+  @@map("newsletter_recipes")
+}
+
+// ==================================
+// 5. NEWSLETTERS (Campagnes)
 // ==================================
 model Newsletter {
   id                String           @id @default(uuid())
@@ -153,6 +175,12 @@ model Newsletter {
   type              NewsletterType
   segmentFilter     Json?            @map("segment_filter")
   status            NewsletterStatus @default(DRAFT)
+
+  // Dates hebdomadaires (dimanche à dimanche)
+  startDate         DateTime?        @map("start_date") @db.Date
+  endDate           DateTime?        @map("end_date") @db.Date
+  weekNumber        Int?             @map("week_number") // Numéro de semaine (optionnel)
+
   scheduledAt       DateTime?        @map("scheduled_at")
   sentAt            DateTime?        @map("sent_at")
   recipientsCount   Int              @default(0) @map("recipients_count")
@@ -163,12 +191,15 @@ model Newsletter {
   updatedAt         DateTime         @updatedAt @map("updated_at")
 
   // Relations
-  newsletterEvents NewsletterEvent[]
-  mailLogs         MailLog[]
+  newsletterEvents  NewsletterEvent[]
+  mailLogs          MailLog[]
+  newsletterRecipes NewsletterRecipe[]
 
   @@index([status])
   @@index([type])
   @@index([sentAt])
+  @@index([startDate])
+  @@index([endDate])
   @@map("newsletters")
 }
 
@@ -181,7 +212,9 @@ enum NewsletterType {
 enum NewsletterStatus {
   DRAFT     @map("draft")
   SCHEDULED @map("scheduled")
+  ACTIVE    @map("active")
   SENT      @map("sent")
+  ARCHIVED  @map("archived")
 }
 
 // ==================================

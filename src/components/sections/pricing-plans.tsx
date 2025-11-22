@@ -46,7 +46,7 @@ export function PricingPlansSection() {
         {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-light text-white mb-4">
-            Choisis ton <span className="italic" style={{ color: '#D4AF37' }}>plan</span>
+            Choisis ton <span className="italic" style={{ background: 'linear-gradient(to right, #D4AF37, #C77A4E)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>plan</span>
           </h2>
           <p className="text-base sm:text-lg text-white/60 max-w-xl mx-auto leading-relaxed font-light">
             Recettes exclusives chaque semaine
@@ -84,7 +84,7 @@ export function PricingPlansSection() {
 
           {/* Price Display */}
           <div className="text-center mb-12">
-            <div className="text-6xl sm:text-7xl md:text-8xl font-light mb-3" style={{ color: '#D4AF37' }}>
+            <div className="text-6xl sm:text-7xl md:text-8xl font-light mb-3" style={{ background: 'linear-gradient(to right, #D4AF37, #C77A4E)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
               {plan.price}
             </div>
             {plan.period && (
@@ -99,8 +99,14 @@ export function PricingPlansSection() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6 mb-12">
             {plan.features.map((feature, i) => (
               <div key={i} className="flex items-start gap-4">
-                <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 bg-[#D4AF37]/10">
-                  <svg className="w-3.5 h-3.5" style={{ color: '#D4AF37' }} fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: 'linear-gradient(to right, #D4AF37, #C77A4E)', opacity: 0.1 }}>
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="url(#gradient-checkmark)" strokeWidth="3" viewBox="0 0 24 24">
+                    <defs>
+                      <linearGradient id="gradient-checkmark" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="#D4AF37" />
+                        <stop offset="100%" stopColor="#C77A4E" />
+                      </linearGradient>
+                    </defs>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                   </svg>
                 </div>

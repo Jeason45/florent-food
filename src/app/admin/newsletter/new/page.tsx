@@ -29,9 +29,18 @@ export default function NewNewsletterPage() {
   const [showPreview, setShowPreview] = useState(false);
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState(true);
-  const [featuredRecipeId, setFeaturedRecipeId] = useState('');
-  const [secondaryRecipe1Id, setSecondaryRecipe1Id] = useState('');
-  const [secondaryRecipe2Id, setSecondaryRecipe2Id] = useState('');
+  const [saving, setSaving] = useState(false);
+
+  // Dates hebdomadaires (dimanche à dimanche)
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+
+  // Dynamic recipe selection system
+  const [selectedRecipes, setSelectedRecipes] = useState<Array<{ id: string; recipeId: string }>>([
+    { id: '1', recipeId: '' },
+    { id: '2', recipeId: '' },
+    { id: '3', recipeId: '' }
+  ]);
 
   useEffect(() => {
     fetchRecipes();
@@ -53,22 +62,78 @@ export default function NewNewsletterPage() {
 
   const getRecipeById = (id: string) => recipes.find(r => r.id === id);
 
+  // Functions to manage dynamic recipes
+  const addRecipe = () => {
+    const newId = (selectedRecipes.length + 1).toString();
+    setSelectedRecipes([...selectedRecipes, { id: newId, recipeId: '' }]);
+  };
+
+  const removeRecipe = (id: string) => {
+    if (selectedRecipes.length <= 1) {
+      alert('Vous devez avoir au moins 1 recette dans la newsletter');
+      return;
+    }
+    setSelectedRecipes(selectedRecipes.filter(r => r.id !== id));
+  };
+
+  const updateRecipe = (id: string, recipeId: string) => {
+    setSelectedRecipes(selectedRecipes.map(r =>
+      r.id === id ? { ...r, recipeId } : r
+    ));
+  };
+
+  // Get selected recipe IDs for validation and sending
+  const getSelectedRecipeIds = () => selectedRecipes
+    .filter(r => r.recipeId)
+    .map(r => r.recipeId);
+
+  // Calculer automatiquement la date de fin (dimanche suivant)
+  const calculateEndDate = (start: string) => {
+    if (!start) return '';
+    const startDateObj = new Date(start);
+    const endDateObj = new Date(startDateObj);
+    endDateObj.setDate(startDateObj.getDate() + 6); // +6 jours pour avoir dimanche à dimanche
+    return endDateObj.toISOString().split('T')[0];
+  };
+
+  // Handler pour la date de début
+  const handleStartDateChange = (date: string) => {
+    setStartDate(date);
+    const calculatedEnd = calculateEndDate(date);
+    setEndDate(calculatedEnd);
+  };
+
+  // Calculer le numéro de semaine
+  const getWeekNumber = (date: Date): number => {
+    const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+    const dayNum = d.getUTCDay() || 7;
+    d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+    const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+    return Math.ceil((((d.getTime() - yearStart.getTime()) / 86400000) + 1) / 7);
+  };
+
   const handlePreview = () => {
-    if (!subject || !introMessage || !featuredRecipeId) {
-      alert('Merci de remplir au moins le sujet, le message d\'intro et la recette principale');
+    const validRecipes = getSelectedRecipeIds();
+    if (!subject || !introMessage || validRecipes.length === 0) {
+      alert('Merci de remplir au moins le sujet, le message d\'intro et sélectionner au moins 1 recette');
       return;
     }
     setShowPreview(true);
   };
 
   const generatePreviewHTML = () => {
-    const featuredRecipe = getRecipeById(featuredRecipeId);
-    const secondaryRecipes = [
-      getRecipeById(secondaryRecipe1Id),
-      getRecipeById(secondaryRecipe2Id)
-    ].filter(Boolean);
+    const validRecipeIds = getSelectedRecipeIds();
+    if (validRecipeIds.length === 0) return '';
 
-    if (!featuredRecipe) return '';
+    const selectedRecipeObjects = validRecipeIds
+      .map(id => getRecipeById(id))
+      .filter(Boolean) as Recipe[];
+
+    if (selectedRecipeObjects.length === 0) return '';
+
+    // First recipe is featured, rest are secondary
+    const featuredRecipe = selectedRecipeObjects[0];
+    const secondaryRecipes = selectedRecipeObjects.slice(1);
 
     const baseUrl = process.env.NEXT_PUBLIC_URL || 'http://localhost:3001';
     const dateString = new Date().toLocaleDateString('fr-FR', {
@@ -77,21 +142,35 @@ export default function NewNewsletterPage() {
       year: 'numeric'
     });
 
-    const secondaryRecipesHTML = secondaryRecipes.map(recipe => `
-      <td style="width: 50%; padding: 0;">
-        <div style="position: relative; height: 350px; overflow: hidden;">
-          <img src="${recipe?.imageUrl || ''}" alt="${recipe?.title || ''}" style="width: 100%; height: 100%; object-fit: cover;">
-          <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 30px; background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.9) 100%);">
-            <h3 style="font-size: 22px; color: #fff; font-weight: 700; margin-bottom: 8px;">
-              ${recipe?.title || ''}
-            </h3>
-            <a href="${baseUrl}/recettes/${recipe?.slug || ''}" style="color: #D4AF37; text-decoration: none; font-size: 12px; letter-spacing: 1px; text-transform: uppercase;">
-              Découvrir →
-            </a>
+    // Group secondary recipes in pairs for grid layout (2 per row)
+    const secondaryRecipesRows: Recipe[][] = [];
+    for (let i = 0; i < secondaryRecipes.length; i += 2) {
+      secondaryRecipesRows.push(secondaryRecipes.slice(i, i + 2));
+    }
+
+    const secondaryRecipesHTML = secondaryRecipesRows.map(row => {
+      const recipesInRow = row.map(recipe => `
+        <td style="width: ${row.length === 1 ? '100%' : '50%'}; padding: 0;">
+          <div style="position: relative; height: 350px; overflow: hidden;">
+            <img src="${recipe?.imageUrl || ''}" alt="${recipe?.title || ''}" style="width: 100%; height: 100%; object-fit: cover;">
+            <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 30px; background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.9) 100%);">
+              <h3 style="font-size: 22px; color: #fff; font-weight: 700; margin-bottom: 8px;">
+                ${recipe?.title || ''}
+              </h3>
+              <a href="${baseUrl}/recettes/${recipe?.slug || ''}" style="color: #D4AF37; text-decoration: none; font-size: 12px; letter-spacing: 1px; text-transform: uppercase;">
+                Découvrir →
+              </a>
+            </div>
           </div>
-        </div>
-      </td>
-    `).join('');
+        </td>
+      `).join('');
+
+      return `
+        <tr>
+          ${recipesInRow}
+        </tr>
+      `;
+    }).join('');
 
     const quoteHTML = tipOfWeek ? `
       <tr>
@@ -149,7 +228,7 @@ export default function NewNewsletterPage() {
             Saveurs<br>d'Exception
           </h1>
           <div style="font-size: 16px; color: rgba(0,0,0,0.7); letter-spacing: 1px;">
-            Trois Recettes Exclusives
+            ${selectedRecipeObjects.length === 1 ? 'Une Recette Exclusive' : `${selectedRecipeObjects.length} Recettes Exclusives`}
           </div>
         </div>
       </td>
@@ -195,9 +274,7 @@ export default function NewNewsletterPage() {
     <tr>
       <td>
         <table width="100%" cellpadding="0" cellspacing="2" border="0" style="background: #000;">
-          <tr>
-            ${secondaryRecipesHTML}
-          </tr>
+          ${secondaryRecipesHTML}
         </table>
       </td>
     </tr>
@@ -226,40 +303,140 @@ export default function NewNewsletterPage() {
     `.trim();
   };
 
-  const handleSend = async () => {
-    // Validation
+  // Validation commune
+  const validateNewsletter = () => {
     if (!subject || !introMessage) {
       alert('Merci de remplir au moins le sujet et le message d\'intro');
-      return;
+      return false;
     }
 
-    if (!featuredRecipeId) {
-      alert('Merci de sélectionner au moins la recette principale');
-      return;
+    const validRecipeIds = getSelectedRecipeIds();
+    if (validRecipeIds.length === 0) {
+      alert('Merci de sélectionner au moins 1 recette');
+      return false;
     }
 
-    const confirmed = confirm(`Êtes-vous sûr de vouloir envoyer cette newsletter maintenant ?\n\nCible: ${sendTo === 'ALL' ? 'Tous les abonnés' : sendTo === 'FREE' ? 'Abonnés gratuits' : 'Abonnés premium'}`);
-    if (!confirmed) return;
+    if (!startDate || !endDate) {
+      alert('Merci de sélectionner les dates de la newsletter (du dimanche au dimanche)');
+      return false;
+    }
 
+    return true;
+  };
+
+  // 1. Enregistrer comme brouillon (DRAFT)
+  const handleSaveDraft = async () => {
+    if (!validateNewsletter()) return;
+
+    setSaving(true);
     try {
-      const response = await fetch('/api/admin/newsletter/send', {
+      const weekNumber = getWeekNumber(new Date(startDate));
+      const response = await fetch('/api/admin/newsletter/save', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           subject,
           introMessage,
-          featuredRecipeId,
-          secondaryRecipeIds: [secondaryRecipe1Id, secondaryRecipe2Id].filter(Boolean),
+          recipeIds: getSelectedRecipeIds(),
           tipOfWeek,
           sendTo,
+          startDate,
+          endDate,
+          weekNumber,
+          status: 'DRAFT',
         }),
       });
 
       const data = await response.json();
 
       if (data.success) {
-        alert(`✅ Newsletter envoyée avec succès à ${data.recipientsCount} abonnés !`);
-        // Rediriger vers la page de liste des newsletters
+        alert('✅ Brouillon enregistré avec succès !');
+        router.push('/admin/newsletter');
+      } else {
+        alert(`❌ Erreur: ${data.error}`);
+      }
+    } catch (error) {
+      console.error('Error saving draft:', error);
+      alert('❌ Erreur lors de l\'enregistrement du brouillon');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  // 2. Programmer la newsletter (SCHEDULED)
+  const handleSchedule = async () => {
+    if (!validateNewsletter()) return;
+
+    const confirmed = confirm(`Programmer cette newsletter pour la semaine du ${new Date(startDate).toLocaleDateString('fr-FR')} au ${new Date(endDate).toLocaleDateString('fr-FR')} ?\n\nElle sera activée et envoyée automatiquement le ${new Date(startDate).toLocaleDateString('fr-FR')} à 00h00.`);
+    if (!confirmed) return;
+
+    setSaving(true);
+    try {
+      const weekNumber = getWeekNumber(new Date(startDate));
+      const response = await fetch('/api/admin/newsletter/save', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          subject,
+          introMessage,
+          recipeIds: getSelectedRecipeIds(),
+          tipOfWeek,
+          sendTo,
+          startDate,
+          endDate,
+          weekNumber,
+          status: 'SCHEDULED',
+          scheduledAt: new Date(startDate).toISOString(),
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        alert('✅ Newsletter programmée avec succès !');
+        router.push('/admin/newsletter');
+      } else {
+        alert(`❌ Erreur: ${data.error}`);
+      }
+    } catch (error) {
+      console.error('Error scheduling newsletter:', error);
+      alert('❌ Erreur lors de la programmation');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  // 3. Activer et envoyer maintenant (ACTIVE + envoi immédiat)
+  const handleActivateAndSend = async () => {
+    if (!validateNewsletter()) return;
+
+    const validRecipeIds = getSelectedRecipeIds();
+    const confirmed = confirm(`⚠️ Activer et envoyer cette newsletter MAINTENANT ?\n\n${validRecipeIds.length} recette(s)\nCible: ${sendTo === 'ALL' ? 'Tous les abonnés' : sendTo === 'FREE' ? 'Abonnés gratuits' : 'Abonnés premium'}\n\nLa newsletter sera immédiatement visible sur le site et envoyée aux abonnés.`);
+    if (!confirmed) return;
+
+    setSaving(true);
+    try {
+      const weekNumber = getWeekNumber(new Date(startDate));
+      const response = await fetch('/api/admin/newsletter/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          subject,
+          introMessage,
+          recipeIds: validRecipeIds,
+          tipOfWeek,
+          sendTo,
+          startDate,
+          endDate,
+          weekNumber,
+          status: 'ACTIVE', // Active immédiatement
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        alert(`✅ Newsletter activée et envoyée avec succès à ${data.recipientsCount} abonnés !`);
         router.push('/admin/newsletter');
       } else {
         alert(`❌ Erreur: ${data.error}`);
@@ -267,6 +444,8 @@ export default function NewNewsletterPage() {
     } catch (error) {
       console.error('Error sending newsletter:', error);
       alert('❌ Erreur lors de l\'envoi de la newsletter');
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -303,9 +482,10 @@ export default function NewNewsletterPage() {
             </p>
           </div>
 
-          <div style={{ display: 'flex', gap: '12px' }}>
+          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
             <button
               onClick={handlePreview}
+              disabled={saving}
               style={{
                 background: 'rgba(255,255,255,0.1)',
                 border: '1px solid rgba(255,255,255,0.2)',
@@ -314,11 +494,12 @@ export default function NewNewsletterPage() {
                 padding: '12px 24px',
                 fontSize: '14px',
                 fontWeight: 600,
-                cursor: 'pointer',
-                transition: 'all 0.3s'
+                cursor: saving ? 'not-allowed' : 'pointer',
+                transition: 'all 0.3s',
+                opacity: saving ? 0.5 : 1
               }}
               onMouseOver={(e) => {
-                e.currentTarget.style.background = 'rgba(255,255,255,0.15)';
+                if (!saving) e.currentTarget.style.background = 'rgba(255,255,255,0.15)';
               }}
               onMouseOut={(e) => {
                 e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
@@ -327,7 +508,44 @@ export default function NewNewsletterPage() {
               👁️ Prévisualiser
             </button>
             <button
-              onClick={handleSend}
+              onClick={handleSaveDraft}
+              disabled={saving}
+              style={{
+                background: 'rgba(99, 102, 241, 0.2)',
+                border: '1px solid rgba(99, 102, 241, 0.4)',
+                borderRadius: '10px',
+                color: '#818cf8',
+                padding: '12px 24px',
+                fontSize: '14px',
+                fontWeight: 600,
+                cursor: saving ? 'not-allowed' : 'pointer',
+                transition: 'all 0.3s',
+                opacity: saving ? 0.5 : 1
+              }}
+            >
+              💾 Enregistrer brouillon
+            </button>
+            <button
+              onClick={handleSchedule}
+              disabled={saving}
+              style={{
+                background: 'rgba(251, 191, 36, 0.2)',
+                border: '1px solid rgba(251, 191, 36, 0.4)',
+                borderRadius: '10px',
+                color: '#fbbf24',
+                padding: '12px 24px',
+                fontSize: '14px',
+                fontWeight: 600,
+                cursor: saving ? 'not-allowed' : 'pointer',
+                transition: 'all 0.3s',
+                opacity: saving ? 0.5 : 1
+              }}
+            >
+              📆 Programmer
+            </button>
+            <button
+              onClick={handleActivateAndSend}
+              disabled={saving}
               style={{
                 background: 'linear-gradient(135deg, #34d399 0%, #10b981 100%)',
                 border: 'none',
@@ -336,12 +554,13 @@ export default function NewNewsletterPage() {
                 padding: '12px 28px',
                 fontSize: '14px',
                 fontWeight: 700,
-                cursor: 'pointer',
+                cursor: saving ? 'not-allowed' : 'pointer',
                 transition: 'all 0.3s',
-                boxShadow: '0 4px 16px rgba(52, 211, 153, 0.3)'
+                boxShadow: '0 4px 16px rgba(52, 211, 153, 0.3)',
+                opacity: saving ? 0.5 : 1
               }}
             >
-              📤 Envoyer Maintenant
+              {saving ? '⏳ Envoi...' : '🚀 Activer & Envoyer'}
             </button>
           </div>
         </div>
@@ -427,7 +646,7 @@ export default function NewNewsletterPage() {
             </p>
           </div>
 
-          {/* Recipes Selection */}
+          {/* Newsletter Period (Dates) */}
           <div style={{
             background: 'rgba(255,255,255,0.05)',
             padding: '30px',
@@ -439,242 +658,326 @@ export default function NewNewsletterPage() {
               fontSize: '13px',
               fontWeight: 600,
               color: '#34d399',
-              marginBottom: '16px',
+              marginBottom: '20px',
               textTransform: 'uppercase',
               letterSpacing: '1px'
             }}>
-              Recettes de la Semaine
+              📅 Période de la Newsletter (Dimanche à Dimanche) *
             </label>
 
-            {/* Featured Recipe */}
-            <div style={{ marginBottom: '24px' }}>
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '12px',
-                marginBottom: '12px'
-              }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr auto', gap: '16px', alignItems: 'end' }}>
+              {/* Start Date */}
+              <div>
+                <label style={{
+                  display: 'block',
+                  fontSize: '12px',
+                  color: 'rgba(255,255,255,0.7)',
+                  marginBottom: '8px',
+                  fontWeight: 500
+                }}>
+                  Date de début (Dimanche)
+                </label>
+                <input
+                  type="date"
+                  value={startDate}
+                  onChange={(e) => handleStartDateChange(e.target.value)}
+                  style={{
+                    width: '100%',
+                    padding: '14px 16px',
+                    background: 'rgba(255,255,255,0.05)',
+                    border: '1px solid rgba(255,255,255,0.1)',
+                    borderRadius: '10px',
+                    color: '#fff',
+                    fontSize: '15px',
+                    outline: 'none',
+                    colorScheme: 'dark'
+                  }}
+                />
+              </div>
+
+              {/* End Date (auto-calculated) */}
+              <div>
+                <label style={{
+                  display: 'block',
+                  fontSize: '12px',
+                  color: 'rgba(255,255,255,0.7)',
+                  marginBottom: '8px',
+                  fontWeight: 500
+                }}>
+                  Date de fin (Dimanche suivant)
+                </label>
+                <input
+                  type="date"
+                  value={endDate}
+                  readOnly
+                  disabled
+                  style={{
+                    width: '100%',
+                    padding: '14px 16px',
+                    background: 'rgba(255,255,255,0.03)',
+                    border: '1px solid rgba(255,255,255,0.05)',
+                    borderRadius: '10px',
+                    color: 'rgba(255,255,255,0.5)',
+                    fontSize: '15px',
+                    outline: 'none',
+                    cursor: 'not-allowed',
+                    colorScheme: 'dark'
+                  }}
+                />
+              </div>
+
+              {/* Week Number Badge */}
+              {startDate && (
                 <div style={{
                   background: 'linear-gradient(135deg, #D4AF37 0%, #C77A4E 100%)',
-                  width: '32px',
-                  height: '32px',
-                  borderRadius: '8px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '16px',
-                  fontWeight: 900,
-                  color: '#000'
-                }}>
-                  1
-                </div>
-                <span style={{ fontSize: '14px', color: '#fff', fontWeight: 600 }}>
-                  Recette Principale (Featured)
-                </span>
-              </div>
-              <select
-                value={featuredRecipeId}
-                onChange={(e) => setFeaturedRecipeId(e.target.value)}
-                disabled={loading}
-                style={{
-                  width: '100%',
-                  padding: '12px 16px',
-                  background: 'rgba(255,255,255,0.05)',
-                  border: '1px solid rgba(255,255,255,0.1)',
+                  padding: '14px 20px',
                   borderRadius: '10px',
-                  color: '#fff',
-                  fontSize: '14px',
-                  outline: 'none',
-                  cursor: 'pointer'
-                }}
-              >
-                <option value="">Sélectionner une recette...</option>
-                {recipes.map(recipe => (
-                  <option key={recipe.id} value={recipe.id}>
-                    {recipe.title}
-                  </option>
-                ))}
-              </select>
-              {featuredRecipeId && getRecipeById(featuredRecipeId) && (
-                <div style={{
-                  marginTop: '16px',
-                  background: 'rgba(255,255,255,0.05)',
-                  borderRadius: '12px',
-                  overflow: 'hidden',
-                  border: '2px solid #D4AF37'
+                  textAlign: 'center',
+                  minWidth: '120px'
                 }}>
-                  <img
-                    src={getRecipeById(featuredRecipeId)?.imageUrl || ''}
-                    alt={getRecipeById(featuredRecipeId)?.title}
-                    style={{ width: '100%', height: '200px', objectFit: 'cover' }}
-                  />
-                  <div style={{ padding: '16px' }}>
-                    <h4 style={{ color: '#D4AF37', fontSize: '16px', marginBottom: '8px', fontWeight: 700 }}>
-                      {getRecipeById(featuredRecipeId)?.title}
-                    </h4>
-                    <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '13px', lineHeight: 1.5 }}>
-                      {getRecipeById(featuredRecipeId)?.description}
-                    </p>
-                    <div style={{ marginTop: '12px', fontSize: '12px', color: 'rgba(255,255,255,0.5)' }}>
-                      ⏱️ {getRecipeById(featuredRecipeId)?.totalTime}min ·
-                      📊 {getRecipeById(featuredRecipeId)?.difficulty}
-                      {getRecipeById(featuredRecipeId)?.visibility === 'PREMIUM' && ' · ⭐ Premium'}
-                    </div>
+                  <div style={{
+                    fontSize: '11px',
+                    color: 'rgba(0,0,0,0.7)',
+                    marginBottom: '2px',
+                    fontWeight: 600,
+                    letterSpacing: '0.5px'
+                  }}>
+                    SEMAINE
+                  </div>
+                  <div style={{
+                    fontSize: '24px',
+                    color: '#000',
+                    fontWeight: 900,
+                    lineHeight: 1
+                  }}>
+                    {getWeekNumber(new Date(startDate))}
                   </div>
                 </div>
               )}
             </div>
 
-            {/* Secondary Recipes */}
-            <div style={{ marginBottom: '16px' }}>
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '12px',
-                marginBottom: '12px'
+            <div style={{
+              marginTop: '16px',
+              padding: '12px',
+              background: 'rgba(251, 191, 36, 0.1)',
+              borderRadius: '8px',
+              border: '1px solid rgba(251, 191, 36, 0.2)'
+            }}>
+              <p style={{
+                fontSize: '12px',
+                color: 'rgba(255,255,255,0.7)',
+                margin: 0,
+                lineHeight: 1.5
               }}>
-                <div style={{
-                  background: 'rgba(212, 175, 55, 0.2)',
-                  border: '2px solid #D4AF37',
-                  width: '32px',
-                  height: '32px',
-                  borderRadius: '8px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '14px',
-                  fontWeight: 700,
-                  color: '#D4AF37'
-                }}>
-                  2
-                </div>
-                <span style={{ fontSize: '14px', color: '#fff', fontWeight: 600 }}>
-                  Recette Secondaire #1
-                </span>
-              </div>
-              <select
-                value={secondaryRecipe1Id}
-                onChange={(e) => setSecondaryRecipe1Id(e.target.value)}
-                disabled={loading}
-                style={{
-                  width: '100%',
-                  padding: '12px 16px',
-                  background: 'rgba(255,255,255,0.05)',
-                  border: '1px solid rgba(255,255,255,0.1)',
-                  borderRadius: '10px',
-                  color: '#fff',
-                  fontSize: '14px',
-                  outline: 'none',
-                  cursor: 'pointer'
-                }}
-              >
-                <option value="">Sélectionner une recette...</option>
-                {recipes.map(recipe => (
-                  <option key={recipe.id} value={recipe.id}>
-                    {recipe.title}
-                  </option>
-                ))}
-              </select>
-              {secondaryRecipe1Id && getRecipeById(secondaryRecipe1Id) && (
-                <div style={{
-                  marginTop: '16px',
-                  background: 'rgba(255,255,255,0.03)',
-                  borderRadius: '12px',
-                  overflow: 'hidden',
-                  border: '1px solid rgba(212, 175, 55, 0.3)'
-                }}>
-                  <img
-                    src={getRecipeById(secondaryRecipe1Id)?.imageUrl || ''}
-                    alt={getRecipeById(secondaryRecipe1Id)?.title}
-                    style={{ width: '100%', height: '150px', objectFit: 'cover' }}
-                  />
-                  <div style={{ padding: '12px' }}>
-                    <h5 style={{ color: '#fff', fontSize: '14px', marginBottom: '4px', fontWeight: 600 }}>
-                      {getRecipeById(secondaryRecipe1Id)?.title}
-                    </h5>
-                    <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.5)' }}>
-                      ⏱️ {getRecipeById(secondaryRecipe1Id)?.totalTime}min ·
-                      📊 {getRecipeById(secondaryRecipe1Id)?.difficulty}
-                    </div>
-                  </div>
-                </div>
-              )}
+                💡 <strong>Info:</strong> Les newsletters s'activent automatiquement le dimanche de début à 00h00.
+                {startDate && endDate && (
+                  <span style={{ display: 'block', marginTop: '6px', color: '#fbbf24' }}>
+                    📆 Cette newsletter sera active du <strong>{new Date(startDate).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</strong> au <strong>{new Date(endDate).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</strong>
+                  </span>
+                )}
+              </p>
+            </div>
+          </div>
+
+          {/* Dynamic Recipes Selection */}
+          <div style={{
+            background: 'rgba(255,255,255,0.05)',
+            padding: '30px',
+            borderRadius: '16px',
+            border: '1px solid rgba(255,255,255,0.1)'
+          }}>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: '20px'
+            }}>
+              <label style={{
+                fontSize: '13px',
+                fontWeight: 600,
+                color: '#34d399',
+                textTransform: 'uppercase',
+                letterSpacing: '1px'
+              }}>
+                Recettes de la Newsletter
+              </label>
+              <span style={{
+                fontSize: '12px',
+                color: 'rgba(255,255,255,0.5)',
+                background: 'rgba(255,255,255,0.05)',
+                padding: '6px 12px',
+                borderRadius: '6px'
+              }}>
+                {getSelectedRecipeIds().length} / {selectedRecipes.length} sélectionnées
+              </span>
             </div>
 
-            <div>
-              <div style={{
+            {/* Dynamic Recipe List */}
+            {selectedRecipes.map((recipeSlot, index) => {
+              const selectedRecipe = recipeSlot.recipeId ? getRecipeById(recipeSlot.recipeId) : null;
+              const isFirst = index === 0;
+
+              return (
+                <div key={recipeSlot.id} style={{ marginBottom: '20px' }}>
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '12px',
+                    marginBottom: '12px'
+                  }}>
+                    <div style={{
+                      background: isFirst
+                        ? 'linear-gradient(135deg, #D4AF37 0%, #C77A4E 100%)'
+                        : 'rgba(212, 175, 55, 0.2)',
+                      border: isFirst ? 'none' : '2px solid #D4AF37',
+                      width: '32px',
+                      height: '32px',
+                      borderRadius: '8px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: isFirst ? '16px' : '14px',
+                      fontWeight: isFirst ? 900 : 700,
+                      color: isFirst ? '#000' : '#D4AF37'
+                    }}>
+                      {index + 1}
+                    </div>
+                    <span style={{ fontSize: '14px', color: '#fff', fontWeight: 600, flex: 1 }}>
+                      {isFirst ? 'Recette Principale' : `Recette #${index + 1}`}
+                    </span>
+                    {selectedRecipes.length > 1 && (
+                      <button
+                        onClick={() => removeRecipe(recipeSlot.id)}
+                        style={{
+                          background: 'rgba(239, 68, 68, 0.1)',
+                          border: '1px solid rgba(239, 68, 68, 0.3)',
+                          borderRadius: '6px',
+                          color: '#ef4444',
+                          padding: '6px 12px',
+                          fontSize: '12px',
+                          fontWeight: 600,
+                          cursor: 'pointer',
+                          transition: 'all 0.2s'
+                        }}
+                        onMouseOver={(e) => {
+                          e.currentTarget.style.background = 'rgba(239, 68, 68, 0.2)';
+                        }}
+                        onMouseOut={(e) => {
+                          e.currentTarget.style.background = 'rgba(239, 68, 68, 0.1)';
+                        }}
+                      >
+                        ✕ Supprimer
+                      </button>
+                    )}
+                  </div>
+
+                  <select
+                    value={recipeSlot.recipeId}
+                    onChange={(e) => updateRecipe(recipeSlot.id, e.target.value)}
+                    disabled={loading}
+                    style={{
+                      width: '100%',
+                      padding: '12px 16px',
+                      background: 'rgba(255,255,255,0.05)',
+                      border: '1px solid rgba(255,255,255,0.1)',
+                      borderRadius: '10px',
+                      color: '#fff',
+                      fontSize: '14px',
+                      outline: 'none',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    <option value="">Sélectionner une recette...</option>
+                    {recipes.map(recipe => (
+                      <option key={recipe.id} value={recipe.id}>
+                        {recipe.title}
+                      </option>
+                    ))}
+                  </select>
+
+                  {selectedRecipe && (
+                    <div style={{
+                      marginTop: '16px',
+                      background: 'rgba(255,255,255,0.05)',
+                      borderRadius: '12px',
+                      overflow: 'hidden',
+                      border: isFirst ? '2px solid #D4AF37' : '1px solid rgba(212, 175, 55, 0.3)'
+                    }}>
+                      <img
+                        src={selectedRecipe.imageUrl || ''}
+                        alt={selectedRecipe.title}
+                        style={{
+                          width: '100%',
+                          height: isFirst ? '200px' : '150px',
+                          objectFit: 'cover'
+                        }}
+                      />
+                      <div style={{ padding: isFirst ? '16px' : '12px' }}>
+                        <h4 style={{
+                          color: isFirst ? '#D4AF37' : '#fff',
+                          fontSize: isFirst ? '16px' : '14px',
+                          marginBottom: isFirst ? '8px' : '4px',
+                          fontWeight: isFirst ? 700 : 600
+                        }}>
+                          {selectedRecipe.title}
+                        </h4>
+                        {isFirst && selectedRecipe.description && (
+                          <p style={{
+                            color: 'rgba(255,255,255,0.7)',
+                            fontSize: '13px',
+                            lineHeight: 1.5,
+                            marginBottom: '8px'
+                          }}>
+                            {selectedRecipe.description}
+                          </p>
+                        )}
+                        <div style={{
+                          fontSize: isFirst ? '12px' : '11px',
+                          color: 'rgba(255,255,255,0.5)'
+                        }}>
+                          ⏱️ {selectedRecipe.totalTime}min · 📊 {selectedRecipe.difficulty}
+                          {selectedRecipe.visibility === 'PREMIUM' && ' · ⭐ Premium'}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+
+            {/* Add Recipe Button */}
+            <button
+              onClick={addRecipe}
+              disabled={loading}
+              style={{
+                width: '100%',
+                padding: '14px',
+                background: 'rgba(52, 211, 153, 0.1)',
+                border: '2px dashed rgba(52, 211, 153, 0.3)',
+                borderRadius: '10px',
+                color: '#34d399',
+                fontSize: '14px',
+                fontWeight: 600,
+                cursor: 'pointer',
+                transition: 'all 0.3s',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '12px',
-                marginBottom: '12px'
-              }}>
-                <div style={{
-                  background: 'rgba(212, 175, 55, 0.2)',
-                  border: '2px solid #D4AF37',
-                  width: '32px',
-                  height: '32px',
-                  borderRadius: '8px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '14px',
-                  fontWeight: 700,
-                  color: '#D4AF37'
-                }}>
-                  3
-                </div>
-                <span style={{ fontSize: '14px', color: '#fff', fontWeight: 600 }}>
-                  Recette Secondaire #2
-                </span>
-              </div>
-              <select
-                value={secondaryRecipe2Id}
-                onChange={(e) => setSecondaryRecipe2Id(e.target.value)}
-                disabled={loading}
-                style={{
-                  width: '100%',
-                  padding: '12px 16px',
-                  background: 'rgba(255,255,255,0.05)',
-                  border: '1px solid rgba(255,255,255,0.1)',
-                  borderRadius: '10px',
-                  color: '#fff',
-                  fontSize: '14px',
-                  outline: 'none',
-                  cursor: 'pointer'
-                }}
-              >
-                <option value="">Sélectionner une recette...</option>
-                {recipes.map(recipe => (
-                  <option key={recipe.id} value={recipe.id}>
-                    {recipe.title}
-                  </option>
-                ))}
-              </select>
-              {secondaryRecipe2Id && getRecipeById(secondaryRecipe2Id) && (
-                <div style={{
-                  marginTop: '16px',
-                  background: 'rgba(255,255,255,0.03)',
-                  borderRadius: '12px',
-                  overflow: 'hidden',
-                  border: '1px solid rgba(212, 175, 55, 0.3)'
-                }}>
-                  <img
-                    src={getRecipeById(secondaryRecipe2Id)?.imageUrl || ''}
-                    alt={getRecipeById(secondaryRecipe2Id)?.title}
-                    style={{ width: '100%', height: '150px', objectFit: 'cover' }}
-                  />
-                  <div style={{ padding: '12px' }}>
-                    <h5 style={{ color: '#fff', fontSize: '14px', marginBottom: '4px', fontWeight: 600 }}>
-                      {getRecipeById(secondaryRecipe2Id)?.title}
-                    </h5>
-                    <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.5)' }}>
-                      ⏱️ {getRecipeById(secondaryRecipe2Id)?.totalTime}min ·
-                      📊 {getRecipeById(secondaryRecipe2Id)?.difficulty}
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
+                justifyContent: 'center',
+                gap: '8px',
+                marginTop: '12px'
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.background = 'rgba(52, 211, 153, 0.15)';
+                e.currentTarget.style.borderColor = 'rgba(52, 211, 153, 0.5)';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.background = 'rgba(52, 211, 153, 0.1)';
+                e.currentTarget.style.borderColor = 'rgba(52, 211, 153, 0.3)';
+              }}
+            >
+              <span style={{ fontSize: '18px' }}>+</span>
+              Ajouter une recette
+            </button>
 
             <p style={{
               fontSize: '12px',
@@ -685,7 +988,7 @@ export default function NewNewsletterPage() {
               borderRadius: '8px',
               border: '1px solid rgba(52, 211, 153, 0.2)'
             }}>
-              💡 {loading ? 'Chargement des recettes...' : `${recipes.length} recettes publiées disponibles`}
+              💡 {loading ? 'Chargement des recettes...' : `${recipes.length} recettes publiées disponibles · Minimum 1 recette requise`}
             </p>
           </div>
 

@@ -30,7 +30,7 @@ export function Footer() {
                 href="https://jldigitalstudio.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#E07A5F] hover:text-white transition-colors"
+                className="text-[#D4AF37] hover:text-white transition-colors"
               >
                 JLDS
               </a>

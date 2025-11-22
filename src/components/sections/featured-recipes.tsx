@@ -59,18 +59,18 @@ export function FeaturedRecipesSection() {
   return (
     <section className="relative py-16 sm:py-20 md:py-24 lg:py-32 bg-gradient-to-br from-[#FFF8F0] via-[#FFFBF7] to-[#FFF5EB] overflow-hidden">
       {/* Decorative elements */}
-      <div className="absolute top-20 right-10 w-32 h-32 rounded-full bg-[var(--caramel)]/5 blur-3xl"></div>
-      <div className="absolute bottom-40 left-10 w-40 h-40 rounded-full bg-[#E07A5F]/5 blur-3xl"></div>
+      <div className="absolute top-20 right-10 w-32 h-32 rounded-full bg-[#D4AF37]/5 blur-3xl"></div>
+      <div className="absolute bottom-40 left-10 w-40 h-40 rounded-full bg-[#C77A4E]/5 blur-3xl"></div>
 
       <div className="relative w-full max-w-6xl mx-auto px-5 sm:px-8 lg:px-12">
         {/* Section Header */}
         <div className="text-center mb-12 sm:mb-14 md:mb-16">
-          <span className="text-[10px] sm:text-xs tracking-[0.3em] uppercase font-medium text-[#E07A5F] mb-4 sm:mb-6 block">
+          <span className="text-[10px] sm:text-xs tracking-[0.3em] uppercase font-medium mb-4 sm:mb-6 block" style={{ background: 'linear-gradient(to right, #D4AF37, #C77A4E)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
             Aperçu
           </span>
           <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-[var(--noir-luxe)] mb-4 sm:mb-5 leading-[1.05] tracking-[-0.02em] px-2">
             Quelques créations
-            <span className="block mt-2 font-normal italic text-[#E07A5F]">qui t'attendent</span>
+            <span className="block mt-2 font-normal italic" style={{ background: 'linear-gradient(to right, #D4AF37, #C77A4E)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>qui t'attendent</span>
           </h2>
           <p className="text-sm sm:text-base text-[var(--gris-taupe)] max-w-2xl mx-auto px-4 leading-relaxed font-light mt-4">
             Inscris-toi pour recevoir chaque semaine une recette complète avec photos pas-à-pas
@@ -97,7 +97,7 @@ export function FeaturedRecipesSection() {
 
                 {/* Category badge flottant */}
                 <div className="absolute top-4 left-4">
-                  <span className="text-[10px] tracking-[0.2em] uppercase font-medium text-white bg-gradient-to-r from-[#E07A5F] to-[#D96A50] px-4 py-2 rounded-full shadow-lg backdrop-blur-sm">
+                  <span className="text-[10px] tracking-[0.2em] uppercase font-medium text-white px-4 py-2 rounded-full shadow-lg backdrop-blur-sm" style={{ background: 'linear-gradient(to right, #D4AF37, #C77A4E)' }}>
                     {recipe.category}
                   </span>
                 </div>
@@ -105,7 +105,7 @@ export function FeaturedRecipesSection() {
 
               {/* Content - Plus compact */}
               <div className="space-y-3">
-                <h3 className="font-serif text-2xl sm:text-3xl font-light text-[var(--noir-luxe)] tracking-tight leading-tight group-hover:text-[#E07A5F] transition-colors duration-300">
+                <h3 className="font-serif text-2xl sm:text-3xl font-light text-[var(--noir-luxe)] tracking-tight leading-tight group-hover:text-[#D4AF37] transition-colors duration-300">
                   {recipe.title}
                 </h3>
 
@@ -116,14 +116,14 @@ export function FeaturedRecipesSection() {
                 {/* Meta info - Compact */}
                 <div className="flex items-center gap-4 pt-2">
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-[#E07A5F]/10 flex items-center justify-center">
-                      <Clock className="w-4 h-4 text-[#E07A5F]" />
+                    <div className="w-8 h-8 rounded-full bg-[#D4AF37]/10 flex items-center justify-center">
+                      <Clock className="w-4 h-4 text-[#D4AF37]" />
                     </div>
                     <span className="text-xs sm:text-sm text-[var(--noir-luxe)] font-light">{recipe.time}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-[#C9A961]/10 flex items-center justify-center">
-                      <Users className="w-4 h-4 text-[#C9A961]" />
+                    <div className="w-8 h-8 rounded-full bg-[#C77A4E]/10 flex items-center justify-center">
+                      <Users className="w-4 h-4 text-[#C77A4E]" />
                     </div>
                     <span className="text-xs sm:text-sm text-[var(--noir-luxe)] font-light">{recipe.servings} pers.</span>
                   </div>
@@ -135,7 +135,7 @@ export function FeaturedRecipesSection() {
 
         {/* CTA Newsletter - Compact */}
         <div className="max-w-3xl mx-auto">
-          <div className="relative overflow-hidden bg-gradient-to-br from-[#E07A5F] to-[#D96A50] rounded-2xl shadow-xl p-8 sm:p-10 md:p-12">
+          <div className="relative overflow-hidden bg-gradient-to-br from-[#D4AF37] to-[#C77A4E] rounded-2xl shadow-xl p-8 sm:p-10 md:p-12">
             {/* Decorative circles */}
             <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full blur-3xl"></div>
             <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full blur-3xl"></div>
@@ -185,7 +185,8 @@ export function FeaturedRecipesSection() {
                 <Button
                   variant="default"
                   size="lg"
-                  className="px-10 sm:px-12 h-12 sm:h-14 text-sm sm:text-base tracking-[0.15em] uppercase font-medium bg-white text-[#E07A5F] hover:bg-white/95 border-0 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
+                  className="px-10 sm:px-12 h-12 sm:h-14 text-sm sm:text-base tracking-[0.15em] uppercase font-medium bg-white hover:bg-white/95 border-0 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
+                  style={{ background: 'white', color: 'transparent', WebkitBackgroundClip: 'text', backgroundClip: 'text', backgroundImage: 'linear-gradient(to right, #D4AF37, #C77A4E)' }}
                   onClick={() => {
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                     setTimeout(() => {
@@ -194,7 +195,7 @@ export function FeaturedRecipesSection() {
                     }, 500);
                   }}
                 >
-                  Je m'inscris
+                  <span style={{ background: 'linear-gradient(to right, #D4AF37, #C77A4E)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Je m'inscris</span>
                 </Button>
                 <p className="text-xs text-white/90 mt-4 font-light">
                   ✓ Désinscription en 1 clic · ✓ Zéro spam

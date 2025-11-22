@@ -1,12 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import crypto from 'crypto';
 import { sendEmail } from '@/lib/emailUtils';
-import { confirmSubscriptionEmail } from '@/lib/email/templates';
+import { welcomeEmail } from '@/lib/email/templates';
 
 export async function POST(request: NextRequest) {
   try {
-    const { email, firstName, source } = await request.json();
+    const { email, source } = await request.json();
 
     // Validation
     if (!email || !email.includes('@')) {
@@ -30,70 +29,55 @@ export async function POST(request: NextRequest) {
         );
       }
 
-      // Si désabonné, on peut réinscrire
-      if (existing.status === 'UNSUBSCRIBED') {
-        const confirmToken = crypto.randomBytes(32).toString('hex');
-        const confirmTokenExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24h
-
+      // Si désabonné ou en attente, on réactive directement
+      if (existing.status === 'UNSUBSCRIBED' || existing.status === 'PENDING') {
         await prisma.newsletterSubscriber.update({
           where: { id: existing.id },
           data: {
-            status: 'PENDING',
-            firstName: firstName || existing.firstName,
-            confirmToken,
-            confirmTokenExpiry,
+            status: 'ACTIVE',
             subscribedAt: new Date()
           }
         });
 
-        // Envoyer l'email de confirmation
-        const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3001';
-        const confirmationLink = `${baseUrl}/newsletter/confirm?token=${confirmToken}`;
-        const emailHtml = confirmSubscriptionEmail(firstName || existing.firstName, confirmationLink);
+        // Envoyer l'email de bienvenue
+        const emailHtml = welcomeEmail();
 
         await sendEmail({
           to: email.toLowerCase(),
-          subject: '🎉 Confirme ton inscription à Florent Food',
+          subject: '🎉 Bienvenue chez Florent Food !',
           htmlContent: emailHtml,
-          type: 'newsletter_confirmation',
+          type: 'welcome',
           subscriberId: existing.id
         });
 
         return NextResponse.json({
           success: true,
-          message: 'Email de confirmation envoyé !'
+          message: 'Inscription confirmée !'
         });
       }
     }
 
-    // Créer un nouveau subscriber
-    const confirmToken = crypto.randomBytes(32).toString('hex');
-    const confirmTokenExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24h
-
+    // Créer un nouveau subscriber - directement ACTIVE
     const subscriber = await prisma.newsletterSubscriber.create({
       data: {
         email: email.toLowerCase(),
-        firstName: firstName || null,
-        status: 'PENDING',
+        status: 'ACTIVE',
         subscriptionType: 'FREE',
         source: source || 'website',
-        confirmToken,
-        confirmTokenExpiry
+        subscribedAt: new Date()
       }
     });
 
-    console.log('✅ New subscriber created:', email);
+    console.log('✅ New subscriber created and activated:', email);
 
-    // Envoyer l'email de confirmation
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3001';
-    const confirmationLink = `${baseUrl}/newsletter/confirm?token=${confirmToken}`;
-    const emailHtml = confirmSubscriptionEmail(firstName, confirmationLink);
+    // Envoyer l'email de bienvenue
+    const emailHtml = welcomeEmail();
 
     const emailResult = await sendEmail({
       to: email.toLowerCase(),
-      subject: '🎉 Confirme ton inscription à Florent Food',
+      subject: '🎉 Bienvenue chez Florent Food !',
       htmlContent: emailHtml,
-      type: 'newsletter_confirmation',
+      type: 'welcome',
       subscriberId: subscriber.id
     });
 
@@ -101,11 +85,9 @@ export async function POST(request: NextRequest) {
       console.warn('⚠️ Email not sent, but subscriber created:', emailResult.error);
     }
 
-    console.log(`🔗 Confirmation link: ${confirmationLink}`);
-
     return NextResponse.json({
       success: true,
-      message: 'Email de confirmation envoyé !',
+      message: 'Inscription confirmée !',
       subscriberId: subscriber.id
     });
 

@@ -43,6 +43,48 @@ export default function NewsletterPage() {
     }
   };
 
+  const handleToggleVisibility = async (id: string, currentStatus: string) => {
+    const isCurrentlyVisible = currentStatus === 'ACTIVE';
+    const action = isCurrentlyVisible ? 'retirer du site' : 'publier sur le site';
+
+    if (!confirm(`Êtes-vous sûr de vouloir ${action} cette newsletter ?`)) return;
+
+    try {
+      const response = await fetch(`/api/admin/newsletter/${id}/toggle-visibility`, {
+        method: 'PATCH',
+      });
+      const data = await response.json();
+      if (data.success) {
+        fetchNewsletters();
+        alert(data.message);
+      } else {
+        alert(`Erreur: ${data.error}`);
+      }
+    } catch (error) {
+      console.error('Error toggling visibility:', error);
+      alert('Erreur lors du changement de visibilité');
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    if (!confirm('Êtes-vous sûr de vouloir supprimer cette newsletter ?')) return;
+
+    try {
+      const response = await fetch(`/api/admin/newsletter/${id}`, {
+        method: 'DELETE',
+      });
+      const data = await response.json();
+      if (data.success) {
+        fetchNewsletters();
+      } else {
+        alert(`Erreur: ${data.error}`);
+      }
+    } catch (error) {
+      console.error('Error deleting newsletter:', error);
+      alert('Erreur lors de la suppression');
+    }
+  };
+
   return (
     <div style={{ display: 'flex', minHeight: '100vh', background: 'linear-gradient(135deg, #0a0e1a 0%, #0f1b2e 100%)' }}>
       <AdminSidebar />
@@ -287,6 +329,82 @@ export default function NewsletterPage() {
                     }}
                   >
                     👁️ Voir
+                  </button>
+
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleToggleVisibility(newsletter.id, newsletter.status);
+                    }}
+                    style={{
+                      background: newsletter.status === 'ACTIVE'
+                        ? 'rgba(251, 191, 36, 0.1)'
+                        : 'rgba(99, 102, 241, 0.1)',
+                      border: newsletter.status === 'ACTIVE'
+                        ? '1px solid rgba(251, 191, 36, 0.3)'
+                        : '1px solid rgba(99, 102, 241, 0.3)',
+                      borderRadius: '8px',
+                      color: newsletter.status === 'ACTIVE' ? '#fbbf24' : '#6366f1',
+                      padding: '10px 20px',
+                      fontSize: '13px',
+                      fontWeight: 600,
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                      transition: 'all 0.3s'
+                    }}
+                    onMouseOver={(e) => {
+                      if (newsletter.status === 'ACTIVE') {
+                        e.currentTarget.style.background = 'rgba(251, 191, 36, 0.2)';
+                        e.currentTarget.style.borderColor = 'rgba(251, 191, 36, 0.5)';
+                      } else {
+                        e.currentTarget.style.background = 'rgba(99, 102, 241, 0.2)';
+                        e.currentTarget.style.borderColor = 'rgba(99, 102, 241, 0.5)';
+                      }
+                    }}
+                    onMouseOut={(e) => {
+                      if (newsletter.status === 'ACTIVE') {
+                        e.currentTarget.style.background = 'rgba(251, 191, 36, 0.1)';
+                        e.currentTarget.style.borderColor = 'rgba(251, 191, 36, 0.3)';
+                      } else {
+                        e.currentTarget.style.background = 'rgba(99, 102, 241, 0.1)';
+                        e.currentTarget.style.borderColor = 'rgba(99, 102, 241, 0.3)';
+                      }
+                    }}
+                  >
+                    {newsletter.status === 'ACTIVE' ? '👁️‍🗨️ Masquer' : '🌐 Publier'}
+                  </button>
+
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDelete(newsletter.id);
+                    }}
+                    style={{
+                      background: 'rgba(239, 68, 68, 0.1)',
+                      border: '1px solid rgba(239, 68, 68, 0.3)',
+                      borderRadius: '8px',
+                      color: '#ef4444',
+                      padding: '10px 20px',
+                      fontSize: '13px',
+                      fontWeight: 600,
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                      transition: 'all 0.3s'
+                    }}
+                    onMouseOver={(e) => {
+                      e.currentTarget.style.background = 'rgba(239, 68, 68, 0.2)';
+                      e.currentTarget.style.borderColor = 'rgba(239, 68, 68, 0.5)';
+                    }}
+                    onMouseOut={(e) => {
+                      e.currentTarget.style.background = 'rgba(239, 68, 68, 0.1)';
+                      e.currentTarget.style.borderColor = 'rgba(239, 68, 68, 0.3)';
+                    }}
+                  >
+                    🗑️ Supprimer
                   </button>
                 </div>
               </div>

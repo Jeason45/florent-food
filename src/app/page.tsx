@@ -1,3 +1,5 @@
+'use client';
+
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { HeroSection } from "@/components/sections/hero";
@@ -5,144 +7,169 @@ import { RecipesCategorySection } from "@/components/sections/recipes-category";
 import { AboutStorySection } from "@/components/sections/about-story";
 import { TestimonialsSection } from "@/components/sections/testimonials";
 import { SocialLinksSection } from "@/components/sections/social-links";
+import { useState, useEffect } from "react";
 
-// Données des recettes par catégorie
-const patisserieRecipes = [
-  {
-    id: 1,
-    name: "Tarte Citron Meringuée",
-    image: "https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=800&q=80",
-    badge: "Signature",
-    time: "2h30",
-    servings: 8,
-    difficulty: "Moyen"
-  },
-  {
-    id: 2,
-    name: "Paris-Brest",
-    image: "https://images.unsplash.com/photo-1612203985729-70726954388c?w=800&q=80",
-    time: "3h",
-    servings: 6,
-    difficulty: "Avancé"
-  },
-  {
-    id: 3,
-    name: "Éclair Café-Vanille",
-    image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=800&q=80",
-    badge: "Nouveau",
-    time: "2h",
-    servings: 12,
-    difficulty: "Avancé"
-  },
-  {
-    id: 4,
-    name: "Millefeuille Vanille",
-    image: "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=800&q=80",
-    time: "1h45",
-    servings: 6,
-    difficulty: "Moyen"
-  },
-];
+interface Recipe {
+  id: string;
+  title: string;
+  slug: string;
+  imageUrl: string | null;
+  category: string[];
+  difficulty: string;
+  prepTime: number;
+  cookTime: number;
+  totalTime: number;
+  servings: number;
+  visibility: string;
+}
 
-const platsRecipes = [
-  {
-    id: 1,
-    name: "Risotto aux Champignons",
-    image: "https://images.unsplash.com/photo-1637806930600-37fa8892069d?w=800&q=80",
-    badge: "Végétarien",
-    time: "45min",
-    servings: 4,
-    difficulty: "Facile"
-  },
-  {
-    id: 2,
-    name: "Saumon Mi-Cuit",
-    image: "https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=800&q=80",
-    time: "25min",
-    servings: 4,
-    difficulty: "Moyen"
-  },
-  {
-    id: 3,
-    name: "Bœuf Bourguignon",
-    image: "https://images.unsplash.com/photo-1600891964092-4316c288032e?w=800&q=80",
-    badge: "Classique",
-    time: "3h",
-    servings: 6,
-    difficulty: "Moyen"
-  },
-  {
-    id: 4,
-    name: "Poulet Rôti Citron",
-    image: "https://images.unsplash.com/photo-1598103442097-8b74394b95c6?w=800&q=80",
-    time: "1h15",
-    servings: 4,
-    difficulty: "Facile"
-  },
-];
-
-const aperoRecipes = [
-  {
-    id: 1,
-    name: "Mini Quiches Lorraine",
-    image: "https://images.unsplash.com/photo-1619895092538-128341789043?w=800&q=80",
-    time: "35min",
-    servings: 12,
-    difficulty: "Facile"
-  },
-  {
-    id: 2,
-    name: "Verrines Saumon Avocat",
-    image: "https://images.unsplash.com/photo-1608897013039-887f21d8c804?w=800&q=80",
-    badge: "Frais",
-    time: "15min",
-    servings: 8,
-    difficulty: "Facile"
-  },
-  {
-    id: 3,
-    name: "Feuilletés Chèvre Miel",
-    image: "https://images.unsplash.com/photo-1551024601-bec78aea704b?w=800&q=80",
-    time: "30min",
-    servings: 10,
-    difficulty: "Facile"
-  },
-  {
-    id: 4,
-    name: "Tartines Burrata",
-    image: "https://images.unsplash.com/photo-1608039829572-78524f79c4c7?w=800&q=80",
-    badge: "Gourmand",
-    time: "10min",
-    servings: 6,
-    difficulty: "Facile"
-  },
-];
+interface DisplayRecipe {
+  id: number;
+  name: string;
+  image: string;
+  badge?: string;
+  time: string;
+  servings: number;
+  difficulty: string;
+}
 
 export default function Home() {
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [weekInfo, setWeekInfo] = useState<{ weekNumber: number; startDate: string; endDate: string } | null>(null);
+
+  useEffect(() => {
+    fetchActiveNewsletter();
+  }, []);
+
+  const fetchActiveNewsletter = async () => {
+    try {
+      const response = await fetch('/api/newsletter/active');
+      const data = await response.json();
+
+      if (data.success && data.recipes) {
+        setRecipes(data.recipes);
+        // Afficher les infos de la newsletter la plus récente (première dans le tableau)
+        if (data.newsletters && data.newsletters.length > 0) {
+          const latestNewsletter = data.newsletters[0];
+          setWeekInfo({
+            weekNumber: latestNewsletter.weekNumber,
+            startDate: latestNewsletter.startDate,
+            endDate: latestNewsletter.endDate
+          });
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching active newsletter:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Transformer les recettes de la DB en format d'affichage
+  const transformRecipe = (recipe: Recipe): DisplayRecipe => ({
+    id: parseInt(recipe.id.substring(0, 8), 16),
+    name: recipe.title,
+    image: recipe.imageUrl || 'https://images.unsplash.com/photo-1546548970-71785318a17b?w=800&q=80',
+    badge: recipe.visibility === 'PREMIUM' ? 'Premium' : undefined,
+    time: `${recipe.totalTime}min`,
+    servings: recipe.servings,
+    difficulty: recipe.difficulty === 'DEBUTANT' ? 'Facile' : recipe.difficulty === 'INTERMEDIAIRE' ? 'Moyen' : 'Avancé'
+  });
+
+  // Grouper les recettes par catégorie
+  const patisserieRecipes = recipes
+    .filter(r => r.category.some(c => c.toLowerCase().includes('pâtisserie') || c.toLowerCase().includes('patisserie') || c.toLowerCase().includes('dessert')))
+    .map(transformRecipe);
+
+  const platsRecipes = recipes
+    .filter(r => r.category.some(c => c.toLowerCase().includes('plat') || c.toLowerCase().includes('cuisine')))
+    .map(transformRecipe);
+
+  const aperoRecipes = recipes
+    .filter(r => r.category.some(c => c.toLowerCase().includes('apéro') || c.toLowerCase().includes('apero') || c.toLowerCase().includes('entrée') || c.toLowerCase().includes('entree')))
+    .map(transformRecipe);
+
   return (
     <>
       <Header />
       <main>
         <HeroSection />
-        <RecipesCategorySection
-          title="Pâtisserie & Desserts"
-          subtitle="Des créations sucrées raffinées pour régaler vos proches"
-          recipes={patisserieRecipes}
-          bgColor="from-[#FFFBF7] via-[#FFF8F0] to-[#FFF5EB]"
-          isFirst={true}
-        />
-        <RecipesCategorySection
-          title="Plats & Cuisine"
-          subtitle="Des recettes savoureuses pour tous les jours et les grandes occasions"
-          recipes={platsRecipes}
-          bgColor="from-[#FFF8F0] via-[#FFFBF7] to-[#FFF5EB]"
-        />
-        <RecipesCategorySection
-          title="Apéritifs & Entrées"
-          subtitle="Commencez vos repas avec élégance et gourmandise"
-          recipes={aperoRecipes}
-          bgColor="from-[#FFF5EB] via-[#FFFBF7] to-[#FFF8F0]"
-        />
+
+        {loading ? (
+          <div style={{
+            textAlign: 'center',
+            padding: '80px 20px',
+            background: 'linear-gradient(to bottom, #FFFBF7, #FFF8F0)'
+          }}>
+            <div style={{ fontSize: '14px', color: '#6B5D52', fontWeight: 500 }}>
+              ⏳ Chargement des recettes de la semaine...
+            </div>
+          </div>
+        ) : recipes.length === 0 ? (
+          <div style={{
+            textAlign: 'center',
+            padding: '100px 20px',
+            background: 'linear-gradient(to bottom, #FFFBF7, #FFF8F0)'
+          }}>
+            <div style={{ fontSize: '48px', marginBottom: '20px' }}>📧</div>
+            <h2 style={{ fontSize: '24px', color: '#2D2D2D', marginBottom: '12px', fontWeight: 600 }}>
+              Aucune recette cette semaine
+            </h2>
+            <p style={{ fontSize: '16px', color: '#6B5D52', lineHeight: 1.6 }}>
+              Abonnez-vous à la newsletter pour recevoir les nouvelles recettes chaque semaine !
+            </p>
+          </div>
+        ) : (
+          <>
+            {weekInfo && (
+              <div style={{
+                background: 'linear-gradient(135deg, #D4AF37 0%, #C77A4E 100%)',
+                padding: '16px 20px',
+                textAlign: 'center',
+                color: '#000'
+              }}>
+                <div style={{ fontSize: '12px', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase', opacity: 0.8 }}>
+                  Semaine {weekInfo.weekNumber}
+                </div>
+                <div style={{ fontSize: '14px', fontWeight: 500, marginTop: '4px' }}>
+                  {new Date(weekInfo.startDate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' })}
+                  {' → '}
+                  {new Date(weekInfo.endDate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
+                </div>
+              </div>
+            )}
+
+            {aperoRecipes.length > 0 && (
+              <RecipesCategorySection
+                title="Entrée & Apéro"
+                subtitle="Commencez vos repas avec élégance et gourmandise"
+                recipes={aperoRecipes}
+                bgColor="from-[#FFFBF7] via-[#FFF8F0] to-[#FFF5EB]"
+                isFirst={true}
+              />
+            )}
+
+            {platsRecipes.length > 0 && (
+              <RecipesCategorySection
+                title="Plats & Cuisine"
+                subtitle="Des recettes savoureuses pour tous les jours et les grandes occasions"
+                recipes={platsRecipes}
+                bgColor="from-[#FFF8F0] via-[#FFFBF7] to-[#FFF5EB]"
+              />
+            )}
+
+            {patisserieRecipes.length > 0 && (
+              <RecipesCategorySection
+                title="Pâtisserie & Desserts"
+                subtitle="Des créations sucrées raffinées pour régaler vos proches"
+                recipes={patisserieRecipes}
+                bgColor="from-[#FFF5EB] via-[#FFFBF7] to-[#FFF8F0]"
+              />
+            )}
+          </>
+        )}
+
         <AboutStorySection />
         <TestimonialsSection />
         <SocialLinksSection />

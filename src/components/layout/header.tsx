@@ -82,7 +82,7 @@ export function Header() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="block font-serif text-3xl sm:text-4xl md:text-5xl font-light text-white hover:text-[var(--caramel)] transition-colors tracking-tight"
+                  className="block font-serif text-3xl sm:text-4xl md:text-5xl font-light text-white hover:text-[#D4AF37] transition-colors tracking-tight"
                   onClick={() => setIsMobileMenuOpen(false)}
                   style={{ animationDelay: `${index * 50}ms` }}
                 >

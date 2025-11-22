@@ -35,23 +35,23 @@ export function RecipesCategorySection({
       style={{ paddingTop: isFirst ? '20px' : '40px' }}
     >
       {/* Decorative elements */}
-      <div className="absolute top-20 right-10 w-32 h-32 rounded-full bg-[#E07A5F]/5 blur-3xl"></div>
-      <div className="absolute bottom-20 left-10 w-40 h-40 rounded-full bg-[#C9A961]/5 blur-3xl"></div>
+      <div className="absolute top-20 right-10 w-32 h-32 rounded-full bg-[#C77A4E]/5 blur-3xl"></div>
+      <div className="absolute bottom-20 left-10 w-40 h-40 rounded-full bg-[#D4AF37]/5 blur-3xl"></div>
 
       <div className="relative max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl 2xl:max-w-7xl px-5 sm:px-8 lg:px-12" style={{ margin: '0 auto' }}>
         {/* Section Header */}
         <div className="text-center mb-12 sm:mb-14 md:mb-16 lg:mb-20">
           {/* Ligne décorative au-dessus */}
           <div className="flex items-center justify-center mb-6 sm:mb-8 md:mb-10">
-            <div className="h-[1px] w-16 sm:w-24 md:w-32 bg-gradient-to-r from-transparent to-[#E07A5F]"></div>
+            <div className="h-[1px] w-16 sm:w-24 md:w-32" style={{ background: 'linear-gradient(to right, transparent, #D4AF37, #C77A4E)' }}></div>
             <div className="mx-4 sm:mx-6 md:mx-8">
-              <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-[#E07A5F]"></div>
+              <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full" style={{ background: 'linear-gradient(to right, #D4AF37, #C77A4E)' }}></div>
             </div>
-            <div className="h-[1px] w-16 sm:w-24 md:w-32 bg-gradient-to-l from-transparent to-[#E07A5F]"></div>
+            <div className="h-[1px] w-16 sm:w-24 md:w-32" style={{ background: 'linear-gradient(to left, transparent, #C77A4E, #D4AF37)' }}></div>
           </div>
 
           <h2 className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-light mb-4 sm:mb-5 md:mb-6 lg:mb-8 leading-[0.95] tracking-[-0.03em]">
-            <span className="bg-gradient-to-r from-[#E07A5F] to-[#C9A961] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#C77A4E] to-[#D4AF37] bg-clip-text text-transparent">
               {title}
             </span>
           </h2>
@@ -63,11 +63,38 @@ export function RecipesCategorySection({
         </div>
 
         {/* Recipes Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6 md:gap-8 lg:gap-10" style={{ marginTop: '3rem' }}>
-          {recipes.map((recipe) => (
+        <div
+          className={`${
+            recipes.length === 1
+              ? 'grid grid-cols-1 place-items-center gap-5 sm:gap-6 md:gap-8 lg:gap-10'
+              : recipes.length === 2
+              ? 'flex justify-center items-center'
+              : recipes.length === 3
+              ? 'grid grid-cols-2 md:flex md:justify-center md:items-center place-items-center'
+              : 'grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6 md:gap-8 lg:gap-10'
+          }`}
+          style={{
+            marginTop: '3rem',
+            gap: recipes.length === 2 ? '32px' : recipes.length === 3 ? '16px' : undefined
+          }}
+        >
+          {recipes.map((recipe, index) => (
             <div
               key={recipe.id}
-              className="group relative cursor-pointer"
+              className={`group relative cursor-pointer ${
+                recipes.length === 1
+                  ? 'w-full max-w-xs'
+                  : recipes.length === 2
+                  ? 'w-full max-w-xs'
+                  : recipes.length === 3
+                  ? index === 2
+                    ? 'col-span-2 md:col-span-1'
+                    : ''
+                  : ''
+              }`}
+              style={{
+                width: recipes.length === 3 ? 'min(320px, 45vw)' : undefined
+              }}
               onMouseEnter={() => setHoveredId(recipe.id)}
               onMouseLeave={() => setHoveredId(null)}
             >
@@ -85,7 +112,7 @@ export function RecipesCategorySection({
                 {/* Badge (si présent) */}
                 {recipe.badge && (
                   <div className="absolute top-3 right-3 z-10">
-                    <span className="text-[9px] sm:text-[10px] tracking-[0.2em] uppercase font-medium text-white bg-[#E07A5F] px-3 py-1.5 rounded-full shadow-lg">
+                    <span className="text-[9px] sm:text-[10px] tracking-[0.2em] uppercase font-medium text-white px-3 py-1.5 rounded-full shadow-lg" style={{ background: 'linear-gradient(to right, #D4AF37, #C77A4E)' }}>
                       {recipe.badge}
                     </span>
                   </div>

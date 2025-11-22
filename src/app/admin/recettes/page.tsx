@@ -30,6 +30,7 @@ export default function RecettesAdminPage() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<'all' | 'PUBLISHED' | 'DRAFT'>('all');
+  const [categoryFilter, setCategoryFilter] = useState<'all' | 'entree' | 'plat' | 'dessert'>('all');
 
   useEffect(() => {
     fetchRecipes();
@@ -68,7 +69,33 @@ export default function RecettesAdminPage() {
     }
   };
 
-  const filteredRecipes = recipes;
+  const filteredRecipes = recipes.filter(recipe => {
+    if (categoryFilter === 'all') return true;
+
+    const categories = recipe.category.map(c => c.toLowerCase());
+
+    if (categoryFilter === 'entree') {
+      return categories.some(c =>
+        c.includes('entrée') || c.includes('entree') ||
+        c.includes('apéro') || c.includes('apero')
+      );
+    }
+
+    if (categoryFilter === 'plat') {
+      return categories.some(c =>
+        c.includes('plat') || c.includes('cuisine')
+      );
+    }
+
+    if (categoryFilter === 'dessert') {
+      return categories.some(c =>
+        c.includes('pâtisserie') || c.includes('patisserie') ||
+        c.includes('dessert')
+      );
+    }
+
+    return true;
+  });
 
   return (
     <div style={{ display: 'flex', minHeight: '100vh', background: 'linear-gradient(135deg, #0a0e1a 0%, #0f1b2e 100%)' }}>
@@ -87,13 +114,29 @@ export default function RecettesAdminPage() {
           justifyContent: 'space-between',
           marginBottom: '40px'
         }}>
-          <div>
-            <h1 style={{ fontSize: '28px', fontWeight: 700, color: '#fff', marginBottom: '8px' }}>
-              Gestion des Recettes
-            </h1>
-            <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.6)' }}>
-              {recipes.length} recette{recipes.length > 1 ? 's' : ''} au total
-            </p>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div style={{
+              width: '8px',
+              height: '8px',
+              borderRadius: '50%',
+              background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
+              boxShadow: '0 0 12px rgba(251, 191, 36, 0.4)'
+            }} />
+            <div style={{
+              flex: 1,
+              height: '1px',
+              background: 'linear-gradient(90deg, rgba(251, 191, 36, 0.3) 0%, transparent 100%)',
+              width: '200px'
+            }} />
+            <span style={{
+              fontSize: '10px',
+              color: 'rgba(255,255,255,0.4)',
+              fontWeight: 600,
+              letterSpacing: '0.2em',
+              textTransform: 'uppercase'
+            }}>
+              Recettes
+            </span>
           </div>
 
           <button
@@ -130,32 +173,96 @@ export default function RecettesAdminPage() {
         {/* Filters */}
         <div style={{
           display: 'flex',
-          gap: '12px',
+          flexDirection: 'column',
+          gap: '16px',
           marginBottom: '24px'
         }}>
-          {['all', 'PUBLISHED', 'DRAFT'].map((f) => (
-            <button
-              key={f}
-              onClick={() => setFilter(f as any)}
-              style={{
-                padding: '10px 20px',
-                background: filter === f
-                  ? 'rgba(212, 175, 55, 0.2)'
-                  : 'rgba(255,255,255,0.05)',
-                border: filter === f
-                  ? '2px solid #D4AF37'
-                  : '1px solid rgba(255,255,255,0.1)',
-                borderRadius: '10px',
-                color: filter === f ? '#D4AF37' : 'rgba(255,255,255,0.7)',
-                fontSize: '14px',
-                fontWeight: 600,
-                cursor: 'pointer',
-                transition: 'all 0.3s'
-              }}
-            >
-              {f === 'all' ? 'Toutes' : f === 'PUBLISHED' ? 'Publiées' : 'Brouillons'}
-            </button>
-          ))}
+          {/* Filtre par statut */}
+          <div>
+            <div style={{
+              fontSize: '12px',
+              color: 'rgba(255,255,255,0.5)',
+              marginBottom: '8px',
+              fontWeight: 600,
+              textTransform: 'uppercase',
+              letterSpacing: '0.5px'
+            }}>
+              Statut
+            </div>
+            <div style={{ display: 'flex', gap: '12px' }}>
+              {['all', 'PUBLISHED', 'DRAFT'].map((f) => (
+                <button
+                  key={f}
+                  onClick={() => setFilter(f as any)}
+                  style={{
+                    padding: '10px 20px',
+                    background: filter === f
+                      ? 'rgba(212, 175, 55, 0.2)'
+                      : 'rgba(255,255,255,0.05)',
+                    border: filter === f
+                      ? '2px solid #D4AF37'
+                      : '1px solid rgba(255,255,255,0.1)',
+                    borderRadius: '10px',
+                    color: filter === f ? '#D4AF37' : 'rgba(255,255,255,0.7)',
+                    fontSize: '14px',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    transition: 'all 0.3s'
+                  }}
+                >
+                  {f === 'all' ? 'Toutes' : f === 'PUBLISHED' ? 'Publiées' : 'Brouillons'}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Filtre par catégorie */}
+          <div>
+            <div style={{
+              fontSize: '12px',
+              color: 'rgba(255,255,255,0.5)',
+              marginBottom: '8px',
+              fontWeight: 600,
+              textTransform: 'uppercase',
+              letterSpacing: '0.5px'
+            }}>
+              Catégorie
+            </div>
+            <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+              {[
+                { value: 'all', label: 'Toutes', icon: '🍽️' },
+                { value: 'entree', label: 'Entrées & Apéro', icon: '🥗' },
+                { value: 'plat', label: 'Plats', icon: '🍝' },
+                { value: 'dessert', label: 'Desserts', icon: '🍰' }
+              ].map((cat) => (
+                <button
+                  key={cat.value}
+                  onClick={() => setCategoryFilter(cat.value as any)}
+                  style={{
+                    padding: '10px 20px',
+                    background: categoryFilter === cat.value
+                      ? 'rgba(212, 175, 55, 0.2)'
+                      : 'rgba(255,255,255,0.05)',
+                    border: categoryFilter === cat.value
+                      ? '2px solid #D4AF37'
+                      : '1px solid rgba(255,255,255,0.1)',
+                    borderRadius: '10px',
+                    color: categoryFilter === cat.value ? '#D4AF37' : 'rgba(255,255,255,0.7)',
+                    fontSize: '14px',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    transition: 'all 0.3s',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px'
+                  }}
+                >
+                  <span>{cat.icon}</span>
+                  {cat.label}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Recipes Grid */}

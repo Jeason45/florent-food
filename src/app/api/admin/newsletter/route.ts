@@ -18,7 +18,10 @@ export async function GET(request: NextRequest) {
         scheduledAt: true,
         sentAt: true,
         createdAt: true,
-        content: true
+        content: true,
+        startDate: true,
+        endDate: true,
+        weekNumber: true
       }
     });
 
@@ -37,7 +40,10 @@ export async function GET(request: NextRequest) {
         totalClicks: n.clicksCount,
         scheduledFor: n.scheduledAt,
         sentAt: n.sentAt,
-        createdAt: n.createdAt
+        createdAt: n.createdAt,
+        startDate: n.startDate,
+        endDate: n.endDate,
+        weekNumber: n.weekNumber
       }))
     });
   } catch (error) {

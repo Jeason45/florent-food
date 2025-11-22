@@ -20,18 +20,18 @@
   --beige-sable: #EAE4DA;
   --beige-chaud: #E8E3D5;
 
-  --caramel: #A67C52;
-  --caramel-clair: #C9A961;
-  --caramel-fonce: #8B6F47;
+  --caramel: #C77A4E;
+  --caramel-clair: #D4AF37;
+  --caramel-fonce: #B8682F;
 
-  --accent-or: #C9A961;
-  --accent-or-clair: #D4B76A;
-  --accent-or-fonce: #B89C52;
+  --accent-or: #D4AF37;
+  --accent-or-clair: #E5C347;
+  --accent-or-fonce: #C09B30;
 
   /* Anciens noms pour compatibilité - à migrer */
-  --terracotta: #A67C52;
-  --terracotta-light: #C9A961;
-  --terracotta-dark: #8B6F47;
+  --terracotta: #C77A4E;
+  --terracotta-light: #D4AF37;
+  --terracotta-dark: #B8682F;
 
   --creme: #F5F3EE;
   --creme-light: #FAFAF9;
@@ -40,9 +40,9 @@
   --gris-charbon: #2A2A2A;
   --gris-moyen: #8B7355;
 
-  --or-accent: #C9A961;
-  --or-light: #D4B76A;
-  --or-dark: #B89C52;
+  --or-accent: #D4AF37;
+  --or-light: #E5C347;
+  --or-dark: #C09B30;
 
   --blanc: #FFFFFF;
   --blanc-casse: #FAFAF9;

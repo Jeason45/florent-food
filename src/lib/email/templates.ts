@@ -42,7 +42,7 @@ export function baseEmailTemplate({
       background-color: #FFFFFF;
     }
     .header {
-      background: linear-gradient(135deg, #E07A5F, #D4AF37);
+      background: linear-gradient(135deg, #D4AF37, #C77A4E);
       padding: 40px 20px;
       text-align: center;
     }
@@ -70,7 +70,7 @@ export function baseEmailTemplate({
     }
     .cta-button {
       display: inline-block;
-      background: linear-gradient(135deg, #E07A5F, #D4AF37);
+      background: linear-gradient(135deg, #D4AF37, #C77A4E);
       color: #FFFFFF !important;
       text-decoration: none;
       padding: 14px 32px;
@@ -91,7 +91,7 @@ export function baseEmailTemplate({
       font-size: 14px;
     }
     .footer a {
-      color: #E07A5F;
+      color: #D4AF37;
       text-decoration: none;
     }
     .divider {
@@ -105,7 +105,7 @@ export function baseEmailTemplate({
     .social-links a {
       display: inline-block;
       margin: 0 10px;
-      color: #E07A5F;
+      color: #D4AF37;
       text-decoration: none;
       font-weight: 500;
     }
@@ -170,51 +170,51 @@ export function baseEmailTemplate({
 }
 
 /**
- * Email de bienvenue (J+0)
+ * Email de bienvenue (inscription confirmée)
  */
 export function welcomeEmail(firstName?: string): string {
   const content = `
     <p>Bienvenue dans la famille Florent Food ! 🎉</p>
 
     <p>
-      Je suis ravi de t'accueillir parmi les passionnés de pâtisserie qui, comme toi,
-      rêvent de réussir les recettes des grands chefs à la maison.
+      Ton inscription est confirmée ! Je suis ravi de t'accueillir parmi les passionnés
+      de cuisine et pâtisserie qui, comme toi, aiment découvrir de nouvelles recettes.
     </p>
 
-    <p>
-      <strong>Pour bien commencer, je t'offre mon e-book exclusif :</strong><br>
-      "Les 10 Recettes Essentielles de la Pâtisserie Française"
-    </p>
-
-    <p style="background-color: #FAF8F0; padding: 20px; border-radius: 8px; border-left: 4px solid #E07A5F;">
+    <p style="background-color: #FAF8F0; padding: 20px; border-radius: 8px; border-left: 4px solid #D4AF37;">
       💡 <strong>Astuce de chef :</strong> Commence toujours par lire la recette en entier
       avant de te lancer. C'est le secret des pros !
     </p>
 
     <p>
-      Chaque semaine, tu recevras :
+      <strong>Chaque semaine, tu recevras :</strong>
     </p>
     <ul style="line-height: 2;">
-      <li>📖 Une nouvelle recette détaillée</li>
-      <li>🎥 Des astuces et techniques en vidéo</li>
-      <li>🍰 Des coulisses exclusives de mes créations</li>
-      <li>💬 Mes réponses à vos questions</li>
+      <li>📖 <strong>5 recettes détaillées</strong> (pâtisserie, plats & apéros)</li>
+      <li>📸 Des photos pas-à-pas pour réussir à tous les coups</li>
+      <li>🎯 Mes astuces et conseils de chef</li>
+      <li>🍰 Les coulisses de mes créations</li>
     </ul>
 
     <p>
-      <strong>Envie d'aller plus loin ?</strong><br>
-      Découvre mes 100+ recettes premium, vidéos HD et formations exclusives en
-      <a href="${process.env.NEXT_PUBLIC_SITE_URL}/membership" style="color: #E07A5F; text-decoration: underline;">
-        devenant membre
-      </a>.
+      Tu peux aussi me suivre sur les réseaux sociaux pour encore plus de contenu :
+    </p>
+    <p style="text-align: center; margin: 20px 0;">
+      <a href="https://instagram.com/florentfood" style="color: #D4AF37; margin: 0 10px;">📱 Instagram</a>
+      <a href="https://tiktok.com/@florentfood" style="color: #D4AF37; margin: 0 10px;">🎵 TikTok</a>
+      <a href="https://youtube.com/florentfood" style="color: #D4AF37; margin: 0 10px;">🎥 YouTube</a>
+    </p>
+
+    <p>
+      À très vite pour ta première recette ! 👨‍🍳
     </p>
   `;
 
   return baseEmailTemplate({
     firstName,
     content,
-    ctaText: "Télécharger mon e-book gratuit",
-    ctaLink: `${process.env.NEXT_PUBLIC_SITE_URL}/downloads/ebook-10-recettes.pdf`,
+    ctaText: "Découvrir toutes les recettes",
+    ctaLink: `${process.env.NEXT_PUBLIC_SITE_URL}`,
   });
 }
 

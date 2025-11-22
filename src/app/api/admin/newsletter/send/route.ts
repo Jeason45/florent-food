@@ -1,55 +1,70 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { sendEmail } from '@/lib/emailUtils';
+import { NewsletterStatus, NewsletterType, SubscriberStatus, SubscriptionType } from '@prisma/client';
 
 export async function POST(request: NextRequest) {
   try {
     const {
       subject,
       introMessage,
-      featuredRecipeId,
-      secondaryRecipeIds,
+      recipeIds,
       tipOfWeek,
-      sendTo
+      sendTo,
+      startDate,
+      endDate,
+      weekNumber,
+      status
     } = await request.json();
 
     // Validation
-    if (!subject || !introMessage || !featuredRecipeId) {
+    if (!subject || !introMessage) {
       return NextResponse.json(
-        { success: false, error: 'Champs obligatoires manquants' },
+        { success: false, error: 'Le sujet et le message d\'introduction sont obligatoires' },
+        { status: 400 }
+      );
+    }
+
+    if (!recipeIds || recipeIds.length === 0) {
+      return NextResponse.json(
+        { success: false, error: 'Au moins une recette doit être sélectionnée' },
+        { status: 400 }
+      );
+    }
+
+    if (!startDate || !endDate) {
+      return NextResponse.json(
+        { success: false, error: 'Les dates de début et de fin sont obligatoires' },
         { status: 400 }
       );
     }
 
     // Récupérer les recettes
-    const recipeIds = [featuredRecipeId, ...secondaryRecipeIds].filter(Boolean);
     const recipes = await prisma.recipe.findMany({
       where: {
         id: { in: recipeIds }
       }
     });
 
-    const featuredRecipe = recipes.find(r => r.id === featuredRecipeId);
-    if (!featuredRecipe) {
+    if (recipes.length !== recipeIds.length) {
       return NextResponse.json(
-        { success: false, error: 'Recette principale introuvable' },
+        { success: false, error: 'Certaines recettes sont introuvables' },
         { status: 404 }
       );
     }
 
-    const secondaryRecipes = secondaryRecipeIds
-      .map((id: string) => recipes.find(r => r.id === id))
-      .filter(Boolean);
+    const featuredRecipe = recipes[0]; // La première recette
+    const secondaryRecipes = recipes.slice(1); // Les recettes suivantes
 
     // Récupérer les abonnés selon le filtre
     let subscriberFilter: any = {
-      status: 'ACTIVE'
+      status: SubscriberStatus.ACTIVE
     };
 
     if (sendTo === 'FREE') {
-      subscriberFilter.subscriptionType = 'FREE';
+      subscriberFilter.subscriptionType = SubscriptionType.FREE;
     } else if (sendTo === 'PREMIUM') {
-      subscriberFilter.subscriptionType = 'PREMIUM';
+      subscriberFilter.subscriptionType = SubscriptionType.PREMIUM;
     }
 
     const subscribers = await prisma.newsletterSubscriber.findMany({
@@ -70,7 +85,8 @@ export async function POST(request: NextRequest) {
       featuredRecipe,
       secondaryRecipes,
       tipOfWeek,
-      sendTo
+      sendTo,
+      recipes
     });
 
     // Créer un enregistrement newsletter dans la DB
@@ -80,16 +96,29 @@ export async function POST(request: NextRequest) {
         content: {
           html: newsletterHTML,
           introMessage,
-          featuredRecipeId,
-          secondaryRecipeIds,
+          recipeIds,
           tipOfWeek,
           sendTo
         },
-        type: 'REGULAR',
-        status: 'SENT',
+        type: NewsletterType.REGULAR,
+        status: NewsletterStatus.ACTIVE,
+        startDate: new Date(startDate),
+        endDate: new Date(endDate),
+        weekNumber,
         recipientsCount: subscribers.length,
         sentAt: new Date()
       }
+    });
+
+    // Créer les relations NewsletterRecipe
+    const newsletterRecipes = recipeIds.map((recipeId: string, index: number) => ({
+      newsletterId: newsletter.id,
+      recipeId,
+      position: index + 1
+    }));
+
+    await prisma.newsletterRecipe.createMany({
+      data: newsletterRecipes
     });
 
     // Envoyer à tous les abonnés
@@ -127,10 +156,10 @@ export async function POST(request: NextRequest) {
       newsletterId: newsletter.id
     });
 
-  } catch (error) {
+  } catch (error: any) {
     console.error('❌ Error sending newsletter:', error);
     return NextResponse.json(
-      { success: false, error: 'Erreur lors de l\'envoi' },
+      { success: false, error: error.message || 'Erreur lors de l\'envoi' },
       { status: 500 }
     );
   }

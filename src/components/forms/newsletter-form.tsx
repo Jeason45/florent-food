@@ -15,12 +15,6 @@ const newsletterSchema = z.object({
     .email("Email invalide")
     .toLowerCase()
     .trim(),
-  firstName: z
-    .string()
-    .min(2, "Le prénom doit contenir au moins 2 caractères")
-    .max(50, "Le prénom est trop long")
-    .trim()
-    .optional(),
   source: z.string().optional(),
 });
 
@@ -97,7 +91,7 @@ export function NewsletterForm({
           <div className="flex items-center gap-2 text-white bg-green-500/20 border border-green-500/30 rounded-lg px-4 py-3">
             <CheckCircle2 className="w-5 h-5 flex-shrink-0" />
             <p className="text-sm">
-              Merci ! Vérifie ton email pour confirmer ton inscription.
+              Inscription confirmée ! Tu vas recevoir un email de bienvenue.
             </p>
           </div>
         ) : (
@@ -142,7 +136,7 @@ export function NewsletterForm({
     );
   }
 
-  // Variant modal (vertical, avec prénom)
+  // Variant modal (vertical)
   if (variant === "modal") {
     return (
       <form onSubmit={handleSubmit(onSubmit)} className={`space-y-4 ${className}`}>
@@ -153,7 +147,7 @@ export function NewsletterForm({
               Bienvenue dans la famille ! 🎉
             </h3>
             <p className="text-[var(--gris-moyen)] mb-4">
-              Vérifie ton email (et tes spams) pour confirmer ton inscription.
+              C'est confirmé ! Tu vas recevoir un email de bienvenue.
             </p>
             <p className="text-sm text-[var(--gris-moyen)]">
               Tu vas recevoir mes meilleures recettes chaque semaine !
@@ -162,21 +156,6 @@ export function NewsletterForm({
         ) : (
           <>
             <div className="space-y-4">
-              <div>
-                <Input
-                  type="text"
-                  placeholder="Ton prénom"
-                  className="w-full"
-                  {...register("firstName")}
-                  disabled={status === "loading"}
-                />
-                {errors.firstName && (
-                  <p className="text-sm text-red-500 mt-1">
-                    {errors.firstName.message}
-                  </p>
-                )}
-              </div>
-
               <div>
                 <Input
                   type="email"
@@ -236,7 +215,7 @@ export function NewsletterForm({
               Inscription confirmée ! 🎉
             </p>
             <p className="text-sm text-green-700 mt-1">
-              Vérifie ton email pour valider ton inscription.
+              Tu vas recevoir un email de bienvenue.
             </p>
           </div>
         </div>
