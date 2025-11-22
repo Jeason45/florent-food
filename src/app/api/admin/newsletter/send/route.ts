@@ -188,17 +188,19 @@ function generateNewsletterHTML({
 
     return `
     <td style="width: 50%; padding: 0;">
-      <div style="position: relative; height: 350px; overflow: hidden;">
-        <img src="${imageUrl}" alt="${recipe?.title || ''}" style="width: 100%; height: 100%; object-fit: cover; display: block;">
-        <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 30px; background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.9) 100%);">
-          <h3 style="font-size: 22px; color: #fff; font-weight: 700; margin-bottom: 8px;">
-            ${recipe?.title || ''}
-          </h3>
-          <a href="${baseUrl}/recettes/${recipe?.slug || ''}" style="color: #D4AF37; text-decoration: none; font-size: 12px; letter-spacing: 1px; text-transform: uppercase;">
-            Découvrir →
-          </a>
+      <a href="${baseUrl}/recettes/${recipe?.slug || ''}" style="text-decoration: none; display: block;">
+        <div style="position: relative; height: 350px; overflow: hidden;">
+          <img src="${imageUrl}" alt="${recipe?.title || ''}" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+          <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 30px; background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.9) 100%);">
+            <h3 style="font-size: 22px; color: #fff; font-weight: 700; margin-bottom: 8px;">
+              ${recipe?.title || ''}
+            </h3>
+            <span style="color: #D4AF37; text-decoration: none; font-size: 12px; letter-spacing: 1px; text-transform: uppercase;">
+              Découvrir →
+            </span>
+          </div>
         </div>
-      </div>
+      </a>
     </td>
   `;
   }).join('');
@@ -246,8 +248,8 @@ function generateNewsletterHTML({
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${subject}</title>
 </head>
-<body style="margin:0; padding:0; background:#000;">
-  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:700px; margin:0 auto; background:#000;">
+<body style="margin:0; padding:0; background:#FFFBF7;">
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:700px; margin:0 auto; background:#FFFBF7;">
     <!-- Hero -->
     <tr>
       <td style="position: relative; height: 500px; background: linear-gradient(135deg, #D4AF37 0%, #C77A4E 100%); display: flex; align-items: center; justify-content: center; text-align: center; padding: 60px 40px;">
@@ -279,24 +281,26 @@ function generateNewsletterHTML({
 
     <!-- Featured Recipe -->
     <tr>
-      <td style="background: #000; padding: 0; position: relative;">
-        <div style="position: relative;">
-          <img src="${featuredRecipe.imageUrl?.startsWith('http') ? featuredRecipe.imageUrl : `${baseUrl}${featuredRecipe.imageUrl || ''}`}" alt="${featuredRecipe.title}" style="width: 100%; height: 450px; object-fit: cover; display: block;">
-          <div style="padding: 50px; background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.9) 100%); position: absolute; bottom: 0; left: 0; right: 0;">
-            <div style="font-size: 80px; font-weight: 900; color: #D4AF37; line-height: 1; margin-bottom: 10px; opacity: 0.3;">
-              01
+      <td style="background: #FFFBF7; padding: 0; position: relative;">
+        <a href="${baseUrl}/recettes/${featuredRecipe.slug}" style="text-decoration: none; display: block;">
+          <div style="position: relative;">
+            <img src="${featuredRecipe.imageUrl?.startsWith('http') ? featuredRecipe.imageUrl : `${baseUrl}${featuredRecipe.imageUrl || ''}`}" alt="${featuredRecipe.title}" style="width: 100%; height: 450px; object-fit: cover; display: block;">
+            <div style="padding: 50px; background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.9) 100%); position: absolute; bottom: 0; left: 0; right: 0;">
+              <div style="font-size: 80px; font-weight: 900; color: #D4AF37; line-height: 1; margin-bottom: 10px; opacity: 0.3;">
+                01
+              </div>
+              <h2 style="font-size: 38px; color: #fff; font-weight: 700; margin-bottom: 16px; text-transform: uppercase; letter-spacing: -0.5px;">
+                ${featuredRecipe.title}
+              </h2>
+              <p style="font-size: 16px; color: rgba(255,255,255,0.9); line-height: 1.6; margin-bottom: 24px;">
+                ${featuredRecipe.description || 'Une création exceptionnelle qui va éveiller vos papilles.'}
+              </p>
+              <span style="display: inline-block; background: #D4AF37; color: #000; padding: 14px 32px; text-decoration: none; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700;">
+                Voir la Recette
+              </span>
             </div>
-            <h2 style="font-size: 38px; color: #fff; font-weight: 700; margin-bottom: 16px; text-transform: uppercase; letter-spacing: -0.5px;">
-              ${featuredRecipe.title}
-            </h2>
-            <p style="font-size: 16px; color: rgba(255,255,255,0.9); line-height: 1.6; margin-bottom: 24px;">
-              ${featuredRecipe.description || 'Une création exceptionnelle qui va éveiller vos papilles.'}
-            </p>
-            <a href="${baseUrl}/recettes/${featuredRecipe.slug}" style="display: inline-block; background: #D4AF37; color: #000; padding: 14px 32px; text-decoration: none; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700;">
-              Voir la Recette
-            </a>
           </div>
-        </div>
+        </a>
       </td>
     </tr>
 
@@ -304,7 +308,7 @@ function generateNewsletterHTML({
     <!-- Grid Recipes -->
     <tr>
       <td>
-        <table width="100%" cellpadding="0" cellspacing="2" border="0" style="background: #000;">
+        <table width="100%" cellpadding="0" cellspacing="2" border="0" style="background: #FFFBF7;">
           <tr>
             ${secondaryRecipesHTML}
           </tr>
@@ -319,11 +323,11 @@ function generateNewsletterHTML({
 
     <!-- Footer -->
     <tr>
-      <td style="background: #000; padding: 50px; text-align: center; border-top: 1px solid #333;">
+      <td style="background: #2D2D2D; padding: 50px; text-align: center; border-top: 1px solid rgba(212, 175, 55, 0.2);">
         <div style="font-size: 24px; color: #D4AF37; font-weight: 900; margin-bottom: 20px; letter-spacing: 2px;">
           FLORENT FOOD
         </div>
-        <p style="font-size: 11px; color: #666; line-height: 2; letter-spacing: 1px; text-transform: uppercase; margin: 0;">
+        <p style="font-size: 11px; color: rgba(255,255,255,0.6); line-height: 2; letter-spacing: 1px; text-transform: uppercase; margin: 0;">
           Haute Cuisine · Paris<br>
           <a href="${baseUrl}/newsletter/unsubscribe?email={{EMAIL}}" style="color: #D4AF37; text-decoration: none;">Se Désinscrire</a> ·
           <a href="${baseUrl}/newsletter/preferences?email={{EMAIL}}" style="color: #D4AF37; text-decoration: none;">Préférences</a>
