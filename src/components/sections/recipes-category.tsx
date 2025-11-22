@@ -38,7 +38,7 @@ export function RecipesCategorySection({
       <div className="absolute top-20 right-10 w-32 h-32 rounded-full bg-[#E07A5F]/5 blur-3xl"></div>
       <div className="absolute bottom-20 left-10 w-40 h-40 rounded-full bg-[#C9A961]/5 blur-3xl"></div>
 
-      <div className="relative w-full max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl 2xl:max-w-7xl px-5 sm:px-8 lg:px-12" style={{ marginLeft: 'auto', marginRight: 'auto' }}>
+      <div className="relative max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl 2xl:max-w-7xl px-5 sm:px-8 lg:px-12" style={{ margin: '0 auto' }}>
         {/* Section Header */}
         <div className="text-center mb-12 sm:mb-14 md:mb-16 lg:mb-20">
           {/* Ligne décorative au-dessus */}
@@ -56,14 +56,14 @@ export function RecipesCategorySection({
             </span>
           </h2>
           {subtitle && (
-            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-[var(--gris-taupe)] max-w-2xl mx-auto leading-relaxed font-light mt-4 sm:mt-5 md:mt-6">
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-[var(--gris-taupe)] max-w-5xl leading-relaxed font-light" style={{ textAlign: 'center', margin: '0 auto', marginTop: '0.75rem' }}>
               {subtitle}
             </p>
           )}
         </div>
 
         {/* Recipes Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6 md:gap-8 lg:gap-10">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6 md:gap-8 lg:gap-10" style={{ marginTop: '3rem' }}>
           {recipes.map((recipe) => (
             <div
               key={recipe.id}

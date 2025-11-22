@@ -3,7 +3,7 @@
 export function AboutStorySection() {
   return (
     <section className="relative pb-20 sm:pb-24 md:pb-32 lg:pb-40 bg-gradient-to-br from-[#FFF8F0] via-[#FFFBF7] to-[#FFF5EB] overflow-hidden" style={{ paddingTop: '40px' }}>
-      <div className="relative w-full max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl 2xl:max-w-7xl px-5 sm:px-8 lg:px-12" style={{ marginLeft: 'auto', marginRight: 'auto' }}>
+      <div className="relative max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl 2xl:max-w-7xl px-5 sm:px-8 lg:px-12" style={{ margin: '0 auto' }}>
         {/* Titre avec le même style que les sections recettes */}
         <div className="text-center mb-12 sm:mb-14 md:mb-16 lg:mb-20">
           {/* Ligne décorative au-dessus */}
@@ -21,16 +21,16 @@ export function AboutStorySection() {
             </span>
           </h2>
 
-          <div className="max-w-2xl mx-auto space-y-5 sm:space-y-6 md:space-y-8 text-base sm:text-lg md:text-xl lg:text-2xl text-[var(--gris-taupe)] leading-relaxed font-light mt-4 sm:mt-5 md:mt-6">
-            <p>
+          <div className="max-w-5xl space-y-5 sm:space-y-6 md:space-y-8 text-base sm:text-lg md:text-xl lg:text-2xl text-[var(--gris-taupe)] leading-relaxed font-light" style={{ margin: '0 auto', marginTop: '0.75rem' }}>
+            <p style={{ textAlign: 'center' }}>
               J'ai eu la chance de participer à un défi culinaire organisé par <strong className="font-medium text-[var(--noir-luxe)]">Audi</strong>, devant <strong className="font-medium text-[var(--noir-luxe)]">Thierry Marx</strong> et <strong className="font-medium text-[var(--noir-luxe)]">Jessica Préalpato</strong>, élue meilleure pâtissière du monde en 2019.
             </p>
 
-            <p>
+            <p style={{ textAlign: 'center' }}>
               J'ai également collaboré avec des marques comme <strong className="font-medium text-[var(--noir-luxe)]">McDonald's</strong> et <strong className="font-medium text-[var(--noir-luxe)]">Uber Eats</strong>.
             </p>
 
-            <p>
+            <p style={{ textAlign: 'center' }}>
               Ce qui m'anime au quotidien, c'est simple : partager des recettes accessibles et transmettre ma passion pour la cuisine.
             </p>
           </div>

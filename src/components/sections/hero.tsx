@@ -30,7 +30,7 @@ export function HeroSection() {
       {/* Bottom Pricing Section */}
       <div className="absolute bottom-0 left-0 right-0 z-30">
         <div className="relative py-12 sm:py-16 md:py-20">
-          <div className="w-full max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl 2xl:max-w-7xl px-4 sm:px-6 md:px-8 lg:px-12" style={{ marginLeft: 'auto', marginRight: 'auto' }}>
+          <div className="max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl 2xl:max-w-7xl px-4 sm:px-6 md:px-8 lg:px-12" style={{ margin: '0 auto' }}>
             {/* Pills Tabs avec fond commun - VERSION RADICALE */}
             <div className="flex justify-center mb-24 sm:mb-28 md:mb-32 lg:mb-40 px-4">
               <div className="inline-flex gap-3 md:gap-4 bg-white/10 backdrop-blur-md p-3 md:p-4 rounded-full">
