@@ -66,7 +66,7 @@ export async function POST(request: NextRequest) {
           }
         ],
         status: {
-          in: ['draft', 'scheduled', 'active']
+          in: [NewsletterStatus.DRAFT, NewsletterStatus.SCHEDULED, NewsletterStatus.ACTIVE]
         }
       }
     });
