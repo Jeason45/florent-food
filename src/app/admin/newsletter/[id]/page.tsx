@@ -1,9 +1,10 @@
 'use client';
 
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import AdminSidebar from '@/components/admin/AdminSidebar';
 import { useSidebar } from '@/components/admin/SidebarContext';
+import { ArrowLeft } from 'lucide-react';
 
 interface Newsletter {
   id: string;
@@ -18,6 +19,7 @@ interface Newsletter {
 
 export default function ViewNewsletterPage() {
   const params = useParams();
+  const router = useRouter();
   const newsletterId = params.id as string;
   const { sidebarWidth } = useSidebar();
   const [newsletter, setNewsletter] = useState<Newsletter | null>(null);
@@ -89,6 +91,36 @@ export default function ViewNewsletterPage() {
         transition: 'margin-left 0.3s ease',
         padding: '40px'
       }}>
+        {/* Bouton Retour */}
+        <button
+          onClick={() => router.push('/admin/newsletter')}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            background: 'rgba(255,255,255,0.05)',
+            border: '1px solid rgba(255,255,255,0.1)',
+            borderRadius: '8px',
+            padding: '10px 16px',
+            color: '#fff',
+            fontSize: '14px',
+            cursor: 'pointer',
+            marginBottom: '24px',
+            transition: 'all 0.2s ease'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
+            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
+            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)';
+          }}
+        >
+          <ArrowLeft size={18} />
+          Retour aux newsletters
+        </button>
+
         {/* Header */}
         <div style={{
           marginBottom: '30px',
