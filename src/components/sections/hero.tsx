@@ -30,10 +30,10 @@ export function HeroSection() {
       {/* Bottom Pricing Section */}
       <div className="absolute bottom-0 left-0 right-0 z-30">
         <div className="relative py-12 sm:py-16 md:py-20">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
+          <div className="w-full max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl 2xl:max-w-7xl px-4 sm:px-6 md:px-8 lg:px-12" style={{ marginLeft: 'auto', marginRight: 'auto' }}>
             {/* Pills Tabs avec fond commun - VERSION RADICALE */}
-            <div className="flex justify-center mb-24 sm:mb-28 md:mb-32 lg:mb-36 px-4">
-              <div className="inline-flex gap-3 bg-white/10 backdrop-blur-md p-3 rounded-full">
+            <div className="flex justify-center mb-24 sm:mb-28 md:mb-32 lg:mb-40 px-4">
+              <div className="inline-flex gap-3 md:gap-4 bg-white/10 backdrop-blur-md p-3 md:p-4 rounded-full">
                 <button
                   onClick={() => setSelectedPlan("free")}
                   style={{
@@ -75,19 +75,19 @@ export function HeroSection() {
 
             {/* Details Card - UPDATED */}
             <div className="bg-[#6B5D52]/40 backdrop-blur-3xl rounded-[1.5rem] shadow-2xl border border-white/5">
-              <div className="px-12 sm:px-16 md:px-20 lg:px-24 pb-8 sm:pb-10 md:pb-12">
+              <div className="px-12 sm:px-16 md:px-20 lg:px-24 pb-8 sm:pb-10 md:pb-12 lg:pb-14">
                 {/* Grand espace en haut - VISIBLE */}
-                <div className="h-4 sm:h-5 md:h-6 lg:h-7"></div>
+                <div className="h-4 sm:h-5 md:h-6 lg:h-8"></div>
 
                 {/* Features List */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 sm:gap-x-10 gap-y-4 sm:gap-y-5 mb-12 sm:mb-14">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 sm:gap-x-10 md:gap-x-12 gap-y-4 sm:gap-y-5 md:gap-y-6 mb-12 sm:mb-14 md:mb-16 lg:mb-20">
                   {(selectedPlan === "free"
                     ? ["1 recette par semaine", "Accès à 25 recettes exclusives", "Newsletter hebdomadaire", "Conseils et astuces"]
                     : ["7 recettes par semaine", "Accès à +150 recettes exclusives", "Liste de courses automatique", "Vidéos pas-à-pas détaillées", "Newsletter hebdomadaire", "Conseils et astuces"]
                   ).map((feature, i) => (
-                    <div key={i} className="flex items-center gap-2.5 sm:gap-3">
-                      <div className="w-1 h-1 rounded-full bg-[#D98066] flex-shrink-0"></div>
-                      <span className="text-sm sm:text-[15px] text-white font-light tracking-wide">
+                    <div key={i} className="flex items-center gap-2.5 sm:gap-3 md:gap-4">
+                      <div className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-[#D98066] flex-shrink-0"></div>
+                      <span className="text-sm sm:text-[15px] md:text-base lg:text-lg text-white font-light tracking-wide">
                         {feature}
                       </span>
                     </div>
@@ -96,7 +96,7 @@ export function HeroSection() {
               </div>
 
               {/* CTA Button - Intégré au bas de la carte */}
-              <div style={{
+              <div className="md:pt-4 lg:pt-6" style={{
                 paddingLeft: '0',
                 paddingRight: '0',
                 paddingTop: '1rem',

@@ -156,7 +156,6 @@ body {
   font-size: var(--text-base);
   line-height: 1.65;
   font-weight: 300;
-  overflow-x: hidden;
 }
 
 /* ============================================

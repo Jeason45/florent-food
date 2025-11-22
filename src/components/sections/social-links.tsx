@@ -3,7 +3,7 @@
 export function SocialLinksSection() {
   return (
     <section className="relative py-16 sm:py-20 md:py-24 bg-gradient-to-br from-[#FFFBF7] via-[#FFF8F0] to-[#FFF5EB]">
-      <div className="relative w-full max-w-4xl mx-auto px-5 sm:px-8 lg:px-12">
+      <div className="relative w-full max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl 2xl:max-w-7xl px-5 sm:px-8 lg:px-12" style={{ marginLeft: 'auto', marginRight: 'auto' }}>
         <div className="text-center">
           <p className="text-xs sm:text-sm text-[var(--gris-taupe)] uppercase tracking-[0.2em] font-light mb-6 sm:mb-8">
             Retrouve-moi sur
