@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing Tabs Variations - 25+ Designs</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0a0a0a;
+            color: white;
+            padding: 60px 20px;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 42px;
+            margin-bottom: 20px;
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #D4AF37 0%, #C77A4E 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 16px;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 80px;
+            font-weight: 300;
+        }
+
+        .proposal {
+            margin-bottom: 120px;
+            background: #1a1410;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid rgba(212, 175, 55, 0.15);
+        }
+
+        .proposal-header {
+            padding: 32px 40px;
+            background: linear-gradient(135deg, #2a2420 0%, #1a1410 100%);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .proposal-number {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: #D4AF37;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .proposal-title {
+            font-size: 28px;
+            font-weight: 300;
+            color: white;
+            margin-bottom: 8px;
+        }
+
+        .proposal-desc {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        .preview {
+            padding: 0;
+            min-height: 500px;
+        }
+
+        /* DESIGN 1 - Pills Tabs Centered */
+        .design-1 {
+            background: linear-gradient(135deg, #1a1410 0%, #0f0b08 100%);
+            padding: 80px 40px;
+        }
+
+        .design-1 .content {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .design-1 h2 {
+            font-size: 36px;
+            font-weight: 300;
+            margin-bottom: 12px;
+        }
+
+        .design-1 .accent {
+            color: #D4AF37;
+            font-style: italic;
+        }
+
+        .design-1 .subtitle {
+            font-size: 14px;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 48px;
+        }
+
+        .design-1 .tabs {
+            display: inline-flex;
+            gap: 12px;
+            background: rgba(255,255,255,0.05);
+            padding: 6px;
+            border-radius: 100px;
+            margin-bottom: 40px;
+        }
+
+        .design-1 .tab {
+            padding: 14px 36px;
+            background: transparent;
+            border: none;
+            border-radius: 100px;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: rgba(255,255,255,0.5);
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .design-1 .tab.active {
+            background: linear-gradient(135deg, #D4AF37 0%, #C77A4E 100%);
+            color: #000;
+            font-weight: 600;
+        }
+
+        .design-1 .details {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(212,175,55,0.2);
+            border-radius: 20px;
+            padding: 48px 40px;
+        }
+
+        .design-1 .price-big {
+            font-size: 64px;
+            font-weight: 300;
+            color: #D4AF37;
+            margin-bottom: 8px;
+        }
+
+        .design-1 .price-period {
+            font-size: 16px;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 32px;
+        }
+
+        .design-1 .features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 36px;
+            text-align: left;
+        }
+
+        .design-1 .feature {
+            font-size: 13px;
+            color: rgba(255,255,255,0.8);
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .design-1 .feature::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #D4AF37;
+            font-weight: 600;
+        }
+
+        .design-1 .cta {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #D4AF37 0%, #C77A4E 100%);
+            border: none;
+            border-radius: 14px;
+            color: #000;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* DESIGN 2 - Segmented Control iOS Style */
+        .design-2 {
+            background: linear-gradient(135deg, #1a1410 0%, #0f0b08 100%);
+            padding: 80px 40px;
+        }
+
+        .design-2 .content {
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .design-2 h2 {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 300;
+            margin-bottom: 48px;
+        }
+
+        .design-2 .segmented {
+            display: flex;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 14px;
+            padding: 4px;
+            margin-bottom: 36px;
+        }
+
+        .design-2 .segment {
+            flex: 1;
+            padding: 16px;
+            background: transparent;
+            border: none;
+            border-radius: 12px;
+            color: rgba(255,255,255,0.5);
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .design-2 .segment.active {
+            background: rgba(212,175,55,0.2);
+            color: #D4AF37;
+            font-weight: 500;
+        }
+
+        .design-2 .plan-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(212,175,55,0.2);
+            border-radius: 20px;
+            padding: 40px;
+        }
+
+        .design-2 .plan-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .design-2 .plan-name {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #D4AF37;
+            margin-bottom: 16px;
+        }
+
+        .design-2 .plan-price {
+            font-size: 52px;
+            font-weight: 300;
+        }
+
+        .design-2 .plan-desc {
+            font-size: 13px;
+            color: rgba(255,255,255,0.6);
+            margin-top: 12px;
+        }
+
+        .design-2 .features-list {
+            list-style: none;
+            margin-bottom: 32px;
+        }
+
+        .design-2 .features-list li {
+            font-size: 14px;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 14px;
+            padding-left: 28px;
+            position: relative;
+        }
+
+        .design-2 .features-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #D4AF37;
+            font-size: 16px;
+        }
+
+        /* DESIGN 3 - Underline Tabs */
+        .design-3 {
+            background: linear-gradient(135deg, #1a1410 0%, #0f0b08 100%);
+            padding: 80px 40px;
+        }
+
+        .design-3 .content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .design-3 h2 {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 300;
+            margin-bottom: 48px;
+        }
+
+        .design-3 .tabs-underline {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 40px;
+        }
+
+        .design-3 .tab-underline {
+            padding: 16px 24px;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid transparent;
+            color: rgba(255,255,255,0.5);
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            top: 1px;
+        }
+
+        .design-3 .tab-underline.active {
+            border-bottom-color: #D4AF37;
+            color: #D4AF37;
+            font-weight: 500;
+        }
+
+        .design-3 .content-box {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(212,175,55,0.15);
+            border-radius: 20px;
+            padding: 48px 40px;
+        }
+
+        .design-3 .price-row {
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 28px;
+        }
+
+        .design-3 .price-amount {
+            font-size: 56px;
+            font-weight: 300;
+            color: #D4AF37;
+        }
+
+        .design-3 .price-suffix {
+            font-size: 18px;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .design-3 .description {
+            text-align: center;
+            font-size: 14px;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 36px;
+        }
+
+        .design-3 .features-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-bottom: 36px;
+        }
+
+        .design-3 .feature-item {
+            font-size: 13px;
+            color: rgba(255,255,255,0.8);
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .design-3 .feature-item::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #D4AF37;
+            font-size: 18px;
+        }
+
+        /* DESIGN 4 - Vertical Pills */
+        .design-4 {
+            background: linear-gradient(135deg, #1a1410 0%, #0f0b08 100%);
+            padding: 80px 40px;
+        }
+
+        .design-4 .content {
+            max-width: 800px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 32px;
+        }
+
+        .design-4 .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .design-4 h2 {
+            font-size: 20px;
+            font-weight: 400;
+            margin-bottom: 20px;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .design-4 .pill {
+            padding: 20px 24px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: left;
+        }
+
+        .design-4 .pill.active {
+            border-color: #D4AF37;
+            background: rgba(212,175,55,0.1);
+        }
+
+        .design-4 .pill-name {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #D4AF37;
+            margin-bottom: 8px;
+        }
+
+        .design-4 .pill-price {
+            font-size: 24px;
+            font-weight: 300;
+        }
+
+        .design-4 .main-content {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(212,175,55,0.2);
+            border-radius: 20px;
+            padding: 40px;
+        }
+
+        .design-4 .plan-title {
+            font-size: 28px;
+            font-weight: 300;
+            margin-bottom: 12px;
+        }
+
+        .design-4 .plan-subtitle {
+            font-size: 13px;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 32px;
+        }
+
+        .design-4 .features {
+            list-style: none;
+            margin-bottom: 32px;
+        }
+
+        .design-4 .features li {
+            font-size: 14px;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 12px;
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .design-4 .features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #D4AF37;
+        }
+
+        /* DESIGN 5 - Toggle Switch Modern */
+        .design-5 {
+            background: linear-gradient(135deg, #1a1410 0%, #0f0b08 100%);
+            padding: 80px 40px;
+        }
+
+        .design-5 .content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .design-5 h2 {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 300;
+            margin-bottom: 16px;
+        }
+
+        .design-5 .hint {
+            text-align: center;
+            font-size: 13px;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 40px;
+        }
+
+        .design-5 .toggle-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .design-5 .toggle-label {
+            font-size: 14px;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .design-5 .toggle-label.active {
+            color: #D4AF37;
+            font-weight: 500;
+        }
+
+        .design-5 .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 32px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 100px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .design-5 .toggle-switch.active {
+            background: linear-gradient(135deg, #D4AF37 0%, #C77A4E 100%);
+        }
+
+        .design-5 .toggle-knob {
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .design-5 .toggle-switch.active .toggle-knob {
+            left: 32px;
+        }
+
+        .design-5 .plan-display {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(212,175,55,0.2);
+            border-radius: 24px;
+            padding: 48px 40px;
+            text-align: center;
+        }
+
+        .design-5 .plan-badge {
+            display: inline-block;
+            background: rgba(212,175,55,0.15);
+            color: #D4AF37;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            margin-bottom: 20px;
+        }
+
+        .design-5 .plan-price-display {
+            font-size: 60px;
+            font-weight: 300;
+            color: #D4AF37;
+            margin-bottom: 32px;
+        }
+
+        .design-5 .features-compact {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 36px;
+            text-align: left;
+        }
+
+        .design-5 .features-compact li {
+            list-style: none;
+            font-size: 13px;
+            color: rgba(255,255,255,0.8);
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .design-5 .features-compact li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #D4AF37;
+        }
+
+        /* DESIGN 6 - Button Group Tabs */
+        .design-6 {
+            background: linear-gradient(135deg, #1a1410 0%, #0f0b08 100%);
+            padding: 80px 40px;
+        }
+
+        .design-6 .content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .design-6 h2 {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 300;
+            margin-bottom: 48px;
+        }
+
+        .design-6 .button-group {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .design-6 .btn-tab {
+            padding: 18px 40px;
+            background: rgba(255,255,255,0.03);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 14px;
+            color: rgba(255,255,255,0.6);
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .design-6 .btn-tab.active {
+            border-color: #D4AF37;
+            background: rgba(212,175,55,0.08);
+            color: #D4AF37;
+        }
+
+        .design-6 .btn-tab-name {
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 11px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .design-6 .btn-tab-price {
+            font-size: 24px;
+            font-weight: 300;
+        }
+
+        .design-6 .details-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(212,175,55,0.2);
+            border-radius: 20px;
+            padding: 40px;
+        }
+
+        .design-6 .details-desc {
+            text-align: center;
+            font-size: 14px;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 32px;
+        }
+
+        .design-6 .features-two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .design-6 .features-two-col li {
+            list-style: none;
+            font-size: 13px;
+            color: rgba(255,255,255,0.8);
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .design-6 .features-two-col li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #D4AF37;
+        }
+
+        /* DESIGN 7 - Radio Cards */
+        .design-7 {
+            background: linear-gradient(135deg, #1a1410 0%, #0f0b08 100%);
+            padding: 80px 40px;
+        }
+
+        .design-7 .content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .design-7 h2 {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 300;
+            margin-bottom: 40px;
+        }
+
+        .design-7 .radio-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        .design-7 .radio-card {
+            background: rgba(255,255,255,0.03);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 28px 24px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .design-7 .radio-card.active {
+            border-color: #D4AF37;
+            background: rgba(212,175,55,0.08);
+        }
+
+        .design-7 .radio-dot {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+        }
+
+        .design-7 .radio-card.active .radio-dot {
+            border-color: #D4AF37;
+        }
+
+        .design-7 .radio-card.active .radio-dot::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 10px;
+            height: 10px;
+            background: #D4AF37;
+            border-radius: 50%;
+        }
+
+        .design-7 .radio-name {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #D4AF37;
+            margin-bottom: 12px;
+        }
+
+        .design-7 .radio-price {
+            font-size: 32px;
+            font-weight: 300;
+            margin-bottom: 8px;
+        }
+
+        .design-7 .radio-desc {
+            font-size: 12px;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .design-7 .selected-details {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(212,175,55,0.2);
+            border-radius: 20px;
+            padding: 36px 32px;
+        }
+
+        .design-7 .selected-features {
+            list-style: none;
+        }
+
+        .design-7 .selected-features li {
+            font-size: 13px;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 12px;
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .design-7 .selected-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #D4AF37;
+        }
+
+        /* DESIGN 8 - Slider Tabs */
+        .design-8 {
+            background: linear-gradient(135deg, #1a1410 0%, #0f0b08 100%);
+            padding: 80px 40px;
+        }
+
+        .design-8 .content {
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .design-8 h2 {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 300;
+            margin-bottom: 48px;
+        }
+
+        .design-8 .slider-tabs {
+            display: flex;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(212,175,55,0.15);
+            border-radius: 16px;
+            padding: 8px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .design-8 .slider-bg {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            width: calc(50% - 8px);
+            height: calc(100% - 16px);
+            background: linear-gradient(135deg, rgba(212,175,55,0.2) 0%, rgba(199,122,78,0.2) 100%);
+            border-radius: 12px;
+            transition: all 0.3s;
+        }
+
+        .design-8 .slider-tab {
+            flex: 1;
+            padding: 18px;
+            background: transparent;
+            border: none;
+            border-radius: 12px;
+            color: rgba(255,255,255,0.6);
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            z-index: 1;
+        }
+
+        .design-8 .slider-tab.active {
+            color: #D4AF37;
+            font-weight: 500;
+        }
+
+        .design-8 .plan-content {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(212,175,55,0.2);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .design-8 .price-large {
+            font-size: 56px;
+            font-weight: 300;
+            color: #D4AF37;
+            margin-bottom: 12px;
+        }
+
+        .design-8 .price-note {
+            font-size: 13px;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 32px;
+        }
+
+        .design-8 .features-centered {
+            list-style: none;
+            margin-bottom: 32px;
+        }
+
+        .design-8 .features-centered li {
+            font-size: 14px;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 12px;
+        }
+
+        /* DESIGN 9 - Chip Tabs */
+        .design-9 {
+            background: linear-gradient(135deg, #1a1410 0%, #0f0b08 100%);
+            padding: 80px 40px;
+        }
+
+        .design-9 .content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .design-9 h2 {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 300;
+            margin-bottom: 16px;
+        }
+
+        .design-9 .subtitle-text {
+            text-align: center;
+            font-size: 14px;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 40px;
+        }
+
+        .design-9 .chips {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .design-9 .chip {
+            padding: 12px 28px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 50px;
+            color: rgba(255,255,255,0.6);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .design-9 .chip.active {
+            background: rgba(212,175,55,0.15);
+            border-color: #D4AF37;
+            color: #D4AF37;
+            font-weight: 500;
+        }
+
+        .design-9 .content-area {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(212,175,55,0.2);
+            border-radius: 20px;
+            padding: 48px 40px;
+        }
+
+        .design-9 .content-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .design-9 .content-name {
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #D4AF37;
+            margin-bottom: 12px;
+        }
+
+        .design-9 .content-price {
+            font-size: 48px;
+            font-weight: 300;
+        }
+
+        .design-9 .content-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 32px;
+        }
+
+        .design-9 .content-features li {
+            list-style: none;
+            font-size: 13px;
+            color: rgba(255,255,255,0.8);
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .design-9 .content-features li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #D4AF37;
+        }
+
+        /* DESIGN 10 - Bordered Tabs */
+        .design-10 {
+            background: linear-gradient(135deg, #1a1410 0%, #0f0b08 100%);
+            padding: 80px 40px;
+        }
+
+        .design-10 .content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .design-10 h2 {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 300;
+            margin-bottom: 48px;
+        }
+
+        .design-10 .bordered-tabs {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .design-10 .bordered-tab {
+            padding: 24px 36px;
+            background: rgba(255,255,255,0.03);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            min-width: 160px;
+        }
+
+        .design-10 .bordered-tab.active {
+            border-color: #D4AF37;
+            background: rgba(212,175,55,0.08);
+            transform: scale(1.05);
+        }
+
+        .design-10 .bordered-tab-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #D4AF37;
+            margin-bottom: 10px;
+        }
+
+        .design-10 .bordered-tab-price {
+            font-size: 28px;
+            font-weight: 300;
+        }
+
+        .design-10 .info-box {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(212,175,55,0.2);
+            border-radius: 20px;
+            padding: 40px;
+        }
+
+        .design-10 .info-title {
+            font-size: 20px;
+            font-weight: 400;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .design-10 .info-subtitle {
+            text-align: center;
+            font-size: 13px;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 32px;
+        }
+
+        .design-10 .info-features {
+            list-style: none;
+            margin-bottom: 32px;
+        }
+
+        .design-10 .info-features li {
+            font-size: 14px;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 12px;
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .design-10 .info-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #D4AF37;
+        }
+
+        /* Common button styles */
+        .btn-primary {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #D4AF37 0%, #C77A4E 100%);
+            border: none;
+            border-radius: 12px;
+            color: #000;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(212,175,55,0.4);
+        }
+
+        @media (max-width: 768px) {
+            .design-1 .features,
+            .design-3 .features-grid,
+            .design-5 .features-compact,
+            .design-6 .features-two-col,
+            .design-7 .radio-cards,
+            .design-9 .content-features {
+                grid-template-columns: 1fr;
+            }
+
+            .design-4 .content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>25+ Variations Style Tabs/Toggle</h1>
+        <p class="subtitle">Designs interactifs avec tabs, toggles et switches - Style comme le #3</p>
+
+        <!-- DESIGN 1 -->
+        <div class="proposal">
+            <div class="proposal-header">
+                <div class="proposal-number">Variation #1</div>
+                <div class="proposal-title">Pills Tabs Centered</div>
+                <div class="proposal-desc">Pills rondes avec background gradient sur l'actif, détails en dessous avec features en grid 2 colonnes</div>
+            </div>
+            <div class="preview">
+                <div class="design-1">
+                    <div class="content">
+                        <h2>Choisis ton <span class="accent">plan</span></h2>
+                        <p class="subtitle">Recettes exclusives chaque semaine</p>
+                        <div class="tabs">
+                            <button class="tab active">Essentiel</button>
+                            <button class="tab">Premium 2,99€</button>
+                        </div>
+                        <div class="details">
+                            <div class="price-big">Gratuit</div>
+                            <div class="price-period">Plan gratuit à vie</div>
+                            <div class="features">
+                                <div class="feature">1 recette par semaine</div>
+                                <div class="feature">25 recettes exclusives</div>
+                                <div class="feature">Newsletter hebdo</div>
+                                <div class="feature">Conseils & astuces</div>
+                            </div>
+                            <button class="cta">Commencer gratuitement</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESIGN 2 -->
+        <div class="proposal">
+            <div class="proposal-header">
+                <div class="proposal-number">Variation #2</div>
+                <div class="proposal-title">Segmented Control iOS Style</div>
+                <div class="proposal-desc">Segmented control style iOS avec effet de sélection subtil, card en dessous</div>
+            </div>
+            <div class="preview">
+                <div class="design-2">
+                    <div class="content">
+                        <h2>Choisis ta formule</h2>
+                        <div class="segmented">
+                            <button class="segment active">Essentiel - Gratuit</button>
+                            <button class="segment">Premium - 2,99€</button>
+                        </div>
+                        <div class="plan-card">
+                            <div class="plan-header">
+                                <div class="plan-name">Essentiel</div>
+                                <div class="plan-price">Gratuit</div>
+                                <div class="plan-desc">Pour découvrir et s'inspirer</div>
+                            </div>
+                            <ul class="features-list">
+                                <li>1 recette par semaine</li>
+                                <li>Accès à 25 recettes exclusives</li>
+                                <li>Newsletter hebdomadaire</li>
+                                <li>Conseils et astuces</li>
+                            </ul>
+                            <button class="btn-primary">Commencer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESIGN 3 -->
+        <div class="proposal">
+            <div class="proposal-header">
+                <div class="proposal-number">Variation #3</div>
+                <div class="proposal-title">Underline Tabs</div>
+                <div class="proposal-desc">Tabs avec underline gold, style épuré et minimaliste</div>
+            </div>
+            <div class="preview">
+                <div class="design-3">
+                    <div class="content">
+                        <h2>Nos formules</h2>
+                        <div class="tabs-underline">
+                            <button class="tab-underline active">Essentiel</button>
+                            <button class="tab-underline">Premium</button>
+                        </div>
+                        <div class="content-box">
+                            <div class="price-row">
+                                <span class="price-amount">Gratuit</span>
+                            </div>
+                            <p class="description">Pour découvrir et s'inspirer avec des recettes chaque semaine</p>
+                            <div class="features-grid">
+                                <div class="feature-item">1 recette par semaine</div>
+                                <div class="feature-item">25 recettes exclusives</div>
+                                <div class="feature-item">Newsletter hebdo</div>
+                                <div class="feature-item">Conseils & astuces</div>
+                            </div>
+                            <button class="btn-primary">Commencer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESIGN 4 -->
+        <div class="proposal">
+            <div class="proposal-header">
+                <div class="proposal-number">Variation #4</div>
+                <div class="proposal-title">Vertical Pills Sidebar</div>
+                <div class="proposal-desc">Pills verticaux dans une sidebar à gauche, contenu à droite</div>
+            </div>
+            <div class="preview">
+                <div class="design-4">
+                    <div class="content">
+                        <div class="sidebar">
+                            <h2>Plans</h2>
+                            <div class="pill active">
+                                <div class="pill-name">Essentiel</div>
+                                <div class="pill-price">Gratuit</div>
+                            </div>
+                            <div class="pill">
+                                <div class="pill-name">Premium</div>
+                                <div class="pill-price">2,99€</div>
+                            </div>
+                        </div>
+                        <div class="main-content">
+                            <div class="plan-title">Plan Essentiel</div>
+                            <div class="plan-subtitle">Pour découvrir et s'inspirer</div>
+                            <ul class="features">
+                                <li>1 recette par semaine</li>
+                                <li>Accès à 25 recettes exclusives</li>
+                                <li>Newsletter hebdomadaire</li>
+                                <li>Conseils et astuces</li>
+                            </ul>
+                            <button class="btn-primary">Commencer gratuitement</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESIGN 5 -->
+        <div class="proposal">
+            <div class="proposal-header">
+                <div class="proposal-number">Variation #5</div>
+                <div class="proposal-title">Toggle Switch Modern</div>
+                <div class="proposal-desc">Toggle switch animé style moderne avec labels de chaque côté</div>
+            </div>
+            <div class="preview">
+                <div class="design-5">
+                    <div class="content">
+                        <h2>Choisis ton plan</h2>
+                        <p class="hint">Bascule entre les formules</p>
+                        <div class="toggle-container">
+                            <span class="toggle-label active">Essentiel</span>
+                            <div class="toggle-switch">
+                                <div class="toggle-knob"></div>
+                            </div>
+                            <span class="toggle-label">Premium</span>
+                        </div>
+                        <div class="plan-display">
+                            <div class="plan-badge">Gratuit</div>
+                            <div class="plan-price-display">0€</div>
+                            <ul class="features-compact">
+                                <li>1 recette/semaine</li>
+                                <li>25 recettes exclusives</li>
+                                <li>Newsletter hebdo</li>
+                                <li>Conseils & astuces</li>
+                            </ul>
+                            <button class="btn-primary">Commencer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESIGN 6 -->
+        <div class="proposal">
+            <div class="proposal-header">
+                <div class="proposal-number">Variation #6</div>
+                <div class="proposal-title">Button Group Tabs</div>
+                <div class="proposal-desc">Boutons carrés avec nom et prix, hover avec border gold</div>
+            </div>
+            <div class="preview">
+                <div class="design-6">
+                    <div class="content">
+                        <h2>Sélectionne ta formule</h2>
+                        <div class="button-group">
+                            <div class="btn-tab active">
+                                <div class="btn-tab-name">Essentiel</div>
+                                <div class="btn-tab-price">Gratuit</div>
+                            </div>
+                            <div class="btn-tab">
+                                <div class="btn-tab-name">Premium</div>
+                                <div class="btn-tab-price">2,99€</div>
+                            </div>
+                        </div>
+                        <div class="details-card">
+                            <p class="details-desc">Pour découvrir et s'inspirer avec des recettes exclusives</p>
+                            <ul class="features-two-col">
+                                <li>1 recette par semaine</li>
+                                <li>25 recettes exclusives</li>
+                                <li>Newsletter hebdo</li>
+                                <li>Conseils & astuces</li>
+                            </ul>
+                            <button class="btn-primary">Commencer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESIGN 7 -->
+        <div class="proposal">
+            <div class="proposal-header">
+                <div class="proposal-number">Variation #7</div>
+                <div class="proposal-title">Radio Cards</div>
+                <div class="proposal-desc">Cards avec radio button, sélection visuelle avec border gold</div>
+            </div>
+            <div class="preview">
+                <div class="design-7">
+                    <div class="content">
+                        <h2>Choisis ton plan</h2>
+                        <div class="radio-cards">
+                            <div class="radio-card active">
+                                <div class="radio-dot"></div>
+                                <div class="radio-name">Essentiel</div>
+                                <div class="radio-price">Gratuit</div>
+                                <div class="radio-desc">1 recette/sem</div>
+                            </div>
+                            <div class="radio-card">
+                                <div class="radio-dot"></div>
+                                <div class="radio-name">Premium</div>
+                                <div class="radio-price">2,99€</div>
+                                <div class="radio-desc">7 recettes/sem</div>
+                            </div>
+                        </div>
+                        <div class="selected-details">
+                            <ul class="selected-features">
+                                <li>1 recette par semaine</li>
+                                <li>Accès à 25 recettes exclusives</li>
+                                <li>Newsletter hebdomadaire</li>
+                                <li>Conseils et astuces</li>
+                            </ul>
+                            <button class="btn-primary" style="margin-top: 24px;">Commencer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESIGN 8 -->
+        <div class="proposal">
+            <div class="proposal-header">
+                <div class="proposal-number">Variation #8</div>
+                <div class="proposal-title">Slider Tabs with Background</div>
+                <div class="proposal-desc">Tabs avec background qui slide, animation fluide</div>
+            </div>
+            <div class="preview">
+                <div class="design-8">
+                    <div class="content">
+                        <h2>Nos formules</h2>
+                        <div class="slider-tabs">
+                            <div class="slider-bg"></div>
+                            <button class="slider-tab active">Essentiel - Gratuit</button>
+                            <button class="slider-tab">Premium - 2,99€</button>
+                        </div>
+                        <div class="plan-content">
+                            <div class="price-large">Gratuit</div>
+                            <p class="price-note">Plan gratuit à vie</p>
+                            <ul class="features-centered">
+                                <li>✓ 1 recette par semaine</li>
+                                <li>✓ Accès à 25 recettes exclusives</li>
+                                <li>✓ Newsletter hebdomadaire</li>
+                                <li>✓ Conseils et astuces</li>
+                            </ul>
+                            <button class="btn-primary">Commencer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESIGN 9 -->
+        <div class="proposal">
+            <div class="proposal-header">
+                <div class="proposal-number">Variation #9</div>
+                <div class="proposal-title">Chip Tabs Minimal</div>
+                <div class="proposal-desc">Petits chips minimalistes, très discrets et élégants</div>
+            </div>
+            <div class="preview">
+                <div class="design-9">
+                    <div class="content">
+                        <h2>Newsletter</h2>
+                        <p class="subtitle-text">Choisis ta formule d'abonnement</p>
+                        <div class="chips">
+                            <div class="chip active">Essentiel</div>
+                            <div class="chip">Premium</div>
+                        </div>
+                        <div class="content-area">
+                            <div class="content-header">
+                                <div class="content-name">Essentiel</div>
+                                <div class="content-price">Gratuit</div>
+                            </div>
+                            <ul class="content-features">
+                                <li>1 recette/semaine</li>
+                                <li>25 exclusives</li>
+                                <li>Newsletter hebdo</li>
+                                <li>Conseils & astuces</li>
+                            </ul>
+                            <button class="btn-primary">Commencer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESIGN 10 -->
+        <div class="proposal">
+            <div class="proposal-header">
+                <div class="proposal-number">Variation #10</div>
+                <div class="proposal-title">Bordered Tabs with Scale</div>
+                <div class="proposal-desc">Tabs avec borders épais, scale effect sur l'actif</div>
+            </div>
+            <div class="preview">
+                <div class="design-10">
+                    <div class="content">
+                        <h2>Choisis ton accompagnement</h2>
+                        <div class="bordered-tabs">
+                            <div class="bordered-tab active">
+                                <div class="bordered-tab-label">Essentiel</div>
+                                <div class="bordered-tab-price">Gratuit</div>
+                            </div>
+                            <div class="bordered-tab">
+                                <div class="bordered-tab-label">Premium</div>
+                                <div class="bordered-tab-price">2,99€</div>
+                            </div>
+                        </div>
+                        <div class="info-box">
+                            <div class="info-title">Plan Essentiel</div>
+                            <p class="info-subtitle">Pour découvrir et s'inspirer</p>
+                            <ul class="info-features">
+                                <li>1 recette par semaine</li>
+                                <li>Accès à 25 recettes exclusives</li>
+                                <li>Newsletter hebdomadaire</li>
+                                <li>Conseils et astuces</li>
+                            </ul>
+                            <button class="btn-primary">Commencer gratuitement</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

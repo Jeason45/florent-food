@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Propositions Pricing - Florent Food</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #0a0a0a;
+      color: #fff;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 48px;
+      margin-bottom: 60px;
+      font-weight: 300;
+      letter-spacing: -1px;
+    }
+
+    .proposal {
+      margin-bottom: 120px;
+      padding-bottom: 80px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .proposal-title {
+      text-align: center;
+      font-size: 14px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #D4AF37;
+      margin-bottom: 60px;
+      font-weight: 600;
+    }
+
+    /* Proposal 1 - Magazine Luxe */
+    .pricing-1 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .plan-card-1 {
+      background: linear-gradient(135deg, rgba(212,175,55,0.05) 0%, rgba(199,122,78,0.05) 100%);
+      border: 1px solid rgba(212,175,55,0.2);
+      padding: 60px 40px;
+      border-radius: 0;
+      position: relative;
+      transition: all 0.4s ease;
+    }
+
+    .plan-card-1:hover {
+      transform: translateY(-8px);
+      border-color: rgba(212,175,55,0.5);
+      box-shadow: 0 20px 60px rgba(212,175,55,0.2);
+    }
+
+    .plan-card-1.featured {
+      background: linear-gradient(135deg, rgba(212,175,55,0.1) 0%, rgba(199,122,78,0.1) 100%);
+      border: 2px solid #D4AF37;
+    }
+
+    .plan-badge {
+      position: absolute;
+      top: -12px;
+      left: 40px;
+      background: #D4AF37;
+      color: #000;
+      padding: 6px 20px;
+      font-size: 10px;
+      letter-spacing: 2px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .plan-name-1 {
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 20px;
+    }
+
+    .plan-price-1 {
+      font-size: 56px;
+      font-weight: 300;
+      margin-bottom: 10px;
+      letter-spacing: -2px;
+    }
+
+    .plan-price-1 sup {
+      font-size: 24px;
+      font-weight: 300;
+    }
+
+    .plan-period {
+      font-size: 14px;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 40px;
+    }
+
+    .plan-features-1 {
+      list-style: none;
+      margin-bottom: 40px;
+    }
+
+    .plan-features-1 li {
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 15px;
+      color: rgba(255,255,255,0.8);
+      font-weight: 300;
+    }
+
+    .plan-features-1 li:before {
+      content: "—";
+      color: #D4AF37;
+      margin-right: 12px;
+      font-weight: 300;
+    }
+
+    .plan-cta-1 {
+      width: 100%;
+      padding: 18px;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.3);
+      color: #fff;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+    }
+
+    .plan-cta-1:hover {
+      background: #fff;
+      color: #000;
+      border-color: #fff;
+    }
+
+    .plan-card-1.featured .plan-cta-1 {
+      background: #D4AF37;
+      border-color: #D4AF37;
+      color: #000;
+    }
+
+    .plan-card-1.featured .plan-cta-1:hover {
+      background: #fff;
+      border-color: #fff;
+    }
+
+    /* Proposal 2 - Minimaliste Épuré */
+    .pricing-2 {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      gap: 2px;
+      background: rgba(212,175,55,0.1);
+      padding: 2px;
+    }
+
+    .plan-card-2 {
+      flex: 1;
+      background: #0a0a0a;
+      padding: 80px 50px;
+      text-align: center;
+      transition: all 0.4s ease;
+    }
+
+    .plan-card-2:hover {
+      background: rgba(212,175,55,0.02);
+    }
+
+    .plan-name-2 {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #D4AF37;
+      margin-bottom: 30px;
+      font-weight: 600;
+    }
+
+    .plan-price-2 {
+      font-size: 72px;
+      font-weight: 200;
+      margin-bottom: 50px;
+      letter-spacing: -3px;
+      line-height: 1;
+    }
+
+    .plan-divider {
+      width: 40px;
+      height: 1px;
+      background: rgba(212,175,55,0.5);
+      margin: 40px auto;
+    }
+
+    .plan-features-2 {
+      list-style: none;
+      margin-bottom: 50px;
+    }
+
+    .plan-features-2 li {
+      padding: 12px 0;
+      font-size: 14px;
+      color: rgba(255,255,255,0.7);
+      font-weight: 300;
+    }
+
+    .plan-cta-2 {
+      padding: 16px 40px;
+      background: transparent;
+      border: 1px solid rgba(212,175,55,0.3);
+      color: rgba(255,255,255,0.8);
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+    }
+
+    .plan-cta-2:hover {
+      border-color: #D4AF37;
+      color: #D4AF37;
+    }
+
+    /* Proposal 3 - Élégant Asymétrique */
+    .pricing-3 {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 0;
+      max-width: 1200px;
+      margin: 0 auto;
+      border: 1px solid rgba(212,175,55,0.2);
+    }
+
+    .plan-card-3 {
+      padding: 80px 60px;
+      position: relative;
+    }
+
+    .plan-card-3:first-child {
+      background: rgba(255,255,255,0.02);
+      border-right: 1px solid rgba(212,175,55,0.2);
+    }
+
+    .plan-card-3:last-child {
+      background: linear-gradient(135deg, rgba(212,175,55,0.08) 0%, rgba(199,122,78,0.08) 100%);
+    }
+
+    .plan-label-3 {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 24px;
+    }
+
+    .plan-name-3 {
+      font-size: 42px;
+      font-weight: 300;
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+    }
+
+    .plan-price-3 {
+      font-size: 28px;
+      color: #D4AF37;
+      margin-bottom: 40px;
+      font-weight: 300;
+    }
+
+    .plan-desc-3 {
+      font-size: 15px;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 40px;
+      font-weight: 300;
+    }
+
+    .plan-features-3 {
+      list-style: none;
+      margin-bottom: 50px;
+    }
+
+    .plan-features-3 li {
+      padding: 14px 0;
+      font-size: 14px;
+      color: rgba(255,255,255,0.7);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 300;
+    }
+
+    .plan-features-3 li:before {
+      content: "✓";
+      color: #D4AF37;
+      font-size: 12px;
+    }
+
+    .plan-cta-3 {
+      padding: 20px 50px;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      width: 100%;
+    }
+
+    .plan-cta-3:hover {
+      background: rgba(255,255,255,0.05);
+      border-color: rgba(255,255,255,0.4);
+    }
+
+    .plan-card-3:last-child .plan-cta-3 {
+      background: #D4AF37;
+      border-color: #D4AF37;
+      color: #000;
+    }
+
+    .plan-card-3:last-child .plan-cta-3:hover {
+      background: #E5C047;
+      border-color: #E5C047;
+    }
+
+    /* Proposal 4 - Vertical Luxe */
+    .pricing-4 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 60px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .plan-card-4 {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(212,175,55,0.15);
+      padding: 0;
+      overflow: hidden;
+      transition: all 0.4s ease;
+    }
+
+    .plan-card-4:hover {
+      border-color: rgba(212,175,55,0.4);
+      transform: translateY(-10px);
+    }
+
+    .plan-header-4 {
+      background: linear-gradient(135deg, rgba(212,175,55,0.1) 0%, rgba(199,122,78,0.1) 100%);
+      padding: 50px 40px;
+      text-align: center;
+      border-bottom: 1px solid rgba(212,175,55,0.2);
+    }
+
+    .plan-name-4 {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #D4AF37;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .plan-price-4 {
+      font-size: 64px;
+      font-weight: 200;
+      letter-spacing: -2px;
+      margin-bottom: 10px;
+    }
+
+    .plan-price-4 small {
+      font-size: 18px;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .plan-body-4 {
+      padding: 50px 40px;
+    }
+
+    .plan-features-4 {
+      list-style: none;
+      margin-bottom: 40px;
+    }
+
+    .plan-features-4 li {
+      padding: 16px 0;
+      font-size: 14px;
+      color: rgba(255,255,255,0.7);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-weight: 300;
+    }
+
+    .plan-cta-4 {
+      width: 100%;
+      padding: 20px;
+      background: transparent;
+      border: 1px solid rgba(212,175,55,0.3);
+      color: #D4AF37;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+    }
+
+    .plan-cta-4:hover {
+      background: #D4AF37;
+      border-color: #D4AF37;
+      color: #000;
+    }
+
+    @media (max-width: 768px) {
+      .pricing-1,
+      .pricing-2,
+      .pricing-3,
+      .pricing-4 {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Propositions Pricing Luxe</h1>
+
+    <!-- Proposal 1 - Magazine Luxe -->
+    <div class="proposal">
+      <div class="proposal-title">Proposition 1 — Magazine Luxe</div>
+      <div class="pricing-1">
+        <div class="plan-card-1">
+          <div class="plan-name-1">Gratuit</div>
+          <div class="plan-price-1">0<sup>€</sup></div>
+          <div class="plan-period">Par mois</div>
+          <ul class="plan-features-1">
+            <li>1 recette par semaine</li>
+            <li>25 recettes exclusives</li>
+            <li>Newsletter hebdomadaire</li>
+            <li>Accès aux recettes gratuites</li>
+          </ul>
+          <button class="plan-cta-1">S'inscrire gratuitement</button>
+        </div>
+
+        <div class="plan-card-1 featured">
+          <div class="plan-badge">Populaire</div>
+          <div class="plan-name-1">Premium</div>
+          <div class="plan-price-1">2<sup>,99€</sup></div>
+          <div class="plan-period">Par mois</div>
+          <ul class="plan-features-1">
+            <li>Accès illimité aux recettes</li>
+            <li>Vidéos exclusives HD</li>
+            <li>Techniques de chef</li>
+            <li>Support prioritaire</li>
+          </ul>
+          <button class="plan-cta-1">Devenir Premium</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Proposal 2 - Minimaliste Épuré -->
+    <div class="proposal">
+      <div class="proposal-title">Proposition 2 — Minimaliste Épuré</div>
+      <div class="pricing-2">
+        <div class="plan-card-2">
+          <div class="plan-name-2">Gratuit</div>
+          <div class="plan-price-2">0€</div>
+          <div class="plan-divider"></div>
+          <ul class="plan-features-2">
+            <li>1 recette / semaine</li>
+            <li>25 recettes exclusives</li>
+            <li>Newsletter</li>
+          </ul>
+          <button class="plan-cta-2">Commencer</button>
+        </div>
+
+        <div class="plan-card-2">
+          <div class="plan-name-2">Premium</div>
+          <div class="plan-price-2">2,99€</div>
+          <div class="plan-divider"></div>
+          <ul class="plan-features-2">
+            <li>Accès illimité</li>
+            <li>Vidéos exclusives</li>
+            <li>Techniques de chef</li>
+            <li>Support prioritaire</li>
+          </ul>
+          <button class="plan-cta-2">Devenir Premium</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Proposal 3 - Élégant Asymétrique -->
+    <div class="proposal">
+      <div class="proposal-title">Proposition 3 — Élégant Asymétrique</div>
+      <div class="pricing-3">
+        <div class="plan-card-3">
+          <div class="plan-label-3">Essentiel</div>
+          <div class="plan-name-3">Gratuit</div>
+          <div class="plan-price-3">0€ / mois</div>
+          <p class="plan-desc-3">Découvrez l'univers de la haute gastronomie avec nos recettes sélectionnées.</p>
+          <ul class="plan-features-3">
+            <li>1 recette hebdomadaire</li>
+            <li>25 recettes exclusives</li>
+            <li>Newsletter</li>
+          </ul>
+          <button class="plan-cta-3">S'inscrire</button>
+        </div>
+
+        <div class="plan-card-3">
+          <div class="plan-label-3">Exclusif</div>
+          <div class="plan-name-3">Premium</div>
+          <div class="plan-price-3">2,99€ / mois</div>
+          <p class="plan-desc-3">Une expérience gastronomique complète avec accès illimité à toutes nos créations.</p>
+          <ul class="plan-features-3">
+            <li>Accès illimité aux recettes</li>
+            <li>Vidéos exclusives HD</li>
+            <li>Techniques de chef</li>
+            <li>Masterclass en direct</li>
+            <li>Support prioritaire</li>
+          </ul>
+          <button class="plan-cta-3">Devenir Premium</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Proposal 4 - Vertical Luxe -->
+    <div class="proposal">
+      <div class="proposal-title">Proposition 4 — Vertical Luxe</div>
+      <div class="pricing-4">
+        <div class="plan-card-4">
+          <div class="plan-header-4">
+            <div class="plan-name-4">Gratuit</div>
+            <div class="plan-price-4">0€<br><small>par mois</small></div>
+          </div>
+          <div class="plan-body-4">
+            <ul class="plan-features-4">
+              <li>1 recette par semaine</li>
+              <li>25 recettes exclusives</li>
+              <li>Newsletter hebdomadaire</li>
+              <li>Accès communauté</li>
+            </ul>
+            <button class="plan-cta-4">S'inscrire gratuitement</button>
+          </div>
+        </div>
+
+        <div class="plan-card-4">
+          <div class="plan-header-4">
+            <div class="plan-name-4">Premium</div>
+            <div class="plan-price-4">2,99€<br><small>par mois</small></div>
+          </div>
+          <div class="plan-body-4">
+            <ul class="plan-features-4">
+              <li>Accès illimité aux recettes</li>
+              <li>Vidéos exclusives HD</li>
+              <li>Techniques de chef</li>
+              <li>Masterclass en direct</li>
+              <li>Support prioritaire</li>
+            </ul>
+            <button class="plan-cta-4">Devenir Premium</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

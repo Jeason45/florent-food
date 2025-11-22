@@ -1,0 +1,1944 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing Section - 20+ Propositions Design Luxe</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0a0a0a;
+            color: white;
+            padding: 60px 20px;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 42px;
+            margin-bottom: 20px;
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #D4AF37 0%, #C77A4E 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 16px;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 80px;
+            font-weight: 300;
+        }
+
+        .proposal {
+            margin-bottom: 120px;
+            background: #1a1410;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid rgba(212, 175, 55, 0.15);
+        }
+
+        .proposal-header {
+            padding: 32px 40px;
+            background: linear-gradient(135deg, #2a2420 0%, #1a1410 100%);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .proposal-number {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: #D4AF37;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .proposal-title {
+            font-size: 28px;
+            font-weight: 300;
+            color: white;
+            margin-bottom: 8px;
+        }
+
+        .proposal-desc {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        .preview {
+            padding: 0;
+            min-height: 500px;
+        }
+
+        /* DESIGN 1 - Minimal Cards Side by Side */
+        .design-1 {
+            background: linear-gradient(135deg, #1a1410 0%, #0f0b08 100%);
+            padding: 80px 40px;
+        }
+
+        .design-1 .content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .design-1 .header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .design-1 h2 {
+            font-size: 36px;
+            font-weight: 300;
+            margin-bottom: 12px;
+        }
+
+        .design-1 .accent {
+            color: #D4AF37;
+            font-style: italic;
+        }
+
+        .design-1 .subtitle {
+            font-size: 14px;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 0;
+        }
+
+        .design-1 .plans {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .design-1 .plan {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 36px 28px;
+            transition: all 0.3s;
+        }
+
+        .design-1 .plan:hover {
+            border-color: #D4AF37;
+            background: rgba(212,175,55,0.05);
+            transform: translateY(-4px);
+        }
+
+        .design-1 .plan.featured {
+            border-color: #D4AF37;
+            background: rgba(212,175,55,0.08);
+            position: relative;
+        }
+
+        .design-1 .badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #D4AF37 0%, #C77A4E 100%);
+            color: #000;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .design-1 .plan-name {
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #D4AF37;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .design-1 .plan-desc {
+            font-size: 12px;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        .design-1 .price {
+            font-size: 42px;
+            font-weight: 300;
+            margin-bottom: 24px;
+        }
+
+        .design-1 .price span {
+            font-size: 16px;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .design-1 .features {
+            list-style: none;
+            margin-bottom: 28px;
+        }
+
+        .design-1 .features li {
+            font-size: 13px;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 12px;
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .design-1 .features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #D4AF37;
+            font-weight: 600;
+        }
+
+        .design-1 button {
+            width: 100%;
+            padding: 14px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 12px;
+            color: white;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .design-1 .plan.featured button {
+            background: linear-gradient(135deg, #D4AF37 0%, #C77A4E 100%);
+            border: none;
+            color: #000;
+            font-weight: 600;
+        }
+
+        /* DESIGN 2 - Compact Table Style */
+        .design-2 {
+            background: linear-gradient(135deg, #1a1410 0%, #0f0b08 100%);
+            padding: 60px 40px;
+        }
+
+        .design-2 .content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .design-2 h2 {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 300;
+            margin-bottom: 40px;
+        }
+
+        .design-2 .table {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(212,175,55,0.2);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .design-2 .row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .design-2 .row:last-child {
+            border-bottom: none;
+        }
+
+        .design-2 .row.header {
+            background: rgba(212,175,55,0.08);
+        }
+
+        .design-2 .cell {
+            padding: 20px 24px;
+            font-size: 13px;
+        }
+
+        .design-2 .cell.feature {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .design-2 .cell.value {
+            text-align: center;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .design-2 .cell.header {
+            text-align: center;
+            font-weight: 500;
+            color: #D4AF37;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 12px;
+        }
+
+        /* DESIGN 3 - Horizontal Tabs */
+        .design-3 {
+            background: linear-gradient(135deg, #1a1410 0%, #0f0b08 100%);
+            padding: 80px 40px;
+        }
+
+        .design-3 .content {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .design-3 h2 {
+            font-size: 36px;
+            font-weight: 300;
+            margin-bottom: 40px;
+        }
+
+        .design-3 .tabs {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .design-3 .tab {
+            padding: 16px 40px;
+            background: rgba(255,255,255,0.03);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .design-3 .tab:hover,
+        .design-3 .tab.active {
+            border-color: #D4AF37;
+            background: rgba(212,175,55,0.1);
+        }
+
+        .design-3 .tab-name {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #D4AF37;
+            margin-bottom: 8px;
+        }
+
+        .design-3 .tab-price {
+            font-size: 28px;
+            font-weight: 300;
+        }
+
+        .design-3 .details {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(212,175,55,0.2);
+            border-radius: 20px;
+            padding: 40px;
+        }
+
+        .design-3 .details-desc {
+            font-size: 14px;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 28px;
+        }
+
+        .design-3 .features-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .design-3 .feature {
+            font-size: 13px;
+            color: rgba(255,255,255,0.8);
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .design-3 .feature::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #D4AF37;
+        }
+
+        /* DESIGN 4 - Minimal List */
+        .design-4 {
+            background: linear-gradient(135deg, #1a1410 0%, #0f0b08 100%);
+            padding: 60px 40px;
+        }
+
+        .design-4 .content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .design-4 h2 {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 300;
+            margin-bottom: 48px;
+        }
+
+        .design-4 .plan-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 28px 32px;
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .design-4 .plan-item:hover {
+            border-color: #D4AF37;
+            background: rgba(212,175,55,0.05);
+        }
+
+        .design-4 .plan-item.featured {
+            border-color: #D4AF37;
+            background: rgba(212,175,55,0.08);
+        }
+
+        .design-4 .plan-info h3 {
+            font-size: 18px;
+            font-weight: 400;
+            margin-bottom: 6px;
+        }
+
+        .design-4 .plan-info p {
+            font-size: 12px;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .design-4 .plan-price {
+            font-size: 32px;
+            font-weight: 300;
+            color: #D4AF37;
+        }
+
+        /* DESIGN 5 - Card with Toggle */
+        .design-5 {
+            background: linear-gradient(135deg, #1a1410 0%, #0f0b08 100%);
+            padding: 80px 40px;
+        }
+
+        .design-5 .content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .design-5 .card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(212,175,55,0.2);
+            border-radius: 24px;
+            padding: 48px 40px;
+        }
+
+        .design-5 h2 {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 300;
+            margin-bottom: 12px;
+        }
+
+        .design-5 .subtitle {
+            text-align: center;
+            font-size: 13px;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 36px;
+        }
+
+        .design-5 .toggle {
+            display: flex;
+            background: rgba(255,255,255,0.05);
+            padding: 6px;
+            border-radius: 50px;
+            margin-bottom: 32px;
+        }
+
+        .design-5 .toggle button {
+            flex: 1;
+            padding: 14px;
+            background: transparent;
+            border: none;
+            color: rgba(255,255,255,0.5);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .design-5 .toggle button.active {
+            background: linear-gradient(135deg, #D4AF37 0%, #C77A4E 100%);
+            color: #000;
+            font-weight: 600;
+        }
+
+        .design-5 .plan-details {
+            margin-bottom: 32px;
+        }
+
+        .design-5 .price-display {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .design-5 .price-display .price {
+            font-size: 52px;
+            font-weight: 300;
+            color: #D4AF37;
+        }
+
+        .design-5 .price-display .period {
+            font-size: 16px;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .design-5 .features {
+            list-style: none;
+        }
+
+        .design-5 .features li {
+            font-size: 13px;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 12px;
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .design-5 .features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #D4AF37;
+        }
+
+        .design-5 .cta {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #D4AF37 0%, #C77A4E 100%);
+            border: none;
+            border-radius: 12px;
+            color: #000;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* DESIGN 6 - Split Comparison */
+        .design-6 {
+            background: linear-gradient(135deg, #1a1410 0%, #0f0b08 100%);
+            padding: 80px 40px;
+        }
+
+        .design-6 .content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .design-6 h2 {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 300;
+            margin-bottom: 48px;
+        }
+
+        .design-6 .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2px;
+            background: rgba(212,175,55,0.2);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .design-6 .col {
+            background: #1a1410;
+            padding: 40px 32px;
+        }
+
+        .design-6 .col-header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .design-6 .col-header h3 {
+            font-size: 18px;
+            font-weight: 400;
+            margin-bottom: 12px;
+            color: #D4AF37;
+        }
+
+        .design-6 .col-header .price {
+            font-size: 36px;
+            font-weight: 300;
+        }
+
+        .design-6 .col-features {
+            list-style: none;
+        }
+
+        .design-6 .col-features li {
+            font-size: 13px;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 12px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .design-6 .col-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #D4AF37;
+            font-size: 12px;
+        }
+
+        /* DESIGN 7 - Accordion Style */
+        .design-7 {
+            background: linear-gradient(135deg, #1a1410 0%, #0f0b08 100%);
+            padding: 60px 40px;
+        }
+
+        .design-7 .content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .design-7 h2 {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 300;
+            margin-bottom: 40px;
+        }
+
+        .design-7 .accordion-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+
+        .design-7 .accordion-header {
+            padding: 24px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .design-7 .accordion-header:hover {
+            background: rgba(255,255,255,0.02);
+        }
+
+        .design-7 .accordion-title h3 {
+            font-size: 18px;
+            font-weight: 400;
+            margin-bottom: 4px;
+        }
+
+        .design-7 .accordion-title p {
+            font-size: 12px;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .design-7 .accordion-price {
+            font-size: 28px;
+            font-weight: 300;
+            color: #D4AF37;
+        }
+
+        .design-7 .accordion-content {
+            padding: 0 28px 24px;
+            display: none;
+        }
+
+        .design-7 .accordion-item.active .accordion-content {
+            display: block;
+        }
+
+        .design-7 .features-list {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .design-7 .features-list li {
+            font-size: 13px;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .design-7 .features-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #D4AF37;
+        }
+
+        /* DESIGN 8 - Pricing Pills */
+        .design-8 {
+            background: linear-gradient(135deg, #1a1410 0%, #0f0b08 100%);
+            padding: 80px 40px;
+        }
+
+        .design-8 .content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .design-8 h2 {
+            font-size: 36px;
+            font-weight: 300;
+            margin-bottom: 12px;
+        }
+
+        .design-8 .subtitle {
+            font-size: 14px;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 48px;
+        }
+
+        .design-8 .pills {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .design-8 .pill {
+            background: rgba(255,255,255,0.03);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 100px;
+            padding: 32px 48px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .design-8 .pill:hover,
+        .design-8 .pill.featured {
+            border-color: #D4AF37;
+            background: rgba(212,175,55,0.08);
+        }
+
+        .design-8 .pill-name {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #D4AF37;
+            margin-bottom: 12px;
+        }
+
+        .design-8 .pill-price {
+            font-size: 40px;
+            font-weight: 300;
+            margin-bottom: 8px;
+        }
+
+        .design-8 .pill-desc {
+            font-size: 12px;
+            color: rgba(255,255,255,0.5);
+        }
+
+        /* DESIGN 9 - Stacked Cards */
+        .design-9 {
+            background: linear-gradient(135deg, #1a1410 0%, #0f0b08 100%);
+            padding: 80px 40px;
+        }
+
+        .design-9 .content {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .design-9 h2 {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 300;
+            margin-bottom: 40px;
+        }
+
+        .design-9 .stack {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .design-9 .card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 32px 28px;
+            transition: all 0.3s;
+        }
+
+        .design-9 .card:hover {
+            border-color: #D4AF37;
+            transform: translateX(8px);
+        }
+
+        .design-9 .card.featured {
+            border-color: #D4AF37;
+            background: rgba(212,175,55,0.05);
+        }
+
+        .design-9 .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .design-9 .card-name h3 {
+            font-size: 18px;
+            font-weight: 400;
+            margin-bottom: 6px;
+        }
+
+        .design-9 .card-name p {
+            font-size: 11px;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .design-9 .card-price {
+            font-size: 32px;
+            font-weight: 300;
+            color: #D4AF37;
+        }
+
+        .design-9 .card-features {
+            font-size: 12px;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.8;
+        }
+
+        /* DESIGN 10 - Horizontal Scroll */
+        .design-10 {
+            background: linear-gradient(135deg, #1a1410 0%, #0f0b08 100%);
+            padding: 80px 0;
+        }
+
+        .design-10 .header {
+            text-align: center;
+            padding: 0 40px;
+            margin-bottom: 48px;
+        }
+
+        .design-10 h2 {
+            font-size: 36px;
+            font-weight: 300;
+            margin-bottom: 12px;
+        }
+
+        .design-10 .subtitle {
+            font-size: 14px;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .design-10 .scroll-container {
+            display: flex;
+            gap: 24px;
+            padding: 0 40px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+        }
+
+        .design-10 .plan-card {
+            min-width: 320px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 40px 32px;
+            scroll-snap-align: start;
+        }
+
+        .design-10 .plan-card.featured {
+            border-color: #D4AF37;
+            background: rgba(212,175,55,0.05);
+        }
+
+        .design-10 .plan-header {
+            margin-bottom: 28px;
+        }
+
+        .design-10 .plan-name {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #D4AF37;
+            margin-bottom: 12px;
+        }
+
+        .design-10 .plan-price {
+            font-size: 44px;
+            font-weight: 300;
+        }
+
+        .design-10 .plan-features {
+            list-style: none;
+        }
+
+        .design-10 .plan-features li {
+            font-size: 13px;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .design-10 .plan-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #D4AF37;
+        }
+
+        /* DESIGN 11 - Grid Showcase */
+        .design-11 {
+            background: linear-gradient(135deg, #1a1410 0%, #0f0b08 100%);
+            padding: 80px 40px;
+        }
+
+        .design-11 .content {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .design-11 h2 {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 300;
+            margin-bottom: 48px;
+        }
+
+        .design-11 .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+        }
+
+        .design-11 .plan {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 24px;
+            padding: 48px 40px;
+            position: relative;
+        }
+
+        .design-11 .plan.featured::before {
+            content: 'RECOMMANDÉ';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #D4AF37 0%, #C77A4E 100%);
+            color: #000;
+            font-size: 9px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+        }
+
+        .design-11 .plan-name {
+            font-size: 22px;
+            font-weight: 400;
+            margin-bottom: 8px;
+        }
+
+        .design-11 .plan-desc {
+            font-size: 13px;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 28px;
+        }
+
+        .design-11 .plan-price {
+            font-size: 52px;
+            font-weight: 300;
+            margin-bottom: 8px;
+            color: #D4AF37;
+        }
+
+        .design-11 .plan-period {
+            font-size: 14px;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 32px;
+        }
+
+        .design-11 .plan-features {
+            list-style: none;
+            margin-bottom: 32px;
+        }
+
+        .design-11 .plan-features li {
+            font-size: 13px;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 12px;
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .design-11 .plan-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #D4AF37;
+        }
+
+        .design-11 button {
+            width: 100%;
+            padding: 16px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 12px;
+            color: white;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+        }
+
+        .design-11 .plan.featured button {
+            background: linear-gradient(135deg, #D4AF37 0%, #C77A4E 100%);
+            border: none;
+            color: #000;
+            font-weight: 600;
+        }
+
+        /* DESIGN 12 - Simple List */
+        .design-12 {
+            background: linear-gradient(135deg, #1a1410 0%, #0f0b08 100%);
+            padding: 60px 40px;
+        }
+
+        .design-12 .content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .design-12 h2 {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 300;
+            margin-bottom: 40px;
+        }
+
+        .design-12 .list {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(212,175,55,0.15);
+            border-radius: 20px;
+            padding: 8px;
+        }
+
+        .design-12 .list-item {
+            background: rgba(255,255,255,0.03);
+            border-radius: 14px;
+            padding: 24px 28px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .design-12 .list-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .design-12 .item-info h3 {
+            font-size: 16px;
+            font-weight: 400;
+            margin-bottom: 4px;
+        }
+
+        .design-12 .item-info p {
+            font-size: 11px;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .design-12 .item-price {
+            font-size: 24px;
+            font-weight: 300;
+            color: #D4AF37;
+        }
+
+        /* DESIGN 13 - Feature Matrix */
+        .design-13 {
+            background: linear-gradient(135deg, #1a1410 0%, #0f0b08 100%);
+            padding: 80px 40px;
+        }
+
+        .design-13 .content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .design-13 h2 {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 300;
+            margin-bottom: 48px;
+        }
+
+        .design-13 .matrix {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(212,175,55,0.2);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .design-13 .matrix-header {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            background: rgba(212,175,55,0.08);
+            border-bottom: 1px solid rgba(212,175,55,0.2);
+        }
+
+        .design-13 .header-cell {
+            padding: 20px 24px;
+            text-align: center;
+        }
+
+        .design-13 .header-cell.empty {
+            background: transparent;
+        }
+
+        .design-13 .plan-header h3 {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #D4AF37;
+            margin-bottom: 8px;
+        }
+
+        .design-13 .plan-header .price {
+            font-size: 28px;
+            font-weight: 300;
+        }
+
+        .design-13 .matrix-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .design-13 .matrix-row:last-child {
+            border-bottom: none;
+        }
+
+        .design-13 .feature-cell {
+            padding: 16px 24px;
+            font-size: 13px;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .design-13 .value-cell {
+            padding: 16px 24px;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        .design-13 .value-cell.check {
+            color: #D4AF37;
+        }
+
+        /* DESIGN 14 - Vertical Comparison */
+        .design-14 {
+            background: linear-gradient(135deg, #1a1410 0%, #0f0b08 100%);
+            padding: 80px 40px;
+        }
+
+        .design-14 .content {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .design-14 h2 {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 300;
+            margin-bottom: 40px;
+        }
+
+        .design-14 .comparison-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(212,175,55,0.2);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .design-14 .plan-section {
+            padding: 32px 28px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .design-14 .plan-section:last-child {
+            border-bottom: none;
+        }
+
+        .design-14 .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .design-14 .section-name h3 {
+            font-size: 18px;
+            font-weight: 400;
+        }
+
+        .design-14 .section-price {
+            font-size: 28px;
+            font-weight: 300;
+            color: #D4AF37;
+        }
+
+        .design-14 .section-features {
+            font-size: 12px;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.8;
+        }
+
+        /* DESIGN 15 - Slider Cards */
+        .design-15 {
+            background: linear-gradient(135deg, #1a1410 0%, #0f0b08 100%);
+            padding: 80px 40px;
+        }
+
+        .design-15 .content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .design-15 h2 {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 300;
+            margin-bottom: 40px;
+        }
+
+        .design-15 .slider {
+            position: relative;
+        }
+
+        .design-15 .slide {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(212,175,55,0.2);
+            border-radius: 24px;
+            padding: 48px 40px;
+            text-align: center;
+        }
+
+        .design-15 .slide-name {
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #D4AF37;
+            margin-bottom: 16px;
+        }
+
+        .design-15 .slide-desc {
+            font-size: 13px;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 24px;
+        }
+
+        .design-15 .slide-price {
+            font-size: 56px;
+            font-weight: 300;
+            margin-bottom: 32px;
+            color: #D4AF37;
+        }
+
+        .design-15 .slide-features {
+            list-style: none;
+            text-align: left;
+            max-width: 350px;
+            margin: 0 auto 32px;
+        }
+
+        .design-15 .slide-features li {
+            font-size: 13px;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 12px;
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .design-15 .slide-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #D4AF37;
+        }
+
+        .design-15 .slide-cta {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #D4AF37 0%, #C77A4E 100%);
+            border: none;
+            border-radius: 12px;
+            color: #000;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .design-1 .plans,
+            .design-2 .row,
+            .design-6 .comparison,
+            .design-11 .grid,
+            .design-13 .matrix-header,
+            .design-13 .matrix-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>20+ Propositions Section Pricing Épurée</h1>
+        <p class="subtitle">Versions minimalistes et sophistiquées pour remplacer la grosse section pricing actuelle</p>
+
+        <!-- DESIGN 1 -->
+        <div class="proposal">
+            <div class="proposal-header">
+                <div class="proposal-number">Design #1</div>
+                <div class="proposal-title">Minimal Cards Side by Side</div>
+                <div class="proposal-desc">Deux cartes côte à côte épurées avec features en liste, badge "Recommandé" discret</div>
+            </div>
+            <div class="preview">
+                <div class="design-1">
+                    <div class="content">
+                        <div class="header">
+                            <h2>Choisis ton <span class="accent">accompagnement</span></h2>
+                            <p class="subtitle">Deux formules pensées pour ton parcours culinaire</p>
+                        </div>
+                        <div class="plans">
+                            <div class="plan">
+                                <div class="plan-name">Essentiel</div>
+                                <div class="plan-desc">Pour découvrir et s'inspirer</div>
+                                <div class="price">Gratuit</div>
+                                <ul class="features">
+                                    <li>1 recette par semaine</li>
+                                    <li>Accès à 25 recettes</li>
+                                    <li>Newsletter hebdo</li>
+                                    <li>Conseils & astuces</li>
+                                </ul>
+                                <button>Commencer</button>
+                            </div>
+                            <div class="plan featured">
+                                <span class="badge">Recommandé</span>
+                                <div class="plan-name">Premium</div>
+                                <div class="plan-desc">Pour aller plus loin</div>
+                                <div class="price">2,99€<span>/mois</span></div>
+                                <ul class="features">
+                                    <li>7 recettes par semaine</li>
+                                    <li>150+ recettes exclusives</li>
+                                    <li>Liste de courses auto</li>
+                                    <li>Vidéos pas-à-pas</li>
+                                    <li>Techniques de chef</li>
+                                    <li>Groupe communauté</li>
+                                </ul>
+                                <button>Devenir Premium</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESIGN 2 -->
+        <div class="proposal">
+            <div class="proposal-header">
+                <div class="proposal-number">Design #2</div>
+                <div class="proposal-title">Compact Table Style</div>
+                <div class="proposal-desc">Format tableau épuré pour comparer rapidement les features</div>
+            </div>
+            <div class="preview">
+                <div class="design-2">
+                    <div class="content">
+                        <h2>Compare les plans</h2>
+                        <div class="table">
+                            <div class="row header">
+                                <div class="cell"></div>
+                                <div class="cell header">Essentiel</div>
+                                <div class="cell header">Premium</div>
+                            </div>
+                            <div class="row">
+                                <div class="cell feature">Recettes/semaine</div>
+                                <div class="cell value">1</div>
+                                <div class="cell value">7</div>
+                            </div>
+                            <div class="row">
+                                <div class="cell feature">Bibliothèque</div>
+                                <div class="cell value">25</div>
+                                <div class="cell value">150+</div>
+                            </div>
+                            <div class="row">
+                                <div class="cell feature">Vidéos détaillées</div>
+                                <div class="cell value">-</div>
+                                <div class="cell value">✓</div>
+                            </div>
+                            <div class="row">
+                                <div class="cell feature">Liste de courses</div>
+                                <div class="cell value">-</div>
+                                <div class="cell value">✓</div>
+                            </div>
+                            <div class="row">
+                                <div class="cell feature">Communauté privée</div>
+                                <div class="cell value">-</div>
+                                <div class="cell value">✓</div>
+                            </div>
+                            <div class="row">
+                                <div class="cell feature">Prix</div>
+                                <div class="cell value">Gratuit</div>
+                                <div class="cell value">2,99€/mois</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESIGN 3 -->
+        <div class="proposal">
+            <div class="proposal-header">
+                <div class="proposal-number">Design #3</div>
+                <div class="proposal-title">Horizontal Tabs</div>
+                <div class="proposal-desc">Tabs pour switcher entre plans, détails s'affichent en dessous</div>
+            </div>
+            <div class="preview">
+                <div class="design-3">
+                    <div class="content">
+                        <h2>Choisis ton plan</h2>
+                        <div class="tabs">
+                            <div class="tab active">
+                                <div class="tab-name">Essentiel</div>
+                                <div class="tab-price">Gratuit</div>
+                            </div>
+                            <div class="tab">
+                                <div class="tab-name">Premium</div>
+                                <div class="tab-price">2,99€</div>
+                            </div>
+                        </div>
+                        <div class="details">
+                            <p class="details-desc">Pour découvrir et s'inspirer avec des recettes chaque semaine</p>
+                            <div class="features-grid">
+                                <div class="feature">1 recette par semaine</div>
+                                <div class="feature">25 recettes exclusives</div>
+                                <div class="feature">Newsletter hebdo</div>
+                                <div class="feature">Conseils & astuces</div>
+                            </div>
+                            <button style="width: 100%; padding: 16px; background: linear-gradient(135deg, #D4AF37 0%, #C77A4E 100%); border: none; border-radius: 12px; color: #000; font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 600; cursor: pointer;">Commencer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESIGN 4 -->
+        <div class="proposal">
+            <div class="proposal-header">
+                <div class="proposal-number">Design #4</div>
+                <div class="proposal-title">Minimal List</div>
+                <div class="proposal-desc">Liste verticale ultra simple avec prix aligné à droite</div>
+            </div>
+            <div class="preview">
+                <div class="design-4">
+                    <div class="content">
+                        <h2>Nos formules</h2>
+                        <div class="plan-item">
+                            <div class="plan-info">
+                                <h3>Essentiel</h3>
+                                <p>1 recette/semaine • 25 exclusives</p>
+                            </div>
+                            <div class="plan-price">Gratuit</div>
+                        </div>
+                        <div class="plan-item featured">
+                            <div class="plan-info">
+                                <h3>Premium</h3>
+                                <p>7 recettes/semaine • 150+ exclusives</p>
+                            </div>
+                            <div class="plan-price">2,99€</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESIGN 5 -->
+        <div class="proposal">
+            <div class="proposal-header">
+                <div class="proposal-number">Design #5</div>
+                <div class="proposal-title">Card with Toggle</div>
+                <div class="proposal-desc">Une seule card avec toggle switch pour alterner entre les plans</div>
+            </div>
+            <div class="preview">
+                <div class="design-5">
+                    <div class="content">
+                        <div class="card">
+                            <h2>Newsletter</h2>
+                            <p class="subtitle">Choisis ta formule</p>
+                            <div class="toggle">
+                                <button class="active">Essentiel - Gratuit</button>
+                                <button>Premium - 2,99€</button>
+                            </div>
+                            <div class="plan-details">
+                                <div class="price-display">
+                                    <span class="price">Gratuit</span>
+                                </div>
+                                <ul class="features">
+                                    <li>1 recette par semaine</li>
+                                    <li>Accès à 25 recettes exclusives</li>
+                                    <li>Newsletter hebdomadaire</li>
+                                    <li>Conseils et astuces</li>
+                                </ul>
+                            </div>
+                            <button class="cta">Commencer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESIGN 6 -->
+        <div class="proposal">
+            <div class="proposal-header">
+                <div class="proposal-number">Design #6</div>
+                <div class="proposal-title">Split Comparison</div>
+                <div class="proposal-desc">Split 50/50 avec séparateur gold pour comparer visuellement</div>
+            </div>
+            <div class="preview">
+                <div class="design-6">
+                    <div class="content">
+                        <h2>Choisis ton plan</h2>
+                        <div class="comparison">
+                            <div class="col">
+                                <div class="col-header">
+                                    <h3>Essentiel</h3>
+                                    <div class="price">Gratuit</div>
+                                </div>
+                                <ul class="col-features">
+                                    <li>1 recette/semaine</li>
+                                    <li>25 recettes exclusives</li>
+                                    <li>Newsletter hebdo</li>
+                                    <li>Conseils & astuces</li>
+                                </ul>
+                            </div>
+                            <div class="col">
+                                <div class="col-header">
+                                    <h3>Premium</h3>
+                                    <div class="price">2,99€</div>
+                                </div>
+                                <ul class="col-features">
+                                    <li>7 recettes/semaine</li>
+                                    <li>150+ recettes exclusives</li>
+                                    <li>Liste de courses auto</li>
+                                    <li>Vidéos détaillées</li>
+                                    <li>Techniques de chef</li>
+                                    <li>Groupe communauté</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESIGN 7 -->
+        <div class="proposal">
+            <div class="proposal-header">
+                <div class="proposal-number">Design #7</div>
+                <div class="proposal-title">Accordion Style</div>
+                <div class="proposal-desc">Plans en accordion, clic pour expand et voir les détails</div>
+            </div>
+            <div class="preview">
+                <div class="design-7">
+                    <div class="content">
+                        <h2>Nos formules</h2>
+                        <div class="accordion-item active">
+                            <div class="accordion-header">
+                                <div class="accordion-title">
+                                    <h3>Essentiel</h3>
+                                    <p>Pour découvrir et s'inspirer</p>
+                                </div>
+                                <div class="accordion-price">Gratuit</div>
+                            </div>
+                            <div class="accordion-content">
+                                <ul class="features-list">
+                                    <li>1 recette par semaine</li>
+                                    <li>Accès à 25 recettes exclusives</li>
+                                    <li>Newsletter hebdomadaire</li>
+                                    <li>Conseils et astuces</li>
+                                </ul>
+                                <button style="width: 100%; padding: 14px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; color: white; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; cursor: pointer;">Commencer</button>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <div class="accordion-title">
+                                    <h3>Premium</h3>
+                                    <p>Pour aller plus loin</p>
+                                </div>
+                                <div class="accordion-price">2,99€</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESIGN 8 -->
+        <div class="proposal">
+            <div class="proposal-header">
+                <div class="proposal-number">Design #8</div>
+                <div class="proposal-title">Pricing Pills</div>
+                <div class="proposal-desc">Pills horizontaux en forme de capsules, ultra compact</div>
+            </div>
+            <div class="preview">
+                <div class="design-8">
+                    <div class="content">
+                        <h2>Nos formules</h2>
+                        <p class="subtitle">Deux options pour recevoir des recettes exclusives</p>
+                        <div class="pills">
+                            <div class="pill">
+                                <div class="pill-name">Essentiel</div>
+                                <div class="pill-price">Gratuit</div>
+                                <div class="pill-desc">1 recette/semaine</div>
+                            </div>
+                            <div class="pill featured">
+                                <div class="pill-name">Premium</div>
+                                <div class="pill-price">2,99€</div>
+                                <div class="pill-desc">7 recettes/semaine</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESIGN 9 -->
+        <div class="proposal">
+            <div class="proposal-header">
+                <div class="proposal-number">Design #9</div>
+                <div class="proposal-title">Stacked Cards</div>
+                <div class="proposal-desc">Cards empilées verticalement, hover slide à droite</div>
+            </div>
+            <div class="preview">
+                <div class="design-9">
+                    <div class="content">
+                        <h2>Choisis ta formule</h2>
+                        <div class="stack">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-name">
+                                        <h3>Essentiel</h3>
+                                        <p>Pour découvrir</p>
+                                    </div>
+                                    <div class="card-price">Gratuit</div>
+                                </div>
+                                <div class="card-features">
+                                    1 recette/sem · 25 exclusives · Newsletter · Conseils
+                                </div>
+                            </div>
+                            <div class="card featured">
+                                <div class="card-header">
+                                    <div class="card-name">
+                                        <h3>Premium</h3>
+                                        <p>Pour aller plus loin</p>
+                                    </div>
+                                    <div class="card-price">2,99€</div>
+                                </div>
+                                <div class="card-features">
+                                    7 recettes/sem · 150+ exclusives · Vidéos · Liste courses · Communauté
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESIGN 10 -->
+        <div class="proposal">
+            <div class="proposal-header">
+                <div class="proposal-number">Design #10</div>
+                <div class="proposal-title">Horizontal Scroll</div>
+                <div class="proposal-desc">Cards en scroll horizontal pour mobile-friendly</div>
+            </div>
+            <div class="preview">
+                <div class="design-10">
+                    <div class="header">
+                        <h2>Nos formules</h2>
+                        <p class="subtitle">Choisis celle qui te correspond</p>
+                    </div>
+                    <div class="scroll-container">
+                        <div class="plan-card">
+                            <div class="plan-header">
+                                <div class="plan-name">Essentiel</div>
+                                <div class="plan-price">Gratuit</div>
+                            </div>
+                            <ul class="plan-features">
+                                <li>1 recette/semaine</li>
+                                <li>25 recettes exclusives</li>
+                                <li>Newsletter hebdo</li>
+                                <li>Conseils & astuces</li>
+                            </ul>
+                        </div>
+                        <div class="plan-card featured">
+                            <div class="plan-header">
+                                <div class="plan-name">Premium</div>
+                                <div class="plan-price">2,99€</div>
+                            </div>
+                            <ul class="plan-features">
+                                <li>7 recettes/semaine</li>
+                                <li>150+ exclusives</li>
+                                <li>Liste de courses</li>
+                                <li>Vidéos détaillées</li>
+                                <li>Techniques de chef</li>
+                                <li>Groupe communauté</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESIGN 11 -->
+        <div class="proposal">
+            <div class="proposal-header">
+                <div class="proposal-number">Design #11</div>
+                <div class="proposal-title">Grid Showcase (similaire actuel mais épuré)</div>
+                <div class="proposal-desc">Version améliorée de ton design actuel mais plus compact et élégant</div>
+            </div>
+            <div class="preview">
+                <div class="design-11">
+                    <div class="content">
+                        <h2>Choisis ton accompagnement</h2>
+                        <div class="grid">
+                            <div class="plan">
+                                <div class="plan-name">Essentiel</div>
+                                <div class="plan-desc">Pour découvrir et s'inspirer</div>
+                                <div class="plan-price">Gratuit</div>
+                                <div class="plan-period">Plan gratuit</div>
+                                <ul class="plan-features">
+                                    <li>1 recette par semaine</li>
+                                    <li>25 recettes exclusives</li>
+                                    <li>Newsletter hebdo</li>
+                                    <li>Conseils & astuces</li>
+                                </ul>
+                                <button>Commencer</button>
+                            </div>
+                            <div class="plan featured">
+                                <div class="plan-name">Premium</div>
+                                <div class="plan-desc">Pour aller plus loin</div>
+                                <div class="plan-price">2,99€</div>
+                                <div class="plan-period">par mois</div>
+                                <ul class="plan-features">
+                                    <li>7 recettes/semaine</li>
+                                    <li>150+ exclusives</li>
+                                    <li>Liste de courses</li>
+                                    <li>Vidéos détaillées</li>
+                                    <li>Techniques de chef</li>
+                                    <li>Groupe communauté</li>
+                                </ul>
+                                <button>Devenir Premium</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESIGN 12 -->
+        <div class="proposal">
+            <div class="proposal-header">
+                <div class="proposal-number">Design #12</div>
+                <div class="proposal-title">Simple List</div>
+                <div class="proposal-desc">Liste ultra simple dans une card, parfait pour mobile</div>
+            </div>
+            <div class="preview">
+                <div class="design-12">
+                    <div class="content">
+                        <h2>Formules disponibles</h2>
+                        <div class="list">
+                            <div class="list-item">
+                                <div class="item-info">
+                                    <h3>Essentiel</h3>
+                                    <p>1 recette/sem · 25 exclusives</p>
+                                </div>
+                                <div class="item-price">Gratuit</div>
+                            </div>
+                            <div class="list-item">
+                                <div class="item-info">
+                                    <h3>Premium</h3>
+                                    <p>7 recettes/sem · 150+ exclusives</p>
+                                </div>
+                                <div class="item-price">2,99€</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESIGN 13 -->
+        <div class="proposal">
+            <div class="proposal-header">
+                <div class="proposal-number">Design #13</div>
+                <div class="proposal-title">Feature Matrix</div>
+                <div class="proposal-desc">Matrice de comparaison détaillée style professionnel</div>
+            </div>
+            <div class="preview">
+                <div class="design-13">
+                    <div class="content">
+                        <h2>Compare les formules</h2>
+                        <div class="matrix">
+                            <div class="matrix-header">
+                                <div class="header-cell empty"></div>
+                                <div class="header-cell plan-header">
+                                    <h3>Essentiel</h3>
+                                    <div class="price">Gratuit</div>
+                                </div>
+                                <div class="header-cell plan-header">
+                                    <h3>Premium</h3>
+                                    <div class="price">2,99€</div>
+                                </div>
+                            </div>
+                            <div class="matrix-row">
+                                <div class="feature-cell">Recettes par semaine</div>
+                                <div class="value-cell">1</div>
+                                <div class="value-cell">7</div>
+                            </div>
+                            <div class="matrix-row">
+                                <div class="feature-cell">Bibliothèque exclusive</div>
+                                <div class="value-cell">25</div>
+                                <div class="value-cell">150+</div>
+                            </div>
+                            <div class="matrix-row">
+                                <div class="feature-cell">Newsletter hebdo</div>
+                                <div class="value-cell check">✓</div>
+                                <div class="value-cell check">✓</div>
+                            </div>
+                            <div class="matrix-row">
+                                <div class="feature-cell">Vidéos pas-à-pas</div>
+                                <div class="value-cell">-</div>
+                                <div class="value-cell check">✓</div>
+                            </div>
+                            <div class="matrix-row">
+                                <div class="feature-cell">Liste de courses auto</div>
+                                <div class="value-cell">-</div>
+                                <div class="value-cell check">✓</div>
+                            </div>
+                            <div class="matrix-row">
+                                <div class="feature-cell">Groupe communauté</div>
+                                <div class="value-cell">-</div>
+                                <div class="value-cell check">✓</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESIGN 14 -->
+        <div class="proposal">
+            <div class="proposal-header">
+                <div class="proposal-number">Design #14</div>
+                <div class="proposal-title">Vertical Comparison</div>
+                <div class="proposal-desc">Plans empilés verticalement dans une card unique</div>
+            </div>
+            <div class="preview">
+                <div class="design-14">
+                    <div class="content">
+                        <h2>Nos formules</h2>
+                        <div class="comparison-card">
+                            <div class="plan-section">
+                                <div class="section-header">
+                                    <div class="section-name">
+                                        <h3>Essentiel</h3>
+                                    </div>
+                                    <div class="section-price">Gratuit</div>
+                                </div>
+                                <div class="section-features">
+                                    1 recette/sem · 25 exclusives · Newsletter · Conseils
+                                </div>
+                            </div>
+                            <div class="plan-section">
+                                <div class="section-header">
+                                    <div class="section-name">
+                                        <h3>Premium</h3>
+                                    </div>
+                                    <div class="section-price">2,99€</div>
+                                </div>
+                                <div class="section-features">
+                                    7 recettes/sem · 150+ exclusives · Vidéos · Liste courses · Techniques chef · Communauté
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESIGN 15 -->
+        <div class="proposal">
+            <div class="proposal-header">
+                <div class="proposal-number">Design #15</div>
+                <div class="proposal-title">Slider Card (focus unique)</div>
+                <div class="proposal-desc">Une seule card qui met en valeur un plan à la fois, slider pour alterner</div>
+            </div>
+            <div class="preview">
+                <div class="design-15">
+                    <div class="content">
+                        <h2>Newsletter Premium</h2>
+                        <div class="slider">
+                            <div class="slide">
+                                <div class="slide-name">Premium</div>
+                                <div class="slide-desc">Pour les passionnés qui veulent aller plus loin</div>
+                                <div class="slide-price">2,99€</div>
+                                <ul class="slide-features">
+                                    <li>7 recettes par semaine</li>
+                                    <li>Accès à 150+ recettes exclusives</li>
+                                    <li>Liste de courses automatique</li>
+                                    <li>Vidéos pas-à-pas détaillées</li>
+                                    <li>Techniques de chef exclusives</li>
+                                    <li>Groupe privé communauté</li>
+                                </ul>
+                                <button class="slide-cta">Devenir Premium</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

@@ -39,9 +39,11 @@ COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=builder /app/node_modules/prisma ./node_modules/prisma
 COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
+COPY --from=builder /app/node_modules/.bin ./node_modules/.bin
 COPY start.sh ./start.sh
 
-RUN chmod +x start.sh
+RUN chmod +x start.sh && \
+    chown -R nextjs:nodejs ./prisma ./node_modules ./start.sh
 
 USER nextjs
 
@@ -49,5 +51,6 @@ EXPOSE 3000
 
 ENV PORT 3000
 ENV HOSTNAME "0.0.0.0"
+ENV PATH="/app/node_modules/.bin:$PATH"
 
 CMD ["sh", "start.sh"]
