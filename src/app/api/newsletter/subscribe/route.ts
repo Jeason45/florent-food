@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
           to: email.toLowerCase(),
           subject: '🎉 Bienvenue chez Florent Food !',
           htmlContent: emailHtml,
-          type: 'welcome',
+          type: 'newsletter_welcome',
           subscriberId: existing.id
         });
 
@@ -77,7 +77,7 @@ export async function POST(request: NextRequest) {
       to: email.toLowerCase(),
       subject: '🎉 Bienvenue chez Florent Food !',
       htmlContent: emailHtml,
-      type: 'welcome',
+      type: 'newsletter_welcome',
       subscriberId: subscriber.id
     });
 
