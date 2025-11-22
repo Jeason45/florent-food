@@ -1,7 +1,6 @@
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { HeroSection } from "@/components/sections/hero";
-import { PricingPlansSection } from "@/components/sections/pricing-plans";
 import { RecipesCategorySection } from "@/components/sections/recipes-category";
 import { AboutStorySection } from "@/components/sections/about-story";
 import { TestimonialsSection } from "@/components/sections/testimonials";
@@ -125,7 +124,6 @@ export default function Home() {
       <Header />
       <main>
         <HeroSection />
-        <PricingPlansSection />
         <RecipesCategorySection
           title="Pâtisserie & Desserts"
           subtitle="Des créations sucrées raffinées pour régaler vos proches"

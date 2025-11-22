@@ -1,14 +1,13 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Check } from "lucide-react";
+import { useState } from "react";
 
-const plans = [
-  {
+const plans = {
+  free: {
     name: "Essentiel",
     price: "Gratuit",
     period: "",
-    description: "Pour découvrir et s'inspirer",
+    description: "Pour découvrir et s'inspirer avec des recettes exclusives",
     features: [
       "1 recette par semaine",
       "Accès à 25 recettes exclusives",
@@ -16,10 +15,8 @@ const plans = [
       "Conseils et astuces",
     ],
     cta: "Commencer gratuitement",
-    featured: false,
-    color: "#C9A961",
   },
-  {
+  premium: {
     name: "Premium",
     price: "2,99€",
     period: "/mois",
@@ -35,121 +32,97 @@ const plans = [
       "Accès anticipé nouveautés",
     ],
     cta: "Devenir Premium",
-    featured: true,
-    color: "#E07A5F",
   },
-];
+};
 
 export function PricingPlansSection() {
-  return (
-    <section className="relative py-16 sm:py-20 md:py-24 lg:py-32 bg-gradient-to-br from-[#FFFBF7] via-[#FFF8F0] to-[#FFF5EB] overflow-hidden">
-      {/* Decorative elements */}
-      <div className="absolute top-20 right-10 w-40 h-40 rounded-full bg-[#E07A5F]/5 blur-3xl"></div>
-      <div className="absolute bottom-20 left-10 w-48 h-48 rounded-full bg-[#C9A961]/5 blur-3xl"></div>
+  const [selectedPlan, setSelectedPlan] = useState<"free" | "premium">("free");
+  const plan = plans[selectedPlan];
 
+  return (
+    <section className="relative py-20 sm:py-24 md:py-32 bg-black overflow-hidden">
       <div className="relative w-full max-w-4xl mx-auto px-5 sm:px-8 lg:px-12">
+
         {/* Section Header */}
-        <div className="text-center mb-10 sm:mb-12">
-          <span className="text-[10px] sm:text-xs tracking-[0.3em] uppercase font-medium text-[#E07A5F] mb-4 sm:mb-5 block">
-            Newsletter
-          </span>
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-light text-[var(--noir-luxe)] mb-3 sm:mb-4 leading-[1.05] tracking-[-0.02em] px-2">
-            Choisis ton
-            <span className="block mt-2 font-normal italic text-[#E07A5F]">accompagnement</span>
+        <div className="text-center mb-16">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-light text-white mb-4">
+            Choisis ton <span className="italic" style={{ color: '#D4AF37' }}>plan</span>
           </h2>
-          <p className="text-sm sm:text-base text-[var(--gris-taupe)] max-w-xl mx-auto px-4 leading-relaxed font-light mt-3">
-            Deux formules pensées pour t'accompagner dans ton parcours culinaire
+          <p className="text-base sm:text-lg text-white/60 max-w-xl mx-auto leading-relaxed font-light">
+            Recettes exclusives chaque semaine
           </p>
         </div>
 
-        {/* Pricing Cards */}
-        <div className="grid grid-cols-2 gap-4 sm:gap-5 md:gap-6 max-w-3xl mx-auto">
-          {plans.map((plan, index) => (
-            <div
-              key={plan.name}
-              className={`relative bg-white rounded-2xl overflow-hidden transition-all duration-500 ${
-                plan.featured
-                  ? 'shadow-2xl lg:scale-105 border-2 border-[#E07A5F]/20'
-                  : 'shadow-lg hover:shadow-xl'
+        {/* Pills Tabs */}
+        <div className="flex justify-center mb-12">
+          <div className="inline-flex gap-3 bg-white/5 p-2 rounded-full backdrop-blur-sm">
+            <button
+              onClick={() => setSelectedPlan("free")}
+              className={`px-10 sm:px-12 py-4 rounded-full text-sm sm:text-base uppercase tracking-wider font-medium transition-all duration-300 ${
+                selectedPlan === "free"
+                  ? 'bg-gradient-to-r from-[#D4AF37] to-[#C77A4E] text-black shadow-lg'
+                  : 'text-white/50 hover:text-white/70'
               }`}
             >
-              {/* Badge pour le plan featured */}
-              {plan.featured && (
-                <div className="absolute top-0 right-0 bg-gradient-to-r from-[#E07A5F] to-[#D96A50] text-white text-[9px] sm:text-[10px] tracking-[0.2em] uppercase font-medium px-4 sm:px-5 py-2 sm:py-2.5 rounded-bl-2xl">
-                  Recommandé
-                </div>
-              )}
+              Essentiel
+            </button>
+            <button
+              onClick={() => setSelectedPlan("premium")}
+              className={`px-10 sm:px-12 py-4 rounded-full text-sm sm:text-base uppercase tracking-wider font-medium transition-all duration-300 ${
+                selectedPlan === "premium"
+                  ? 'bg-gradient-to-r from-[#D4AF37] to-[#C77A4E] text-black shadow-lg'
+                  : 'text-white/50 hover:text-white/70'
+              }`}
+            >
+              Premium 2,99€
+            </button>
+          </div>
+        </div>
 
-              <div className="p-4 sm:p-6 md:p-7 lg:p-8 flex flex-col h-full text-center">
-                {/* Header */}
-                <div style={{ marginBottom: '22px' }}>
-                  <h3 className="font-serif text-xl sm:text-2xl md:text-3xl font-light text-[var(--noir-luxe)] mb-2 sm:mb-3 tracking-tight">
-                    {plan.name}
-                  </h3>
-                  <p className="text-[10px] sm:text-xs md:text-sm text-[var(--gris-taupe)] font-light leading-relaxed" style={{ marginBottom: '14px' }}>
-                    {plan.description}
-                  </p>
+        {/* Details Card */}
+        <div className="bg-white/5 border border-[#D4AF37]/20 rounded-3xl p-10 sm:p-12 md:p-16">
 
-                  {/* Price */}
-                  <div className="flex items-baseline gap-1 justify-center">
-                    <span
-                      className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light tracking-tight"
-                      style={{ color: plan.color }}
-                    >
-                      {plan.price}
-                    </span>
-                    {plan.period && (
-                      <span className="text-xs sm:text-sm md:text-base text-[var(--gris-taupe)] font-light">
-                        {plan.period}
-                      </span>
-                    )}
-                  </div>
-                </div>
-
-                {/* Features */}
-                <div className="space-y-2.5 sm:space-y-3 md:space-y-4 mb-5 sm:mb-6 md:mb-7 flex-grow flex flex-col items-center">
-                  {plan.features.map((feature, i) => (
-                    <div key={i} className="flex items-start gap-2 sm:gap-2.5 w-full max-w-[200px]">
-                      <div
-                        className="w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
-                        style={{ backgroundColor: `${plan.color}15` }}
-                      >
-                        <Check
-                          className="w-2.5 h-2.5 sm:w-3 sm:h-3"
-                          style={{ color: plan.color }}
-                          strokeWidth={3}
-                        />
-                      </div>
-                      <span className="text-[10px] sm:text-xs md:text-sm text-[var(--noir-luxe)] font-light leading-relaxed text-left">
-                        {feature}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-
-                {/* CTA */}
-                <Button
-                  variant="default"
-                  size="lg"
-                  className={`w-full h-9 sm:h-10 md:h-11 text-[10px] sm:text-xs tracking-[0.12em] uppercase font-medium rounded-full transition-all duration-300 ${
-                    plan.featured
-                      ? 'bg-[#E07A5F] hover:bg-[#D96A50] text-white shadow-lg hover:shadow-xl hover:scale-105'
-                      : 'bg-white hover:bg-[var(--blanc-casse)] text-[#C9A961] border-2 border-[#C9A961]/30 hover:border-[#C9A961]/50'
-                  }`}
-                  onClick={() => {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }}
-                >
-                  {plan.cta}
-                </Button>
-              </div>
+          {/* Price Display */}
+          <div className="text-center mb-12">
+            <div className="text-6xl sm:text-7xl md:text-8xl font-light mb-3" style={{ color: '#D4AF37' }}>
+              {plan.price}
             </div>
-          ))}
+            {plan.period && (
+              <div className="text-lg sm:text-xl text-white/50 font-light">{plan.period}</div>
+            )}
+            <div className="text-base sm:text-lg text-white/60 mt-6 font-light leading-relaxed max-w-2xl mx-auto">
+              {plan.description}
+            </div>
+          </div>
+
+          {/* Features Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6 mb-12">
+            {plan.features.map((feature, i) => (
+              <div key={i} className="flex items-start gap-4">
+                <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 bg-[#D4AF37]/10">
+                  <svg className="w-3.5 h-3.5" style={{ color: '#D4AF37' }} fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <span className="text-sm sm:text-base text-white/80 font-light leading-relaxed">
+                  {feature}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          {/* CTA Button */}
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="w-full py-5 sm:py-6 bg-gradient-to-r from-[#D4AF37] to-[#C77A4E] text-black rounded-2xl text-sm sm:text-base uppercase tracking-wider font-semibold hover:shadow-2xl hover:shadow-[#D4AF37]/40 transition-all duration-300 hover:-translate-y-1"
+          >
+            {plan.cta}
+          </button>
         </div>
 
         {/* Bottom Note */}
-        <div className="text-center mt-10 sm:mt-12 md:mt-14">
-          <p className="text-xs sm:text-sm text-[var(--gris-taupe)] font-light leading-relaxed">
+        <div className="text-center mt-14 sm:mt-16">
+          <p className="text-sm sm:text-base text-white/40 font-light leading-relaxed">
             ✓ Annulation possible à tout moment · ✓ Paiement sécurisé · ✓ Désinscription en 1 clic
           </p>
         </div>

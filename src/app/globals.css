@@ -402,6 +402,10 @@ a:hover {
   }
 }
 
+.animate-shimmer {
+  animation: shimmer 3s ease-in-out infinite;
+}
+
 /* Classes d'animation */
 .animate-fade-in {
   animation: fadeIn var(--transition-slow) ease-out;
