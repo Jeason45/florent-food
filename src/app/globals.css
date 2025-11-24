@@ -588,7 +588,7 @@ a:hover {
 }
 
 
-/* Animation pour la bannière de cookies */
+/* Animation pour la bannière de cookies - Plus fluide */
 @keyframes slide-up {
   from {
     transform: translateY(100%);
@@ -601,5 +601,5 @@ a:hover {
 }
 
 .animate-slide-up {
-  animation: slide-up 0.4s ease-out;
+  animation: slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }

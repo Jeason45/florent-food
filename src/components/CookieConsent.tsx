@@ -96,13 +96,13 @@ export default function CookieConsent() {
             <div className="flex gap-3 w-full sm:w-auto">
               <button
                 onClick={refuseCookies}
-                className="flex-1 sm:flex-none px-4 py-2.5 border-2 border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors text-sm"
+                className="flex-1 sm:flex-none px-4 py-2.5 border-2 border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 ease-out text-sm"
               >
                 Refuser
               </button>
               <button
                 onClick={acceptCookies}
-                className="flex-1 sm:flex-none px-6 py-2.5 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-semibold rounded-lg hover:from-orange-600 hover:to-amber-600 transition-all shadow-md text-sm"
+                className="flex-1 sm:flex-none px-6 py-2.5 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-semibold rounded-lg hover:from-orange-600 hover:to-amber-600 hover:shadow-lg active:scale-95 transition-all duration-200 ease-out shadow-md text-sm"
               >
                 Accepter
               </button>
