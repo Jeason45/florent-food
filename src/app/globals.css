@@ -586,3 +586,20 @@ a:hover {
   scrollbar-width: thin;
   scrollbar-color: var(--terracotta) var(--creme-light);
 }
+
+
+/* Animation pour la bannière de cookies */
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.4s ease-out;
+}

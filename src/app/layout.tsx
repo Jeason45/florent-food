@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Cormorant_Garamond, Inter } from "next/font/google";
 import "./globals.css";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import CookieConsent from "@/components/CookieConsent";
 
 // Fonte serif premium pour les titres
 const cormorant = Cormorant_Garamond({
@@ -47,6 +48,7 @@ export default function RootLayout({
       <body className={`${inter.variable} ${cormorant.variable} antialiased`}>
         <GoogleAnalytics />
         {children}
+        <CookieConsent />
       </body>
     </html>
   );

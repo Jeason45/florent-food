@@ -15,8 +15,11 @@ export function Footer() {
             <Link href="/mentions-legales" className="text-white/50 hover:text-white/80 transition-colors font-light tracking-wide">
               Mentions légales
             </Link>
-            <Link href="/confidentialite" className="text-white/50 hover:text-white/80 transition-colors font-light tracking-wide">
+            <Link href="/politique-confidentialite" className="text-white/50 hover:text-white/80 transition-colors font-light tracking-wide">
               Confidentialité
+            </Link>
+            <Link href="/cookies" className="text-white/50 hover:text-white/80 transition-colors font-light tracking-wide">
+              Cookies
             </Link>
           </div>
 
