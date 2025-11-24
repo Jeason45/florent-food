@@ -1,9 +1,6 @@
-import Link from 'next/link';
+'use client';
 
-export const metadata = {
-  title: 'Politique de Cookies | Florent Food',
-  description: 'Informations sur l\'utilisation des cookies sur Florent Food',
-};
+import Link from 'next/link';
 
 export default function CookiesPage() {
   return (
