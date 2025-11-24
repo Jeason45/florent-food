@@ -107,34 +107,62 @@ export function HeroSection() {
                   </div>
 
                   {status !== "success" && (
-                    <div className="md:pt-4 lg:pt-6" style={{
-                      paddingLeft: '0',
-                      paddingRight: '0',
-                      paddingTop: '1rem',
-                      paddingBottom: '0'
-                    }}>
-                      <button
-                        type="submit"
-                        disabled={status === "loading"}
-                        style={{
-                          width: '100%',
-                          padding: '0.6rem 1rem',
-                          background: 'linear-gradient(to right, #D4AF37, #C77A4E)',
-                          color: 'white',
-                          borderRadius: '0 0 1.5rem 1.5rem',
-                          fontSize: '0.6rem',
-                          textTransform: 'uppercase',
-                          letterSpacing: '0.25em',
-                          fontWeight: '600',
-                          transition: 'all 300ms',
-                          border: 'none',
-                          cursor: status === "loading" ? 'wait' : 'pointer',
-                          opacity: status === "loading" ? 0.7 : 1
-                        }}
-                      >
-                        {status === "loading" ? "Inscription..." : "S'inscrire gratuitement"}
-                      </button>
-                    </div>
+                    <>
+                      <div className="md:pt-4 lg:pt-6" style={{
+                        paddingLeft: '0',
+                        paddingRight: '0',
+                        paddingTop: '1rem',
+                        paddingBottom: '0'
+                      }}>
+                        <button
+                          type="submit"
+                          disabled={status === "loading"}
+                          style={{
+                            width: '100%',
+                            padding: '0.6rem 1rem',
+                            background: 'linear-gradient(to right, #D4AF37, #C77A4E)',
+                            color: 'white',
+                            borderRadius: '0 0 1.5rem 1.5rem',
+                            fontSize: '0.6rem',
+                            textTransform: 'uppercase',
+                            letterSpacing: '0.25em',
+                            fontWeight: '600',
+                            transition: 'all 300ms',
+                            border: 'none',
+                            cursor: status === "loading" ? 'wait' : 'pointer',
+                            opacity: status === "loading" ? 0.7 : 1
+                          }}
+                        >
+                          {status === "loading" ? "Inscription..." : "S'inscrire gratuitement"}
+                        </button>
+                      </div>
+
+                      {/* Clause RGPD */}
+                      <p style={{
+                        fontSize: '11px',
+                        color: 'rgba(255,255,255,0.6)',
+                        textAlign: 'center',
+                        lineHeight: '1.6',
+                        marginTop: '12px',
+                        paddingLeft: '8px',
+                        paddingRight: '8px'
+                      }}>
+                        En t'inscrivant, tu acceptes de recevoir notre newsletter et que tes données soient traitées conformément à notre{' '}
+                        <a
+                          href="/politique-confidentialite"
+                          style={{
+                            color: '#D4AF37',
+                            textDecoration: 'underline',
+                            transition: 'color 0.2s'
+                          }}
+                          onMouseEnter={(e) => e.currentTarget.style.color = '#C77A4E'}
+                          onMouseLeave={(e) => e.currentTarget.style.color = '#D4AF37'}
+                        >
+                          politique de confidentialité
+                        </a>
+                        . Désinscription possible à tout moment.
+                      </p>
+                    </>
                   )}
                 </form>
               </div>
