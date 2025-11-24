@@ -275,6 +275,53 @@ export default function AdminSidebar() {
         padding: isCollapsed ? '16px 12px' : '16px',
         borderTop: '1px solid rgba(255, 255, 255, 0.06)'
       }}>
+        {/* Bouton de déconnexion */}
+        <button
+          onClick={async () => {
+            try {
+              const response = await fetch('/api/admin/auth/logout', {
+                method: 'POST'
+              });
+              if (response.ok) {
+                window.location.href = '/admin/login';
+              }
+            } catch (error) {
+              console.error('Logout error:', error);
+            }
+          }}
+          style={{
+            width: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px',
+            padding: isCollapsed ? '12px' : '12px 16px',
+            backgroundColor: 'rgba(239, 68, 68, 0.1)',
+            border: '1px solid rgba(239, 68, 68, 0.2)',
+            borderRadius: '6px',
+            fontSize: '14px',
+            fontWeight: 500,
+            color: '#ef4444',
+            cursor: 'pointer',
+            transition: 'all 0.2s',
+            justifyContent: isCollapsed ? 'center' : 'flex-start',
+            marginBottom: '12px'
+          }}
+          onMouseOver={(e) => {
+            e.currentTarget.style.backgroundColor = 'rgba(239, 68, 68, 0.15)';
+          }}
+          onMouseOut={(e) => {
+            e.currentTarget.style.backgroundColor = 'rgba(239, 68, 68, 0.1)';
+          }}
+          title={isCollapsed ? 'Déconnexion' : undefined}
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+            <polyline points="16 17 21 12 16 7"/>
+            <line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+          {!isCollapsed && <span>Déconnexion</span>}
+        </button>
+
         <div style={{
           display: 'flex',
           alignItems: 'center',
