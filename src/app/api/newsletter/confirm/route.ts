@@ -52,7 +52,7 @@ export async function GET(request: NextRequest) {
     console.log('✅ Subscriber confirmed:', subscriber.email);
 
     // Envoyer l'email de bienvenue
-    const emailHtml = welcomeEmail();
+    const emailHtml = welcomeEmail(subscriber.firstName || undefined, subscriber.email);
 
     await sendEmail({
       to: subscriber.email,

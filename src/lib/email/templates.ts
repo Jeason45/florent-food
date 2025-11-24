@@ -8,6 +8,7 @@ interface EmailTemplateProps {
   content: string;
   ctaText?: string;
   ctaLink?: string;
+  subscriberEmail?: string;
 }
 
 /**
@@ -18,6 +19,7 @@ export function baseEmailTemplate({
   content,
   ctaText,
   ctaLink,
+  subscriberEmail,
 }: EmailTemplateProps): string {
   const greeting = firstName ? `Bonjour ${firstName},` : "Bonjour,";
 
@@ -116,7 +118,7 @@ export function baseEmailTemplate({
     <!-- Header -->
     <div class="header">
       <h1 class="logo">Florent Food</h1>
-      <p class="subtitle">La Haute Pâtisserie Accessible</p>
+      <p class="subtitle">Cuisine & Pâtisserie Accessibles</p>
     </div>
 
     <!-- Content -->
@@ -153,14 +155,14 @@ export function baseEmailTemplate({
       </div>
 
       <p style="margin: 20px 0 10px 0;">
-        <a href="${process.env.NEXT_PUBLIC_SITE_URL}/newsletter/unsubscribe?email={{EMAIL}}" style="color: rgba(255, 255, 255, 0.5);">
+        <a href="${process.env.NEXT_PUBLIC_SITE_URL}/newsletter/unsubscribe?email=${subscriberEmail || ''}" style="color: rgba(255, 255, 255, 0.5);">
           Se désinscrire
         </a>
       </p>
 
       <p style="font-size: 12px; color: rgba(255, 255, 255, 0.5); margin-top: 10px;">
         © ${new Date().getFullYear()} Florent Food. Tous droits réservés.<br>
-        Fait avec ❤️ et passion pour la pâtisserie
+        Fait avec ❤️ et passion pour la cuisine
       </p>
     </div>
   </div>
@@ -172,7 +174,7 @@ export function baseEmailTemplate({
 /**
  * Email de bienvenue (inscription confirmée)
  */
-export function welcomeEmail(firstName?: string): string {
+export function welcomeEmail(firstName?: string, email?: string): string {
   const content = `
     <p>Bienvenue dans la famille Florent Food ! 🎉</p>
 
@@ -215,6 +217,7 @@ export function welcomeEmail(firstName?: string): string {
     content,
     ctaText: "Découvrir toutes les recettes",
     ctaLink: `${process.env.NEXT_PUBLIC_SITE_URL}`,
+    subscriberEmail: email,
   });
 }
 
@@ -223,7 +226,8 @@ export function welcomeEmail(firstName?: string): string {
  */
 export function confirmSubscriptionEmail(
   firstName: string | undefined,
-  confirmationLink: string
+  confirmationLink: string,
+  email?: string
 ): string {
   const content = `
     <p>Merci de ton intérêt pour Florent Food ! 🎉</p>
@@ -257,6 +261,7 @@ export function confirmSubscriptionEmail(
     content,
     ctaText: "Confirmer mon inscription",
     ctaLink: confirmationLink,
+    subscriberEmail: email,
   });
 }
 
@@ -280,7 +285,7 @@ export function adminNotificationEmail(
 /**
  * Email de désinscription (confirmation)
  */
-export function unsubscribeConfirmationEmail(firstName?: string): string {
+export function unsubscribeConfirmationEmail(firstName?: string, email?: string): string {
   const content = `
     <p>Tu t'es désinscrit avec succès de ma newsletter.</p>
 
@@ -310,5 +315,6 @@ export function unsubscribeConfirmationEmail(firstName?: string): string {
   return baseEmailTemplate({
     firstName,
     content,
+    subscriberEmail: email,
   });
 }
