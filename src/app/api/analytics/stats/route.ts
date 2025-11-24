@@ -4,11 +4,6 @@ import path from 'path';
 
 export async function GET() {
   try {
-    // Initialiser le client Google Analytics
-    const analyticsDataClient = new BetaAnalyticsDataClient({
-      keyFilename: path.join(process.cwd(), 'google-analytics-credentials.json'),
-    });
-
     const propertyId = process.env.NEXT_PUBLIC_GA_PROPERTY_ID || '';
 
     if (!propertyId) {
@@ -16,6 +11,23 @@ export async function GET() {
         { error: 'GA Property ID not configured' },
         { status: 400 }
       );
+    }
+
+    // Initialiser le client Google Analytics
+    // Support pour les credentials via variable d'environnement (production) ou fichier (dev)
+    let analyticsDataClient;
+
+    if (process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON) {
+      // Production: utiliser la variable d'environnement JSON
+      const credentials = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON);
+      analyticsDataClient = new BetaAnalyticsDataClient({
+        credentials,
+      });
+    } else {
+      // Dev: utiliser le fichier JSON
+      analyticsDataClient = new BetaAnalyticsDataClient({
+        keyFilename: path.join(process.cwd(), 'google-analytics-credentials.json'),
+      });
     }
 
     // Récupérer les statistiques des 30 derniers jours
