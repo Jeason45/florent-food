@@ -1,9 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { jwtVerify } from 'jose';
 
-const JWT_SECRET = new TextEncoder().encode(
-  process.env.JWT_SECRET || 'florent-food-secret-key-change-in-production'
-);
+// 🔒 SÉCURITÉ: JWT_SECRET est obligatoire
+if (!process.env.JWT_SECRET) {
+  throw new Error('JWT_SECRET environment variable is required for authentication');
+}
+
+const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET);
 
 export async function GET(request: NextRequest) {
   try {

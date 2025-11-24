@@ -5,8 +5,9 @@ export async function POST(request: NextRequest) {
   try {
     const { email } = await request.json();
 
-    // Validation
-    if (!email || !email.includes('@')) {
+    // Validation email (RFC 5322 compliant)
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !emailRegex.test(email)) {
       return NextResponse.json(
         { error: 'Email invalide' },
         { status: 400 }

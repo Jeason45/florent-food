@@ -2,16 +2,20 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { SignJWT } from 'jose';
 
-const JWT_SECRET = new TextEncoder().encode(
-  process.env.JWT_SECRET || 'florent-food-secret-key-change-in-production'
-);
+// 🔒 SÉCURITÉ: JWT_SECRET est obligatoire
+if (!process.env.JWT_SECRET) {
+  throw new Error('JWT_SECRET environment variable is required for authentication');
+}
+
+const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET);
 
 export async function POST(request: NextRequest) {
   try {
     const { email } = await request.json();
 
-    // Validation
-    if (!email || !email.includes('@')) {
+    // Validation email (RFC 5322 compliant)
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !emailRegex.test(email)) {
       return NextResponse.json(
         { error: 'Email invalide' },
         { status: 400 }
