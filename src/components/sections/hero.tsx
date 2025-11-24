@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import confetti from "canvas-confetti";
 
 interface HeroSectionProps {
   id?: string;
@@ -10,6 +11,47 @@ export function HeroSection({ id }: HeroSectionProps = {}) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState<string>("");
+
+  // Fonction pour déclencher le feu d'artifice de confettis
+  const triggerConfetti = () => {
+    const duration = 3000; // 3 secondes
+    const animationEnd = Date.now() + duration;
+    const defaults = {
+      startVelocity: 30,
+      spread: 360,
+      ticks: 60,
+      zIndex: 9999,
+      colors: ['#D4AF37', '#C77A4E', '#FFD700', '#FFA500', '#FF6347']
+    };
+
+    function randomInRange(min: number, max: number) {
+      return Math.random() * (max - min) + min;
+    }
+
+    const interval: NodeJS.Timeout = setInterval(function() {
+      const timeLeft = animationEnd - Date.now();
+
+      if (timeLeft <= 0) {
+        return clearInterval(interval);
+      }
+
+      const particleCount = 50 * (timeLeft / duration);
+
+      // Depuis la gauche
+      confetti({
+        ...defaults,
+        particleCount,
+        origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }
+      });
+
+      // Depuis la droite
+      confetti({
+        ...defaults,
+        particleCount,
+        origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }
+      });
+    }, 250);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,6 +75,9 @@ export function HeroSection({ id }: HeroSectionProps = {}) {
 
       setStatus("success");
       setEmail("");
+
+      // Déclencher le feu d'artifice de confettis
+      triggerConfetti();
     } catch (error) {
       setStatus("error");
       setErrorMessage(

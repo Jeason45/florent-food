@@ -21,7 +21,7 @@ export function SocialLinksSection() {
               <span className="text-xs sm:text-sm text-[var(--gris-taupe)] group-hover:text-[#D4AF37] transition-colors">Instagram</span>
             </a>
             <a
-              href="https://tiktok.com/@florentfood"
+              href="https://www.tiktok.com/@florent_cmt"
               target="_blank"
               rel="noopener noreferrer"
               className="group flex flex-col items-center gap-3 transition-all duration-300 hover:scale-105"
