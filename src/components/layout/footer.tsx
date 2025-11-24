@@ -24,9 +24,12 @@ export function Footer() {
           </div>
 
           {/* Copyright - centré */}
-          <div className="flex flex-row items-center gap-6 sm:gap-8 text-sm text-white/50 font-light">
-            <p>© {currentYear} Florent Food</p>
-            <span className="hidden sm:block">•</span>
+          <div className="flex flex-col items-center gap-3 text-sm text-white/50 font-light">
+            <div className="flex flex-row items-center gap-6 sm:gap-8">
+              <p>© {currentYear} Florent Food</p>
+              <span className="hidden sm:block">•</span>
+              <p>SIRET : 927 497 875 00017</p>
+            </div>
             <p>
               Conçu par{" "}
               <a

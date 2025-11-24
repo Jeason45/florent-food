@@ -1,11 +1,31 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import Script from 'next/script';
 
 export default function GoogleAnalytics() {
   const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
+  const [hasConsent, setHasConsent] = useState(false);
 
-  if (!GA_ID) {
+  useEffect(() => {
+    // Vérifier le consentement cookies
+    const consentData = localStorage.getItem('cookie_consent');
+
+    if (!consentData) {
+      setHasConsent(false);
+      return;
+    }
+
+    try {
+      const { value } = JSON.parse(consentData);
+      setHasConsent(value === 'accepted');
+    } catch (error) {
+      // Format ancien (juste "accepted" ou "refused")
+      setHasConsent(consentData === 'accepted');
+    }
+  }, []);
+
+  if (!GA_ID || !hasConsent) {
     return null;
   }
 

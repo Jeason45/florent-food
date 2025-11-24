@@ -7,172 +7,226 @@ export const metadata = {
 
 export default function MentionsLegalesPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#FFFBF7] to-white">
-      {/* Header */}
-      <header className="border-b border-gray-200 bg-white/80 backdrop-blur-sm">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 text-gray-600 hover:text-orange-600 transition-colors"
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M19 12H5M12 19l-7-7 7-7"/>
-            </svg>
-            Retour à l'accueil
-          </Link>
-        </div>
-      </header>
+    <div className="min-h-screen bg-[#FFFBF7]" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      {/* Navigation */}
+      <div className="border-b border-[#E8E3D5] py-8 w-full px-8">
+        <Link
+          href="/"
+          className="inline-flex items-center gap-2 text-[#8B7355] hover:text-[#C77A4E] transition-colors duration-300 text-sm font-light tracking-[0.1em] uppercase"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+          Retour
+        </Link>
+      </div>
 
-      {/* Content */}
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h1 className="text-4xl font-bold text-gray-900 mb-8">
-          Mentions Légales
+      {/* Hero */}
+      <section className="py-24 md:py-32 px-8 w-full" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <p className="text-xs font-light tracking-[0.3em] uppercase text-[#8B7355] mb-6" style={{ textAlign: 'center' }}>
+          Informations Légales
+        </p>
+
+        <h1 className="font-serif text-[64px] md:text-[80px] font-light text-[#0F0F0F] leading-[0.9] mb-8 tracking-tight" style={{ textAlign: 'center' }}>
+          Mentions<br/>Légales
         </h1>
 
-        <div className="prose prose-lg max-w-none">
-          {/* Éditeur du site */}
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-              1. Éditeur du site
+        <div className="w-16 h-[0.5px] bg-[#C77A4E]"></div>
+      </section>
+
+      {/* Contenu */}
+      <main className="pb-32 px-8 w-full" style={{ display: 'flex', justifyContent: 'center' }}>
+        <div className="max-w-[700px] w-full" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4rem' }}>
+
+          {/* Section 1 */}
+          <section style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem', width: '100%' }}>
+            <h2 className="font-serif text-3xl font-light text-[#0F0F0F]" style={{ textAlign: 'center' }}>
+              Éditeur du site
             </h2>
-            <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
-              <p className="mb-2"><strong>Nom :</strong> Florent Carivenc</p>
-              <p className="mb-2"><strong>Statut :</strong> Particulier</p>
-              <p className="mb-2">
-                <strong>Adresse :</strong><br />
-                15 rue des cresses, Maison 245<br />
-                34110 Vic la Gardiole<br />
-                France
-              </p>
-              <p className="mb-2">
-                <strong>Email :</strong>{' '}
-                <a href="mailto:florentcmtpro@gmail.com" className="text-orange-600 hover:text-orange-700">
+
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem', width: '100%' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
+                <p className="text-xs font-medium tracking-[0.2em] uppercase text-[#8B7355]">Nom</p>
+                <p className="text-base font-light text-[#2A2A2A]">Florent Carivenc</p>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
+                <p className="text-xs font-medium tracking-[0.2em] uppercase text-[#8B7355]">Statut</p>
+                <p className="text-base font-light text-[#2A2A2A]">Auto-entrepreneur</p>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
+                <p className="text-xs font-medium tracking-[0.2em] uppercase text-[#8B7355]">SIRET</p>
+                <p className="text-base font-light text-[#2A2A2A]">927 497 875 00017</p>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
+                <p className="text-xs font-medium tracking-[0.2em] uppercase text-[#8B7355]">Adresse</p>
+                <p className="text-base font-light text-[#2A2A2A] leading-relaxed" style={{ textAlign: 'center' }}>
+                  15 rue des cresses, Maison 245<br />
+                  34110 Vic la Gardiole, France
+                </p>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
+                <p className="text-xs font-medium tracking-[0.2em] uppercase text-[#8B7355]">Contact</p>
+                <a
+                  href="mailto:florentcmtpro@gmail.com"
+                  className="text-base font-light text-[#C77A4E] hover:text-[#8B7355] transition-colors duration-300"
+                >
                   florentcmtpro@gmail.com
                 </a>
-              </p>
-              <p className="mb-0"><strong>SIRET :</strong> En cours d'obtention</p>
+              </div>
             </div>
           </section>
 
-          {/* Directeur de publication */}
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-              2. Directeur de la publication
+          <div className="w-16 h-[0.5px] bg-[#E8E3D5]"></div>
+
+          {/* Section 2 */}
+          <section style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem' }}>
+            <h2 className="font-serif text-3xl font-light text-[#0F0F0F]" style={{ textAlign: 'center' }}>
+              Directeur de la publication
             </h2>
-            <p>Le directeur de la publication du site est Florent Carivenc.</p>
+
+            <p className="text-base font-light text-[#2A2A2A] leading-relaxed" style={{ textAlign: 'center' }}>
+              Le directeur de la publication du site est Florent Carivenc.
+            </p>
           </section>
 
-          {/* Hébergement */}
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-              3. Hébergement
+          <div className="w-16 h-[0.5px] bg-[#E8E3D5]"></div>
+
+          {/* Section 3 */}
+          <section style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem', width: '100%' }}>
+            <h2 className="font-serif text-3xl font-light text-[#0F0F0F]" style={{ textAlign: 'center' }}>
+              Hébergement
             </h2>
-            <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
-              <p className="mb-2"><strong>Hébergeur :</strong> Contabo GmbH</p>
-              <p className="mb-2">
-                <strong>Adresse :</strong><br />
-                Aschauer Straße 32a<br />
-                81549 München<br />
-                Allemagne
-              </p>
-              <p className="mb-2"><strong>Site web :</strong>{' '}
+
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem', width: '100%' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
+                <p className="text-xs font-medium tracking-[0.2em] uppercase text-[#8B7355]">Hébergeur</p>
+                <p className="text-base font-light text-[#2A2A2A]">Contabo GmbH</p>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
+                <p className="text-xs font-medium tracking-[0.2em] uppercase text-[#8B7355]">Adresse</p>
+                <p className="text-base font-light text-[#2A2A2A] leading-relaxed" style={{ textAlign: 'center' }}>
+                  Aschauer Straße 32a<br />
+                  81549 München, Allemagne
+                </p>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
+                <p className="text-xs font-medium tracking-[0.2em] uppercase text-[#8B7355]">Site web</p>
                 <a
                   href="https://contabo.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-orange-600 hover:text-orange-700"
+                  className="text-base font-light text-[#C77A4E] hover:text-[#8B7355] transition-colors duration-300"
                 >
-                  https://contabo.com
+                  contabo.com
                 </a>
-              </p>
-              <p className="mb-0"><strong>Serveur :</strong> IP 194.163.180.53</p>
+              </div>
             </div>
           </section>
 
-          {/* Propriété intellectuelle */}
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-              4. Propriété intellectuelle
+          <div className="w-16 h-[0.5px] bg-[#E8E3D5]"></div>
+
+          {/* Section 4 */}
+          <section style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem' }}>
+            <h2 className="font-serif text-3xl font-light text-[#0F0F0F]" style={{ textAlign: 'center' }}>
+              Propriété intellectuelle
             </h2>
-            <p className="mb-4">
-              L'ensemble de ce site relève de la législation française et internationale sur le droit d'auteur
-              et la propriété intellectuelle. Tous les droits de reproduction sont réservés, y compris pour les
-              documents téléchargeables et les représentations iconographiques et photographiques.
-            </p>
-            <p>
-              La reproduction de tout ou partie de ce site sur un support électronique quel qu'il soit est
-              formellement interdite sauf autorisation expresse du directeur de la publication.
-            </p>
+
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', maxWidth: '600px' }}>
+              <p className="text-base font-light text-[#2A2A2A] leading-relaxed" style={{ textAlign: 'center' }}>
+                L'ensemble de ce site relève de la législation française et internationale sur le droit d'auteur
+                et la propriété intellectuelle. Tous les droits de reproduction sont réservés.
+              </p>
+              <p className="text-base font-light text-[#2A2A2A] leading-relaxed" style={{ textAlign: 'center' }}>
+                La reproduction de tout ou partie de ce site sur un support électronique quel qu'il soit est
+                formellement interdite sauf autorisation expresse du directeur de la publication.
+              </p>
+            </div>
           </section>
 
-          {/* Protection des données */}
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-              5. Protection des données personnelles
+          <div className="w-16 h-[0.5px] bg-[#E8E3D5]"></div>
+
+          {/* Section 5 */}
+          <section style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem', width: '100%' }}>
+            <h2 className="font-serif text-3xl font-light text-[#0F0F0F]" style={{ textAlign: 'center' }}>
+              Données personnelles
             </h2>
-            <p>
+
+            <p className="text-base font-light text-[#2A2A2A] leading-relaxed max-w-[600px]" style={{ textAlign: 'center' }}>
               Conformément au Règlement Général sur la Protection des Données (RGPD), vous disposez d'un droit
-              d'accès, de rectification et de suppression des données vous concernant. Pour exercer ce droit,
-              veuillez nous contacter à l'adresse : {' '}
-              <a href="mailto:florentcmtpro@gmail.com" className="text-orange-600 hover:text-orange-700">
+              d'accès, de rectification et de suppression des données vous concernant.
+            </p>
+
+            <p className="text-base font-light text-[#2A2A2A]" style={{ textAlign: 'center' }}>
+              Pour exercer ce droit :{' '}
+              <a
+                href="mailto:florentcmtpro@gmail.com"
+                className="text-[#C77A4E] hover:text-[#8B7355] transition-colors duration-300"
+              >
                 florentcmtpro@gmail.com
               </a>
             </p>
-            <p className="mt-4">
-              Pour plus d'informations, consultez notre{' '}
-              <Link href="/politique-confidentialite" className="text-orange-600 hover:text-orange-700 underline">
+
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', marginTop: '3rem' }}>
+              <Link
+                href="/politique-confidentialite"
+                className="px-8 py-4 bg-white border border-[#E8E3D5] text-[#2A2A2A] text-sm font-light tracking-[0.1em] uppercase hover:border-[#C77A4E] hover:text-[#C77A4E] transition-all duration-300"
+              >
                 Politique de Confidentialité
-              </Link>.
-            </p>
+              </Link>
+
+              <Link
+                href="/cookies"
+                className="px-8 py-4 bg-white border border-[#E8E3D5] text-[#2A2A2A] text-sm font-light tracking-[0.1em] uppercase hover:border-[#C77A4E] hover:text-[#C77A4E] transition-all duration-300"
+              >
+                Gestion des Cookies
+              </Link>
+            </div>
           </section>
 
-          {/* Cookies */}
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-              6. Cookies
+          <div className="w-16 h-[0.5px] bg-[#E8E3D5]"></div>
+
+          {/* Section 6 */}
+          <section style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem', width: '100%' }}>
+            <h2 className="font-serif text-3xl font-light text-[#0F0F0F]" style={{ textAlign: 'center' }}>
+              Crédits
             </h2>
-            <p>
-              Ce site utilise des cookies pour améliorer l'expérience utilisateur. Pour en savoir plus,
-              consultez notre{' '}
-              <Link href="/cookies" className="text-orange-600 hover:text-orange-700 underline">
-                Politique de Cookies
-              </Link>.
-            </p>
+
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem', width: '100%' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
+                <p className="text-xs font-medium tracking-[0.2em] uppercase text-[#8B7355]">Conception</p>
+                <a
+                  href="https://jldigitalstudio.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-base font-light text-[#C77A4E] hover:text-[#8B7355] transition-colors duration-300"
+                >
+                  JLDS — Jeason Lemoine
+                </a>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
+                <p className="text-xs font-medium tracking-[0.2em] uppercase text-[#8B7355]">Photographies</p>
+                <p className="text-base font-light text-[#2A2A2A]">Florent Carivenc & Cloudinary</p>
+              </div>
+            </div>
           </section>
 
-          {/* Crédits */}
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-              7. Crédits
-            </h2>
-            <p className="mb-2">
-              <strong>Conception et développement :</strong> Jeason Lemoine
+          {/* Footer */}
+          <div className="mt-32 pt-12 border-t border-[#E8E3D5] w-full" style={{ display: 'flex', justifyContent: 'center' }}>
+            <p className="text-xs font-light tracking-[0.2em] uppercase text-[#8B7355]" style={{ textAlign: 'center' }}>
+              Dernière mise à jour : {new Date().toLocaleDateString('fr-FR', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+              })}
             </p>
-            <p className="mb-2">
-              <strong>Images :</strong> Cloudinary & Photos personnelles
-            </p>
-          </section>
-
-          {/* Contact */}
-          <section>
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-              8. Contact
-            </h2>
-            <p>
-              Pour toute question concernant le site, vous pouvez nous contacter à l'adresse :{' '}
-              <a href="mailto:florentcmtpro@gmail.com" className="text-orange-600 hover:text-orange-700">
-                florentcmtpro@gmail.com
-              </a>
-            </p>
-          </section>
-        </div>
-
-        <div className="mt-12 pt-8 border-t border-gray-200 text-sm text-gray-600">
-          <p>Dernière mise à jour : {new Date().toLocaleDateString('fr-FR', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-          })}</p>
+          </div>
         </div>
       </main>
     </div>

@@ -4,169 +4,213 @@ import Link from 'next/link';
 
 export default function CookiesPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#FFFBF7] to-white">
-      {/* Header */}
-      <header className="border-b border-gray-200 bg-white/80 backdrop-blur-sm">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 text-gray-600 hover:text-orange-600 transition-colors"
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M19 12H5M12 19l-7-7 7-7"/>
-            </svg>
-            Retour à l'accueil
-          </Link>
-        </div>
-      </header>
+    <div className="min-h-screen bg-[#FFFBF7]" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      {/* Navigation */}
+      <div className="border-b border-[#E8E3D5] py-8 w-full px-8">
+        <Link
+          href="/"
+          className="inline-flex items-center gap-2 text-[#8B7355] hover:text-[#C77A4E] transition-colors duration-300 text-sm font-light tracking-[0.1em] uppercase"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+          Retour
+        </Link>
+      </div>
 
-      {/* Content */}
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h1 className="text-4xl font-bold text-gray-900 mb-8">
-          Politique de Cookies
+      {/* Hero */}
+      <section className="py-24 md:py-32 px-8 w-full" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <p className="text-xs font-light tracking-[0.3em] uppercase text-[#8B7355] mb-6" style={{ textAlign: 'center' }}>
+          Gestion des Traceurs
+        </p>
+
+        <h1 className="font-serif text-[64px] md:text-[80px] font-light text-[#0F0F0F] leading-[0.9] mb-8 tracking-tight" style={{ textAlign: 'center' }}>
+          Politique<br/>Cookies
         </h1>
 
-        <div className="prose prose-lg max-w-none space-y-8">
+        <div className="w-16 h-[0.5px] bg-[#C77A4E]"></div>
+      </section>
+
+      {/* Contenu */}
+      <main className="pb-32 px-8 w-full" style={{ display: 'flex', justifyContent: 'center' }}>
+        <div className="max-w-[700px] w-full" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4rem' }}>
+
           {/* Introduction */}
-          <section>
-            <p className="text-lg text-gray-700 leading-relaxed">
-              Cette page vous informe sur l'utilisation des cookies sur le site Florent Food et
-              comment vous pouvez gérer vos préférences.
+          <section style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <p className="text-base font-light text-[#2A2A2A] leading-relaxed max-w-[600px]" style={{ textAlign: 'center' }}>
+              Cette page vous informe sur l'utilisation des cookies sur le site Florent Food
+              et comment vous pouvez gérer vos préférences.
             </p>
           </section>
 
-          {/* Qu'est-ce qu'un cookie */}
-          <section>
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-              1. Qu'est-ce qu'un cookie ?
+          <div className="w-16 h-[0.5px] bg-[#E8E3D5]"></div>
+
+          {/* Section 1 */}
+          <section style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem' }}>
+            <h2 className="font-serif text-3xl font-light text-[#0F0F0F]" style={{ textAlign: 'center' }}>
+              Qu'est-ce qu'un cookie ?
             </h2>
-            <p className="mb-4">
-              Un cookie est un petit fichier texte déposé sur votre terminal (ordinateur, smartphone, tablette)
-              lors de la visite d'un site web. Il permet de :
+
+            <p className="text-base font-light text-[#2A2A2A] leading-relaxed max-w-[600px]" style={{ textAlign: 'center' }}>
+              Un cookie est un petit fichier texte déposé sur votre terminal lors de la visite d'un site web.
             </p>
-            <ul className="list-disc list-inside space-y-2 text-gray-700 ml-4">
-              <li>Mémoriser vos préférences</li>
-              <li>Faciliter votre navigation</li>
-              <li>Analyser le trafic du site</li>
-              <li>Améliorer l'expérience utilisateur</li>
-            </ul>
+
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem', maxWidth: '600px' }}>
+              <p className="text-base font-light text-[#2A2A2A]">Mémoriser vos préférences</p>
+              <p className="text-base font-light text-[#2A2A2A]">Faciliter votre navigation</p>
+              <p className="text-base font-light text-[#2A2A2A]">Analyser le trafic du site</p>
+              <p className="text-base font-light text-[#2A2A2A]">Améliorer l'expérience utilisateur</p>
+            </div>
           </section>
 
-          {/* Types de cookies */}
-          <section>
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-              2. Types de cookies utilisés
+          <div className="w-16 h-[0.5px] bg-[#E8E3D5]"></div>
+
+          {/* Section 2 */}
+          <section style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem', width: '100%' }}>
+            <h2 className="font-serif text-3xl font-light text-[#0F0F0F]" style={{ textAlign: 'center' }}>
+              Types de cookies
             </h2>
 
-            <div className="space-y-4">
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3rem', maxWidth: '600px' }}>
               {/* Cookies essentiels */}
-              <div className="bg-green-50 border-l-4 border-green-500 p-6 rounded-lg">
-                <h3 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <span className="text-2xl">🔒</span>
-                  Cookies essentiels (nécessaires)
-                </h3>
-                <p className="text-gray-700 mb-3">
-                  Ces cookies sont indispensables au fonctionnement du site. Ils ne peuvent pas être désactivés.
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
+                  <p className="text-xs font-medium tracking-[0.2em] uppercase text-[#8B7355]">Cookies essentiels</p>
+                  <p className="text-xs font-light tracking-[0.2em] uppercase text-[#8B7355]">Nécessaires</p>
+                </div>
+
+                <p className="text-base font-light text-[#2A2A2A] leading-relaxed" style={{ textAlign: 'center' }}>
+                  Ces cookies sont indispensables au fonctionnement du site.<br />
+                  Ils ne peuvent pas être désactivés.
                 </p>
-                <div className="bg-white rounded-lg p-4 mt-3">
-                  <p className="text-sm font-medium text-gray-900 mb-2">Exemples :</p>
-                  <ul className="text-sm text-gray-600 space-y-1">
-                    <li>• <strong>florent_admin_session</strong> : Session d'authentification admin (7 jours)</li>
-                    <li>• <strong>cookie_consent</strong> : Mémorisation de votre choix concernant les cookies (12 mois)</li>
-                  </ul>
+
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.25rem' }}>
+                    <p className="text-xs font-medium tracking-[0.15em] uppercase text-[#8B7355]">
+                      florent_admin_session
+                    </p>
+                    <p className="text-sm font-light text-[#2A2A2A]">Session administrateur — 7 jours</p>
+                  </div>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.25rem' }}>
+                    <p className="text-xs font-medium tracking-[0.15em] uppercase text-[#8B7355]">
+                      cookie_consent
+                    </p>
+                    <p className="text-sm font-light text-[#2A2A2A]">Mémorisation de vos choix — 12 mois</p>
+                  </div>
                 </div>
               </div>
 
               {/* Cookies analytiques */}
-              <div className="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-lg">
-                <h3 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <span className="text-2xl">📊</span>
-                  Cookies analytiques (optionnels)
-                </h3>
-                <p className="text-gray-700 mb-3">
-                  Ces cookies nous aident à comprendre comment vous utilisez le site pour l'améliorer.
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
+                  <p className="text-xs font-medium tracking-[0.2em] uppercase text-[#8B7355]">Cookies analytiques</p>
+                  <p className="text-xs font-light tracking-[0.2em] uppercase text-[#8B7355]">Optionnels</p>
+                </div>
+
+                <p className="text-base font-light text-[#2A2A2A] leading-relaxed" style={{ textAlign: 'center' }}>
+                  Ces cookies nous aident à comprendre comment vous utilisez le site.<br />
                   Vous pouvez les refuser.
                 </p>
-                <div className="bg-white rounded-lg p-4 mt-3">
-                  <p className="text-sm font-medium text-gray-900 mb-2">Ce que nous analysons :</p>
-                  <ul className="text-sm text-gray-600 space-y-1">
-                    <li>• Pages les plus visitées</li>
-                    <li>• Temps passé sur le site</li>
-                    <li>• Parcours de navigation</li>
-                    <li>• Taux de rebond</li>
-                  </ul>
-                  <p className="text-xs text-gray-500 mt-3 italic">
-                    Durée de conservation : 13 mois maximum
-                  </p>
+
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
+                  <p className="text-sm font-light text-[#2A2A2A]">Pages visitées</p>
+                  <p className="text-sm font-light text-[#2A2A2A]">Temps passé sur le site</p>
+                  <p className="text-sm font-light text-[#2A2A2A]">Parcours de navigation</p>
+                  <p className="text-sm font-light text-[#2A2A2A]">Taux de rebond</p>
                 </div>
+
+                <p className="text-xs font-light text-[#8B7355]">
+                  Durée : 13 mois maximum
+                </p>
               </div>
 
               {/* Cookies fonctionnels */}
-              <div className="bg-purple-50 border-l-4 border-purple-500 p-6 rounded-lg">
-                <h3 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <span className="text-2xl">⚙️</span>
-                  Cookies fonctionnels (optionnels)
-                </h3>
-                <p className="text-gray-700 mb-3">
-                  Ces cookies améliorent votre expérience en mémorisant vos préférences.
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
+                  <p className="text-xs font-medium tracking-[0.2em] uppercase text-[#8B7355]">Cookies fonctionnels</p>
+                  <p className="text-xs font-light tracking-[0.2em] uppercase text-[#8B7355]">Optionnels</p>
+                </div>
+
+                <p className="text-base font-light text-[#2A2A2A] leading-relaxed" style={{ textAlign: 'center' }}>
+                  Ces cookies améliorent votre expérience<br />
+                  en mémorisant vos préférences.
                 </p>
-                <div className="bg-white rounded-lg p-4 mt-3">
-                  <p className="text-sm font-medium text-gray-900 mb-2">Exemples :</p>
-                  <ul className="text-sm text-gray-600 space-y-1">
-                    <li>• Préférences d'affichage</li>
-                    <li>• Langue choisie</li>
-                    <li>• Recettes favorites</li>
-                  </ul>
+
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
+                  <p className="text-sm font-light text-[#2A2A2A]">Préférences d'affichage</p>
+                  <p className="text-sm font-light text-[#2A2A2A]">Langue choisie</p>
+                  <p className="text-sm font-light text-[#2A2A2A]">Recettes favorites</p>
                 </div>
               </div>
             </div>
           </section>
 
-          {/* Cookies tiers */}
-          <section>
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-              3. Cookies tiers
+          <div className="w-16 h-[0.5px] bg-[#E8E3D5]"></div>
+
+          {/* Section 3 */}
+          <section style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem' }}>
+            <h2 className="font-serif text-3xl font-light text-[#0F0F0F]" style={{ textAlign: 'center' }}>
+              Cookies tiers
             </h2>
-            <p className="mb-4">
+
+            <p className="text-base font-light text-[#2A2A2A] leading-relaxed max-w-[600px]" style={{ textAlign: 'center' }}>
               Certains cookies peuvent être déposés par des services tiers que nous utilisons :
             </p>
 
-            <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
-              <h3 className="font-semibold text-gray-900 mb-4">Services utilisés :</h3>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem' }}>
+              {/* Google Analytics */}
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
+                <p className="text-xs font-medium tracking-[0.2em] uppercase text-[#8B7355]">Google Analytics</p>
+                <p className="text-sm font-light text-[#2A2A2A]" style={{ textAlign: 'center' }}>
+                  Analyse d'audience et statistiques de visite
+                </p>
+                <p className="text-xs font-light text-[#8B7355]">
+                  Nécessite votre consentement
+                </p>
+                <a
+                  href="https://policies.google.com/privacy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm font-light text-[#C77A4E] hover:text-[#8B7355] transition-colors duration-300"
+                >
+                  Voir leur politique →
+                </a>
+              </div>
 
-              <div className="space-y-4">
-                <div className="pb-4 border-b border-gray-200 last:border-0">
-                  <p className="font-medium text-gray-900 mb-2">Cloudinary</p>
-                  <p className="text-sm text-gray-600 mb-2">
-                    Hébergement et optimisation d'images
-                  </p>
-                  <a
-                    href="https://cloudinary.com/privacy"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm text-orange-600 hover:text-orange-700 underline"
-                  >
-                    Voir leur politique de confidentialité →
-                  </a>
-                </div>
+              {/* Cloudinary */}
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
+                <p className="text-xs font-medium tracking-[0.2em] uppercase text-[#8B7355]">Cloudinary</p>
+                <p className="text-sm font-light text-[#2A2A2A]" style={{ textAlign: 'center' }}>
+                  Hébergement et optimisation d'images
+                </p>
+                <a
+                  href="https://cloudinary.com/privacy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm font-light text-[#C77A4E] hover:text-[#8B7355] transition-colors duration-300"
+                >
+                  Voir leur politique →
+                </a>
               </div>
             </div>
           </section>
 
-          {/* Gérer les cookies */}
-          <section>
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-              4. Comment gérer vos cookies ?
+          <div className="w-16 h-[0.5px] bg-[#E8E3D5]"></div>
+
+          {/* Section 4 */}
+          <section style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem', width: '100%' }}>
+            <h2 className="font-serif text-3xl font-light text-[#0F0F0F]" style={{ textAlign: 'center' }}>
+              Gérer vos cookies
             </h2>
 
-            <div className="space-y-6">
-              {/* Via notre bannière */}
-              <div>
-                <h3 className="font-semibold text-gray-900 mb-3">
-                  Sur notre site
-                </h3>
-                <p className="text-gray-700 mb-3">
-                  Vous pouvez accepter ou refuser les cookies via la bannière qui s'affiche lors de votre première visite.
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3rem', maxWidth: '600px' }}>
+              {/* Via notre site */}
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}>
+                <p className="text-xs font-medium tracking-[0.2em] uppercase text-[#8B7355]">Sur notre site</p>
+                <p className="text-base font-light text-[#2A2A2A] leading-relaxed" style={{ textAlign: 'center' }}>
+                  Vous pouvez accepter ou refuser les cookies via la bannière<br className="hidden md:block" />
+                  qui s'affiche lors de votre première visite.
                 </p>
                 <button
                   onClick={() => {
@@ -175,9 +219,9 @@ export default function CookiesPage() {
                       window.location.reload();
                     }
                   }}
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-orange-600 text-white font-medium rounded-lg hover:bg-orange-700 transition-colors"
+                  className="inline-flex items-center gap-3 px-8 py-4 bg-[#2A2A2A] text-white text-sm font-light tracking-[0.1em] uppercase hover:bg-[#C77A4E] transition-colors duration-300"
                 >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                     <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
                   </svg>
                   Modifier mes préférences
@@ -185,164 +229,149 @@ export default function CookiesPage() {
               </div>
 
               {/* Via le navigateur */}
-              <div>
-                <h3 className="font-semibold text-gray-900 mb-3">
-                  Via votre navigateur
-                </h3>
-                <p className="text-gray-700 mb-4">
-                  Vous pouvez également configurer votre navigateur pour refuser les cookies :
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}>
+                <p className="text-xs font-medium tracking-[0.2em] uppercase text-[#8B7355]">Via votre navigateur</p>
+                <p className="text-base font-light text-[#2A2A2A] leading-relaxed" style={{ textAlign: 'center' }}>
+                  Vous pouvez également configurer votre navigateur<br className="hidden md:block" />
+                  pour refuser les cookies :
                 </p>
 
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="bg-white rounded-lg p-4 border border-gray-200">
-                    <p className="font-medium text-gray-900 mb-2">Chrome</p>
-                    <a
-                      href="https://support.google.com/chrome/answer/95647"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm text-orange-600 hover:text-orange-700"
-                    >
-                      Guide Chrome →
-                    </a>
-                  </div>
+                <div className="grid grid-cols-2 gap-4 text-sm font-light text-[#2A2A2A]">
+                  <a
+                    href="https://support.google.com/chrome/answer/95647"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#C77A4E] hover:text-[#8B7355] transition-colors duration-300"
+                    style={{ textAlign: 'center' }}
+                  >
+                    Chrome
+                  </a>
 
-                  <div className="bg-white rounded-lg p-4 border border-gray-200">
-                    <p className="font-medium text-gray-900 mb-2">Firefox</p>
-                    <a
-                      href="https://support.mozilla.org/fr/kb/activer-desactiver-cookies"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm text-orange-600 hover:text-orange-700"
-                    >
-                      Guide Firefox →
-                    </a>
-                  </div>
+                  <a
+                    href="https://support.mozilla.org/fr/kb/activer-desactiver-cookies"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#C77A4E] hover:text-[#8B7355] transition-colors duration-300"
+                    style={{ textAlign: 'center' }}
+                  >
+                    Firefox
+                  </a>
 
-                  <div className="bg-white rounded-lg p-4 border border-gray-200">
-                    <p className="font-medium text-gray-900 mb-2">Safari</p>
-                    <a
-                      href="https://support.apple.com/fr-fr/guide/safari/sfri11471/mac"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm text-orange-600 hover:text-orange-700"
-                    >
-                      Guide Safari →
-                    </a>
-                  </div>
+                  <a
+                    href="https://support.apple.com/fr-fr/guide/safari/sfri11471/mac"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#C77A4E] hover:text-[#8B7355] transition-colors duration-300"
+                    style={{ textAlign: 'center' }}
+                  >
+                    Safari
+                  </a>
 
-                  <div className="bg-white rounded-lg p-4 border border-gray-200">
-                    <p className="font-medium text-gray-900 mb-2">Edge</p>
-                    <a
-                      href="https://support.microsoft.com/fr-fr/microsoft-edge/supprimer-les-cookies-dans-microsoft-edge-63947406-40ac-c3b8-57b9-2a946a29ae09"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm text-orange-600 hover:text-orange-700"
-                    >
-                      Guide Edge →
-                    </a>
-                  </div>
+                  <a
+                    href="https://support.microsoft.com/fr-fr/microsoft-edge/supprimer-les-cookies-dans-microsoft-edge-63947406-40ac-c3b8-57b9-2a946a29ae09"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#C77A4E] hover:text-[#8B7355] transition-colors duration-300"
+                    style={{ textAlign: 'center' }}
+                  >
+                    Edge
+                  </a>
                 </div>
 
-                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mt-4">
-                  <p className="text-sm text-gray-700">
-                    ⚠️ <strong>Attention :</strong> Bloquer tous les cookies peut affecter votre expérience
-                    de navigation et empêcher certaines fonctionnalités du site de fonctionner correctement.
-                  </p>
-                </div>
+                <p className="text-sm font-light text-[#8B7355]">
+                  ⚠ Bloquer tous les cookies peut affecter l'expérience de navigation
+                </p>
               </div>
             </div>
           </section>
 
-          {/* Durée de conservation */}
-          <section>
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-              5. Durée de conservation
+          <div className="w-16 h-[0.5px] bg-[#E8E3D5]"></div>
+
+          {/* Section 5 */}
+          <section style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem', width: '100%' }}>
+            <h2 className="font-serif text-3xl font-light text-[#0F0F0F]" style={{ textAlign: 'center' }}>
+              Durée de conservation
             </h2>
-            <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-gray-200">
-                    <th className="text-left py-3 font-semibold text-gray-900">Type de cookie</th>
-                    <th className="text-left py-3 font-semibold text-gray-900">Durée maximum</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200">
-                  <tr>
-                    <td className="py-3 text-gray-700">Cookies essentiels</td>
-                    <td className="py-3 text-gray-700">12 mois</td>
-                  </tr>
-                  <tr>
-                    <td className="py-3 text-gray-700">Cookies analytiques</td>
-                    <td className="py-3 text-gray-700">13 mois</td>
-                  </tr>
-                  <tr>
-                    <td className="py-3 text-gray-700">Cookies fonctionnels</td>
-                    <td className="py-3 text-gray-700">12 mois</td>
-                  </tr>
-                  <tr>
-                    <td className="py-3 text-gray-700">Session admin</td>
-                    <td className="py-3 text-gray-700">7 jours</td>
-                  </tr>
-                </tbody>
-              </table>
+
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem', maxWidth: '600px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
+                <p className="text-xs font-medium tracking-[0.2em] uppercase text-[#8B7355]">Cookies essentiels</p>
+                <p className="text-base font-light text-[#2A2A2A]">12 mois maximum</p>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
+                <p className="text-xs font-medium tracking-[0.2em] uppercase text-[#8B7355]">Cookies analytiques</p>
+                <p className="text-base font-light text-[#2A2A2A]">13 mois maximum</p>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
+                <p className="text-xs font-medium tracking-[0.2em] uppercase text-[#8B7355]">Cookies fonctionnels</p>
+                <p className="text-base font-light text-[#2A2A2A]">12 mois maximum</p>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
+                <p className="text-xs font-medium tracking-[0.2em] uppercase text-[#8B7355]">Session admin</p>
+                <p className="text-base font-light text-[#2A2A2A]">7 jours</p>
+              </div>
             </div>
           </section>
 
-          {/* Plus d'informations */}
-          <section>
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-              6. Pour en savoir plus
+          <div className="w-16 h-[0.5px] bg-[#E8E3D5]"></div>
+
+          {/* Section 6 */}
+          <section style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem' }}>
+            <h2 className="font-serif text-3xl font-light text-[#0F0F0F]" style={{ textAlign: 'center' }}>
+              En savoir plus
             </h2>
-            <p className="mb-4">
-              Pour plus d'informations sur la protection de vos données personnelles, consultez :
-            </p>
-            <ul className="space-y-2">
-              <li>
-                <Link
-                  href="/politique-confidentialite"
-                  className="text-orange-600 hover:text-orange-700 underline font-medium"
-                >
-                  Notre Politique de Confidentialité
-                </Link>
-              </li>
-              <li>
-                <a
-                  href="https://www.cnil.fr/fr/cookies-et-autres-traceurs"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-orange-600 hover:text-orange-700 underline"
-                >
-                  Site de la CNIL - Cookies et traceurs
-                </a>
-              </li>
-            </ul>
+
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', maxWidth: '600px' }}>
+              <Link
+                href="/politique-confidentialite"
+                className="px-8 py-4 bg-white border border-[#E8E3D5] text-[#2A2A2A] text-sm font-light tracking-[0.1em] uppercase hover:border-[#C77A4E] hover:text-[#C77A4E] transition-all duration-300"
+              >
+                Politique de Confidentialité
+              </Link>
+
+              <a
+                href="https://www.cnil.fr/fr/cookies-et-autres-traceurs"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-8 py-4 bg-white border border-[#E8E3D5] text-[#2A2A2A] text-sm font-light tracking-[0.1em] uppercase hover:border-[#C77A4E] hover:text-[#C77A4E] transition-all duration-300"
+              >
+                CNIL — Cookies et traceurs
+              </a>
+            </div>
           </section>
 
-          {/* Contact */}
-          <section>
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-              7. Contact
+          <div className="w-16 h-[0.5px] bg-[#E8E3D5]"></div>
+
+          {/* Section 7 */}
+          <section style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem' }}>
+            <h2 className="font-serif text-3xl font-light text-[#0F0F0F]" style={{ textAlign: 'center' }}>
+              Contact
             </h2>
-            <p>
-              Pour toute question concernant l'utilisation des cookies, contactez-nous à :{' '}
+
+            <p className="text-base font-light text-[#2A2A2A]" style={{ textAlign: 'center' }}>
+              Pour toute question :{' '}
               <a
                 href="mailto:florentcmtpro@gmail.com"
-                className="text-orange-600 hover:text-orange-700 font-medium"
+                className="text-[#C77A4E] hover:text-[#8B7355] transition-colors duration-300"
               >
                 florentcmtpro@gmail.com
               </a>
             </p>
           </section>
-        </div>
 
-        <div className="mt-12 pt-8 border-t border-gray-200 text-sm text-gray-600">
-          <p>
-            Dernière mise à jour : {new Date().toLocaleDateString('fr-FR', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric'
-            })}
-          </p>
+          {/* Footer */}
+          <div className="mt-32 pt-12 border-t border-[#E8E3D5] w-full" style={{ display: 'flex', justifyContent: 'center' }}>
+            <p className="text-xs font-light tracking-[0.2em] uppercase text-[#8B7355]" style={{ textAlign: 'center' }}>
+              Dernière mise à jour : {new Date().toLocaleDateString('fr-FR', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+              })}
+            </p>
+          </div>
         </div>
       </main>
     </div>

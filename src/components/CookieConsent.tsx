@@ -8,20 +8,48 @@ export default function CookieConsent() {
 
   useEffect(() => {
     // Vérifier si l'utilisateur a déjà donné son consentement
-    const consent = localStorage.getItem('cookie_consent');
-    if (!consent) {
-      // Attendre 1 seconde avant d'afficher la bannière pour une meilleure UX
+    const consentData = localStorage.getItem('cookie_consent');
+
+    if (!consentData) {
+      // Pas de consentement enregistré
+      setTimeout(() => setShowBanner(true), 1000);
+      return;
+    }
+
+    try {
+      const { value, timestamp } = JSON.parse(consentData);
+      const consentAge = Date.now() - timestamp;
+      const twelveMonthsInMs = 365 * 24 * 60 * 60 * 1000; // 12 mois
+
+      // Si le consentement a plus de 12 mois, on le supprime et on redemande
+      if (consentAge > twelveMonthsInMs) {
+        localStorage.removeItem('cookie_consent');
+        setTimeout(() => setShowBanner(true), 1000);
+      }
+    } catch (error) {
+      // Si le format est ancien (juste "accepted" ou "refused"), on le supprime
+      localStorage.removeItem('cookie_consent');
       setTimeout(() => setShowBanner(true), 1000);
     }
   }, []);
 
   const acceptCookies = () => {
-    localStorage.setItem('cookie_consent', 'accepted');
+    const consentData = {
+      value: 'accepted',
+      timestamp: Date.now()
+    };
+    localStorage.setItem('cookie_consent', JSON.stringify(consentData));
     setShowBanner(false);
+    // Recharger pour activer Google Analytics si configuré
+    window.location.reload();
   };
 
   const refuseCookies = () => {
-    localStorage.setItem('cookie_consent', 'refused');
+    const consentData = {
+      value: 'refused',
+      timestamp: Date.now()
+    };
+    localStorage.setItem('cookie_consent', JSON.stringify(consentData));
     setShowBanner(false);
   };
 
