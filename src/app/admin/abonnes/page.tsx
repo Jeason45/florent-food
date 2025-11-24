@@ -300,6 +300,9 @@ export default function AbonnesAdminPage() {
                       Email
                     </th>
                     <th style={{ padding: '16px', textAlign: 'center', color: 'rgba(255,255,255,0.6)', fontSize: '12px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                      Statut
+                    </th>
+                    <th style={{ padding: '16px', textAlign: 'center', color: 'rgba(255,255,255,0.6)', fontSize: '12px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                       Type
                     </th>
                     <th style={{ padding: '16px', textAlign: 'left', color: 'rgba(255,255,255,0.6)', fontSize: '12px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
@@ -330,6 +333,19 @@ export default function AbonnesAdminPage() {
                     >
                       <td style={{ padding: '16px', color: '#fff', fontSize: '14px' }}>
                         {sub.email}
+                      </td>
+                      <td style={{ padding: '16px', textAlign: 'center' }}>
+                        <span style={{
+                          display: 'inline-block',
+                          padding: '4px 12px',
+                          borderRadius: '12px',
+                          fontSize: '12px',
+                          fontWeight: 600,
+                          background: `${getStatusColor(sub.status)}20`,
+                          color: getStatusColor(sub.status)
+                        }}>
+                          {sub.status === 'ACTIVE' ? 'ACTIF' : sub.status === 'PENDING' ? 'EN ATTENTE' : sub.status}
+                        </span>
                       </td>
                       <td style={{ padding: '16px', textAlign: 'center' }}>
                         <span style={{
