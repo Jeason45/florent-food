@@ -14,17 +14,35 @@ export async function GET() {
     }
 
     // Initialiser le client Google Analytics
-    // Support pour les credentials via variable d'environnement (production) ou fichier (dev)
     let analyticsDataClient;
 
-    if (process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON) {
-      // Production: utiliser la variable d'environnement JSON
-      const credentials = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON);
-      analyticsDataClient = new BetaAnalyticsDataClient({
-        credentials,
-      });
+    if (process.env.GOOGLE_APPLICATION_CREDENTIALS_BASE64) {
+      // PRODUCTION: Décoder Base64 et parser JSON
+      try {
+        const credentialsJson = Buffer.from(
+          process.env.GOOGLE_APPLICATION_CREDENTIALS_BASE64,
+          'base64'
+        ).toString('utf-8');
+
+        const credentials = JSON.parse(credentialsJson);
+
+        // IMPORTANT: Remplacer les \n échappés par de vrais retours à la ligne dans private_key
+        if (credentials.private_key) {
+          credentials.private_key = credentials.private_key.replace(/\\n/g, '\n');
+        }
+
+        analyticsDataClient = new BetaAnalyticsDataClient({
+          credentials,
+        });
+      } catch (parseError) {
+        console.error('❌ Failed to decode GOOGLE_APPLICATION_CREDENTIALS_BASE64:', parseError);
+        return NextResponse.json(
+          { error: 'Invalid Google credentials configuration' },
+          { status: 500 }
+        );
+      }
     } else {
-      // Dev: utiliser le fichier JSON
+      // DEV: utiliser le fichier JSON local
       analyticsDataClient = new BetaAnalyticsDataClient({
         keyFilename: path.join(process.cwd(), 'google-analytics-credentials.json'),
       });
