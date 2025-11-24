@@ -4,6 +4,9 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { HeroSection } from "@/components/sections/hero";
 import { RecipesCategorySection } from "@/components/sections/recipes-category";
+import { NewsletterPreviewSection } from "@/components/sections/newsletter-preview";
+import { RecipeExampleSection } from "@/components/sections/recipe-example";
+import { WhySubscribeSection } from "@/components/sections/why-subscribe";
 import { AboutStorySection } from "@/components/sections/about-story";
 import { TestimonialsSection } from "@/components/sections/testimonials";
 import { SocialLinksSection } from "@/components/sections/social-links";
@@ -26,6 +29,7 @@ interface Recipe {
 interface DisplayRecipe {
   id: number;
   name: string;
+  slug: string;
   image: string;
   badge?: string;
   time: string;
@@ -70,6 +74,7 @@ export default function Home() {
   const transformRecipe = (recipe: Recipe): DisplayRecipe => ({
     id: parseInt(recipe.id.substring(0, 8), 16),
     name: recipe.title,
+    slug: recipe.slug,
     image: recipe.imageUrl || 'https://images.unsplash.com/photo-1546548970-71785318a17b?w=800&q=80',
     badge: recipe.visibility === 'PREMIUM' ? 'Premium' : undefined,
     time: `${recipe.totalTime}min`,
@@ -94,7 +99,7 @@ export default function Home() {
     <>
       <Header />
       <main>
-        <HeroSection />
+        <HeroSection id="accueil" />
 
         {loading ? (
           <div style={{
@@ -140,39 +145,56 @@ export default function Home() {
               </div>
             )}
 
-            {aperoRecipes.length > 0 && (
-              <RecipesCategorySection
-                title="Entrée & Apéro"
-                subtitle="Commencez vos repas avec élégance et gourmandise"
-                recipes={aperoRecipes}
-                bgColor="from-[#FFFBF7] via-[#FFF8F0] to-[#FFF5EB]"
-                isFirst={true}
-              />
-            )}
+            <div id="recettes">
+              {aperoRecipes.length > 0 && (
+                <RecipesCategorySection
+                  title="Entrée & Apéro"
+                  subtitle="Commencez vos repas avec élégance et gourmandise"
+                  recipes={aperoRecipes}
+                  bgColor="from-[#FFFBF7] via-[#FFF8F0] to-[#FFF5EB]"
+                  isFirst={true}
+                />
+              )}
 
-            {platsRecipes.length > 0 && (
-              <RecipesCategorySection
-                title="Plats & Cuisine"
-                subtitle="Des recettes savoureuses pour tous les jours et les grandes occasions"
-                recipes={platsRecipes}
-                bgColor="from-[#FFF8F0] via-[#FFFBF7] to-[#FFF5EB]"
-              />
-            )}
+              {platsRecipes.length > 0 && (
+                <RecipesCategorySection
+                  title="Plats & Cuisine"
+                  subtitle="Des recettes savoureuses pour tous les jours et les grandes occasions"
+                  recipes={platsRecipes}
+                  bgColor="from-[#FFF8F0] via-[#FFFBF7] to-[#FFF5EB]"
+                />
+              )}
 
-            {patisserieRecipes.length > 0 && (
-              <RecipesCategorySection
-                title="Pâtisserie & Desserts"
-                subtitle="Des créations sucrées raffinées pour régaler vos proches"
-                recipes={patisserieRecipes}
-                bgColor="from-[#FFF5EB] via-[#FFFBF7] to-[#FFF8F0]"
-              />
-            )}
+              {patisserieRecipes.length > 0 && (
+                <RecipesCategorySection
+                  title="Pâtisserie & Desserts"
+                  subtitle="Des créations sucrées raffinées pour régaler vos proches"
+                  recipes={patisserieRecipes}
+                  bgColor="from-[#FFF5EB] via-[#FFFBF7] to-[#FFF8F0]"
+                />
+              )}
+            </div>
           </>
         )}
 
-        <AboutStorySection />
-        <TestimonialsSection />
-        <SocialLinksSection />
+        <div id="newsletter-preview">
+          <NewsletterPreviewSection />
+        </div>
+        <div id="recipe-preview">
+          <RecipeExampleSection />
+        </div>
+        <div id="pourquoi-sabonner">
+          <WhySubscribeSection />
+        </div>
+        <div id="a-propos">
+          <AboutStorySection />
+        </div>
+        <div id="temoignages">
+          <TestimonialsSection />
+        </div>
+        <div id="reseaux-sociaux">
+          <SocialLinksSection />
+        </div>
       </main>
       <Footer />
     </>

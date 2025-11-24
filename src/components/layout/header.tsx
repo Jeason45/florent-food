@@ -20,11 +20,27 @@ export function Header() {
   }, []);
 
   const navigation = [
-    { name: "Accueil", href: "/" },
-    { name: "Recettes", href: "/recettes" },
-    { name: "À propos", href: "/a-propos" },
-    { name: "Le Livre", href: "/livre" },
+    { name: "Accueil", href: "#accueil" },
+    { name: "Les Recettes", href: "#recettes" },
+    { name: "Aperçu Newsletter", href: "#newsletter-preview" },
+    { name: "Aperçu Recette", href: "#recipe-preview" },
+    { name: "Pourquoi s'abonner", href: "#pourquoi-sabonner" },
+    { name: "À propos", href: "#a-propos" },
+    { name: "Témoignages", href: "#temoignages" },
+    { name: "Réseaux sociaux", href: "#reseaux-sociaux" },
   ];
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    setIsMobileMenuOpen(false);
+
+    const targetId = href.replace('#', '');
+    const element = document.getElementById(targetId);
+
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
@@ -83,7 +99,7 @@ export function Header() {
                   key={item.name}
                   href={item.href}
                   className="block font-serif text-3xl sm:text-4xl md:text-5xl font-light text-white hover:text-[#D4AF37] transition-colors tracking-tight"
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={(e) => handleNavClick(e, item.href)}
                   style={{ animationDelay: `${index * 50}ms` }}
                 >
                   {item.name}

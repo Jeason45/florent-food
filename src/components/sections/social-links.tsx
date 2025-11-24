@@ -10,7 +10,7 @@ export function SocialLinksSection() {
           </p>
           <div className="flex items-center justify-center gap-8 sm:gap-10 md:gap-12">
             <a
-              href="https://instagram.com/florentfood"
+              href="https://www.instagram.com/florentfood/"
               target="_blank"
               rel="noopener noreferrer"
               className="group flex flex-col items-center gap-3 transition-all duration-300 hover:scale-105"
@@ -32,7 +32,7 @@ export function SocialLinksSection() {
               <span className="text-xs sm:text-sm text-[var(--gris-taupe)] group-hover:text-[#D4AF37] transition-colors">TikTok</span>
             </a>
             <a
-              href="https://youtube.com/@florentfood"
+              href="https://www.youtube.com/@FlorentYtb"
               target="_blank"
               rel="noopener noreferrer"
               className="group flex flex-col items-center gap-3 transition-all duration-300 hover:scale-105"

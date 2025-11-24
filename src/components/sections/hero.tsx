@@ -59,8 +59,8 @@ export function HeroSection() {
       <div className="relative z-20 min-h-[100svh] flex flex-col justify-center items-center text-center px-5 sm:px-8 lg:px-12 pb-32">
       </div>
 
-      {/* Bottom Form Section */}
-      <div className="absolute left-0 right-0 z-30 bottom-0 lg:bottom-16">
+      {/* Bottom Form Section - Lowered positioning */}
+      <div className="absolute left-0 right-0 z-30 bottom-0 lg:bottom-4">
         <div className="relative">
           <div className="max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl 2xl:max-w-7xl px-4 sm:px-6 md:px-8 lg:px-12" style={{ margin: '0 auto' }}>
             {/* Card */}
@@ -71,7 +71,7 @@ export function HeroSection() {
 
                 {/* Features List */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 sm:gap-x-8 md:gap-x-10 gap-y-3 sm:gap-y-4 md:gap-y-5 mb-8 sm:mb-10 md:mb-12">
-                {["5 recettes par semaine", "Accès à 25 recettes exclusives", "Newsletter hebdomadaire", "Conseils et astuces"].map((feature, i) => (
+                {["5 recettes par semaine", "Newsletter hebdomadaire", "Conseils et astuces", "Contenu exclusif"].map((feature, i) => (
                   <div key={i} className="flex items-center gap-3">
                     <div className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full flex-shrink-0" style={{ background: 'linear-gradient(to right, #D4AF37, #C77A4E)' }}></div>
                     <span className="text-sm md:text-base text-white font-light tracking-wide">

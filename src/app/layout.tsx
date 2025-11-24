@@ -3,6 +3,7 @@ import { Cormorant_Garamond, Inter } from "next/font/google";
 import "./globals.css";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import CookieConsent from "@/components/CookieConsent";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 // Fonte serif premium pour les titres
 const cormorant = Cormorant_Garamond({
@@ -47,7 +48,9 @@ export default function RootLayout({
     <html lang="fr" className="scroll-smooth">
       <body className={`${inter.variable} ${cormorant.variable} antialiased`}>
         <GoogleAnalytics />
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
         <CookieConsent />
       </body>
     </html>

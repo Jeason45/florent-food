@@ -1,10 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/AuthContext";
+import { AuthModal } from "@/components/AuthModal";
 
 interface Recipe {
   id: number;
   name: string;
+  slug: string;
   image: string;
   badge?: string;
   time?: string;
@@ -27,9 +31,22 @@ export function RecipesCategorySection({
   bgColor = "from-[#FFFBF7] via-[#FFF8F0] to-[#FFF5EB]",
   isFirst = false
 }: RecipesCategoryProps) {
+  const { isAuthenticated } = useAuth();
+  const router = useRouter();
   const [hoveredId, setHoveredId] = useState<number | null>(null);
+  const [showAuthModal, setShowAuthModal] = useState(false);
+
+  const handleRecipeClick = (slug: string) => {
+    if (!isAuthenticated) {
+      setShowAuthModal(true);
+    } else {
+      router.push(`/recettes/${slug}`);
+    }
+  };
 
   return (
+    <>
+      <AuthModal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)} />
     <section
       className={`relative pb-20 sm:pb-24 md:pb-32 lg:pb-40 bg-gradient-to-br ${bgColor} overflow-hidden`}
       style={{ paddingTop: isFirst ? '20px' : '40px' }}
@@ -97,6 +114,7 @@ export function RecipesCategorySection({
               }}
               onMouseEnter={() => setHoveredId(recipe.id)}
               onMouseLeave={() => setHoveredId(null)}
+              onClick={() => handleRecipeClick(recipe.slug)}
             >
               {/* Image Container */}
               <div className="relative aspect-[3/4] overflow-hidden rounded-xl shadow-md group-hover:shadow-xl transition-all duration-500">
@@ -178,5 +196,6 @@ export function RecipesCategorySection({
         </div>
       </div>
     </section>
+    </>
   );
 }
