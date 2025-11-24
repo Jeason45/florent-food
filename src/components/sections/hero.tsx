@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import confetti from "canvas-confetti";
+import type confetti from "canvas-confetti";
 
 interface HeroSectionProps {
   id?: string;
@@ -13,7 +13,10 @@ export function HeroSection({ id }: HeroSectionProps = {}) {
   const [errorMessage, setErrorMessage] = useState<string>("");
 
   // Fonction pour déclencher le feu d'artifice de confettis
-  const triggerConfetti = () => {
+  const triggerConfetti = async () => {
+    // Charger confetti dynamiquement côté client
+    const confettiModule = await import("canvas-confetti");
+    const confetti = confettiModule.default;
     const duration = 3000; // 3 secondes
     const animationEnd = Date.now() + duration;
     const defaults = {
