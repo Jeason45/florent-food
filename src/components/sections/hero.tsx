@@ -2,7 +2,11 @@
 
 import { useState } from "react";
 
-export function HeroSection() {
+interface HeroSectionProps {
+  id?: string;
+}
+
+export function HeroSection({ id }: HeroSectionProps = {}) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState<string>("");
@@ -40,7 +44,7 @@ export function HeroSection() {
   };
 
   return (
-    <section className="relative min-h-[100svh] overflow-hidden bg-black">
+    <section id={id} className="relative min-h-[100svh] overflow-hidden bg-black">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <div
