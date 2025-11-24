@@ -90,7 +90,7 @@ export function HeroSection({ id }: HeroSectionProps = {}) {
                   <div className="space-y-4">
                     {status === "success" ? (
                       <div className="text-center py-4">
-                        <p className="text-green-400 font-medium">🎉 Inscription confirmée ! Tu vas recevoir un email de bienvenue.</p>
+                        <p className="text-green-400 font-medium">✉️ Email envoyé ! Vérifie ta boîte mail et clique sur le lien de confirmation.</p>
                       </div>
                     ) : (
                       <>
