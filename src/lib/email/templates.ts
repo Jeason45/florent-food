@@ -130,17 +130,21 @@ export function baseEmailTemplate({
       ${
         ctaText && ctaLink
           ? `
-      <div style="text-align: center; margin: 30px 0;">
-        <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
-          <tr>
-            <td bgcolor="#D4AF37" style="border-radius: 50px; background-color: #D4AF37;">
-              <a href="${ctaLink}" target="_blank" style="display: inline-block; padding: 16px 36px; font-size: 16px; font-weight: 600; color: #000000; text-decoration: none; border-radius: 50px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">
-                ${ctaText}
-              </a>
-            </td>
-          </tr>
-        </table>
-      </div>
+      <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin: 30px 0;">
+        <tr>
+          <td align="center">
+            <table cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td align="center" bgcolor="#D4AF37" style="background-color: #D4AF37; border-radius: 50px; mso-padding-alt: 16px 40px;">
+                  <a href="${ctaLink}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 600; color: #000000; text-decoration: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1;">
+                    ${ctaText}
+                  </a>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
       `
           : ""
       }
