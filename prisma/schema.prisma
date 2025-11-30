@@ -96,6 +96,7 @@ model Recipe {
   difficulty      Difficulty
   prepTime        Int            @map("prep_time")
   cookTime        Int            @map("cook_time")
+  restTime        Int?           @map("rest_time") // Temps de repos (pâtisserie)
   totalTime       Int            @map("total_time")
   servings        Int            @default(6)
   ingredients     Json

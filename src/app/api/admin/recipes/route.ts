@@ -54,6 +54,7 @@ export async function POST(request: NextRequest) {
       difficulty,
       prepTime,
       cookTime,
+      restTime,
       servings,
       ingredients,
       steps,
@@ -70,6 +71,9 @@ export async function POST(request: NextRequest) {
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/^-+|-+$/g, '');
 
+    // Calcul du temps total (prep + cuisson + repos)
+    const totalTime = parseInt(prepTime) + parseInt(cookTime) + (restTime ? parseInt(restTime) : 0);
+
     const recipe = await prisma.recipe.create({
       data: {
         title,
@@ -80,7 +84,8 @@ export async function POST(request: NextRequest) {
         difficulty,
         prepTime: parseInt(prepTime),
         cookTime: parseInt(cookTime),
-        totalTime: parseInt(prepTime) + parseInt(cookTime),
+        restTime: restTime ? parseInt(restTime) : null,
+        totalTime,
         servings: parseInt(servings),
         ingredients,
         steps,

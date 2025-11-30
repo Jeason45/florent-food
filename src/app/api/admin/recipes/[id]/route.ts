@@ -48,6 +48,7 @@ export async function PUT(
       difficulty,
       prepTime,
       cookTime,
+      restTime,
       servings,
       ingredients,
       steps,
@@ -55,7 +56,8 @@ export async function PUT(
       status,
     } = body;
 
-    const totalTime = parseInt(prepTime) + parseInt(cookTime);
+    // Calcul du temps total (prep + cuisson + repos)
+    const totalTime = parseInt(prepTime) + parseInt(cookTime) + (restTime ? parseInt(restTime) : 0);
 
     const recipe = await prisma.recipe.update({
       where: { id },
@@ -67,6 +69,7 @@ export async function PUT(
         difficulty,
         prepTime: parseInt(prepTime),
         cookTime: parseInt(cookTime),
+        restTime: restTime ? parseInt(restTime) : null,
         totalTime,
         servings: parseInt(servings),
         ingredients,

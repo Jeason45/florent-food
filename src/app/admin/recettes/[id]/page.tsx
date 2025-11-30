@@ -19,8 +19,11 @@ export default function EditRecipePage() {
   const [difficulty, setDifficulty] = useState('INTERMEDIAIRE');
   const [prepTime, setPrepTime] = useState('15');
   const [cookTime, setCookTime] = useState('30');
+  const [restTime, setRestTime] = useState('');
   const [servings, setServings] = useState('4');
-  const [ingredients, setIngredients] = useState<string[]>(['']);
+  const [ingredientGroups, setIngredientGroups] = useState<{ groupName: string; ingredients: string[] }[]>([
+    { groupName: '', ingredients: [''] }
+  ]);
   const [steps, setSteps] = useState<{ title: string; description: string }[]>([
     { title: '', description: '' }
   ]);
@@ -47,8 +50,20 @@ export default function EditRecipePage() {
         setDifficulty(recipe.difficulty);
         setPrepTime(String(recipe.prepTime));
         setCookTime(String(recipe.cookTime));
+        setRestTime(recipe.restTime ? String(recipe.restTime) : '');
         setServings(String(recipe.servings));
-        setIngredients(Array.isArray(recipe.ingredients) ? recipe.ingredients : ['']);
+        // Gérer l'ancien format (tableau de strings) et le nouveau format (groupes)
+        if (Array.isArray(recipe.ingredients)) {
+          if (recipe.ingredients.length > 0 && typeof recipe.ingredients[0] === 'object' && 'groupName' in recipe.ingredients[0]) {
+            // Nouveau format avec groupes
+            setIngredientGroups(recipe.ingredients);
+          } else {
+            // Ancien format: tableau de strings, on le convertit en un seul groupe sans nom
+            setIngredientGroups([{ groupName: '', ingredients: recipe.ingredients as string[] }]);
+          }
+        } else {
+          setIngredientGroups([{ groupName: '', ingredients: [''] }]);
+        }
         setSteps(Array.isArray(recipe.steps) && recipe.steps.length > 0
           ? recipe.steps
           : [{ title: '', description: '' }]
@@ -91,18 +106,41 @@ export default function EditRecipePage() {
     }
   };
 
-  const addIngredient = () => {
-    setIngredients([...ingredients, '']);
+  const addIngredientGroup = () => {
+    setIngredientGroups([...ingredientGroups, { groupName: '', ingredients: [''] }]);
   };
 
-  const updateIngredient = (index: number, value: string) => {
-    const newIngredients = [...ingredients];
-    newIngredients[index] = value;
-    setIngredients(newIngredients);
+  const updateGroupName = (groupIndex: number, value: string) => {
+    const newGroups = [...ingredientGroups];
+    newGroups[groupIndex].groupName = value;
+    setIngredientGroups(newGroups);
   };
 
-  const removeIngredient = (index: number) => {
-    setIngredients(ingredients.filter((_, i) => i !== index));
+  const addIngredientToGroup = (groupIndex: number) => {
+    const newGroups = [...ingredientGroups];
+    newGroups[groupIndex].ingredients.push('');
+    setIngredientGroups(newGroups);
+  };
+
+  const updateIngredient = (groupIndex: number, ingredientIndex: number, value: string) => {
+    const newGroups = [...ingredientGroups];
+    newGroups[groupIndex].ingredients[ingredientIndex] = value;
+    setIngredientGroups(newGroups);
+  };
+
+  const removeIngredient = (groupIndex: number, ingredientIndex: number) => {
+    const newGroups = [...ingredientGroups];
+    newGroups[groupIndex].ingredients = newGroups[groupIndex].ingredients.filter((_, i) => i !== ingredientIndex);
+    if (newGroups[groupIndex].ingredients.length === 0) {
+      newGroups[groupIndex].ingredients = [''];
+    }
+    setIngredientGroups(newGroups);
+  };
+
+  const removeIngredientGroup = (groupIndex: number) => {
+    if (ingredientGroups.length > 1) {
+      setIngredientGroups(ingredientGroups.filter((_, i) => i !== groupIndex));
+    }
   };
 
   const addStep = () => {
@@ -125,10 +163,17 @@ export default function EditRecipePage() {
       return;
     }
 
-    const filteredIngredients = ingredients.filter(i => i.trim() !== '');
+    // Filtrer les groupes d'ingrédients vides
+    const filteredGroups = ingredientGroups
+      .map(group => ({
+        groupName: group.groupName.trim(),
+        ingredients: group.ingredients.filter(i => i.trim() !== '')
+      }))
+      .filter(group => group.ingredients.length > 0);
+
     const filteredSteps = steps.filter(s => s.description.trim() !== '');
 
-    if (filteredIngredients.length === 0 || filteredSteps.length === 0) {
+    if (filteredGroups.length === 0 || filteredSteps.length === 0) {
       alert('Merci d\'ajouter au moins un ingrédient et une étape');
       return;
     }
@@ -147,8 +192,9 @@ export default function EditRecipePage() {
           difficulty,
           prepTime,
           cookTime,
+          restTime: restTime ? parseInt(restTime) : null,
           servings,
-          ingredients: filteredIngredients,
+          ingredients: filteredGroups,
           steps: filteredSteps,
           visibility,
           status: newStatus,
@@ -495,6 +541,36 @@ export default function EditRecipePage() {
                   textTransform: 'uppercase',
                   letterSpacing: '1px'
                 }}>
+                  Repos (min)
+                </label>
+                <input
+                  type="number"
+                  value={restTime}
+                  onChange={(e) => setRestTime(e.target.value)}
+                  placeholder="Optionnel"
+                  style={{
+                    width: '100%',
+                    padding: '12px',
+                    background: 'rgba(255,255,255,0.05)',
+                    border: '1px solid rgba(255,255,255,0.1)',
+                    borderRadius: '8px',
+                    color: '#fff',
+                    fontSize: '14px',
+                    outline: 'none'
+                  }}
+                />
+              </div>
+
+              <div>
+                <label style={{
+                  display: 'block',
+                  fontSize: '13px',
+                  fontWeight: 600,
+                  color: 'rgba(255,255,255,0.6)',
+                  marginBottom: '8px',
+                  textTransform: 'uppercase',
+                  letterSpacing: '1px'
+                }}>
                   Portions
                 </label>
                 <input
@@ -548,7 +624,7 @@ export default function EditRecipePage() {
             </div>
           </div>
 
-          {/* Ingrédients */}
+          {/* Ingrédients par groupe */}
           <div style={{
             background: 'rgba(255,255,255,0.05)',
             padding: '30px',
@@ -566,7 +642,7 @@ export default function EditRecipePage() {
                 Ingrédients *
               </label>
               <button
-                onClick={addIngredient}
+                onClick={addIngredientGroup}
                 style={{
                   background: 'rgba(212, 175, 55, 0.2)',
                   border: '1px solid #D4AF37',
@@ -578,46 +654,116 @@ export default function EditRecipePage() {
                   cursor: 'pointer'
                 }}
               >
-                + Ajouter
+                + Ajouter un groupe
               </button>
             </div>
 
-            {ingredients.map((ingredient, index) => (
-              <div key={index} style={{ display: 'flex', gap: '12px', marginBottom: '12px' }}>
-                <input
-                  type="text"
-                  value={ingredient}
-                  onChange={(e) => updateIngredient(index, e.target.value)}
-                  placeholder="400g de spaghetti..."
-                  style={{
-                    flex: 1,
-                    padding: '12px',
-                    background: 'rgba(255,255,255,0.05)',
-                    border: '1px solid rgba(255,255,255,0.1)',
-                    borderRadius: '8px',
-                    color: '#fff',
-                    fontSize: '14px',
-                    outline: 'none'
-                  }}
-                />
-                {ingredients.length > 1 && (
+            {ingredientGroups.map((group, groupIndex) => (
+              <div key={groupIndex} style={{
+                background: 'rgba(255,255,255,0.03)',
+                padding: '20px',
+                borderRadius: '12px',
+                marginBottom: '16px',
+                position: 'relative'
+              }}>
+                {ingredientGroups.length > 1 && (
                   <button
-                    onClick={() => removeIngredient(index)}
+                    onClick={() => removeIngredientGroup(groupIndex)}
                     style={{
+                      position: 'absolute',
+                      top: '12px',
+                      right: '12px',
                       background: 'rgba(239, 68, 68, 0.1)',
                       border: '1px solid rgba(239, 68, 68, 0.3)',
                       borderRadius: '8px',
                       color: '#ef4444',
-                      padding: '12px 16px',
-                      fontSize: '14px',
+                      padding: '6px 10px',
+                      fontSize: '12px',
                       cursor: 'pointer'
                     }}
                   >
-                    🗑️
+                    Supprimer le groupe
                   </button>
                 )}
+
+                <input
+                  type="text"
+                  value={group.groupName}
+                  onChange={(e) => updateGroupName(groupIndex, e.target.value)}
+                  placeholder="Nom du groupe (ex: Pour la pâte, Pour la crème...)"
+                  style={{
+                    width: '100%',
+                    padding: '12px',
+                    background: 'rgba(212, 175, 55, 0.1)',
+                    border: '1px solid rgba(212, 175, 55, 0.3)',
+                    borderRadius: '8px',
+                    color: '#D4AF37',
+                    fontSize: '14px',
+                    fontWeight: 600,
+                    outline: 'none',
+                    marginBottom: '16px'
+                  }}
+                />
+
+                {group.ingredients.map((ingredient, ingredientIndex) => (
+                  <div key={ingredientIndex} style={{ display: 'flex', gap: '12px', marginBottom: '12px' }}>
+                    <input
+                      type="text"
+                      value={ingredient}
+                      onChange={(e) => updateIngredient(groupIndex, ingredientIndex, e.target.value)}
+                      placeholder="400g de spaghetti..."
+                      style={{
+                        flex: 1,
+                        padding: '12px',
+                        background: 'rgba(255,255,255,0.05)',
+                        border: '1px solid rgba(255,255,255,0.1)',
+                        borderRadius: '8px',
+                        color: '#fff',
+                        fontSize: '14px',
+                        outline: 'none'
+                      }}
+                    />
+                    {group.ingredients.length > 1 && (
+                      <button
+                        onClick={() => removeIngredient(groupIndex, ingredientIndex)}
+                        style={{
+                          background: 'rgba(239, 68, 68, 0.1)',
+                          border: '1px solid rgba(239, 68, 68, 0.3)',
+                          borderRadius: '8px',
+                          color: '#ef4444',
+                          padding: '12px 16px',
+                          fontSize: '14px',
+                          cursor: 'pointer'
+                        }}
+                      >
+                        🗑️
+                      </button>
+                    )}
+                  </div>
+                ))}
+
+                <button
+                  onClick={() => addIngredientToGroup(groupIndex)}
+                  style={{
+                    background: 'transparent',
+                    border: '1px dashed rgba(255,255,255,0.2)',
+                    borderRadius: '8px',
+                    color: 'rgba(255,255,255,0.5)',
+                    padding: '10px 16px',
+                    fontSize: '13px',
+                    cursor: 'pointer',
+                    width: '100%',
+                    marginTop: '8px'
+                  }}
+                >
+                  + Ajouter un ingrédient
+                </button>
               </div>
             ))}
+
+            <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginTop: '12px' }}>
+              💡 Tu peux laisser le nom du groupe vide si tu n'as qu'un seul groupe d'ingrédients
+            </p>
           </div>
 
           {/* Étapes */}
