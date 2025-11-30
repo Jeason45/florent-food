@@ -137,7 +137,7 @@ export function HeroSection({ id }: HeroSectionProps = {}) {
               </p>
 
               <form onSubmit={handleSubmit} className="w-full">
-                {/* Desktop: Pill form */}
+                {/* Desktop: Pill form (identique à l'original) */}
                 <div
                   className="hidden sm:flex items-center rounded-full w-full overflow-hidden"
                   style={{
@@ -156,7 +156,7 @@ export function HeroSection({ id }: HeroSectionProps = {}) {
                     disabled={status === "loading"}
                     className="flex-1 bg-transparent border-none text-white placeholder-white/40 focus:outline-none disabled:opacity-50 focus:placeholder-white/60 transition-all"
                     style={{
-                      padding: '14px 24px',
+                      padding: '12px 24px',
                       fontSize: '15px',
                       minWidth: 0,
                       letterSpacing: '0.02em'
@@ -167,7 +167,7 @@ export function HeroSection({ id }: HeroSectionProps = {}) {
                     disabled={status === "loading"}
                     className="rounded-full text-white font-semibold whitespace-nowrap transition-all duration-300 disabled:opacity-70 hover:scale-[1.02] hover:shadow-xl active:scale-[0.98]"
                     style={{
-                      padding: '14px 28px',
+                      padding: '12px 28px',
                       background: 'linear-gradient(135deg, #D4AF37 0%, #B8860B 50%, #D4AF37 100%)',
                       backgroundSize: '200% 200%',
                       fontSize: '14px',
@@ -181,34 +181,41 @@ export function HeroSection({ id }: HeroSectionProps = {}) {
                   </button>
                 </div>
 
-                {/* Mobile: Stacked form */}
-                <div className="flex sm:hidden flex-col gap-3 w-full">
+                {/* Mobile: Pill form compact */}
+                <div
+                  className="flex sm:hidden items-center rounded-full w-full overflow-hidden"
+                  style={{
+                    background: 'rgba(0, 0, 0, 0.35)',
+                    border: '1px solid rgba(212, 175, 55, 0.3)',
+                    boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.2), 0 0 20px rgba(212, 175, 55, 0.1)',
+                    padding: '4px'
+                  }}
+                >
                   <input
                     type="email"
-                    placeholder="Ton adresse email"
+                    placeholder="Ton email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
                     disabled={status === "loading"}
-                    className="w-full text-white placeholder-white/40 focus:outline-none disabled:opacity-50 rounded-full transition-all"
+                    className="flex-1 bg-transparent border-none text-white placeholder-white/40 focus:outline-none disabled:opacity-50 transition-all"
                     style={{
-                      background: 'rgba(0, 0, 0, 0.35)',
-                      border: '1px solid rgba(212, 175, 55, 0.3)',
-                      padding: '16px 20px',
-                      fontSize: '15px'
+                      padding: '10px 12px',
+                      fontSize: '13px',
+                      minWidth: 0
                     }}
                   />
                   <button
                     type="submit"
                     disabled={status === "loading"}
-                    className="w-full rounded-full text-white font-semibold transition-all duration-300 disabled:opacity-70 active:scale-[0.98]"
+                    className="rounded-full text-white font-semibold whitespace-nowrap transition-all disabled:opacity-70 active:scale-[0.98]"
                     style={{
-                      padding: '16px 24px',
+                      padding: '10px 14px',
                       background: 'linear-gradient(135deg, #D4AF37 0%, #B8860B 50%, #D4AF37 100%)',
-                      fontSize: '14px',
+                      fontSize: '11px',
                       cursor: status === "loading" ? 'wait' : 'pointer',
                       boxShadow: '0 4px 15px rgba(212, 175, 55, 0.4)',
-                      letterSpacing: '0.03em',
+                      letterSpacing: '0.02em',
                       textTransform: 'uppercase'
                     }}
                   >
