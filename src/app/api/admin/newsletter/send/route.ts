@@ -40,21 +40,26 @@ export async function POST(request: NextRequest) {
     }
 
     // Récupérer les recettes
-    const recipes = await prisma.recipe.findMany({
+    const recipesFromDB = await prisma.recipe.findMany({
       where: {
         id: { in: recipeIds }
       }
     });
 
-    if (recipes.length !== recipeIds.length) {
+    if (recipesFromDB.length !== recipeIds.length) {
       return NextResponse.json(
         { success: false, error: 'Certaines recettes sont introuvables' },
         { status: 404 }
       );
     }
 
-    const featuredRecipe = recipes[0]; // La première recette
-    const secondaryRecipes = recipes.slice(1); // Les recettes suivantes
+    // Réordonner les recettes selon l'ordre choisi par l'utilisateur (recipeIds)
+    const recipes = recipeIds.map((id: string) =>
+      recipesFromDB.find((r) => r.id === id)
+    ).filter(Boolean);
+
+    const featuredRecipe = recipes[0]; // La première recette (dans l'ordre choisi)
+    const secondaryRecipes = recipes.slice(1); // Les recettes suivantes (dans l'ordre choisi)
 
     // Récupérer les abonnés selon le filtre
     let subscriberFilter: any = {
