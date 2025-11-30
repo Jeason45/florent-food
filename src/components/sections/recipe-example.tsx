@@ -59,24 +59,72 @@ export function RecipeExampleSection() {
     return null; // Ne rien afficher s'il n'y a pas de recette
   }
 
-  const getDifficultyLabel = (difficulty: string) => {
-    if (difficulty === 'DEBUTANT') return 'Débutant';
-    if (difficulty === 'INTERMEDIAIRE') return 'Intermédiaire';
-    return 'Expert';
-  };
-
   const getDifficultyStars = (difficulty: string) => {
-    if (difficulty === 'DEBUTANT') return '★';
-    if (difficulty === 'INTERMEDIAIRE') return '★★';
-    return '★★★';
+    const filledCount = difficulty === 'DEBUTANT' ? 1 : difficulty === 'INTERMEDIAIRE' ? 2 : 3;
+    return (
+      <>
+        <span style={{ color: '#D4AF37' }}>{'★'.repeat(filledCount)}</span>
+        <span style={{ color: '#ddd' }}>{'★'.repeat(3 - filledCount)}</span>
+      </>
+    );
   };
 
   return (
-    <section className="relative overflow-hidden" style={{
+    <section className="recipe-preview-section relative overflow-hidden" style={{
       background: 'linear-gradient(to bottom, #FFF8F0, #FFFBF7)',
       paddingTop: '40px',
       paddingBottom: '80px'
     }}>
+      <style>{`
+        @media (max-width: 768px) {
+          .recipe-preview-hero-overlay {
+            padding: 20px 20px !important;
+          }
+          .recipe-preview-hero-overlay h1 {
+            font-size: 24px !important;
+            letter-spacing: -1px !important;
+          }
+          .recipe-preview-hero-overlay p {
+            display: none !important;
+          }
+          .recipe-preview-content {
+            padding: 30px 20px !important;
+          }
+          .recipe-preview-meta {
+            flex-direction: column !important;
+            gap: 20px !important;
+            padding: 25px 0 !important;
+          }
+          .recipe-preview-meta-value {
+            font-size: 28px !important;
+          }
+          .recipe-preview-meta-label {
+            font-size: 10px !important;
+          }
+          .recipe-preview-step {
+            flex-direction: row !important;
+            gap: 12px !important;
+            padding: 20px 16px !important;
+            margin-bottom: 15px !important;
+          }
+          .recipe-preview-step-number {
+            font-size: 24px !important;
+            min-width: 35px !important;
+          }
+          .recipe-preview-step h3 {
+            font-size: 16px !important;
+          }
+          .recipe-preview-step p {
+            font-size: 14px !important;
+          }
+          .recipe-preview-footer {
+            padding: 30px 0 15px !important;
+          }
+          .recipe-preview-footer-title {
+            font-size: 20px !important;
+          }
+        }
+      `}</style>
       {/* Decorative elements */}
       <div className="absolute top-20 left-10 w-32 h-32 rounded-full bg-[#D4AF37]/5 blur-3xl"></div>
       <div className="absolute bottom-20 right-10 w-40 h-40 rounded-full bg-[#C77A4E]/5 blur-3xl"></div>
@@ -158,7 +206,7 @@ export function RecipeExampleSection() {
               </div>
 
               {/* Overlay avec titre */}
-              <div style={{
+              <div className="recipe-preview-hero-overlay" style={{
                 position: 'absolute',
                 bottom: 0,
                 left: 0,
@@ -201,12 +249,12 @@ export function RecipeExampleSection() {
             </div>
 
             {/* Contenu BLANC */}
-            <div style={{
+            <div className="recipe-preview-content" style={{
               padding: '60px 40px',
               background: '#fff'
             }}>
               {/* Meta Info */}
-              <div style={{
+              <div className="recipe-preview-meta" style={{
                 display: 'flex',
                 justifyContent: 'center',
                 gap: '50px',
@@ -215,16 +263,16 @@ export function RecipeExampleSection() {
                 marginBottom: '50px'
               }}>
                 <div style={{ textAlign: 'center' }}>
-                  <div style={{
-                    fontSize: '48px',
+                  <div className="recipe-preview-meta-value" style={{
+                    fontSize: '36px',
                     fontWeight: 900,
                     color: '#D4AF37',
                     lineHeight: 1,
                     marginBottom: '12px'
                   }}>
-                    {recipe.totalTime}
+                    {recipe.totalTime}'
                   </div>
-                  <div style={{
+                  <div className="recipe-preview-meta-label" style={{
                     fontSize: '12px',
                     color: '#999',
                     textTransform: 'uppercase',
@@ -235,8 +283,8 @@ export function RecipeExampleSection() {
                   </div>
                 </div>
                 <div style={{ textAlign: 'center' }}>
-                  <div style={{
-                    fontSize: '48px',
+                  <div className="recipe-preview-meta-value" style={{
+                    fontSize: '36px',
                     fontWeight: 900,
                     color: '#D4AF37',
                     lineHeight: 1,
@@ -244,7 +292,7 @@ export function RecipeExampleSection() {
                   }}>
                     {recipe.servings}
                   </div>
-                  <div style={{
+                  <div className="recipe-preview-meta-label" style={{
                     fontSize: '12px',
                     color: '#999',
                     textTransform: 'uppercase',
@@ -255,23 +303,23 @@ export function RecipeExampleSection() {
                   </div>
                 </div>
                 <div style={{ textAlign: 'center' }}>
-                  <div style={{
-                    fontSize: '48px',
+                  <div className="recipe-preview-meta-value" style={{
+                    fontSize: '28px',
                     fontWeight: 900,
-                    color: '#D4AF37',
                     lineHeight: 1,
-                    marginBottom: '12px'
+                    marginBottom: '12px',
+                    letterSpacing: '2px'
                   }}>
                     {getDifficultyStars(recipe.difficulty)}
                   </div>
-                  <div style={{
+                  <div className="recipe-preview-meta-label" style={{
                     fontSize: '12px',
                     color: '#999',
                     textTransform: 'uppercase',
                     letterSpacing: '2px',
                     fontWeight: 600
                   }}>
-                    {getDifficultyLabel(recipe.difficulty)}
+                    Difficulté
                   </div>
                 </div>
               </div>
@@ -332,6 +380,7 @@ export function RecipeExampleSection() {
                 {recipe.steps.slice(0, 3).map((step: any, index: number) => (
                   <div
                     key={index}
+                    className="recipe-preview-step"
                     style={{
                       display: 'flex',
                       gap: '30px',
@@ -342,13 +391,13 @@ export function RecipeExampleSection() {
                       borderRadius: '16px'
                     }}
                   >
-                    <div style={{
-                      fontSize: '72px',
+                    <div className="recipe-preview-step-number" style={{
+                      fontSize: '48px',
                       fontWeight: 900,
                       color: '#D4AF37',
                       lineHeight: 1,
                       opacity: 0.4,
-                      minWidth: '80px'
+                      minWidth: '60px'
                     }}>
                       {String(index + 1).padStart(2, '0')}
                     </div>
@@ -377,13 +426,13 @@ export function RecipeExampleSection() {
               </div>
 
               {/* Footer */}
-              <div style={{
+              <div className="recipe-preview-footer" style={{
                 textAlign: 'center',
                 padding: '50px 0 20px',
                 borderTop: '1px solid #e8e8e8'
               }}>
-                <div style={{
-                  fontSize: '32px',
+                <div className="recipe-preview-footer-title" style={{
+                  fontSize: '24px',
                   fontWeight: 900,
                   color: '#D4AF37',
                   letterSpacing: '3px',

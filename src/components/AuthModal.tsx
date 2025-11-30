@@ -88,6 +88,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
 
   return (
     <div
+      className="auth-modal-overlay"
       style={{
         position: 'fixed',
         inset: 0,
@@ -97,15 +98,53 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
         justifyContent: 'center',
         background: 'rgba(0, 0, 0, 0.7)',
         backdropFilter: 'blur(8px)',
-        padding: '20px',
+        padding: '12px',
       }}
       onClick={onClose}
     >
+      <style>{`
+        @media (max-width: 480px) {
+          .auth-modal-content {
+            border-radius: 16px !important;
+            max-height: 90vh;
+            overflow-y: auto;
+          }
+          .auth-modal-inner {
+            padding: 32px 20px !important;
+          }
+          .auth-modal-title {
+            font-size: 24px !important;
+          }
+          .auth-modal-subtitle {
+            font-size: 13px !important;
+          }
+          .auth-modal-toggle {
+            flex-direction: column !important;
+            gap: 8px !important;
+          }
+          .auth-modal-toggle button {
+            padding: 10px !important;
+            font-size: 13px !important;
+          }
+          .auth-modal-input {
+            padding: 12px 14px !important;
+            font-size: 14px !important;
+          }
+          .auth-modal-submit {
+            padding: 14px !important;
+            font-size: 14px !important;
+          }
+          .auth-modal-footer {
+            font-size: 10px !important;
+          }
+        }
+      `}</style>
       <div
+        className="auth-modal-content"
         style={{
           background: 'linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%)',
           borderRadius: '24px',
-          maxWidth: '480px',
+          maxWidth: '420px',
           width: '100%',
           position: 'relative',
           overflow: 'hidden',
@@ -157,34 +196,36 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
           <X size={18} color="#fff" />
         </button>
 
-        <div style={{ padding: '48px 40px' }}>
+        <div className="auth-modal-inner" style={{ padding: '40px 32px' }}>
           {/* Header */}
-          <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+          <div style={{ textAlign: 'center', marginBottom: '28px' }}>
             <h2
+              className="auth-modal-title"
               style={{
-                fontSize: '28px',
+                fontSize: '26px',
                 fontWeight: '600',
                 background: 'linear-gradient(to right, #D4AF37, #C77A4E)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
-                marginBottom: '12px',
+                marginBottom: '10px',
                 fontFamily: 'var(--font-cormorant), serif',
               }}
             >
               Accès Membre
             </h2>
-            <p style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '14px', lineHeight: '1.6' }}>
+            <p className="auth-modal-subtitle" style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '14px', lineHeight: '1.6' }}>
               Connecte-toi pour accéder à toutes les recettes
             </p>
           </div>
 
           {/* Mode Toggle */}
           <div
+            className="auth-modal-toggle"
             style={{
               display: 'flex',
-              gap: '12px',
-              marginBottom: '32px',
+              gap: '10px',
+              marginBottom: '28px',
               background: 'rgba(0, 0, 0, 0.3)',
               padding: '6px',
               borderRadius: '12px',
@@ -249,6 +290,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 disabled={status === 'loading' || status === 'success'}
+                className="auth-modal-input"
                 style={{
                   width: '100%',
                   padding: '14px 16px',
@@ -259,6 +301,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
                   fontSize: '15px',
                   outline: 'none',
                   transition: 'all 0.2s',
+                  boxSizing: 'border-box',
                 }}
                 onFocus={(e) => {
                   e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
@@ -305,6 +348,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
             <button
               type="submit"
               disabled={status === 'loading' || status === 'success'}
+              className="auth-modal-submit"
               style={{
                 width: '100%',
                 padding: '16px',
@@ -344,8 +388,9 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
 
           {/* Footer note */}
           <p
+            className="auth-modal-footer"
             style={{
-              marginTop: '24px',
+              marginTop: '20px',
               fontSize: '11px',
               color: 'rgba(255, 255, 255, 0.5)',
               textAlign: 'center',
