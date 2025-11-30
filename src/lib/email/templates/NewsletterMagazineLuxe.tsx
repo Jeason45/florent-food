@@ -20,25 +20,91 @@ interface NewsletterData {
 export function generateNewsletterMagazineLuxe(data: NewsletterData, isFreeTier: boolean = true): string {
   const baseUrl = process.env.NEXT_PUBLIC_URL || 'http://localhost:3001';
 
-  const secondaryRecipesHTML = data.secondaryRecipes.map(recipe => `
-    <td width="50%" valign="top" style="padding: 1px;">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td style="position: relative;">
-            <img src="${recipe.imageUrl}" alt="${recipe.title}" style="width: 100%; height: 280px; object-fit: cover; display: block;">
-            <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 25px; background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.9) 100%);">
-              <h3 style="font-size: 20px; color: #fff; font-weight: 700; margin: 0 0 8px 0;">
-                ${recipe.title}
-              </h3>
-              <a href="${baseUrl}/recettes/${recipe.slug}" style="color: #D4AF37; text-decoration: none; font-size: 12px; letter-spacing: 1px; text-transform: uppercase;">
-                Découvrir →
-              </a>
-            </div>
-          </td>
-        </tr>
-      </table>
-    </td>
-  `).join('');
+  // Générer les recettes secondaires par paires, avec la dernière en pleine largeur si seule
+  const generateSecondaryRecipesHTML = () => {
+    const recipes = data.secondaryRecipes;
+    const isLastAlone = recipes.length % 2 === 1;
+    let html = '';
+
+    // Traiter les recettes par paires
+    for (let i = 0; i < recipes.length; i += 2) {
+      const recipe1 = recipes[i];
+      const recipe2 = recipes[i + 1];
+      const isLastRow = i + 2 >= recipes.length;
+      const isFullWidth = isLastRow && isLastAlone;
+
+      if (isFullWidth) {
+        // Dernière recette seule - pleine largeur
+        html += `
+          <tr>
+            <td colspan="2" style="padding: 1px;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="position: relative;">
+                    <img src="${recipe1.imageUrl}" alt="${recipe1.title}" style="width: 100%; height: 300px; object-fit: cover; display: block;">
+                    <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 30px; background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.9) 100%);">
+                      <h3 style="font-size: 24px; color: #fff; font-weight: 700; margin: 0 0 8px 0;">
+                        ${recipe1.title}
+                      </h3>
+                      <a href="${baseUrl}/recettes/${recipe1.slug}" style="color: #D4AF37; text-decoration: none; font-size: 12px; letter-spacing: 1px; text-transform: uppercase;">
+                        Découvrir →
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        `;
+      } else {
+        // Paire de recettes
+        html += `
+          <tr>
+            <td width="50%" valign="top" style="padding: 1px;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="position: relative;">
+                    <img src="${recipe1.imageUrl}" alt="${recipe1.title}" style="width: 100%; height: 280px; object-fit: cover; display: block;">
+                    <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 25px; background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.9) 100%);">
+                      <h3 style="font-size: 20px; color: #fff; font-weight: 700; margin: 0 0 8px 0;">
+                        ${recipe1.title}
+                      </h3>
+                      <a href="${baseUrl}/recettes/${recipe1.slug}" style="color: #D4AF37; text-decoration: none; font-size: 12px; letter-spacing: 1px; text-transform: uppercase;">
+                        Découvrir →
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+            ${recipe2 ? `
+            <td width="50%" valign="top" style="padding: 1px;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="position: relative;">
+                    <img src="${recipe2.imageUrl}" alt="${recipe2.title}" style="width: 100%; height: 280px; object-fit: cover; display: block;">
+                    <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 25px; background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.9) 100%);">
+                      <h3 style="font-size: 20px; color: #fff; font-weight: 700; margin: 0 0 8px 0;">
+                        ${recipe2.title}
+                      </h3>
+                      <a href="${baseUrl}/recettes/${recipe2.slug}" style="color: #D4AF37; text-decoration: none; font-size: 12px; letter-spacing: 1px; text-transform: uppercase;">
+                        Découvrir →
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+            ` : ''}
+          </tr>
+        `;
+      }
+    }
+
+    return html;
+  };
+
+  const secondaryRecipesHTML = generateSecondaryRecipesHTML();
 
   const quoteHTML = data.tipOfWeek ? `
     <tr>
@@ -139,10 +205,8 @@ export function generateNewsletterMagazineLuxe(data: NewsletterData, isFreeTier:
     <!-- Grid Recipes -->
     <tr>
       <td>
-        <table width="100%" cellpadding="0" cellspacing="2" border="0" style="background: #000;">
-          <tr>
-            ${secondaryRecipesHTML}
-          </tr>
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background: #000;">
+          ${secondaryRecipesHTML}
         </table>
       </td>
     </tr>
