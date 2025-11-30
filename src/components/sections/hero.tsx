@@ -120,12 +120,13 @@ export function HeroSection({ id }: HeroSectionProps = {}) {
           ) : (
             <>
               <h2
-                className="text-white mb-3"
+                className="mb-3"
                 style={{
                   fontSize: 'clamp(24px, 5vw, 32px)',
                   fontWeight: 600,
                   fontFamily: 'var(--font-cormorant), Georgia, serif',
-                  lineHeight: 1.2
+                  lineHeight: 1.2,
+                  color: '#fff'
                 }}
               >
                 Envie de nouvelles idées recettes ?
