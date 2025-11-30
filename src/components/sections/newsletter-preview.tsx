@@ -85,61 +85,77 @@ export function NewsletterPreviewSection() {
       paddingBottom: '80px'
     }}>
       <style>{`
-        /* Mobile - identique au rendu email mobile (< 600px) */
+        /* Mobile - même layout que desktop, tailles adaptées */
         @media (max-width: 600px) {
           .newsletter-preview-hero {
-            height: 350px !important;
-            padding: 40px 25px !important;
+            height: 280px !important;
+            padding: 30px 20px !important;
           }
           .newsletter-preview-hero h1 {
-            font-size: 32px !important;
+            font-size: 28px !important;
           }
           .newsletter-preview-intro {
-            padding: 40px 25px !important;
+            padding: 30px 20px !important;
           }
           .newsletter-preview-intro p {
-            font-size: 17px !important;
+            font-size: 15px !important;
           }
           .newsletter-preview-featured {
-            height: 320px !important;
+            height: 250px !important;
           }
           .newsletter-preview-featured-overlay {
-            padding: 30px 25px !important;
+            padding: 20px 15px !important;
           }
           .newsletter-preview-featured-number {
-            font-size: 50px !important;
+            font-size: 40px !important;
+            margin-bottom: 5px !important;
           }
           .newsletter-preview-featured-title {
-            font-size: 24px !important;
+            font-size: 20px !important;
+            margin-bottom: 8px !important;
           }
-          .newsletter-preview-grid-row {
-            flex-direction: column !important;
+          .newsletter-preview-featured-overlay p {
+            font-size: 12px !important;
+            margin-bottom: 12px !important;
+          }
+          .newsletter-preview-featured-overlay > div:last-child {
+            padding: 10px 20px !important;
+            font-size: 9px !important;
           }
           .newsletter-preview-grid-item {
-            width: 100% !important;
-            height: 250px !important;
+            height: 180px !important;
           }
           .newsletter-preview-grid-item-full {
-            height: 250px !important;
+            height: 180px !important;
           }
-          .newsletter-preview-grid-item h3 {
-            font-size: 20px !important;
+          .newsletter-preview-grid-item h3,
+          .newsletter-preview-grid-item-full h3 {
+            font-size: 14px !important;
+          }
+          .newsletter-preview-grid-item > div,
+          .newsletter-preview-grid-item-full > div:last-child {
+            padding: 15px !important;
+          }
+          .newsletter-preview-grid-item span,
+          .newsletter-preview-grid-item-full span {
+            font-size: 10px !important;
           }
           .newsletter-preview-quote {
-            padding: 50px 25px !important;
+            padding: 40px 20px !important;
           }
           .newsletter-preview-quote-icon {
-            font-size: 40px !important;
-            margin-bottom: 20px !important;
+            font-size: 36px !important;
+            margin-bottom: 15px !important;
           }
           .newsletter-preview-quote p {
-            font-size: 20px !important;
+            font-size: 16px !important;
+            margin-bottom: 15px !important;
           }
           .newsletter-preview-footer {
-            padding: 40px 25px !important;
+            padding: 30px 20px !important;
           }
           .newsletter-preview-footer-title {
-            font-size: 20px !important;
+            font-size: 18px !important;
           }
         }
       `}</style>
