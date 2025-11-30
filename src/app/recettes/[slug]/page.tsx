@@ -225,6 +225,27 @@ export default async function RecipePage({ params }: RecipePageProps) {
           .recipe-content {
             padding: 10px 15px !important;
           }
+
+          /* Astuces du Chef - compact pour impression */
+          .recipe-chef-tips {
+            padding: 15px 20px !important;
+            margin-top: 10px !important;
+            border-radius: 8px !important;
+            break-inside: avoid;
+          }
+
+          .recipe-chef-tips > div:first-child {
+            font-size: 8px !important;
+            padding: 4px 12px !important;
+            top: -10px !important;
+            left: 15px !important;
+          }
+
+          .recipe-chef-tips p {
+            font-size: 8px !important;
+            line-height: 1.4 !important;
+            margin-top: 5px !important;
+          }
         }
       `}</style>
 
@@ -583,6 +604,44 @@ export default async function RecipePage({ params }: RecipePageProps) {
             </div>
           ))}
         </div>
+
+        {/* Astuces du Chef */}
+        {recipe.chefTips && (
+          <div className="recipe-chef-tips" style={{
+            background: 'linear-gradient(135deg, #faf8f5 0%, #f5f0e8 100%)',
+            padding: '50px',
+            borderRadius: '20px',
+            marginTop: '60px',
+            border: '2px solid #D4AF37',
+            position: 'relative'
+          }}>
+            <div style={{
+              position: 'absolute',
+              top: '-20px',
+              left: '40px',
+              background: '#D4AF37',
+              color: '#000',
+              padding: '10px 24px',
+              borderRadius: '30px',
+              fontSize: '14px',
+              fontWeight: 700,
+              letterSpacing: '1px',
+              textTransform: 'uppercase'
+            }}>
+              Astuces du Chef
+            </div>
+            <p style={{
+              fontSize: '17px',
+              lineHeight: 1.9,
+              color: '#333',
+              fontStyle: 'italic',
+              marginTop: '10px',
+              whiteSpace: 'pre-line'
+            }}>
+              {recipe.chefTips}
+            </p>
+          </div>
+        )}
 
         {/* Footer */}
         <div className="recipe-footer" style={{

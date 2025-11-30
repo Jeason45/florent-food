@@ -52,6 +52,7 @@ export async function PUT(
       servings,
       ingredients,
       steps,
+      chefTips,
       visibility,
       status,
     } = body;
@@ -74,6 +75,7 @@ export async function PUT(
         servings: parseInt(servings),
         ingredients,
         steps,
+        chefTips: chefTips || null,
         visibility,
         status,
         publishedAt: status === 'PUBLISHED' ? new Date() : null,

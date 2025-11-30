@@ -101,6 +101,7 @@ model Recipe {
   servings        Int            @default(6)
   ingredients     Json
   steps           Json
+  chefTips        String?        @map("chef_tips") // Astuces du Chef
   videoUrl        String?        @map("video_url")
   pdfUrl          String?        @map("pdf_url")
   status          RecipeStatus   @default(DRAFT)

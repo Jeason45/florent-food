@@ -25,6 +25,7 @@ export default function NewRecipePage() {
     { title: '', description: '' }
   ]);
   const [visibility, setVisibility] = useState('FREE');
+  const [chefTips, setChefTips] = useState('');
   const [uploading, setUploading] = useState(false);
   const [saving, setSaving] = useState(false);
 
@@ -145,6 +146,7 @@ export default function NewRecipePage() {
           servings,
           ingredients: filteredGroups,
           steps: filteredSteps,
+          chefTips: chefTips.trim() || null,
           visibility,
           status,
         }),
@@ -811,6 +813,47 @@ export default function NewRecipePage() {
                 )}
               </div>
             ))}
+          </div>
+
+          {/* Astuces du Chef */}
+          <div style={{
+            background: 'rgba(255,255,255,0.05)',
+            padding: '30px',
+            borderRadius: '16px',
+            border: '1px solid rgba(255,255,255,0.1)'
+          }}>
+            <label style={{
+              display: 'block',
+              fontSize: '13px',
+              fontWeight: 600,
+              color: '#D4AF37',
+              marginBottom: '12px',
+              textTransform: 'uppercase',
+              letterSpacing: '1px'
+            }}>
+              Astuces du Chef
+            </label>
+            <textarea
+              value={chefTips}
+              onChange={(e) => setChefTips(e.target.value)}
+              placeholder="Partage tes conseils et astuces de pro pour réussir cette recette..."
+              rows={4}
+              style={{
+                width: '100%',
+                padding: '14px 16px',
+                background: 'rgba(255,255,255,0.05)',
+                border: '1px solid rgba(255,255,255,0.1)',
+                borderRadius: '10px',
+                color: '#fff',
+                fontSize: '15px',
+                outline: 'none',
+                lineHeight: 1.6,
+                resize: 'vertical'
+              }}
+            />
+            <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginTop: '12px' }}>
+              💡 Ces astuces seront affichées en bas de la recette pour aider les lecteurs
+            </p>
           </div>
 
           {/* Actions */}
