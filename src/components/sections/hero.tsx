@@ -103,9 +103,9 @@ export function HeroSection({ id }: HeroSectionProps = {}) {
       </div>
 
       {/* Card en bas - Style Mix B3 */}
-      <div className="absolute bottom-8 sm:bottom-10 left-1/2 -translate-x-1/2 z-10 w-[90%] max-w-[550px]">
+      <div className="absolute bottom-8 sm:bottom-10 left-1/2 -translate-x-1/2 z-10 w-[95%] max-w-[620px]">
         <div
-          className="backdrop-blur-xl rounded-3xl border border-white/10 text-center"
+          className="backdrop-blur-xl rounded-3xl border border-white/10 flex flex-col items-center justify-center text-center"
           style={{
             background: 'rgba(107, 93, 82, 0.5)',
             padding: 'clamp(24px, 5vw, 36px)'
@@ -133,48 +133,56 @@ export function HeroSection({ id }: HeroSectionProps = {}) {
               </h2>
 
               <p
-                className="text-white/80 mb-6"
+                className="text-white/80 mb-6 mx-auto"
                 style={{
-                  fontSize: 'clamp(14px, 3vw, 16px)',
-                  lineHeight: 1.5
+                  fontSize: 'clamp(12px, 2.5vw, 16px)',
+                  lineHeight: 1.5,
+                  whiteSpace: 'nowrap',
+                  width: 'fit-content'
                 }}
               >
-                Rejoins les <span className="text-[#D4AF37] font-semibold">130K+ gourmands</span> et reçois
-                <br /><strong>5 recettes exclusives</strong> chaque semaine.
+                Rejoins les <span className="text-[#D4AF37] font-semibold">130K+ gourmands</span> et reçois <strong>5 recettes exclusives</strong> chaque semaine.
               </p>
 
-              <form onSubmit={handleSubmit}>
-                {/* Pill form */}
+              <form onSubmit={handleSubmit} className="w-full">
+                {/* Pill form - Luxe */}
                 <div
-                  className="flex items-center rounded-full border border-white/20"
+                  className="flex items-center rounded-full w-full overflow-hidden"
                   style={{
-                    background: 'rgba(255,255,255,0.1)',
-                    padding: '6px'
+                    background: 'rgba(0, 0, 0, 0.35)',
+                    border: '1px solid rgba(212, 175, 55, 0.3)',
+                    boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.2), 0 0 20px rgba(212, 175, 55, 0.1)',
+                    padding: '5px'
                   }}
                 >
                   <input
                     type="email"
-                    placeholder="Ton email"
+                    placeholder="Ton adresse email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
                     disabled={status === "loading"}
-                    className="flex-1 bg-transparent border-none text-white placeholder-white/50 focus:outline-none disabled:opacity-50"
+                    className="flex-1 bg-transparent border-none text-white placeholder-white/40 focus:outline-none disabled:opacity-50 focus:placeholder-white/60 transition-all"
                     style={{
-                      padding: '12px 20px',
+                      padding: '14px 24px',
                       fontSize: '15px',
-                      minWidth: 0
+                      minWidth: 0,
+                      letterSpacing: '0.02em'
                     }}
                   />
                   <button
                     type="submit"
                     disabled={status === "loading"}
-                    className="rounded-full text-white font-semibold whitespace-nowrap transition-opacity disabled:opacity-70"
+                    className="rounded-full text-white font-semibold whitespace-nowrap transition-all duration-300 disabled:opacity-70 hover:scale-[1.02] hover:shadow-xl active:scale-[0.98]"
                     style={{
-                      padding: '12px 24px',
-                      background: 'linear-gradient(to right, #D4AF37, #C77A4E)',
+                      padding: '14px 28px',
+                      background: 'linear-gradient(135deg, #D4AF37 0%, #B8860B 50%, #D4AF37 100%)',
+                      backgroundSize: '200% 200%',
                       fontSize: '14px',
-                      cursor: status === "loading" ? 'wait' : 'pointer'
+                      cursor: status === "loading" ? 'wait' : 'pointer',
+                      boxShadow: '0 4px 15px rgba(212, 175, 55, 0.4)',
+                      letterSpacing: '0.03em',
+                      textTransform: 'uppercase'
                     }}
                   >
                     {status === "loading" ? "..." : "Je m'inscris"}
@@ -185,11 +193,8 @@ export function HeroSection({ id }: HeroSectionProps = {}) {
                   <p className="text-red-400 text-sm mt-3">{errorMessage}</p>
                 )}
 
-                <p className="text-white/50 text-xs mt-4">
-                  ✓ Gratuit · ✓ Sans engagement · ✓ Désinscription 1 clic
-                </p>
-
-                <p className="text-white/40 text-xs mt-3">
+                <p className="text-white/40 text-[10px] mt-3 leading-tight">
+                  Gratuit · Sans engagement · Désinscription 1 clic<br />
                   En t'inscrivant, tu acceptes notre{' '}
                   <a
                     href="/politique-confidentialite"
