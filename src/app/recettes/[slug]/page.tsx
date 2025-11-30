@@ -278,10 +278,9 @@ export default async function RecipePage({ params }: RecipePageProps) {
             display: none !important;
           }
 
-          /* Bouton PDF - plus petit sur mobile */
+          /* Bouton PDF - CACHER sur mobile */
           .print-button-container {
-            top: 10px !important;
-            right: 10px !important;
+            display: none !important;
           }
 
           /* Contenu principal mobile - COMPACT */
@@ -629,13 +628,19 @@ export default async function RecipePage({ params }: RecipePageProps) {
           </div>
           <div style={{ textAlign: 'center', minWidth: '80px' }}>
             <div style={{
-              fontSize: '36px',
+              fontSize: '28px',
               fontWeight: 900,
-              color: '#D4AF37',
               lineHeight: 1,
-              marginBottom: '12px'
+              marginBottom: '12px',
+              letterSpacing: '2px'
             }}>
-              {recipe.difficulty === 'DEBUTANT' ? '★' : recipe.difficulty === 'INTERMEDIAIRE' ? '★★' : '★★★'}
+              {recipe.difficulty === 'DEBUTANT' ? (
+                <><span style={{ color: '#D4AF37' }}>★</span><span style={{ color: '#ddd' }}>★★</span></>
+              ) : recipe.difficulty === 'INTERMEDIAIRE' ? (
+                <><span style={{ color: '#D4AF37' }}>★★</span><span style={{ color: '#ddd' }}>★</span></>
+              ) : (
+                <span style={{ color: '#D4AF37' }}>★★★</span>
+              )}
             </div>
             <div style={{
               fontSize: '11px',
@@ -644,7 +649,7 @@ export default async function RecipePage({ params }: RecipePageProps) {
               letterSpacing: '2px',
               fontWeight: 600
             }}>
-              {recipe.difficulty === 'DEBUTANT' ? 'Débutant' : recipe.difficulty === 'INTERMEDIAIRE' ? 'Intermédiaire' : 'Expert'}
+              Difficulté
             </div>
           </div>
         </div>
