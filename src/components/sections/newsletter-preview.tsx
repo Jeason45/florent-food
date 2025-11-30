@@ -26,15 +26,15 @@ export function NewsletterPreviewSection() {
     fetchActiveNewsletter();
   }, []);
 
-  const fetchActiveNewsletter = async () => {
+  const fetchActiveRecipes = async () => {
     try {
       const response = await fetch('/api/newsletter/active');
       const data = await response.json();
 
       if (data.success && data.newsletters && data.newsletters.length > 0) {
-        // Prendre la newsletter la plus récente (première du tableau)
         setNewsletter(data.newsletters[0]);
-        setRecipes(data.recipes.slice(0, 3)); // Prendre les 3 premières recettes pour l'aperçu
+        // Prendre jusqu'à 5 recettes pour voir le layout complet
+        setRecipes(data.recipes.slice(0, 5));
       }
     } catch (error) {
       console.error('Error fetching newsletter:', error);
@@ -42,6 +42,8 @@ export function NewsletterPreviewSection() {
       setLoading(false);
     }
   };
+
+  const fetchActiveNewsletter = fetchActiveRecipes;
 
   if (loading) {
     return (
@@ -60,7 +62,7 @@ export function NewsletterPreviewSection() {
   }
 
   if (!newsletter || recipes.length === 0) {
-    return null; // Ne rien afficher s'il n'y a pas de newsletter active
+    return null;
   }
 
   const formatDate = (dateString: string) => {
@@ -71,6 +73,11 @@ export function NewsletterPreviewSection() {
     });
   };
 
+  // Séparer featured et secondary (comme dans l'email)
+  const featuredRecipe = recipes[0];
+  const secondaryRecipes = recipes.slice(1);
+  const isLastAlone = secondaryRecipes.length % 2 === 1;
+
   return (
     <section className="newsletter-preview-section relative overflow-hidden" style={{
       background: 'linear-gradient(to bottom, #FFF5EB, #FFFBF7)',
@@ -78,59 +85,65 @@ export function NewsletterPreviewSection() {
       paddingBottom: '80px'
     }}>
       <style>{`
-        @media (max-width: 480px) {
+        /* Mobile - identique au rendu email mobile (< 600px) */
+        @media (max-width: 600px) {
           .newsletter-preview-hero {
-            height: 300px !important;
-            padding: 30px 20px !important;
+            height: 350px !important;
+            padding: 40px 25px !important;
           }
           .newsletter-preview-hero h1 {
-            font-size: 28px !important;
+            font-size: 32px !important;
           }
           .newsletter-preview-intro {
-            padding: 30px 20px !important;
+            padding: 40px 25px !important;
           }
           .newsletter-preview-intro p {
-            font-size: 16px !important;
+            font-size: 17px !important;
           }
           .newsletter-preview-featured {
-            height: 280px !important;
+            height: 320px !important;
           }
           .newsletter-preview-featured-overlay {
-            padding: 25px 20px !important;
+            padding: 30px 25px !important;
           }
           .newsletter-preview-featured-number {
-            font-size: 40px !important;
+            font-size: 50px !important;
           }
           .newsletter-preview-featured-title {
-            font-size: 22px !important;
+            font-size: 24px !important;
           }
-          .newsletter-preview-grid {
-            grid-template-columns: 1fr !important;
+          .newsletter-preview-grid-row {
+            flex-direction: column !important;
           }
           .newsletter-preview-grid-item {
-            height: 200px !important;
+            width: 100% !important;
+            height: 250px !important;
+          }
+          .newsletter-preview-grid-item-full {
+            height: 250px !important;
           }
           .newsletter-preview-grid-item h3 {
-            font-size: 18px !important;
+            font-size: 20px !important;
           }
           .newsletter-preview-quote {
-            padding: 40px 20px !important;
+            padding: 50px 25px !important;
           }
           .newsletter-preview-quote-icon {
-            font-size: 36px !important;
-            margin-bottom: 15px !important;
+            font-size: 40px !important;
+            margin-bottom: 20px !important;
           }
           .newsletter-preview-quote p {
-            font-size: 18px !important;
+            font-size: 20px !important;
           }
           .newsletter-preview-footer {
-            padding: 30px 20px !important;
+            padding: 40px 25px !important;
           }
           .newsletter-preview-footer-title {
-            font-size: 18px !important;
+            font-size: 20px !important;
           }
         }
       `}</style>
+
       {/* Decorative elements */}
       <div className="absolute top-20 right-10 w-32 h-32 rounded-full bg-[#D4AF37]/5 blur-3xl"></div>
       <div className="absolute bottom-20 left-10 w-40 h-40 rounded-full bg-[#C77A4E]/5 blur-3xl"></div>
@@ -174,7 +187,7 @@ export function NewsletterPreviewSection() {
         <div className="max-w-3xl" style={{ margin: '0 auto' }}>
           <div className="relative rounded-2xl overflow-hidden shadow-2xl" style={{ background: '#000' }}>
 
-            {/* HERO - Gradient Gold */}
+            {/* HERO - Gradient Gold (identique à l'email) */}
             <div className="newsletter-preview-hero" style={{
               position: 'relative',
               height: '500px',
@@ -204,14 +217,14 @@ export function NewsletterPreviewSection() {
                   marginBottom: '20px',
                   textTransform: 'uppercase'
                 }}>
-                  {newsletter.subject || 'Saveurs d\'Exception'}
+                  Saveurs<br/>d'Exception
                 </h1>
                 <div style={{
                   fontSize: '16px',
                   color: 'rgba(0,0,0,0.7)',
                   letterSpacing: '1px'
                 }}>
-                  Semaine {newsletter.weekNumber}
+                  {recipes.length} Recettes Exclusives
                 </div>
               </div>
             </div>
@@ -229,7 +242,7 @@ export function NewsletterPreviewSection() {
                 fontWeight: '300',
                 margin: 0
               }}>
-                Bonjour ! Cette semaine, je vous partage trois créations d'exception qui vont sublimer vos tables. Des saveurs intenses, des textures parfaites, et cette touche d'élégance qui fait toute la différence.
+                Bonjour ! Cette semaine, je vous partage {recipes.length} créations d'exception qui vont sublimer vos tables. Des saveurs intenses, des textures parfaites, et cette touche d'élégance qui fait toute la différence.
               </p>
               <div style={{
                 marginTop: '30px',
@@ -241,12 +254,12 @@ export function NewsletterPreviewSection() {
               </div>
             </div>
 
-            {/* RECETTE VEDETTE - Grand format avec overlay */}
-            {recipes[0] && (
+            {/* RECETTE VEDETTE - Grand format avec overlay (identique à l'email) */}
+            {featuredRecipe && (
               <div className="newsletter-preview-featured" style={{ position: 'relative', height: '450px' }}>
                 <img
-                  src={recipes[0].imageUrl || 'https://images.unsplash.com/photo-1546548970-71785318a17b?w=1200&q=80'}
-                  alt={recipes[0].title}
+                  src={featuredRecipe.imageUrl || 'https://images.unsplash.com/photo-1546548970-71785318a17b?w=1200&q=80'}
+                  alt={featuredRecipe.title}
                   style={{
                     width: '100%',
                     height: '100%',
@@ -263,7 +276,7 @@ export function NewsletterPreviewSection() {
                   right: 0
                 }}>
                   <div className="newsletter-preview-featured-number" style={{
-                    fontSize: '60px',
+                    fontSize: '80px',
                     fontWeight: '900',
                     color: '#D4AF37',
                     lineHeight: '1',
@@ -273,14 +286,14 @@ export function NewsletterPreviewSection() {
                     01
                   </div>
                   <h2 className="newsletter-preview-featured-title" style={{
-                    fontSize: '28px',
+                    fontSize: '38px',
                     color: '#fff',
                     fontWeight: '700',
                     marginBottom: '16px',
                     textTransform: 'uppercase',
                     letterSpacing: '-0.5px'
                   }}>
-                    {recipes[0].title}
+                    {featuredRecipe.title}
                   </h2>
                   <p style={{
                     fontSize: '16px',
@@ -288,7 +301,7 @@ export function NewsletterPreviewSection() {
                     lineHeight: '1.6',
                     marginBottom: '24px'
                   }}>
-                    {recipes[0].category.join(' · ')}
+                    {featuredRecipe.category.join(' · ')}
                   </p>
                   <div style={{
                     display: 'inline-block',
@@ -306,35 +319,32 @@ export function NewsletterPreviewSection() {
               </div>
             )}
 
-            {/* GRID RECETTES - 2 colonnes noires avec overlay */}
-            {(() => {
-              const gridRecipes = recipes.slice(1);
-              const isLastAlone = gridRecipes.length % 2 === 1;
+            {/* GRID RECETTES - Par paires comme dans l'email */}
+            <div style={{ background: '#000' }}>
+              {(() => {
+                const rows = [];
+                for (let i = 0; i < secondaryRecipes.length; i += 2) {
+                  const recipe1 = secondaryRecipes[i];
+                  const recipe2 = secondaryRecipes[i + 1];
+                  const isLastRow = i + 2 >= secondaryRecipes.length;
+                  const isFullWidth = isLastRow && isLastAlone;
 
-              return (
-                <div className="newsletter-preview-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2px', background: '#000' }}>
-                  {gridRecipes.map((recipe, i) => {
-                    const isLast = i === gridRecipes.length - 1;
-                    const shouldBeFullWidth = isLast && isLastAlone;
-
-                    return (
-                      <div
-                        key={recipe.id}
-                        className="newsletter-preview-grid-item"
-                        style={{
-                          position: 'relative',
-                          height: shouldBeFullWidth ? '300px' : '350px',
-                          overflow: 'hidden',
-                          gridColumn: shouldBeFullWidth ? '1 / -1' : 'auto'
-                        }}
-                      >
+                  if (isFullWidth) {
+                    // Dernière recette seule - pleine largeur
+                    rows.push(
+                      <div key={i} className="newsletter-preview-grid-item-full" style={{
+                        position: 'relative',
+                        height: '300px',
+                        overflow: 'hidden'
+                      }}>
                         <img
-                          src={recipe.imageUrl || 'https://images.unsplash.com/photo-1546548970-71785318a17b?w=600&q=80'}
-                          alt={recipe.title}
+                          src={recipe1.imageUrl || 'https://images.unsplash.com/photo-1546548970-71785318a17b?w=1200&q=80'}
+                          alt={recipe1.title}
                           style={{
                             width: '100%',
                             height: '100%',
-                            objectFit: 'cover'
+                            objectFit: 'cover',
+                            display: 'block'
                           }}
                         />
                         <div style={{
@@ -346,12 +356,12 @@ export function NewsletterPreviewSection() {
                           background: 'linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.9) 100%)'
                         }}>
                           <h3 style={{
-                            fontSize: '22px',
+                            fontSize: '24px',
                             color: '#fff',
                             fontWeight: '700',
                             marginBottom: '8px'
                           }}>
-                            {recipe.title}
+                            {recipe1.title}
                           </h3>
                           <span style={{
                             color: '#D4AF37',
@@ -364,10 +374,106 @@ export function NewsletterPreviewSection() {
                         </div>
                       </div>
                     );
-                  })}
-                </div>
-              );
-            })()}
+                  } else {
+                    // Paire de recettes
+                    rows.push(
+                      <div key={i} className="newsletter-preview-grid-row" style={{
+                        display: 'flex',
+                        gap: '2px'
+                      }}>
+                        <div className="newsletter-preview-grid-item" style={{
+                          position: 'relative',
+                          width: '50%',
+                          height: '280px',
+                          overflow: 'hidden'
+                        }}>
+                          <img
+                            src={recipe1.imageUrl || 'https://images.unsplash.com/photo-1546548970-71785318a17b?w=600&q=80'}
+                            alt={recipe1.title}
+                            style={{
+                              width: '100%',
+                              height: '100%',
+                              objectFit: 'cover',
+                              display: 'block'
+                            }}
+                          />
+                          <div style={{
+                            position: 'absolute',
+                            bottom: 0,
+                            left: 0,
+                            right: 0,
+                            padding: '25px',
+                            background: 'linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.9) 100%)'
+                          }}>
+                            <h3 style={{
+                              fontSize: '20px',
+                              color: '#fff',
+                              fontWeight: '700',
+                              marginBottom: '8px'
+                            }}>
+                              {recipe1.title}
+                            </h3>
+                            <span style={{
+                              color: '#D4AF37',
+                              fontSize: '12px',
+                              letterSpacing: '1px',
+                              textTransform: 'uppercase'
+                            }}>
+                              Découvrir →
+                            </span>
+                          </div>
+                        </div>
+                        {recipe2 && (
+                          <div className="newsletter-preview-grid-item" style={{
+                            position: 'relative',
+                            width: '50%',
+                            height: '280px',
+                            overflow: 'hidden'
+                          }}>
+                            <img
+                              src={recipe2.imageUrl || 'https://images.unsplash.com/photo-1546548970-71785318a17b?w=600&q=80'}
+                              alt={recipe2.title}
+                              style={{
+                                width: '100%',
+                                height: '100%',
+                                objectFit: 'cover',
+                                display: 'block'
+                              }}
+                            />
+                            <div style={{
+                              position: 'absolute',
+                              bottom: 0,
+                              left: 0,
+                              right: 0,
+                              padding: '25px',
+                              background: 'linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.9) 100%)'
+                            }}>
+                              <h3 style={{
+                                fontSize: '20px',
+                                color: '#fff',
+                                fontWeight: '700',
+                                marginBottom: '8px'
+                              }}>
+                                {recipe2.title}
+                              </h3>
+                              <span style={{
+                                color: '#D4AF37',
+                                fontSize: '12px',
+                                letterSpacing: '1px',
+                                textTransform: 'uppercase'
+                              }}>
+                                Découvrir →
+                              </span>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  }
+                }
+                return rows;
+              })()}
+            </div>
 
             {/* CITATION / CONSEIL - Fond noir */}
             <div className="newsletter-preview-quote" style={{
