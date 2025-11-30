@@ -5,7 +5,6 @@ import { Footer } from "@/components/layout/footer";
 import { HeroSection } from "@/components/sections/hero";
 import { NewsletterPreviewSection } from "@/components/sections/newsletter-preview";
 import { RecipeExampleSection } from "@/components/sections/recipe-example";
-import { WhySubscribeSection } from "@/components/sections/why-subscribe";
 import { AboutStorySection } from "@/components/sections/about-story";
 import { TestimonialsSection } from "@/components/sections/testimonials";
 import { SocialLinksSection } from "@/components/sections/social-links";
@@ -99,9 +98,6 @@ export default function Home() {
       <main>
         <HeroSection id="accueil" />
 
-        <div id="pourquoi-sabonner">
-          <WhySubscribeSection />
-        </div>
         <div id="newsletter-preview">
           <NewsletterPreviewSection />
         </div>

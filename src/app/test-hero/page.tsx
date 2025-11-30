@@ -1,343 +1,1340 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 
 export default function TestHeroPage() {
   const [email, setEmail] = useState("");
-  const [prenom, setPrenom] = useState("");
 
   return (
-    <div className="min-h-screen bg-black">
-      <div className="max-w-7xl mx-auto px-4 py-12">
-        <h1 className="text-3xl text-white font-light text-center mb-12">
-          Propositions Hero Section - Inscription Gratuite
-        </h1>
-
-        {/* VARIATION 1 : Minimaliste - Email uniquement */}
-        <section className="mb-20 bg-white/5 rounded-2xl p-8">
-          <h2 className="text-xl text-white/60 font-light mb-8">Version 1 : Minimaliste - Email uniquement</h2>
-
-          <div className="relative min-h-[100vh] overflow-hidden bg-black rounded-xl">
-            {/* Background Image */}
-            <div className="absolute inset-0 z-0">
-              <div
-                className="absolute inset-0"
-                style={{
-                  backgroundImage: 'url(https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=80)',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  backgroundRepeat: 'no-repeat'
-                }}
-              />
-              <div className="absolute inset-0 bg-black/20" />
-            </div>
-
-            {/* Content */}
-            <div className="relative z-20 min-h-[100vh] flex flex-col justify-center items-center text-center px-5 sm:px-8 lg:px-12 pb-32">
-            </div>
-
-            {/* Bottom Form */}
-            <div className="absolute bottom-0 left-0 right-0 z-30">
-              <div className="relative py-12 sm:py-16 md:py-20">
-                <div className="max-w-2xl mx-auto px-4 sm:px-6 md:px-8">
-                  {/* Card */}
-                  <div className="bg-[#6B5D52]/40 backdrop-blur-3xl rounded-[1.5rem] shadow-2xl border border-white/5 p-8 sm:p-12">
-
-                    {/* Features List */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-                      {["1 recette par semaine", "Accès à 25 recettes exclusives", "Newsletter hebdomadaire", "Conseils et astuces"].map((feature, i) => (
-                        <div key={i} className="flex items-center gap-3">
-                          <div className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full flex-shrink-0" style={{ background: 'linear-gradient(to right, #D4AF37, #C77A4E)' }}></div>
-                          <span className="text-sm md:text-base text-white font-light tracking-wide">
-                            {feature}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Prénom + Email Form */}
-                    <div className="space-y-4">
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <input
-                          type="text"
-                          placeholder="Prénom"
-                          value={prenom}
-                          onChange={(e) => setPrenom(e.target.value)}
-                          className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-white/40 transition-all"
-                        />
-                        <input
-                          type="email"
-                          placeholder="Votre email"
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                          className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-white/40 transition-all"
-                        />
-                      </div>
-                      <button
-                        style={{
-                          width: '100%',
-                          padding: '0.75rem 1rem',
-                          background: 'linear-gradient(to right, #D4AF37, #C77A4E)',
-                          color: 'white',
-                          borderRadius: '0.75rem',
-                          fontSize: '0.75rem',
-                          textTransform: 'uppercase',
-                          letterSpacing: '0.2em',
-                          fontWeight: '600',
-                          transition: 'all 300ms',
-                          border: 'none',
-                          cursor: 'pointer'
-                        }}
-                      >
-                        S'inscrire gratuitement
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* VARIATION 2 : Avec Prénom + Email */}
-        <section className="mb-20 bg-white/5 rounded-2xl p-8">
-          <h2 className="text-xl text-white/60 font-light mb-8">Version 2 : Prénom + Email</h2>
-
-          <div className="relative min-h-[100vh] overflow-hidden bg-black rounded-xl">
-            {/* Background Image */}
-            <div className="absolute inset-0 z-0">
-              <div
-                className="absolute inset-0"
-                style={{
-                  backgroundImage: 'url(https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=80)',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  backgroundRepeat: 'no-repeat'
-                }}
-              />
-              <div className="absolute inset-0 bg-black/20" />
-            </div>
-
-            {/* Content */}
-            <div className="relative z-20 min-h-[100vh] flex flex-col justify-center items-center text-center px-5 sm:px-8 lg:px-12 pb-32">
-            </div>
-
-            {/* Bottom Form */}
-            <div className="absolute bottom-0 left-0 right-0 z-30">
-              <div className="relative py-12 sm:py-16 md:py-20">
-                <div className="max-w-2xl mx-auto px-4 sm:px-6 md:px-8">
-                  {/* Card */}
-                  <div className="bg-[#6B5D52]/40 backdrop-blur-3xl rounded-[1.5rem] shadow-2xl border border-white/5 p-8 sm:p-12">
-
-                    {/* Features List */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-                      {["1 recette par semaine", "Accès à 25 recettes exclusives", "Newsletter hebdomadaire", "Conseils et astuces"].map((feature, i) => (
-                        <div key={i} className="flex items-center gap-3">
-                          <div className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full flex-shrink-0" style={{ background: 'linear-gradient(to right, #D4AF37, #C77A4E)' }}></div>
-                          <span className="text-sm md:text-base text-white font-light tracking-wide">
-                            {feature}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Form with Prénom + Email */}
-                    <div className="space-y-4">
-                      <input
-                        type="text"
-                        placeholder="Prénom"
-                        value={prenom}
-                        onChange={(e) => setPrenom(e.target.value)}
-                        className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-white/40 transition-all"
-                      />
-                      <input
-                        type="email"
-                        placeholder="Votre email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-white/40 transition-all"
-                      />
-                      <button
-                        style={{
-                          width: '100%',
-                          padding: '0.75rem 1rem',
-                          background: 'linear-gradient(to right, #D4AF37, #C77A4E)',
-                          color: 'white',
-                          borderRadius: '0.75rem',
-                          fontSize: '0.75rem',
-                          textTransform: 'uppercase',
-                          letterSpacing: '0.2em',
-                          fontWeight: '600',
-                          transition: 'all 300ms',
-                          border: 'none',
-                          cursor: 'pointer'
-                        }}
-                      >
-                        Recevoir les recettes
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* VARIATION 3 : Formulaire horizontal (desktop) */}
-        <section className="mb-20 bg-white/5 rounded-2xl p-8">
-          <h2 className="text-xl text-white/60 font-light mb-8">Version 3 : Formulaire Horizontal (style inline)</h2>
-
-          <div className="relative min-h-[100vh] overflow-hidden bg-black rounded-xl">
-            {/* Background Image */}
-            <div className="absolute inset-0 z-0">
-              <div
-                className="absolute inset-0"
-                style={{
-                  backgroundImage: 'url(https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=80)',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  backgroundRepeat: 'no-repeat'
-                }}
-              />
-              <div className="absolute inset-0 bg-black/20" />
-            </div>
-
-            {/* Content */}
-            <div className="relative z-20 min-h-[100vh] flex flex-col justify-center items-center text-center px-5 sm:px-8 lg:px-12 pb-32">
-            </div>
-
-            {/* Bottom Form */}
-            <div className="absolute bottom-0 left-0 right-0 z-30">
-              <div className="relative py-12 sm:py-16 md:py-20">
-                <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8">
-                  {/* Card */}
-                  <div className="bg-[#6B5D52]/40 backdrop-blur-3xl rounded-[1.5rem] shadow-2xl border border-white/5 p-8 sm:p-12">
-
-                    {/* Features List */}
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                      {["1 recette par semaine", "25 recettes exclusives", "Newsletter hebdo", "Conseils & astuces"].map((feature, i) => (
-                        <div key={i} className="flex items-center gap-2">
-                          <div className="w-1 h-1 rounded-full flex-shrink-0" style={{ background: 'linear-gradient(to right, #D4AF37, #C77A4E)' }}></div>
-                          <span className="text-xs md:text-sm text-white font-light">
-                            {feature}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Horizontal Form */}
-                    <div className="flex flex-col md:flex-row gap-3">
-                      <input
-                        type="text"
-                        placeholder="Prénom"
-                        className="flex-1 px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-white/40 transition-all"
-                      />
-                      <input
-                        type="email"
-                        placeholder="Email"
-                        className="flex-1 px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-white/40 transition-all"
-                      />
-                      <button
-                        style={{
-                          padding: '0.75rem 2rem',
-                          background: 'linear-gradient(to right, #D4AF37, #C77A4E)',
-                          color: 'white',
-                          borderRadius: '0.75rem',
-                          fontSize: '0.7rem',
-                          textTransform: 'uppercase',
-                          letterSpacing: '0.2em',
-                          fontWeight: '600',
-                          transition: 'all 300ms',
-                          border: 'none',
-                          cursor: 'pointer',
-                          whiteSpace: 'nowrap'
-                        }}
-                      >
-                        M'inscrire
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* VARIATION 4 : Magazine Luxe - Email seul, très épuré */}
-        <section className="mb-20 bg-white/5 rounded-2xl p-8">
-          <h2 className="text-xl text-white/60 font-light mb-8">Version 4 : Magazine Luxe - Ultra épuré</h2>
-
-          <div className="relative min-h-[100vh] overflow-hidden bg-black rounded-xl">
-            {/* Background Image */}
-            <div className="absolute inset-0 z-0">
-              <div
-                className="absolute inset-0"
-                style={{
-                  backgroundImage: 'url(https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=80)',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  backgroundRepeat: 'no-repeat'
-                }}
-              />
-              <div className="absolute inset-0 bg-black/30" />
-            </div>
-
-            {/* Content */}
-            <div className="relative z-20 min-h-[100vh] flex flex-col justify-center items-center text-center px-5 sm:px-8 lg:px-12 pb-32">
-            </div>
-
-            {/* Bottom Form - Plus compact */}
-            <div className="absolute bottom-0 left-0 right-0 z-30">
-              <div className="relative py-12 sm:py-16">
-                <div className="max-w-xl mx-auto px-4 sm:px-6 md:px-8">
-
-                  {/* Titre avant formulaire */}
-                  <h3 className="text-white text-lg sm:text-xl font-light text-center mb-6" style={{ letterSpacing: '0.1em' }}>
-                    RECETTES EXCLUSIVES CHAQUE SEMAINE
-                  </h3>
-
-                  {/* Form très simple */}
-                  <div className="flex gap-3 bg-white/10 backdrop-blur-md p-2 rounded-full">
-                    <input
-                      type="email"
-                      placeholder="Votre email"
-                      className="flex-1 px-6 py-3 bg-transparent text-white placeholder-white/60 focus:outline-none text-sm"
-                    />
-                    <button
-                      style={{
-                        padding: '0.75rem 2.5rem',
-                        background: 'linear-gradient(to right, #D4AF37, #C77A4E)',
-                        color: 'white',
-                        borderRadius: '9999px',
-                        fontSize: '0.65rem',
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.25em',
-                        fontWeight: '600',
-                        transition: 'all 300ms',
-                        border: 'none',
-                        cursor: 'pointer',
-                        whiteSpace: 'nowrap'
-                      }}
-                    >
-                      Rejoindre
-                    </button>
-                  </div>
-
-                  {/* Small features under */}
-                  <div className="flex justify-center gap-6 mt-6">
-                    {["Gratuit", "Sans engagement", "Désinscription 1 clic"].map((item, i) => (
-                      <span key={i} className="text-xs text-white/50 font-light">
-                        ✓ {item}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
+    <div>
+      {/* Navigation entre les options */}
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 9999,
+        background: '#000',
+        padding: '12px 20px',
+        display: 'flex',
+        gap: '12px',
+        overflowX: 'auto',
+        borderBottom: '2px solid #D4AF37'
+      }}>
+        <span style={{ color: '#fff', fontWeight: 600, marginRight: '20px', whiteSpace: 'nowrap' }}>Options :</span>
+        {[1, 2, 3, 4, 5, 6, 7].map(n => (
+          <a
+            key={n}
+            href={`#option${n}`}
+            style={{
+              background: 'rgba(255,255,255,0.2)',
+              color: '#fff',
+              padding: '8px 16px',
+              borderRadius: '20px',
+              textDecoration: 'none',
+              fontWeight: 500,
+              fontSize: '14px',
+              whiteSpace: 'nowrap'
+            }}
+          >
+            {n}
+          </a>
+        ))}
+        <span style={{ color: '#D4AF37', fontWeight: 600, marginLeft: '12px', marginRight: '8px' }}>|</span>
+        <span style={{ color: '#D4AF37', fontWeight: 600, marginRight: '12px', whiteSpace: 'nowrap' }}>MIX B :</span>
+        {['B1', 'B2', 'B3', 'B4', 'B5'].map(n => (
+          <a
+            key={n}
+            href={`#mix${n.toLowerCase()}`}
+            style={{
+              background: 'linear-gradient(to right, #D4AF37, #C77A4E)',
+              color: '#000',
+              padding: '8px 16px',
+              borderRadius: '20px',
+              textDecoration: 'none',
+              fontWeight: 600,
+              fontSize: '14px',
+              whiteSpace: 'nowrap'
+            }}
+          >
+            {n}
+          </a>
+        ))}
       </div>
+
+      {/* OPTION 1 - Ultra minimaliste */}
+      <section id="option1" style={{ position: 'relative', minHeight: '100vh', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+          <Image
+            src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=75"
+            alt="Cuisine"
+            fill
+            style={{ objectFit: 'cover' }}
+          />
+          <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.4)' }} />
+        </div>
+
+        <div style={{
+          position: 'absolute',
+          bottom: '40px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          zIndex: 10,
+          width: '90%',
+          maxWidth: '500px'
+        }}>
+          <div style={{
+            background: 'rgba(107, 93, 82, 0.5)',
+            backdropFilter: 'blur(20px)',
+            borderRadius: '24px',
+            padding: '32px',
+            border: '1px solid rgba(255,255,255,0.1)'
+          }}>
+            <div style={{ textAlign: 'center', marginBottom: '24px' }}>
+              <span style={{ fontSize: '32px' }}>📧</span>
+              <p style={{ color: '#fff', fontSize: '18px', fontWeight: 500, marginTop: '12px' }}>
+                Rejoins <span style={{ color: '#D4AF37', fontWeight: 700 }}>10 000+</span> gourmands
+              </p>
+            </div>
+
+            <input
+              type="email"
+              placeholder="Ton email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              style={{
+                width: '100%',
+                padding: '14px 18px',
+                background: 'rgba(255,255,255,0.1)',
+                border: '1px solid rgba(255,255,255,0.2)',
+                borderRadius: '12px',
+                color: '#fff',
+                fontSize: '16px',
+                marginBottom: '12px'
+              }}
+            />
+
+            <button style={{
+              width: '100%',
+              padding: '14px',
+              background: 'linear-gradient(to right, #D4AF37, #C77A4E)',
+              border: 'none',
+              borderRadius: '12px',
+              color: '#fff',
+              fontWeight: 600,
+              fontSize: '16px',
+              cursor: 'pointer'
+            }}>
+              S'inscrire gratuitement
+            </button>
+
+            <p style={{
+              textAlign: 'center',
+              color: 'rgba(255,255,255,0.6)',
+              fontSize: '12px',
+              marginTop: '16px'
+            }}>
+              ✓ 5 recettes/semaine · ✓ 100% gratuit · ✓ Désinscription 1 clic
+            </p>
+          </div>
+        </div>
+
+        <div style={{
+          position: 'absolute',
+          top: '80px',
+          left: '20px',
+          zIndex: 10,
+          background: 'rgba(0,0,0,0.5)',
+          padding: '8px 16px',
+          borderRadius: '8px'
+        }}>
+          <span style={{ color: '#D4AF37', fontWeight: 700 }}>OPTION 1</span>
+          <span style={{ color: '#fff', marginLeft: '8px' }}>Ultra minimaliste</span>
+        </div>
+      </section>
+
+      {/* OPTION 2 - Focus chiffres */}
+      <section id="option2" style={{ position: 'relative', minHeight: '100vh', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+          <Image
+            src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=75"
+            alt="Cuisine"
+            fill
+            style={{ objectFit: 'cover' }}
+          />
+          <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.5)' }} />
+        </div>
+
+        <div style={{
+          position: 'relative',
+          zIndex: 10,
+          minHeight: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: '20px'
+        }}>
+          {/* Stats */}
+          <div style={{
+            display: 'flex',
+            gap: '40px',
+            marginBottom: '48px',
+            flexWrap: 'wrap',
+            justifyContent: 'center'
+          }}>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: '48px', fontWeight: 700, color: '#D4AF37' }}>10K+</div>
+              <div style={{ color: 'rgba(255,255,255,0.8)', fontSize: '14px' }}>abonnés</div>
+            </div>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: '48px', fontWeight: 700, color: '#D4AF37' }}>200+</div>
+              <div style={{ color: 'rgba(255,255,255,0.8)', fontSize: '14px' }}>recettes</div>
+            </div>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: '48px', fontWeight: 700, color: '#D4AF37' }}>5</div>
+              <div style={{ color: 'rgba(255,255,255,0.8)', fontSize: '14px' }}>recettes/semaine</div>
+            </div>
+          </div>
+
+          {/* Form */}
+          <div style={{
+            background: 'rgba(107, 93, 82, 0.5)',
+            backdropFilter: 'blur(20px)',
+            borderRadius: '24px',
+            padding: '32px',
+            width: '90%',
+            maxWidth: '450px',
+            border: '1px solid rgba(255,255,255,0.1)'
+          }}>
+            <input
+              type="email"
+              placeholder="Ton email"
+              style={{
+                width: '100%',
+                padding: '14px 18px',
+                background: 'rgba(255,255,255,0.1)',
+                border: '1px solid rgba(255,255,255,0.2)',
+                borderRadius: '12px',
+                color: '#fff',
+                fontSize: '16px',
+                marginBottom: '12px'
+              }}
+            />
+            <button style={{
+              width: '100%',
+              padding: '14px',
+              background: 'linear-gradient(to right, #D4AF37, #C77A4E)',
+              border: 'none',
+              borderRadius: '12px',
+              color: '#fff',
+              fontWeight: 600,
+              fontSize: '16px',
+              cursor: 'pointer'
+            }}>
+              Recevoir mes recettes gratuites
+            </button>
+          </div>
+        </div>
+
+        <div style={{
+          position: 'absolute',
+          top: '80px',
+          left: '20px',
+          zIndex: 10,
+          background: 'rgba(0,0,0,0.5)',
+          padding: '8px 16px',
+          borderRadius: '8px'
+        }}>
+          <span style={{ color: '#D4AF37', fontWeight: 700 }}>OPTION 2</span>
+          <span style={{ color: '#fff', marginLeft: '8px' }}>Focus chiffres</span>
+        </div>
+      </section>
+
+      {/* OPTION 3 - Accroche émotionnelle */}
+      <section id="option3" style={{ position: 'relative', minHeight: '100vh', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+          <Image
+            src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=75"
+            alt="Cuisine"
+            fill
+            style={{ objectFit: 'cover' }}
+          />
+          <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.5)' }} />
+        </div>
+
+        <div style={{
+          position: 'relative',
+          zIndex: 10,
+          minHeight: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: '20px',
+          textAlign: 'center'
+        }}>
+          <h1 style={{
+            fontSize: 'clamp(32px, 6vw, 56px)',
+            fontWeight: 300,
+            color: '#fff',
+            marginBottom: '16px',
+            lineHeight: 1.2,
+            fontFamily: 'var(--font-cormorant), Georgia, serif'
+          }}>
+            Cuisine comme un chef,<br />
+            <span style={{ fontWeight: 600 }}>sans prise de tête.</span>
+          </h1>
+
+          <p style={{
+            color: 'rgba(255,255,255,0.8)',
+            fontSize: '18px',
+            marginBottom: '40px',
+            maxWidth: '500px'
+          }}>
+            Chaque semaine, reçois 5 recettes gourmandes<br />
+            testées et approuvées par <span style={{ color: '#D4AF37', fontWeight: 600 }}>+10 000 passionnés</span>.
+          </p>
+
+          <div style={{
+            display: 'flex',
+            gap: '12px',
+            width: '100%',
+            maxWidth: '500px',
+            flexWrap: 'wrap',
+            justifyContent: 'center'
+          }}>
+            <input
+              type="email"
+              placeholder="Ton email"
+              style={{
+                flex: 1,
+                minWidth: '200px',
+                padding: '16px 20px',
+                background: 'rgba(255,255,255,0.1)',
+                backdropFilter: 'blur(10px)',
+                border: '1px solid rgba(255,255,255,0.2)',
+                borderRadius: '12px',
+                color: '#fff',
+                fontSize: '16px'
+              }}
+            />
+            <button style={{
+              padding: '16px 32px',
+              background: 'linear-gradient(to right, #D4AF37, #C77A4E)',
+              border: 'none',
+              borderRadius: '12px',
+              color: '#fff',
+              fontWeight: 600,
+              fontSize: '16px',
+              cursor: 'pointer',
+              whiteSpace: 'nowrap'
+            }}>
+              Je veux mes recettes
+            </button>
+          </div>
+        </div>
+
+        <div style={{
+          position: 'absolute',
+          top: '80px',
+          left: '20px',
+          zIndex: 10,
+          background: 'rgba(0,0,0,0.5)',
+          padding: '8px 16px',
+          borderRadius: '8px'
+        }}>
+          <span style={{ color: '#D4AF37', fontWeight: 700 }}>OPTION 3</span>
+          <span style={{ color: '#fff', marginLeft: '8px' }}>Accroche émotionnelle</span>
+        </div>
+      </section>
+
+      {/* OPTION 4 - FOMO */}
+      <section id="option4" style={{ position: 'relative', minHeight: '100vh', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+          <Image
+            src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=75"
+            alt="Cuisine"
+            fill
+            style={{ objectFit: 'cover' }}
+          />
+          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.4))' }} />
+        </div>
+
+        <div style={{
+          position: 'relative',
+          zIndex: 10,
+          minHeight: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: '20px',
+          textAlign: 'center'
+        }}>
+          <div style={{
+            background: 'rgba(212, 175, 55, 0.2)',
+            border: '1px solid #D4AF37',
+            borderRadius: '50px',
+            padding: '8px 20px',
+            marginBottom: '24px'
+          }}>
+            <span style={{ color: '#D4AF37', fontSize: '14px', fontWeight: 600 }}>
+              Contenu exclusif newsletter
+            </span>
+          </div>
+
+          <h1 style={{
+            fontSize: 'clamp(28px, 5vw, 48px)',
+            fontWeight: 600,
+            color: '#fff',
+            marginBottom: '16px',
+            lineHeight: 1.3,
+            fontFamily: 'var(--font-cormorant), Georgia, serif'
+          }}>
+            Tu rates des recettes<br />chaque semaine.
+          </h1>
+
+          <p style={{
+            color: 'rgba(255,255,255,0.7)',
+            fontSize: '16px',
+            marginBottom: '40px',
+            maxWidth: '450px'
+          }}>
+            Rejoins les <span style={{ color: '#D4AF37', fontWeight: 600 }}>10 000+ abonnés</span> qui reçoivent
+            du contenu que je ne publie <u>nulle part ailleurs</u>.
+          </p>
+
+          <div style={{
+            background: 'rgba(0,0,0,0.4)',
+            backdropFilter: 'blur(20px)',
+            borderRadius: '20px',
+            padding: '28px',
+            width: '90%',
+            maxWidth: '420px',
+            border: '1px solid rgba(255,255,255,0.1)'
+          }}>
+            <input
+              type="email"
+              placeholder="Entre ton email"
+              style={{
+                width: '100%',
+                padding: '14px 18px',
+                background: 'rgba(255,255,255,0.1)',
+                border: '1px solid rgba(255,255,255,0.2)',
+                borderRadius: '10px',
+                color: '#fff',
+                fontSize: '16px',
+                marginBottom: '12px'
+              }}
+            />
+            <button style={{
+              width: '100%',
+              padding: '14px',
+              background: 'linear-gradient(to right, #D4AF37, #C77A4E)',
+              border: 'none',
+              borderRadius: '10px',
+              color: '#fff',
+              fontWeight: 600,
+              fontSize: '15px',
+              cursor: 'pointer',
+              textTransform: 'uppercase',
+              letterSpacing: '1px'
+            }}>
+              Accéder au contenu exclusif
+            </button>
+          </div>
+        </div>
+
+        <div style={{
+          position: 'absolute',
+          top: '80px',
+          left: '20px',
+          zIndex: 10,
+          background: 'rgba(0,0,0,0.5)',
+          padding: '8px 16px',
+          borderRadius: '8px'
+        }}>
+          <span style={{ color: '#D4AF37', fontWeight: 700 }}>OPTION 4</span>
+          <span style={{ color: '#fff', marginLeft: '8px' }}>FOMO / Exclusivité</span>
+        </div>
+      </section>
+
+      {/* OPTION 5 - Direct et pratique */}
+      <section id="option5" style={{ position: 'relative', minHeight: '100vh', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+          <Image
+            src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=75"
+            alt="Cuisine"
+            fill
+            style={{ objectFit: 'cover' }}
+          />
+          <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.55)' }} />
+        </div>
+
+        <div style={{
+          position: 'relative',
+          zIndex: 10,
+          minHeight: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          padding: '20px 40px',
+          maxWidth: '600px'
+        }}>
+          <h1 style={{
+            fontSize: 'clamp(36px, 7vw, 64px)',
+            fontWeight: 700,
+            color: '#fff',
+            marginBottom: '8px',
+            lineHeight: 1.1,
+            fontFamily: 'var(--font-cormorant), Georgia, serif'
+          }}>
+            5 recettes gratuites
+          </h1>
+          <p style={{
+            fontSize: 'clamp(18px, 3vw, 24px)',
+            color: 'rgba(255,255,255,0.8)',
+            marginBottom: '32px'
+          }}>
+            dans ta boîte mail chaque semaine.
+          </p>
+
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '12px',
+            marginBottom: '40px'
+          }}>
+            {['Entrées, plats, desserts', 'Testées plusieurs fois', 'Prêtes à cuisiner'].map((item, i) => (
+              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <div style={{
+                  width: '8px',
+                  height: '8px',
+                  borderRadius: '50%',
+                  background: '#D4AF37'
+                }} />
+                <span style={{ color: '#fff', fontSize: '18px' }}>{item}</span>
+              </div>
+            ))}
+          </div>
+
+          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+            <input
+              type="email"
+              placeholder="Ton email"
+              style={{
+                flex: 1,
+                minWidth: '200px',
+                padding: '16px 20px',
+                background: 'rgba(255,255,255,0.15)',
+                border: '1px solid rgba(255,255,255,0.3)',
+                borderRadius: '12px',
+                color: '#fff',
+                fontSize: '16px'
+              }}
+            />
+            <button style={{
+              padding: '16px 40px',
+              background: 'linear-gradient(to right, #D4AF37, #C77A4E)',
+              border: 'none',
+              borderRadius: '12px',
+              color: '#fff',
+              fontWeight: 700,
+              fontSize: '18px',
+              cursor: 'pointer'
+            }}>
+              C'est parti !
+            </button>
+          </div>
+        </div>
+
+        <div style={{
+          position: 'absolute',
+          top: '80px',
+          left: '20px',
+          zIndex: 10,
+          background: 'rgba(0,0,0,0.5)',
+          padding: '8px 16px',
+          borderRadius: '8px'
+        }}>
+          <span style={{ color: '#D4AF37', fontWeight: 700 }}>OPTION 5</span>
+          <span style={{ color: '#fff', marginLeft: '8px' }}>Direct et pratique</span>
+        </div>
+      </section>
+
+      {/* OPTION 6 - Storytelling */}
+      <section id="option6" style={{ position: 'relative', minHeight: '100vh', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+          <Image
+            src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=75"
+            alt="Cuisine"
+            fill
+            style={{ objectFit: 'cover' }}
+          />
+          <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.6)' }} />
+        </div>
+
+        <div style={{
+          position: 'relative',
+          zIndex: 10,
+          minHeight: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: '20px',
+          textAlign: 'center'
+        }}>
+          {/* Avatar placeholder */}
+          <div style={{
+            width: '80px',
+            height: '80px',
+            borderRadius: '50%',
+            background: 'linear-gradient(135deg, #D4AF37, #C77A4E)',
+            marginBottom: '20px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '32px',
+            border: '3px solid #fff'
+          }}>
+            👨‍🍳
+          </div>
+
+          <p style={{
+            color: 'rgba(255,255,255,0.7)',
+            fontSize: '16px',
+            marginBottom: '8px'
+          }}>
+            Je suis Florent, créateur culinaire.
+          </p>
+
+          <h1 style={{
+            fontSize: 'clamp(24px, 4vw, 36px)',
+            fontWeight: 400,
+            color: '#fff',
+            marginBottom: '32px',
+            lineHeight: 1.5,
+            maxWidth: '500px',
+            fontFamily: 'var(--font-cormorant), Georgia, serif'
+          }}>
+            Chaque semaine, j'envoie à ma communauté<br />
+            <span style={{ fontWeight: 600, color: '#D4AF37' }}>mes 5 meilleures recettes</span> du moment.
+          </h1>
+
+          <p style={{
+            color: 'rgba(255,255,255,0.6)',
+            fontSize: '14px',
+            marginBottom: '24px'
+          }}>
+            Rejoins <span style={{ color: '#D4AF37' }}>10 000+</span> gourmands.
+          </p>
+
+          <div style={{
+            display: 'flex',
+            gap: '12px',
+            width: '100%',
+            maxWidth: '450px',
+            flexWrap: 'wrap',
+            justifyContent: 'center'
+          }}>
+            <input
+              type="email"
+              placeholder="Ton email"
+              style={{
+                flex: 1,
+                minWidth: '200px',
+                padding: '14px 20px',
+                background: 'rgba(255,255,255,0.1)',
+                border: '1px solid rgba(255,255,255,0.2)',
+                borderRadius: '50px',
+                color: '#fff',
+                fontSize: '16px'
+              }}
+            />
+            <button style={{
+              padding: '14px 28px',
+              background: 'linear-gradient(to right, #D4AF37, #C77A4E)',
+              border: 'none',
+              borderRadius: '50px',
+              color: '#fff',
+              fontWeight: 600,
+              fontSize: '15px',
+              cursor: 'pointer'
+            }}>
+              Rejoindre la newsletter
+            </button>
+          </div>
+        </div>
+
+        <div style={{
+          position: 'absolute',
+          top: '80px',
+          left: '20px',
+          zIndex: 10,
+          background: 'rgba(0,0,0,0.5)',
+          padding: '8px 16px',
+          borderRadius: '8px'
+        }}>
+          <span style={{ color: '#D4AF37', fontWeight: 700 }}>OPTION 6</span>
+          <span style={{ color: '#fff', marginLeft: '8px' }}>Storytelling</span>
+        </div>
+      </section>
+
+      {/* OPTION 7 - Question directe */}
+      <section id="option7" style={{ position: 'relative', minHeight: '100vh', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+          <Image
+            src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=75"
+            alt="Cuisine"
+            fill
+            style={{ objectFit: 'cover' }}
+          />
+          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 100%)' }} />
+        </div>
+
+        <div style={{
+          position: 'relative',
+          zIndex: 10,
+          minHeight: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: '20px',
+          textAlign: 'center'
+        }}>
+          <h1 style={{
+            fontSize: 'clamp(32px, 6vw, 56px)',
+            fontWeight: 600,
+            color: '#fff',
+            marginBottom: '24px',
+            lineHeight: 1.2,
+            fontFamily: 'var(--font-cormorant), Georgia, serif'
+          }}>
+            Envie de nouvelles<br />idées recettes ?
+          </h1>
+
+          <p style={{
+            color: 'rgba(255,255,255,0.8)',
+            fontSize: '18px',
+            marginBottom: '12px'
+          }}>
+            Reçois <span style={{ color: '#D4AF37', fontWeight: 600 }}>5 recettes exclusives</span> chaque semaine.
+          </p>
+
+          <p style={{
+            color: 'rgba(255,255,255,0.6)',
+            fontSize: '16px',
+            marginBottom: '40px',
+            fontStyle: 'italic'
+          }}>
+            Testées. Approuvées. Délicieuses.
+          </p>
+
+          <div style={{
+            background: 'rgba(107, 93, 82, 0.4)',
+            backdropFilter: 'blur(20px)',
+            borderRadius: '20px',
+            padding: '28px',
+            width: '90%',
+            maxWidth: '400px',
+            border: '1px solid rgba(255,255,255,0.1)'
+          }}>
+            <input
+              type="email"
+              placeholder="Ton email"
+              style={{
+                width: '100%',
+                padding: '14px 18px',
+                background: 'rgba(255,255,255,0.1)',
+                border: '1px solid rgba(255,255,255,0.2)',
+                borderRadius: '12px',
+                color: '#fff',
+                fontSize: '16px',
+                marginBottom: '12px'
+              }}
+            />
+            <button style={{
+              width: '100%',
+              padding: '16px',
+              background: 'linear-gradient(to right, #D4AF37, #C77A4E)',
+              border: 'none',
+              borderRadius: '12px',
+              color: '#fff',
+              fontWeight: 600,
+              fontSize: '18px',
+              cursor: 'pointer'
+            }}>
+              Oui, je m'inscris
+            </button>
+
+            <p style={{
+              textAlign: 'center',
+              color: 'rgba(255,255,255,0.5)',
+              fontSize: '11px',
+              marginTop: '16px'
+            }}>
+              ✓ Gratuit · ✓ Sans engagement · ✓ Désinscription 1 clic
+            </p>
+          </div>
+        </div>
+
+        <div style={{
+          position: 'absolute',
+          top: '80px',
+          left: '20px',
+          zIndex: 10,
+          background: 'rgba(0,0,0,0.5)',
+          padding: '8px 16px',
+          borderRadius: '8px'
+        }}>
+          <span style={{ color: '#D4AF37', fontWeight: 700 }}>OPTION 7</span>
+          <span style={{ color: '#fff', marginLeft: '8px' }}>Question directe</span>
+        </div>
+      </section>
+
+      {/* ============================================ */}
+      {/* MIX B VARIANTES - Question directe + 130K */}
+      {/* ============================================ */}
+
+      {/* MIX B1 - Centré avec carte */}
+      <section id="mixb1" style={{ position: 'relative', minHeight: '100vh', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+          <Image
+            src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=75"
+            alt="Cuisine"
+            fill
+            style={{ objectFit: 'cover' }}
+          />
+          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 100%)' }} />
+        </div>
+
+        <div style={{
+          position: 'relative',
+          zIndex: 10,
+          minHeight: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: '20px',
+          textAlign: 'center'
+        }}>
+          <h1 style={{
+            fontSize: 'clamp(32px, 6vw, 56px)',
+            fontWeight: 600,
+            color: '#fff',
+            marginBottom: '20px',
+            lineHeight: 1.2,
+            fontFamily: 'var(--font-cormorant), Georgia, serif'
+          }}>
+            Envie de nouvelles<br />idées recettes ?
+          </h1>
+
+          <p style={{
+            color: 'rgba(255,255,255,0.9)',
+            fontSize: '18px',
+            marginBottom: '12px',
+            maxWidth: '500px'
+          }}>
+            Rejoins les <span style={{ color: '#D4AF37', fontWeight: 700 }}>130K+ gourmands</span> qui me suivent
+          </p>
+
+          <p style={{
+            color: 'rgba(255,255,255,0.7)',
+            fontSize: '16px',
+            marginBottom: '40px'
+          }}>
+            et reçois <strong>5 recettes exclusives</strong> chaque semaine.
+          </p>
+
+          <div style={{
+            background: 'rgba(107, 93, 82, 0.4)',
+            backdropFilter: 'blur(20px)',
+            borderRadius: '20px',
+            padding: '28px',
+            width: '90%',
+            maxWidth: '400px',
+            border: '1px solid rgba(255,255,255,0.1)'
+          }}>
+            <input
+              type="email"
+              placeholder="Ton email"
+              style={{
+                width: '100%',
+                padding: '14px 18px',
+                background: 'rgba(255,255,255,0.1)',
+                border: '1px solid rgba(255,255,255,0.2)',
+                borderRadius: '12px',
+                color: '#fff',
+                fontSize: '16px',
+                marginBottom: '12px'
+              }}
+            />
+            <button style={{
+              width: '100%',
+              padding: '16px',
+              background: 'linear-gradient(to right, #D4AF37, #C77A4E)',
+              border: 'none',
+              borderRadius: '12px',
+              color: '#fff',
+              fontWeight: 600,
+              fontSize: '18px',
+              cursor: 'pointer'
+            }}>
+              Oui, je m'inscris
+            </button>
+
+            <p style={{
+              textAlign: 'center',
+              color: 'rgba(255,255,255,0.5)',
+              fontSize: '11px',
+              marginTop: '16px'
+            }}>
+              ✓ Gratuit · ✓ Sans engagement · ✓ Désinscription 1 clic
+            </p>
+          </div>
+        </div>
+
+        <div style={{
+          position: 'absolute',
+          top: '80px',
+          left: '20px',
+          zIndex: 10,
+          background: 'rgba(0,0,0,0.5)',
+          padding: '8px 16px',
+          borderRadius: '8px'
+        }}>
+          <span style={{ color: '#D4AF37', fontWeight: 700 }}>MIX B1</span>
+          <span style={{ color: '#fff', marginLeft: '8px' }}>Centré + Carte</span>
+        </div>
+      </section>
+
+      {/* MIX B2 - Formulaire inline (sans carte) */}
+      <section id="mixb2" style={{ position: 'relative', minHeight: '100vh', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+          <Image
+            src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=75"
+            alt="Cuisine"
+            fill
+            style={{ objectFit: 'cover' }}
+          />
+          <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.5)' }} />
+        </div>
+
+        <div style={{
+          position: 'relative',
+          zIndex: 10,
+          minHeight: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: '20px',
+          textAlign: 'center'
+        }}>
+          <h1 style={{
+            fontSize: 'clamp(36px, 7vw, 64px)',
+            fontWeight: 600,
+            color: '#fff',
+            marginBottom: '20px',
+            lineHeight: 1.1,
+            fontFamily: 'var(--font-cormorant), Georgia, serif'
+          }}>
+            Envie de nouvelles<br />idées recettes ?
+          </h1>
+
+          <p style={{
+            color: 'rgba(255,255,255,0.9)',
+            fontSize: '20px',
+            marginBottom: '40px',
+            maxWidth: '550px',
+            lineHeight: 1.6
+          }}>
+            Rejoins les <span style={{ color: '#D4AF37', fontWeight: 700 }}>130K+ gourmands</span> qui me suivent
+            et reçois <strong>5 recettes exclusives</strong> chaque semaine.
+          </p>
+
+          <div style={{
+            display: 'flex',
+            gap: '12px',
+            width: '100%',
+            maxWidth: '500px',
+            flexWrap: 'wrap',
+            justifyContent: 'center'
+          }}>
+            <input
+              type="email"
+              placeholder="Ton email"
+              style={{
+                flex: 1,
+                minWidth: '220px',
+                padding: '16px 20px',
+                background: 'rgba(255,255,255,0.15)',
+                backdropFilter: 'blur(10px)',
+                border: '1px solid rgba(255,255,255,0.3)',
+                borderRadius: '12px',
+                color: '#fff',
+                fontSize: '16px'
+              }}
+            />
+            <button style={{
+              padding: '16px 32px',
+              background: 'linear-gradient(to right, #D4AF37, #C77A4E)',
+              border: 'none',
+              borderRadius: '12px',
+              color: '#fff',
+              fontWeight: 600,
+              fontSize: '16px',
+              cursor: 'pointer',
+              whiteSpace: 'nowrap'
+            }}>
+              Oui, je m'inscris
+            </button>
+          </div>
+
+          <p style={{
+            color: 'rgba(255,255,255,0.5)',
+            fontSize: '12px',
+            marginTop: '20px'
+          }}>
+            ✓ Gratuit · ✓ Sans engagement · ✓ Désinscription 1 clic
+          </p>
+        </div>
+
+        <div style={{
+          position: 'absolute',
+          top: '80px',
+          left: '20px',
+          zIndex: 10,
+          background: 'rgba(0,0,0,0.5)',
+          padding: '8px 16px',
+          borderRadius: '8px'
+        }}>
+          <span style={{ color: '#D4AF37', fontWeight: 700 }}>MIX B2</span>
+          <span style={{ color: '#fff', marginLeft: '8px' }}>Inline sans carte</span>
+        </div>
+      </section>
+
+      {/* MIX B3 - En bas de page avec pill form */}
+      <section id="mixb3" style={{ position: 'relative', minHeight: '100vh', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+          <Image
+            src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=75"
+            alt="Cuisine"
+            fill
+            style={{ objectFit: 'cover' }}
+          />
+          <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.3)' }} />
+        </div>
+
+        <div style={{
+          position: 'absolute',
+          bottom: '40px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          zIndex: 10,
+          width: '90%',
+          maxWidth: '550px'
+        }}>
+          <div style={{
+            background: 'rgba(107, 93, 82, 0.5)',
+            backdropFilter: 'blur(20px)',
+            borderRadius: '24px',
+            padding: '36px',
+            border: '1px solid rgba(255,255,255,0.1)',
+            textAlign: 'center'
+          }}>
+            <h2 style={{
+              fontSize: '28px',
+              fontWeight: 600,
+              color: '#fff',
+              marginBottom: '12px',
+              fontFamily: 'var(--font-cormorant), Georgia, serif'
+            }}>
+              Envie de nouvelles idées recettes ?
+            </h2>
+
+            <p style={{
+              color: 'rgba(255,255,255,0.8)',
+              fontSize: '15px',
+              marginBottom: '24px',
+              lineHeight: 1.5
+            }}>
+              Rejoins les <span style={{ color: '#D4AF37', fontWeight: 600 }}>130K+ gourmands</span> et reçois
+              <br /><strong>5 recettes exclusives</strong> chaque semaine.
+            </p>
+
+            {/* Pill form style B5 */}
+            <div style={{
+              display: 'flex',
+              background: 'rgba(255,255,255,0.1)',
+              borderRadius: '50px',
+              padding: '6px',
+              border: '1px solid rgba(255,255,255,0.2)'
+            }}>
+              <input
+                type="email"
+                placeholder="Ton email"
+                style={{
+                  flex: 1,
+                  padding: '12px 20px',
+                  background: 'transparent',
+                  border: 'none',
+                  color: '#fff',
+                  fontSize: '15px',
+                  outline: 'none'
+                }}
+              />
+              <button style={{
+                padding: '12px 28px',
+                background: 'linear-gradient(to right, #D4AF37, #C77A4E)',
+                border: 'none',
+                borderRadius: '50px',
+                color: '#fff',
+                fontWeight: 600,
+                fontSize: '14px',
+                cursor: 'pointer',
+                whiteSpace: 'nowrap'
+              }}>
+                Je m'inscris
+              </button>
+            </div>
+
+            <p style={{
+              color: 'rgba(255,255,255,0.5)',
+              fontSize: '11px',
+              marginTop: '16px'
+            }}>
+              ✓ Gratuit · ✓ Sans engagement · ✓ Désinscription 1 clic
+            </p>
+          </div>
+        </div>
+
+        <div style={{
+          position: 'absolute',
+          top: '80px',
+          left: '20px',
+          zIndex: 10,
+          background: 'rgba(0,0,0,0.5)',
+          padding: '8px 16px',
+          borderRadius: '8px'
+        }}>
+          <span style={{ color: '#D4AF37', fontWeight: 700 }}>MIX B3</span>
+          <span style={{ color: '#fff', marginLeft: '8px' }}>Carte + Pill</span>
+        </div>
+      </section>
+
+      {/* MIX B4 - Split screen (texte à gauche) */}
+      <section id="mixb4" style={{ position: 'relative', minHeight: '100vh', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+          <Image
+            src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=75"
+            alt="Cuisine"
+            fill
+            style={{ objectFit: 'cover' }}
+          />
+          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 100%)' }} />
+        </div>
+
+        <div style={{
+          position: 'relative',
+          zIndex: 10,
+          minHeight: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          padding: '40px',
+          maxWidth: '600px'
+        }}>
+          <h1 style={{
+            fontSize: 'clamp(32px, 5vw, 48px)',
+            fontWeight: 600,
+            color: '#fff',
+            marginBottom: '20px',
+            lineHeight: 1.2,
+            fontFamily: 'var(--font-cormorant), Georgia, serif'
+          }}>
+            Envie de nouvelles<br />idées recettes ?
+          </h1>
+
+          <p style={{
+            color: 'rgba(255,255,255,0.9)',
+            fontSize: '18px',
+            marginBottom: '32px',
+            lineHeight: 1.6
+          }}>
+            Rejoins les <span style={{ color: '#D4AF37', fontWeight: 700 }}>130K+ gourmands</span> qui me suivent
+            et reçois <strong>5 recettes exclusives</strong> chaque semaine.
+          </p>
+
+          <div style={{
+            background: 'rgba(255,255,255,0.1)',
+            backdropFilter: 'blur(10px)',
+            borderRadius: '16px',
+            padding: '24px',
+            border: '1px solid rgba(255,255,255,0.15)'
+          }}>
+            <input
+              type="email"
+              placeholder="Ton email"
+              style={{
+                width: '100%',
+                padding: '14px 18px',
+                background: 'rgba(255,255,255,0.1)',
+                border: '1px solid rgba(255,255,255,0.2)',
+                borderRadius: '10px',
+                color: '#fff',
+                fontSize: '16px',
+                marginBottom: '12px'
+              }}
+            />
+
+            <button style={{
+              width: '100%',
+              padding: '14px',
+              background: 'linear-gradient(to right, #D4AF37, #C77A4E)',
+              border: 'none',
+              borderRadius: '10px',
+              color: '#fff',
+              fontWeight: 600,
+              fontSize: '16px',
+              cursor: 'pointer'
+            }}>
+              Oui, je m'inscris
+            </button>
+
+            <p style={{
+              color: 'rgba(255,255,255,0.5)',
+              fontSize: '11px',
+              marginTop: '12px',
+              textAlign: 'center'
+            }}>
+              ✓ Gratuit · ✓ Sans engagement · ✓ Désinscription 1 clic
+            </p>
+          </div>
+        </div>
+
+        <div style={{
+          position: 'absolute',
+          top: '80px',
+          left: '20px',
+          zIndex: 10,
+          background: 'rgba(0,0,0,0.5)',
+          padding: '8px 16px',
+          borderRadius: '8px'
+        }}>
+          <span style={{ color: '#D4AF37', fontWeight: 700 }}>MIX B4</span>
+          <span style={{ color: '#fff', marginLeft: '8px' }}>Split gauche</span>
+        </div>
+      </section>
+
+      {/* MIX B5 - Ultra épuré pill form */}
+      <section id="mixb5" style={{ position: 'relative', minHeight: '100vh', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+          <Image
+            src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=75"
+            alt="Cuisine"
+            fill
+            style={{ objectFit: 'cover' }}
+          />
+          <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.45)' }} />
+        </div>
+
+        <div style={{
+          position: 'relative',
+          zIndex: 10,
+          minHeight: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: '20px',
+          textAlign: 'center'
+        }}>
+          <h1 style={{
+            fontSize: 'clamp(40px, 8vw, 72px)',
+            fontWeight: 600,
+            color: '#fff',
+            marginBottom: '16px',
+            lineHeight: 1.1,
+            fontFamily: 'var(--font-cormorant), Georgia, serif'
+          }}>
+            Envie de nouvelles<br />idées recettes ?
+          </h1>
+
+          <p style={{
+            color: 'rgba(255,255,255,0.8)',
+            fontSize: '18px',
+            marginBottom: '48px'
+          }}>
+            Rejoins les <span style={{ color: '#D4AF37', fontWeight: 700 }}>130K+ gourmands</span> · 5 recettes/semaine
+          </p>
+
+          {/* Pill form */}
+          <div style={{
+            display: 'flex',
+            background: 'rgba(255,255,255,0.15)',
+            backdropFilter: 'blur(10px)',
+            borderRadius: '50px',
+            padding: '6px',
+            width: '100%',
+            maxWidth: '480px',
+            border: '1px solid rgba(255,255,255,0.2)'
+          }}>
+            <input
+              type="email"
+              placeholder="Ton email"
+              style={{
+                flex: 1,
+                padding: '14px 24px',
+                background: 'transparent',
+                border: 'none',
+                color: '#fff',
+                fontSize: '16px',
+                outline: 'none'
+              }}
+            />
+            <button style={{
+              padding: '14px 32px',
+              background: 'linear-gradient(to right, #D4AF37, #C77A4E)',
+              border: 'none',
+              borderRadius: '50px',
+              color: '#fff',
+              fontWeight: 600,
+              fontSize: '15px',
+              cursor: 'pointer',
+              whiteSpace: 'nowrap'
+            }}>
+              Je m'inscris
+            </button>
+          </div>
+
+          <p style={{
+            color: 'rgba(255,255,255,0.5)',
+            fontSize: '12px',
+            marginTop: '20px'
+          }}>
+            ✓ Gratuit · ✓ Sans engagement · ✓ Désinscription 1 clic
+          </p>
+        </div>
+
+        <div style={{
+          position: 'absolute',
+          top: '80px',
+          left: '20px',
+          zIndex: 10,
+          background: 'rgba(0,0,0,0.5)',
+          padding: '8px 16px',
+          borderRadius: '8px'
+        }}>
+          <span style={{ color: '#D4AF37', fontWeight: 700 }}>MIX B5</span>
+          <span style={{ color: '#fff', marginLeft: '8px' }}>Pill épuré</span>
+        </div>
+      </section>
     </div>
   );
 }

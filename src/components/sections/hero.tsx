@@ -14,10 +14,9 @@ export function HeroSection({ id }: HeroSectionProps = {}) {
 
   // Fonction pour déclencher le feu d'artifice de confettis
   const triggerConfetti = async () => {
-    // Charger confetti dynamiquement côté client
     const confettiModule = await import("canvas-confetti");
     const confetti = confettiModule.default;
-    const duration = 3000; // 3 secondes
+    const duration = 3000;
     const animationEnd = Date.now() + duration;
     const defaults = {
       startVelocity: 30,
@@ -40,14 +39,12 @@ export function HeroSection({ id }: HeroSectionProps = {}) {
 
       const particleCount = 50 * (timeLeft / duration);
 
-      // Depuis la gauche
       confetti({
         ...defaults,
         particleCount,
         origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }
       });
 
-      // Depuis la droite
       confetti({
         ...defaults,
         particleCount,
@@ -78,8 +75,6 @@ export function HeroSection({ id }: HeroSectionProps = {}) {
 
       setStatus("success");
       setEmail("");
-
-      // Déclencher le feu d'artifice de confettis
       triggerConfetti();
     } catch (error) {
       setStatus("error");
@@ -93,7 +88,7 @@ export function HeroSection({ id }: HeroSectionProps = {}) {
 
   return (
     <section id={id} className="relative min-h-[100svh] overflow-hidden bg-black">
-      {/* Background Image - Optimisée avec Next.js Image */}
+      {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
           src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=75&fm=webp&auto=format"
@@ -104,127 +99,109 @@ export function HeroSection({ id }: HeroSectionProps = {}) {
           sizes="100vw"
           className="object-cover object-center"
         />
-        <div className="absolute inset-0 bg-black/20" />
+        <div className="absolute inset-0 bg-black/30" />
       </div>
 
-      {/* Hero Text Content - Empty for cleaner look */}
-      <div className="relative z-20 min-h-[100svh] flex flex-col justify-center items-center text-center px-5 sm:px-8 lg:px-12 pb-32">
-      </div>
-
-      {/* Bottom Form Section - Lowered positioning */}
-      <div className="absolute left-0 right-0 z-30 bottom-0 lg:bottom-4">
-        <div className="relative">
-          <div className="max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl 2xl:max-w-7xl px-4 sm:px-6 md:px-8 lg:px-12" style={{ margin: '0 auto' }}>
-            {/* Card */}
-            <div className="bg-[#6B5D52]/40 backdrop-blur-3xl rounded-[1.5rem] shadow-2xl border border-white/5">
-              <div className="px-10 sm:px-12 md:px-16 lg:px-20 pb-6 sm:pb-8 md:pb-10">
-                {/* Espace en haut */}
-                <div className="h-3 sm:h-4 md:h-5"></div>
-
-                {/* Features List */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 sm:gap-x-8 md:gap-x-10 gap-y-3 sm:gap-y-4 md:gap-y-5 mb-8 sm:mb-10 md:mb-12">
-                {["5 recettes par semaine", "Newsletter hebdomadaire", "Conseils et astuces", "Contenu exclusif"].map((feature, i) => (
-                  <div key={i} className="flex items-center gap-3">
-                    <div className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full flex-shrink-0" style={{ background: 'linear-gradient(to right, #D4AF37, #C77A4E)' }}></div>
-                    <span className="text-sm md:text-base text-white font-light tracking-wide">
-                      {feature}
-                    </span>
-                  </div>
-                ))}
-              </div>
-
-                {/* Email Form */}
-                <form onSubmit={handleSubmit}>
-                  <div className="space-y-4">
-                    {status === "success" ? (
-                      <div className="text-center py-4">
-                        <p className="text-green-400 font-medium text-lg">Email envoyé !</p>
-                        <p className="text-white/80 text-sm mt-2">Vérifie ta boîte mail et clique sur le lien de confirmation.</p>
-                        <p className="text-white/60 text-xs mt-2 italic">Pense à vérifier tes spams, c'est notre premier échange !</p>
-                      </div>
-                    ) : (
-                      <>
-                        <input
-                          type="email"
-                          placeholder="Votre email"
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                          required
-                          disabled={status === "loading"}
-                          className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-white/40 transition-all disabled:opacity-50"
-                        />
-                        {status === "error" && (
-                          <p className="text-red-400 text-sm">{errorMessage}</p>
-                        )}
-                      </>
-                    )}
-                  </div>
-
-                  {status !== "success" && (
-                    <>
-                      <div className="md:pt-4 lg:pt-6" style={{
-                        paddingLeft: '0',
-                        paddingRight: '0',
-                        paddingTop: '1rem',
-                        paddingBottom: '0'
-                      }}>
-                        <button
-                          type="submit"
-                          disabled={status === "loading"}
-                          style={{
-                            width: '100%',
-                            padding: '0.6rem 1rem',
-                            background: 'linear-gradient(to right, #D4AF37, #C77A4E)',
-                            color: 'white',
-                            borderRadius: '0 0 1.5rem 1.5rem',
-                            fontSize: '0.6rem',
-                            textTransform: 'uppercase',
-                            letterSpacing: '0.25em',
-                            fontWeight: '600',
-                            transition: 'all 300ms',
-                            border: 'none',
-                            cursor: status === "loading" ? 'wait' : 'pointer',
-                            opacity: status === "loading" ? 0.7 : 1
-                          }}
-                        >
-                          {status === "loading" ? "Inscription..." : "S'inscrire gratuitement"}
-                        </button>
-                      </div>
-
-                      {/* Clause RGPD */}
-                      <p style={{
-                        fontSize: '11px',
-                        color: 'rgba(255,255,255,0.6)',
-                        textAlign: 'center',
-                        lineHeight: '1.6',
-                        marginTop: '12px',
-                        paddingLeft: '8px',
-                        paddingRight: '8px'
-                      }}>
-                        En t'inscrivant, tu acceptes de recevoir notre newsletter et que tes données soient traitées conformément à notre{' '}
-                        <a
-                          href="/politique-confidentialite"
-                          style={{
-                            color: '#D4AF37',
-                            textDecoration: 'underline',
-                            transition: 'color 0.2s'
-                          }}
-                          onMouseEnter={(e) => e.currentTarget.style.color = '#C77A4E'}
-                          onMouseLeave={(e) => e.currentTarget.style.color = '#D4AF37'}
-                        >
-                          politique de confidentialité
-                        </a>
-                        . Désinscription possible à tout moment.
-                      </p>
-                    </>
-                  )}
-                </form>
-              </div>
+      {/* Card en bas - Style Mix B3 */}
+      <div className="absolute bottom-8 sm:bottom-10 left-1/2 -translate-x-1/2 z-10 w-[90%] max-w-[550px]">
+        <div
+          className="backdrop-blur-xl rounded-3xl border border-white/10 text-center"
+          style={{
+            background: 'rgba(107, 93, 82, 0.5)',
+            padding: 'clamp(24px, 5vw, 36px)'
+          }}
+        >
+          {status === "success" ? (
+            <div className="py-4">
+              <p className="text-green-400 font-medium text-lg">Email envoyé !</p>
+              <p className="text-white/80 text-sm mt-2">Vérifie ta boîte mail et clique sur le lien de confirmation.</p>
+              <p className="text-white/60 text-xs mt-2 italic">Pense à vérifier tes spams, c'est notre premier échange !</p>
             </div>
-          </div>
+          ) : (
+            <>
+              <h2
+                className="text-white mb-3"
+                style={{
+                  fontSize: 'clamp(24px, 5vw, 32px)',
+                  fontWeight: 600,
+                  fontFamily: 'var(--font-cormorant), Georgia, serif',
+                  lineHeight: 1.2
+                }}
+              >
+                Envie de nouvelles idées recettes ?
+              </h2>
+
+              <p
+                className="text-white/80 mb-6"
+                style={{
+                  fontSize: 'clamp(14px, 3vw, 16px)',
+                  lineHeight: 1.5
+                }}
+              >
+                Rejoins les <span className="text-[#D4AF37] font-semibold">130K+ gourmands</span> et reçois
+                <br /><strong>5 recettes exclusives</strong> chaque semaine.
+              </p>
+
+              <form onSubmit={handleSubmit}>
+                {/* Pill form */}
+                <div
+                  className="flex items-center rounded-full border border-white/20"
+                  style={{
+                    background: 'rgba(255,255,255,0.1)',
+                    padding: '6px'
+                  }}
+                >
+                  <input
+                    type="email"
+                    placeholder="Ton email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    disabled={status === "loading"}
+                    className="flex-1 bg-transparent border-none text-white placeholder-white/50 focus:outline-none disabled:opacity-50"
+                    style={{
+                      padding: '12px 20px',
+                      fontSize: '15px',
+                      minWidth: 0
+                    }}
+                  />
+                  <button
+                    type="submit"
+                    disabled={status === "loading"}
+                    className="rounded-full text-white font-semibold whitespace-nowrap transition-opacity disabled:opacity-70"
+                    style={{
+                      padding: '12px 24px',
+                      background: 'linear-gradient(to right, #D4AF37, #C77A4E)',
+                      fontSize: '14px',
+                      cursor: status === "loading" ? 'wait' : 'pointer'
+                    }}
+                  >
+                    {status === "loading" ? "..." : "Je m'inscris"}
+                  </button>
+                </div>
+
+                {status === "error" && (
+                  <p className="text-red-400 text-sm mt-3">{errorMessage}</p>
+                )}
+
+                <p className="text-white/50 text-xs mt-4">
+                  ✓ Gratuit · ✓ Sans engagement · ✓ Désinscription 1 clic
+                </p>
+
+                <p className="text-white/40 text-xs mt-3">
+                  En t'inscrivant, tu acceptes notre{' '}
+                  <a
+                    href="/politique-confidentialite"
+                    className="text-[#D4AF37] underline hover:text-[#C77A4E] transition-colors"
+                  >
+                    politique de confidentialité
+                  </a>
+                </p>
+              </form>
+            </>
+          )}
         </div>
       </div>
-
     </section>
   );
 }
