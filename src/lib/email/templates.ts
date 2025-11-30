@@ -133,10 +133,10 @@ export function baseEmailTemplate({
       <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin: 30px 0;">
         <tr>
           <td align="center">
-            <table cellpadding="0" cellspacing="0" border="0">
+            <table cellpadding="0" cellspacing="0" border="0" style="background:#D4AF37;border-radius:8px;">
               <tr>
-                <td align="center" bgcolor="#D4AF37" style="background-color: #D4AF37; border-radius: 50px; mso-padding-alt: 16px 40px;">
-                  <a href="${ctaLink}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 600; color: #000000; text-decoration: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1;">
+                <td style="padding:16px 40px;background:#D4AF37;border-radius:8px;" bgcolor="#D4AF37">
+                  <a href="${ctaLink}" target="_blank" style="color:#000000;font-size:16px;font-weight:bold;text-decoration:none;font-family:Arial,sans-serif;display:block;">
                     ${ctaText}
                   </a>
                 </td>
