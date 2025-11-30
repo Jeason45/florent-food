@@ -188,39 +188,49 @@ export function baseEmailTemplate({
  */
 export function welcomeEmail(firstName?: string, email?: string): string {
   const content = `
-    <p>Bienvenue dans la famille Florent Food ! 🎉</p>
+    <p>Bienvenue dans la famille Florent Food !</p>
 
     <p>
       Ton inscription est confirmée ! Je suis ravi de t'accueillir parmi les passionnés
       de cuisine et pâtisserie qui, comme toi, aiment découvrir de nouvelles recettes.
     </p>
 
-    <p style="background-color: #FAF8F0; padding: 20px; border-radius: 8px; border-left: 4px solid #D4AF37;">
-      💡 <strong>Astuce de chef :</strong> Commence toujours par lire la recette en entier
-      avant de te lancer. C'est le secret des pros !
+    <p>
+      <strong>Chaque semaine, tu recevras une newsletter</strong> avec mes meilleures recettes,
+      des astuces de chef et les coulisses de mes créations culinaires.
     </p>
 
     <p>
-      <strong>Chaque semaine, tu recevras :</strong>
+      Tu peux aussi me suivre sur les réseaux sociaux :
     </p>
-    <ul style="line-height: 2;">
-      <li>📖 <strong>5 recettes détaillées</strong> (pâtisserie, plats & apéros)</li>
-      <li>📸 Des photos pas-à-pas pour réussir à tous les coups</li>
-      <li>🎯 Mes astuces et conseils de chef</li>
-      <li>🍰 Les coulisses de mes créations</li>
-    </ul>
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin: 20px 0;">
+      <tr>
+        <td align="center">
+          <table cellpadding="0" cellspacing="0" border="0">
+            <tr>
+              <td style="padding: 0 15px;">
+                <a href="https://instagram.com/florentfood" target="_blank" style="text-decoration: none;">
+                  <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram" width="32" height="32" style="display: block;">
+                </a>
+              </td>
+              <td style="padding: 0 15px;">
+                <a href="https://tiktok.com/@florentfood" target="_blank" style="text-decoration: none;">
+                  <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TikTok" width="32" height="32" style="display: block;">
+                </a>
+              </td>
+              <td style="padding: 0 15px;">
+                <a href="https://youtube.com/florentfood" target="_blank" style="text-decoration: none;">
+                  <img src="https://cdn-icons-png.flaticon.com/512/174/174883.png" alt="YouTube" width="32" height="32" style="display: block;">
+                </a>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
 
     <p>
-      Tu peux aussi me suivre sur les réseaux sociaux pour encore plus de contenu :
-    </p>
-    <p style="text-align: center; margin: 20px 0;">
-      <a href="https://instagram.com/florentfood" style="color: #D4AF37; margin: 0 10px;">📱 Instagram</a>
-      <a href="https://tiktok.com/@florentfood" style="color: #D4AF37; margin: 0 10px;">🎵 TikTok</a>
-      <a href="https://youtube.com/florentfood" style="color: #D4AF37; margin: 0 10px;">🎥 YouTube</a>
-    </p>
-
-    <p>
-      À très vite pour ta première recette ! 👨‍🍳
+      À très vite pour ta première recette !
     </p>
   `;
 

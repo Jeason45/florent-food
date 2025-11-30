@@ -5,6 +5,77 @@ import { welcomeEmail } from '@/lib/email/templates';
 import { checkRateLimit, getRateLimitHeaders } from '@/lib/rateLimit';
 import crypto from 'crypto';
 
+// Template email de confirmation avec bouton compatible tous clients
+function generateConfirmationEmail(confirmUrl: string): string {
+  return `
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirmez votre inscription</title>
+</head>
+<body style="margin:0; padding:0; background-color:#F4F1DE; font-family: Arial, sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:600px; margin:0 auto; background-color:#FFFFFF;">
+    <!-- Header -->
+    <tr>
+      <td style="background-color:#D4AF37; padding:40px 20px; text-align:center;" bgcolor="#D4AF37">
+        <h1 style="color:#FFFFFF; font-size:28px; margin:0; font-family: Georgia, serif;">Florent Food</h1>
+        <p style="color:rgba(255,255,255,0.9); font-size:14px; margin:8px 0 0 0;">Cuisine & Pâtisserie</p>
+      </td>
+    </tr>
+
+    <!-- Content -->
+    <tr>
+      <td style="padding:40px 30px;">
+        <h2 style="color:#2D2D2D; font-size:24px; margin:0 0 20px 0;">Confirmez votre inscription</h2>
+        <p style="color:#2D2D2D; font-size:16px; line-height:1.6; margin:0 0 20px 0;">
+          Merci de votre intérêt pour la newsletter Florent Food !
+        </p>
+        <p style="color:#2D2D2D; font-size:16px; line-height:1.6; margin:0 0 30px 0;">
+          Pour finaliser votre inscription et recevoir chaque semaine une newsletter avec mes meilleures recettes, cliquez sur le bouton ci-dessous :
+        </p>
+
+        <!-- Bouton avec bgcolor -->
+        <table width="100%" cellpadding="0" cellspacing="0" border="0">
+          <tr>
+            <td align="center">
+              <table cellpadding="0" cellspacing="0" border="0" style="background:#D4AF37; border-radius:8px;">
+                <tr>
+                  <td style="padding:16px 40px; background:#D4AF37; border-radius:8px;" bgcolor="#D4AF37">
+                    <a href="${confirmUrl}" target="_blank" style="color:#000000; font-size:16px; font-weight:bold; text-decoration:none; font-family:Arial,sans-serif; display:block;">
+                      Confirmer mon inscription
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+
+        <p style="color:#666666; font-size:14px; margin:30px 0 0 0;">
+          Ce lien est valide pendant 24 heures.
+        </p>
+        <p style="color:#666666; font-size:14px; margin:10px 0 0 0;">
+          Si vous n'avez pas demandé cette inscription, ignorez cet email.
+        </p>
+      </td>
+    </tr>
+
+    <!-- Footer -->
+    <tr>
+      <td style="background-color:#2D2D2D; padding:30px; text-align:center;" bgcolor="#2D2D2D">
+        <p style="color:rgba(255,255,255,0.7); font-size:14px; margin:0;">
+          © ${new Date().getFullYear()} Florent Food. Tous droits réservés.
+        </p>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+  `.trim();
+}
+
 export async function POST(request: NextRequest) {
   try {
     const { email, source } = await request.json();
@@ -70,21 +141,7 @@ export async function POST(request: NextRequest) {
         await sendEmail({
           to: email.toLowerCase(),
           subject: '✉️ Confirmez votre inscription à Florent Food',
-          htmlContent: `
-            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-              <h1 style="color: #D4AF37; text-align: center;">Florent Food</h1>
-              <h2>Confirmez votre inscription</h2>
-              <p>Merci de votre intérêt pour la newsletter Florent Food !</p>
-              <p>Pour finaliser votre inscription, cliquez sur le bouton ci-dessous :</p>
-              <div style="text-align: center; margin: 30px 0;">
-                <a href="${confirmUrl}" style="background: linear-gradient(to right, #D4AF37, #C77A4E); color: #000; padding: 15px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block;">
-                  Confirmer mon inscription
-                </a>
-              </div>
-              <p style="color: #666; font-size: 14px;">Ce lien est valide pendant 24 heures.</p>
-              <p style="color: #666; font-size: 14px;">Si vous n'avez pas demandé cette inscription, ignorez cet email.</p>
-            </div>
-          `,
+          htmlContent: generateConfirmationEmail(confirmUrl),
           type: 'newsletter_confirmation',
           subscriberId: existing.id
         });
@@ -120,21 +177,7 @@ export async function POST(request: NextRequest) {
     const emailResult = await sendEmail({
       to: email.toLowerCase(),
       subject: '✉️ Confirmez votre inscription à Florent Food',
-      htmlContent: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <h1 style="color: #D4AF37; text-align: center;">Florent Food</h1>
-          <h2>Confirmez votre inscription</h2>
-          <p>Merci de votre intérêt pour la newsletter Florent Food !</p>
-          <p>Pour finaliser votre inscription, cliquez sur le bouton ci-dessous :</p>
-          <div style="text-align: center; margin: 30px 0;">
-            <a href="${confirmUrl}" style="background: linear-gradient(to right, #D4AF37, #C77A4E); color: #000; padding: 15px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block;">
-              Confirmer mon inscription
-            </a>
-          </div>
-          <p style="color: #666; font-size: 14px;">Ce lien est valide pendant 24 heures.</p>
-          <p style="color: #666; font-size: 14px;">Si vous n'avez pas demandé cette inscription, ignorez cet email.</p>
-        </div>
-      `,
+      htmlContent: generateConfirmationEmail(confirmUrl),
       type: 'newsletter_confirmation',
       subscriberId: subscriber.id
     });
