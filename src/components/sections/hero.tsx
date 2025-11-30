@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import type confetti from "canvas-confetti";
+import { useState } from "react";
+import Image from "next/image";
 
 interface HeroSectionProps {
   id?: string;
@@ -93,16 +93,16 @@ export function HeroSection({ id }: HeroSectionProps = {}) {
 
   return (
     <section id={id} className="relative min-h-[100svh] overflow-hidden bg-black">
-      {/* Background Image */}
+      {/* Background Image - Optimisée avec Next.js Image */}
       <div className="absolute inset-0 z-0">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: 'url(https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=80)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat'
-          }}
+        <Image
+          src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=75&fm=webp&auto=format"
+          alt="Cuisine gastronomique"
+          fill
+          priority
+          quality={75}
+          sizes="100vw"
+          className="object-cover object-center"
         />
         <div className="absolute inset-0 bg-black/20" />
       </div>
