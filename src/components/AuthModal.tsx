@@ -96,8 +96,8 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: 'rgba(0, 0, 0, 0.7)',
-        backdropFilter: 'blur(8px)',
+        background: 'rgba(0, 0, 0, 0.5)',
+        backdropFilter: 'blur(4px)',
         padding: '12px',
       }}
       onClick={onClose}
@@ -142,28 +142,22 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
       <div
         className="auth-modal-content"
         style={{
-          background: 'linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%)',
+          background: '#FFFBF7',
           borderRadius: '24px',
           maxWidth: '420px',
           width: '100%',
           position: 'relative',
           overflow: 'hidden',
-          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
-          border: '1px solid rgba(212, 175, 55, 0.2)',
+          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+          border: '1px solid rgba(212, 175, 55, 0.3)',
         }}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Decorative gradient background */}
+        {/* Decorative top bar */}
         <div
           style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            height: '150px',
-            background: 'linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(199, 122, 78, 0.15) 100%)',
-            opacity: 0.5,
-            filter: 'blur(40px)',
+            height: '4px',
+            background: 'linear-gradient(to right, #D4AF37, #C77A4E)',
           }}
         />
 
@@ -177,7 +171,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
             width: '32px',
             height: '32px',
             borderRadius: '50%',
-            background: 'rgba(255, 255, 255, 0.1)',
+            background: 'rgba(0, 0, 0, 0.05)',
             border: 'none',
             display: 'flex',
             alignItems: 'center',
@@ -187,13 +181,13 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
             zIndex: 10,
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
+            e.currentTarget.style.background = 'rgba(0, 0, 0, 0.1)';
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
+            e.currentTarget.style.background = 'rgba(0, 0, 0, 0.05)';
           }}
         >
-          <X size={18} color="#fff" />
+          <X size={18} color="#2D2D2D" />
         </button>
 
         <div className="auth-modal-inner" style={{ padding: '40px 32px' }}>
@@ -202,19 +196,16 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
             <h2
               className="auth-modal-title"
               style={{
-                fontSize: '26px',
+                fontSize: '28px',
                 fontWeight: '600',
-                background: 'linear-gradient(to right, #D4AF37, #C77A4E)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
+                color: '#2D2D2D',
                 marginBottom: '10px',
                 fontFamily: 'var(--font-cormorant), serif',
               }}
             >
               Accès Membre
             </h2>
-            <p className="auth-modal-subtitle" style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '14px', lineHeight: '1.6' }}>
+            <p className="auth-modal-subtitle" style={{ color: '#6B6B6B', fontSize: '14px', lineHeight: '1.6' }}>
               Connecte-toi pour accéder à toutes les recettes
             </p>
           </div>
@@ -226,7 +217,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
               display: 'flex',
               gap: '10px',
               marginBottom: '28px',
-              background: 'rgba(0, 0, 0, 0.3)',
+              background: '#F4F1DE',
               padding: '6px',
               borderRadius: '12px',
             }}
@@ -238,8 +229,8 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
                 padding: '12px',
                 borderRadius: '8px',
                 border: 'none',
-                background: mode === 'new' ? 'linear-gradient(to right, #D4AF37, #C77A4E)' : 'transparent',
-                color: mode === 'new' ? '#000' : 'rgba(255, 255, 255, 0.7)',
+                background: mode === 'new' ? '#D4AF37' : 'transparent',
+                color: mode === 'new' ? '#fff' : '#6B6B6B',
                 fontSize: '14px',
                 fontWeight: '600',
                 cursor: 'pointer',
@@ -255,8 +246,8 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
                 padding: '12px',
                 borderRadius: '8px',
                 border: 'none',
-                background: mode === 'existing' ? 'linear-gradient(to right, #D4AF37, #C77A4E)' : 'transparent',
-                color: mode === 'existing' ? '#000' : 'rgba(255, 255, 255, 0.7)',
+                background: mode === 'existing' ? '#D4AF37' : 'transparent',
+                color: mode === 'existing' ? '#fff' : '#6B6B6B',
                 fontSize: '14px',
                 fontWeight: '600',
                 cursor: 'pointer',
@@ -275,7 +266,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
                 style={{
                   display: 'block',
                   marginBottom: '8px',
-                  color: 'rgba(255, 255, 255, 0.9)',
+                  color: '#2D2D2D',
                   fontSize: '14px',
                   fontWeight: '500',
                 }}
@@ -294,22 +285,22 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
                 style={{
                   width: '100%',
                   padding: '14px 16px',
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  background: '#fff',
+                  border: '1px solid #E8E4D9',
                   borderRadius: '12px',
-                  color: '#fff',
+                  color: '#2D2D2D',
                   fontSize: '15px',
                   outline: 'none',
                   transition: 'all 0.2s',
                   boxSizing: 'border-box',
                 }}
                 onFocus={(e) => {
-                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
-                  e.currentTarget.style.borderColor = 'rgba(212, 175, 55, 0.4)';
+                  e.currentTarget.style.borderColor = '#D4AF37';
+                  e.currentTarget.style.boxShadow = '0 0 0 3px rgba(212, 175, 55, 0.1)';
                 }}
                 onBlur={(e) => {
-                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
-                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                  e.currentTarget.style.borderColor = '#E8E4D9';
+                  e.currentTarget.style.boxShadow = 'none';
                 }}
               />
             </div>
@@ -318,13 +309,13 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
               <div
                 style={{
                   padding: '12px 16px',
-                  background: 'rgba(239, 68, 68, 0.1)',
-                  border: '1px solid rgba(239, 68, 68, 0.3)',
+                  background: '#FEF2F2',
+                  border: '1px solid #FECACA',
                   borderRadius: '8px',
                   marginBottom: '24px',
                 }}
               >
-                <p style={{ color: '#ef4444', fontSize: '13px', margin: 0 }}>{errorMessage}</p>
+                <p style={{ color: '#DC2626', fontSize: '13px', margin: 0 }}>{errorMessage}</p>
               </div>
             )}
 
@@ -332,15 +323,15 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
               <div
                 style={{
                   padding: '12px 16px',
-                  background: 'rgba(34, 197, 94, 0.1)',
-                  border: '1px solid rgba(34, 197, 94, 0.3)',
+                  background: '#F0FDF4',
+                  border: '1px solid #BBF7D0',
                   borderRadius: '8px',
                   marginBottom: '24px',
                   textAlign: 'center',
                 }}
               >
-                <p style={{ color: '#22c55e', fontSize: '14px', margin: 0, fontWeight: '500' }}>
-                  ✓ Connexion réussie !
+                <p style={{ color: '#16A34A', fontSize: '14px', margin: 0, fontWeight: '500' }}>
+                  Connexion réussie !
                 </p>
               </div>
             )}
@@ -352,10 +343,10 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
               style={{
                 width: '100%',
                 padding: '16px',
-                background: 'linear-gradient(to right, #D4AF37, #C77A4E)',
+                background: '#D4AF37',
                 border: 'none',
                 borderRadius: '12px',
-                color: '#000',
+                color: '#fff',
                 fontSize: '15px',
                 fontWeight: '600',
                 cursor: status === 'loading' || status === 'success' ? 'not-allowed' : 'pointer',
@@ -365,11 +356,13 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
               }}
               onMouseEnter={(e) => {
                 if (status === 'idle' || status === 'error') {
+                  e.currentTarget.style.background = '#C9A432';
                   e.currentTarget.style.transform = 'translateY(-2px)';
-                  e.currentTarget.style.boxShadow = '0 8px 24px rgba(212, 175, 55, 0.4)';
+                  e.currentTarget.style.boxShadow = '0 8px 24px rgba(212, 175, 55, 0.3)';
                 }
               }}
               onMouseLeave={(e) => {
+                e.currentTarget.style.background = '#D4AF37';
                 e.currentTarget.style.transform = 'translateY(0)';
                 e.currentTarget.style.boxShadow = 'none';
               }}
@@ -392,7 +385,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
             style={{
               marginTop: '20px',
               fontSize: '11px',
-              color: 'rgba(255, 255, 255, 0.5)',
+              color: '#9CA3AF',
               textAlign: 'center',
               lineHeight: '1.6',
             }}

@@ -133,8 +133,8 @@ export function baseEmailTemplate({
       <div style="text-align: center; margin: 30px 0;">
         <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
           <tr>
-            <td style="border-radius: 50px; background: linear-gradient(135deg, #D4AF37, #C77A4E);">
-              <a href="${ctaLink}" target="_blank" style="display: inline-block; padding: 16px 36px; font-size: 16px; font-weight: 600; color: #FFFFFF; text-decoration: none; border-radius: 50px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">
+            <td bgcolor="#D4AF37" style="border-radius: 50px; background-color: #D4AF37;">
+              <a href="${ctaLink}" target="_blank" style="display: inline-block; padding: 16px 36px; font-size: 16px; font-weight: 600; color: #000000; text-decoration: none; border-radius: 50px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">
                 ${ctaText}
               </a>
             </td>

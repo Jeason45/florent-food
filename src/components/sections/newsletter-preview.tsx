@@ -78,7 +78,7 @@ export function NewsletterPreviewSection() {
       paddingBottom: '80px'
     }}>
       <style>{`
-        @media (max-width: 768px) {
+        @media (max-width: 480px) {
           .newsletter-preview-hero {
             height: 300px !important;
             padding: 30px 20px !important;
