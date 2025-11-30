@@ -1,9 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/AuthContext";
+import { AuthModal } from "@/components/AuthModal";
 
 interface Recipe {
   id: string;
+  slug: string;
   title: string;
   imageUrl: string | null;
   category: string[];
@@ -24,6 +28,17 @@ export function NewsletterPreviewSection() {
   const [newsletter, setNewsletter] = useState<Newsletter | null>(null);
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const { isAuthenticated } = useAuth();
+  const router = useRouter();
+
+  const handleRecipeClick = (slug: string) => {
+    if (!isAuthenticated) {
+      setShowAuthModal(true);
+    } else {
+      router.push(`/recettes/${slug}`);
+    }
+  };
 
   useEffect(() => {
     fetchActiveNewsletter();
@@ -84,6 +99,8 @@ export function NewsletterPreviewSection() {
   const isLastAlone = secondaryRecipes.length % 2 === 1;
 
   return (
+    <>
+    <AuthModal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)} />
     <section className="newsletter-preview-section relative overflow-hidden" style={{
       background: 'linear-gradient(to bottom, #FFF5EB, #FFFBF7)',
       paddingTop: '80px',
@@ -277,7 +294,11 @@ export function NewsletterPreviewSection() {
 
             {/* RECETTE VEDETTE - Grand format avec overlay (identique à l'email) */}
             {featuredRecipe && (
-              <div className="newsletter-preview-featured" style={{ position: 'relative', height: '450px' }}>
+              <div
+                className="newsletter-preview-featured"
+                onClick={() => handleRecipeClick(featuredRecipe.slug)}
+                style={{ position: 'relative', height: '450px', cursor: 'pointer' }}
+              >
                 <img
                   src={featuredRecipe.imageUrl || 'https://images.unsplash.com/photo-1546548970-71785318a17b?w=1200&q=80'}
                   alt={featuredRecipe.title}
@@ -285,8 +306,11 @@ export function NewsletterPreviewSection() {
                     width: '100%',
                     height: '100%',
                     objectFit: 'cover',
-                    display: 'block'
+                    display: 'block',
+                    transition: 'transform 0.3s'
                   }}
+                  onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                  onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                 />
                 <div className="newsletter-preview-featured-overlay" style={{
                   padding: '50px',
@@ -324,18 +348,32 @@ export function NewsletterPreviewSection() {
                   }}>
                     {featuredRecipe.category.join(' · ')}
                   </p>
-                  <div style={{
-                    display: 'inline-block',
-                    background: '#D4AF37',
-                    color: '#000',
-                    padding: '14px 32px',
-                    fontSize: '11px',
-                    letterSpacing: '2px',
-                    textTransform: 'uppercase',
-                    fontWeight: '700'
-                  }}>
+                  <button
+                    onClick={() => handleRecipeClick(featuredRecipe.slug)}
+                    style={{
+                      display: 'inline-block',
+                      background: '#D4AF37',
+                      color: '#000',
+                      padding: '14px 32px',
+                      fontSize: '11px',
+                      letterSpacing: '2px',
+                      textTransform: 'uppercase',
+                      fontWeight: '700',
+                      border: 'none',
+                      cursor: 'pointer',
+                      transition: 'transform 0.2s, box-shadow 0.2s'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'scale(1.05)';
+                      e.currentTarget.style.boxShadow = '0 4px 15px rgba(212, 175, 55, 0.4)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'scale(1)';
+                      e.currentTarget.style.boxShadow = 'none';
+                    }}
+                  >
                     Voir la Recette
-                  </div>
+                  </button>
                 </div>
               </div>
             )}
@@ -353,11 +391,17 @@ export function NewsletterPreviewSection() {
                   if (isFullWidth) {
                     // Dernière recette seule - pleine largeur
                     rows.push(
-                      <div key={i} className="newsletter-preview-grid-item-full" style={{
-                        position: 'relative',
-                        height: '300px',
-                        overflow: 'hidden'
-                      }}>
+                      <div
+                        key={i}
+                        className="newsletter-preview-grid-item-full"
+                        onClick={() => handleRecipeClick(recipe1.slug)}
+                        style={{
+                          position: 'relative',
+                          height: '300px',
+                          overflow: 'hidden',
+                          cursor: 'pointer'
+                        }}
+                      >
                         <img
                           src={recipe1.imageUrl || 'https://images.unsplash.com/photo-1546548970-71785318a17b?w=1200&q=80'}
                           alt={recipe1.title}
@@ -365,8 +409,11 @@ export function NewsletterPreviewSection() {
                             width: '100%',
                             height: '100%',
                             objectFit: 'cover',
-                            display: 'block'
+                            display: 'block',
+                            transition: 'transform 0.3s'
                           }}
+                          onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                          onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                         />
                         <div style={{
                           position: 'absolute',
@@ -402,12 +449,17 @@ export function NewsletterPreviewSection() {
                         display: 'flex',
                         gap: '2px'
                       }}>
-                        <div className="newsletter-preview-grid-item" style={{
-                          position: 'relative',
-                          width: '50%',
-                          height: '280px',
-                          overflow: 'hidden'
-                        }}>
+                        <div
+                          className="newsletter-preview-grid-item"
+                          onClick={() => handleRecipeClick(recipe1.slug)}
+                          style={{
+                            position: 'relative',
+                            width: '50%',
+                            height: '280px',
+                            overflow: 'hidden',
+                            cursor: 'pointer'
+                          }}
+                        >
                           <img
                             src={recipe1.imageUrl || 'https://images.unsplash.com/photo-1546548970-71785318a17b?w=600&q=80'}
                             alt={recipe1.title}
@@ -415,8 +467,11 @@ export function NewsletterPreviewSection() {
                               width: '100%',
                               height: '100%',
                               objectFit: 'cover',
-                              display: 'block'
+                              display: 'block',
+                              transition: 'transform 0.3s'
                             }}
+                            onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                            onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                           />
                           <div style={{
                             position: 'absolute',
@@ -445,12 +500,17 @@ export function NewsletterPreviewSection() {
                           </div>
                         </div>
                         {recipe2 && (
-                          <div className="newsletter-preview-grid-item" style={{
-                            position: 'relative',
-                            width: '50%',
-                            height: '280px',
-                            overflow: 'hidden'
-                          }}>
+                          <div
+                            className="newsletter-preview-grid-item"
+                            onClick={() => handleRecipeClick(recipe2.slug)}
+                            style={{
+                              position: 'relative',
+                              width: '50%',
+                              height: '280px',
+                              overflow: 'hidden',
+                              cursor: 'pointer'
+                            }}
+                          >
                             <img
                               src={recipe2.imageUrl || 'https://images.unsplash.com/photo-1546548970-71785318a17b?w=600&q=80'}
                               alt={recipe2.title}
@@ -458,8 +518,11 @@ export function NewsletterPreviewSection() {
                                 width: '100%',
                                 height: '100%',
                                 objectFit: 'cover',
-                                display: 'block'
+                                display: 'block',
+                                transition: 'transform 0.3s'
                               }}
+                              onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                              onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                             />
                             <div style={{
                               position: 'absolute',
@@ -560,5 +623,6 @@ export function NewsletterPreviewSection() {
         </div>
       </div>
     </section>
+    </>
   );
 }
