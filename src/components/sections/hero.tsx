@@ -138,7 +138,9 @@ export function HeroSection({ id }: HeroSectionProps = {}) {
                   <div className="space-y-4">
                     {status === "success" ? (
                       <div className="text-center py-4">
-                        <p className="text-green-400 font-medium">✉️ Email envoyé ! Vérifie ta boîte mail et clique sur le lien de confirmation.</p>
+                        <p className="text-green-400 font-medium text-lg">Email envoyé !</p>
+                        <p className="text-white/80 text-sm mt-2">Vérifie ta boîte mail et clique sur le lien de confirmation.</p>
+                        <p className="text-white/60 text-xs mt-2 italic">Pense à vérifier tes spams, c'est notre premier échange !</p>
                       </div>
                     ) : (
                       <>
