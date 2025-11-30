@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { sendEmail } from '@/lib/emailUtils';
 import { welcomeEmail } from '@/lib/email/templates';
+import { NewsletterStatus } from '@prisma/client';
 
 export async function GET(request: NextRequest) {
   try {
@@ -61,6 +62,40 @@ export async function GET(request: NextRequest) {
       type: 'newsletter_welcome',
       subscriberId: subscriber.id
     });
+
+    // Envoyer la newsletter de la semaine en cours (si elle existe)
+    try {
+      const now = new Date();
+      const currentNewsletter = await prisma.newsletter.findFirst({
+        where: {
+          status: NewsletterStatus.ACTIVE,
+          startDate: { lte: now },
+          endDate: { gte: now }
+        },
+        orderBy: { sentAt: 'desc' }
+      });
+
+      if (currentNewsletter && currentNewsletter.content) {
+        const content = currentNewsletter.content as { html?: string };
+        if (content.html) {
+          console.log('📧 Sending current week newsletter to new subscriber:', subscriber.email);
+
+          await sendEmail({
+            to: subscriber.email,
+            subject: `📬 ${currentNewsletter.subject}`,
+            htmlContent: content.html,
+            type: 'newsletter_weekly',
+            subscriberId: subscriber.id,
+            newsletterId: currentNewsletter.id
+          });
+
+          console.log('✅ Current week newsletter sent to:', subscriber.email);
+        }
+      }
+    } catch (newsletterError) {
+      // Ne pas bloquer la confirmation si l'envoi de la newsletter échoue
+      console.error('⚠️ Failed to send current week newsletter:', newsletterError);
+    }
 
     // Rediriger vers la page d'accueil avec message de succès
     return NextResponse.redirect(
