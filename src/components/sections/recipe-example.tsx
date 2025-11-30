@@ -212,23 +212,6 @@ export function RecipeExampleSection() {
                 }}
               />
 
-              {/* Badge PREMIUM */}
-              <div style={{
-                position: 'absolute',
-                top: '24px',
-                right: '24px',
-                background: '#D4AF37',
-                color: '#000',
-                padding: '10px 24px',
-                borderRadius: '30px',
-                fontSize: '11px',
-                fontWeight: 900,
-                letterSpacing: '2px',
-                textTransform: 'uppercase'
-              }}>
-                ⭐ PREMIUM
-              </div>
-
               {/* Overlay avec titre */}
               <div className="recipe-preview-hero-overlay" style={{
                 position: 'absolute',
@@ -391,7 +374,7 @@ export function RecipeExampleSection() {
                 </div>
               </div>
 
-              {/* Ingredients */}
+              {/* Ingredients - Comme sur la vraie page recette */}
               <div style={{ marginBottom: '60px' }}>
                 <h2 style={{
                   fontSize: '14px',
@@ -403,35 +386,90 @@ export function RecipeExampleSection() {
                 }}>
                   Ingrédients
                 </h2>
-                <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
-                  {recipe.ingredients.slice(0, 6).map((ingredient: any, index: number) => (
-                    <li
-                      key={index}
-                      style={{
-                        padding: '14px 0 14px 28px',
-                        fontSize: '16px',
-                        color: '#333',
-                        position: 'relative',
-                        lineHeight: 1.6
-                      }}
-                    >
-                      <span style={{
-                        position: 'absolute',
-                        left: 0,
-                        top: '20px',
-                        width: '8px',
-                        height: '8px',
-                        background: '#D4AF37',
-                        borderRadius: '50%',
-                        display: 'block'
-                      }}></span>
-                      {typeof ingredient === 'string' ? ingredient : ingredient.name}
-                    </li>
-                  ))}
-                </ul>
+
+                {/* Vérifier si c'est le nouveau format avec groupes */}
+                {recipe.ingredients.length > 0 && recipe.ingredients[0] !== null && typeof recipe.ingredients[0] === 'object' && 'groupName' in recipe.ingredients[0] ? (
+                  // Format avec groupes - affichés côte à côte
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: `repeat(${Math.min(recipe.ingredients.length, 3)}, 1fr)`,
+                    gap: '30px'
+                  }}>
+                    {(recipe.ingredients as { groupName: string; ingredients: string[] }[]).map((group, groupIndex) => (
+                      <div key={groupIndex}>
+                        {group.groupName && (
+                          <h3 style={{
+                            fontSize: '15px',
+                            fontWeight: 700,
+                            color: '#1a1a1a',
+                            marginBottom: '16px',
+                            paddingBottom: '10px',
+                            borderBottom: '2px solid #D4AF37'
+                          }}>
+                            {group.groupName}
+                          </h3>
+                        )}
+                        <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
+                          {group.ingredients.map((ingredient: string, ingredientIndex: number) => (
+                            <li
+                              key={ingredientIndex}
+                              style={{
+                                padding: '10px 0 10px 20px',
+                                fontSize: '14px',
+                                color: '#333',
+                                position: 'relative',
+                                lineHeight: 1.5
+                              }}
+                            >
+                              <span style={{
+                                position: 'absolute',
+                                left: 0,
+                                top: '16px',
+                                width: '6px',
+                                height: '6px',
+                                background: '#D4AF37',
+                                borderRadius: '50%',
+                                display: 'block'
+                              }}></span>
+                              {ingredient}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  // Format simple: tableau de strings
+                  <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
+                    {recipe.ingredients.map((ingredient: any, index: number) => (
+                      <li
+                        key={index}
+                        style={{
+                          padding: '12px 0 12px 24px',
+                          fontSize: '15px',
+                          color: '#333',
+                          position: 'relative',
+                          lineHeight: 1.6
+                        }}
+                      >
+                        <span style={{
+                          position: 'absolute',
+                          left: 0,
+                          top: '18px',
+                          width: '8px',
+                          height: '8px',
+                          background: '#D4AF37',
+                          borderRadius: '50%',
+                          display: 'block'
+                        }}></span>
+                        {typeof ingredient === 'string' ? ingredient : ingredient.name}
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
 
-              {/* Steps */}
+              {/* Steps - Comme sur la vraie page recette */}
               <div style={{ marginBottom: '60px' }}>
                 <h2 style={{
                   fontSize: '14px',
@@ -444,13 +482,13 @@ export function RecipeExampleSection() {
                   Préparation
                 </h2>
 
-                {recipe.steps.slice(0, 3).map((step: any, index: number) => (
+                {recipe.steps.map((step: any, index: number) => (
                   <div
                     key={index}
                     className="recipe-preview-step"
                     style={{
                       display: 'flex',
-                      gap: '30px',
+                      gap: '40px',
                       marginBottom: '40px',
                       alignItems: 'flex-start',
                       padding: '40px',
@@ -459,31 +497,32 @@ export function RecipeExampleSection() {
                     }}
                   >
                     <div className="recipe-preview-step-number" style={{
-                      fontSize: '48px',
+                      fontSize: '72px',
                       fontWeight: 900,
                       color: '#D4AF37',
                       lineHeight: 1,
                       opacity: 0.4,
-                      minWidth: '60px'
+                      minWidth: '90px'
                     }}>
                       {String(index + 1).padStart(2, '0')}
                     </div>
                     <div style={{ flex: 1 }}>
                       {step.title && (
                         <h3 style={{
-                          fontSize: '20px',
+                          fontSize: '24px',
                           fontWeight: 700,
-                          marginBottom: '12px',
+                          marginBottom: '16px',
                           color: '#1a1a1a'
                         }}>
                           {step.title}
                         </h3>
                       )}
                       <p style={{
-                        fontSize: '15px',
+                        fontSize: '16px',
                         lineHeight: 1.8,
                         color: '#444',
-                        fontWeight: 400
+                        fontWeight: 400,
+                        whiteSpace: 'pre-line'
                       }}>
                         {typeof step === 'string' ? step : step.description}
                       </p>
