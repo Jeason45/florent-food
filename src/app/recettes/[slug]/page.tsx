@@ -439,7 +439,7 @@ export default async function RecipePage({ params }: RecipePageProps) {
           </h2>
 
           {/* Vérifier si c'est le nouveau format avec groupes */}
-          {ingredients.length > 0 && typeof ingredients[0] === 'object' && 'groupName' in ingredients[0] ? (
+          {ingredients.length > 0 && ingredients[0] !== null && typeof ingredients[0] === 'object' && 'groupName' in ingredients[0] ? (
             // Nouveau format avec groupes - affichés côte à côte
             <div style={{
               display: 'grid',
