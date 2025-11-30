@@ -132,22 +132,14 @@ export function HeroSection({ id }: HeroSectionProps = {}) {
                 Envie de nouvelles idées recettes ?
               </h2>
 
-              <p
-                className="text-white/80 mb-6 mx-auto"
-                style={{
-                  fontSize: 'clamp(12px, 2.5vw, 16px)',
-                  lineHeight: 1.5,
-                  whiteSpace: 'nowrap',
-                  width: 'fit-content'
-                }}
-              >
+              <p className="text-white/80 mb-6 text-sm sm:text-base leading-relaxed">
                 Rejoins les <span className="text-[#D4AF37] font-semibold">130K+ gourmands</span> et reçois <strong>5 recettes exclusives</strong> chaque semaine.
               </p>
 
               <form onSubmit={handleSubmit} className="w-full">
-                {/* Pill form - Luxe */}
+                {/* Desktop: Pill form */}
                 <div
-                  className="flex items-center rounded-full w-full overflow-hidden"
+                  className="hidden sm:flex items-center rounded-full w-full overflow-hidden"
                   style={{
                     background: 'rgba(0, 0, 0, 0.35)',
                     border: '1px solid rgba(212, 175, 55, 0.3)',
@@ -178,6 +170,41 @@ export function HeroSection({ id }: HeroSectionProps = {}) {
                       padding: '14px 28px',
                       background: 'linear-gradient(135deg, #D4AF37 0%, #B8860B 50%, #D4AF37 100%)',
                       backgroundSize: '200% 200%',
+                      fontSize: '14px',
+                      cursor: status === "loading" ? 'wait' : 'pointer',
+                      boxShadow: '0 4px 15px rgba(212, 175, 55, 0.4)',
+                      letterSpacing: '0.03em',
+                      textTransform: 'uppercase'
+                    }}
+                  >
+                    {status === "loading" ? "..." : "Je m'inscris"}
+                  </button>
+                </div>
+
+                {/* Mobile: Stacked form */}
+                <div className="flex sm:hidden flex-col gap-3 w-full">
+                  <input
+                    type="email"
+                    placeholder="Ton adresse email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    disabled={status === "loading"}
+                    className="w-full text-white placeholder-white/40 focus:outline-none disabled:opacity-50 rounded-full transition-all"
+                    style={{
+                      background: 'rgba(0, 0, 0, 0.35)',
+                      border: '1px solid rgba(212, 175, 55, 0.3)',
+                      padding: '16px 20px',
+                      fontSize: '15px'
+                    }}
+                  />
+                  <button
+                    type="submit"
+                    disabled={status === "loading"}
+                    className="w-full rounded-full text-white font-semibold transition-all duration-300 disabled:opacity-70 active:scale-[0.98]"
+                    style={{
+                      padding: '16px 24px',
+                      background: 'linear-gradient(135deg, #D4AF37 0%, #B8860B 50%, #D4AF37 100%)',
                       fontSize: '14px',
                       cursor: status === "loading" ? 'wait' : 'pointer',
                       boxShadow: '0 4px 15px rgba(212, 175, 55, 0.4)',
