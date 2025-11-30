@@ -446,7 +446,7 @@ export default async function RecipePage({ params }: RecipePageProps) {
               gridTemplateColumns: `repeat(${Math.min(ingredients.length, 3)}, 1fr)`,
               gap: '40px'
             }}>
-              {ingredients.map((group: { groupName: string; ingredients: string[] }, groupIndex: number) => (
+              {(ingredients as { groupName: string; ingredients: string[] }[]).map((group, groupIndex) => (
                 <div className="ingredient-group" key={groupIndex}>
                   {group.groupName && (
                     <h3 style={{
