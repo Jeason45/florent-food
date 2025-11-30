@@ -244,7 +244,7 @@ export default async function RecipePage({ params }: RecipePageProps) {
           right: '24px',
           zIndex: 10
         }}>
-          <PrintButton recipeTitle={recipe.title} />
+          <PrintButton />
         </div>
         {recipe.imageUrl && (
           <img
