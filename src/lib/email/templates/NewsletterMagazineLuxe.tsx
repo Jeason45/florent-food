@@ -21,17 +21,23 @@ export function generateNewsletterMagazineLuxe(data: NewsletterData, isFreeTier:
   const baseUrl = process.env.NEXT_PUBLIC_URL || 'http://localhost:3001';
 
   const secondaryRecipesHTML = data.secondaryRecipes.map(recipe => `
-    <div style="position: relative; height: 350px; overflow: hidden;">
-      <img src="${recipe.imageUrl}" alt="${recipe.title}" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s;">
-      <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 30px; background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.9) 100%);">
-        <h3 style="font-size: 22px; color: #fff; font-weight: 700; margin-bottom: 8px;">
-          ${recipe.title}
-        </h3>
-        <a href="${baseUrl}/recettes/${recipe.slug}" style="color: #D4AF37; text-decoration: none; font-size: 12px; letter-spacing: 1px; text-transform: uppercase;">
-          Découvrir →
-        </a>
-      </div>
-    </div>
+    <td width="50%" valign="top" style="padding: 1px;">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td style="position: relative;">
+            <img src="${recipe.imageUrl}" alt="${recipe.title}" style="width: 100%; height: 280px; object-fit: cover; display: block;">
+            <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 25px; background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.9) 100%);">
+              <h3 style="font-size: 20px; color: #fff; font-weight: 700; margin: 0 0 8px 0;">
+                ${recipe.title}
+              </h3>
+              <a href="${baseUrl}/recettes/${recipe.slug}" style="color: #D4AF37; text-decoration: none; font-size: 12px; letter-spacing: 1px; text-transform: uppercase;">
+                Découvrir →
+              </a>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </td>
   `).join('');
 
   const quoteHTML = data.tipOfWeek ? `
