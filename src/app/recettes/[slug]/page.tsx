@@ -247,6 +247,186 @@ export default async function RecipePage({ params }: RecipePageProps) {
             margin-top: 5px !important;
           }
         }
+        /* ===========================================
+           STYLES MOBILE RESPONSIVE
+           =========================================== */
+        @media (max-width: 768px) {
+          /* Hero section mobile */
+          .recipe-hero {
+            aspect-ratio: 4 / 3 !important;
+            max-height: 350px !important;
+          }
+
+          .recipe-hero-overlay {
+            padding: 20px 20px !important;
+          }
+
+          .recipe-hero-overlay > div:first-child {
+            font-size: 9px !important;
+            letter-spacing: 2px !important;
+            margin-bottom: 8px !important;
+          }
+
+          .recipe-hero-overlay h1 {
+            font-size: 28px !important;
+            letter-spacing: -1px !important;
+            margin-bottom: 10px !important;
+          }
+
+          .recipe-hero-overlay p {
+            font-size: 14px !important;
+            line-height: 1.5 !important;
+          }
+
+          /* Bouton PDF - plus petit sur mobile */
+          .print-button-container {
+            top: 12px !important;
+            right: 12px !important;
+          }
+
+          /* Contenu principal mobile */
+          .recipe-content {
+            padding: 30px 20px !important;
+          }
+
+          /* Meta info mobile */
+          .recipe-meta {
+            gap: 15px !important;
+            padding: 30px 0 !important;
+            margin-bottom: 40px !important;
+          }
+
+          .recipe-meta > div {
+            min-width: 60px !important;
+          }
+
+          .recipe-meta > div > div:first-child {
+            font-size: 26px !important;
+            margin-bottom: 8px !important;
+          }
+
+          .recipe-meta > div > div:last-child {
+            font-size: 9px !important;
+            letter-spacing: 1px !important;
+          }
+
+          /* Section ingrédients mobile */
+          .ingredients-section {
+            margin-bottom: 50px !important;
+          }
+
+          .ingredients-section > h2 {
+            font-size: 12px !important;
+            margin-bottom: 25px !important;
+          }
+
+          /* Grille ingrédients - 1 colonne sur mobile */
+          .ingredients-section > div {
+            grid-template-columns: 1fr !important;
+            gap: 30px !important;
+          }
+
+          .ingredient-group h3 {
+            font-size: 15px !important;
+            margin-bottom: 15px !important;
+          }
+
+          .ingredients-list li {
+            padding: 10px 0 10px 20px !important;
+            font-size: 14px !important;
+          }
+
+          /* Section étapes mobile */
+          .steps-section {
+            margin-bottom: 50px !important;
+          }
+
+          .steps-section > h2 {
+            font-size: 12px !important;
+            margin-bottom: 25px !important;
+          }
+
+          /* Étapes - layout vertical sur mobile */
+          .recipe-step {
+            flex-direction: column !important;
+            gap: 15px !important;
+            padding: 25px 20px !important;
+            margin-bottom: 20px !important;
+            border-radius: 12px !important;
+          }
+
+          .recipe-step-number {
+            font-size: 48px !important;
+            min-width: unset !important;
+          }
+
+          .recipe-step h3 {
+            font-size: 18px !important;
+            margin-bottom: 10px !important;
+          }
+
+          .recipe-step p {
+            font-size: 15px !important;
+            line-height: 1.7 !important;
+          }
+
+          /* Astuces du Chef mobile */
+          .recipe-chef-tips {
+            padding: 35px 20px 25px 20px !important;
+            margin-top: 40px !important;
+            border-radius: 12px !important;
+          }
+
+          .recipe-chef-tips > div:first-child {
+            font-size: 11px !important;
+            padding: 8px 16px !important;
+            top: -15px !important;
+            left: 20px !important;
+          }
+
+          .recipe-chef-tips p {
+            font-size: 15px !important;
+            line-height: 1.7 !important;
+          }
+
+          /* Footer mobile */
+          .recipe-footer {
+            padding: 50px 0 !important;
+          }
+
+          .recipe-footer > div:first-child {
+            font-size: 22px !important;
+            letter-spacing: 2px !important;
+            margin-bottom: 12px !important;
+          }
+
+          .recipe-footer > div:last-child {
+            font-size: 11px !important;
+          }
+        }
+
+        /* Extra petit écran (iPhone SE, etc.) */
+        @media (max-width: 380px) {
+          .recipe-hero-overlay h1 {
+            font-size: 24px !important;
+          }
+
+          .recipe-meta {
+            gap: 10px !important;
+          }
+
+          .recipe-meta > div {
+            min-width: 50px !important;
+          }
+
+          .recipe-meta > div > div:first-child {
+            font-size: 22px !important;
+          }
+
+          .recipe-step-number {
+            font-size: 36px !important;
+          }
+        }
       `}</style>
 
       {/* Hero SOMBRE - Format 16:9 */}
