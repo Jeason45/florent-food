@@ -22,20 +22,39 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Florent Food - Créateur de Contenu Gourmand",
-  description: "🎬 Créateur de contenu gourmand du sud ☀️ 130K+ followers. Des recettes simples et gourmandes de cuisine et pâtisserie pour régaler tous les jours. 📍 Montpellier - Paris",
-  keywords: ["florent food", "recettes faciles", "cuisine", "pâtisserie", "montpellier", "créateur contenu", "recettes gourmandes", "instagram food"],
+  metadataBase: new URL('https://florentfood.fr'),
+  title: {
+    default: "Florent Food - Recettes Gourmandes & Newsletter Cuisine",
+    template: "%s | Florent Food"
+  },
+  description: "Florent Food : recettes de cuisine et pâtisserie simples et gourmandes. Rejoins 130K+ followers et reçois 5 recettes gratuites par semaine dans ta newsletter !",
+  keywords: ["florent food", "recettes faciles", "cuisine", "pâtisserie", "newsletter recettes", "montpellier", "créateur contenu", "recettes gourmandes", "instagram food"],
   authors: [{ name: "Florent Food" }],
+  creator: "Florent Food",
+  publisher: "Florent Food",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
   openGraph: {
-    title: "Florent Food - Créateur de Contenu Gourmand",
-    description: "🎬 Des recettes simples et gourmandes pour régaler tous les jours ☀️",
+    title: "Florent Food - Recettes Gourmandes & Newsletter Cuisine",
+    description: "Rejoins 130K+ followers ! 5 recettes gratuites par semaine dans ta newsletter cuisine.",
     type: "website",
     locale: "fr_FR",
+    siteName: "Florent Food",
+    url: "https://florentfood.fr",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Florent Food - Créateur de Contenu Gourmand",
-    description: "🎬 Des recettes simples et gourmandes pour régaler tous les jours ☀️",
+    title: "Florent Food - Recettes Gourmandes & Newsletter Cuisine",
+    description: "Rejoins 130K+ followers ! 5 recettes gratuites par semaine dans ta newsletter cuisine.",
+  },
+  alternates: {
+    canonical: "https://florentfood.fr",
   },
 };
 
