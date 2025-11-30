@@ -51,13 +51,22 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      newsletters: activeNewsletters.map(n => ({
-        id: n.id,
-        subject: n.subject,
-        startDate: n.startDate,
-        endDate: n.endDate,
-        weekNumber: n.weekNumber
-      })),
+      // Chaque newsletter avec SES propres recettes (dans l'ordre de position)
+      newsletters: activeNewsletters.map(n => {
+        const content = n.content as { introMessage?: string; tipOfWeek?: string } | null;
+        return {
+          id: n.id,
+          subject: n.subject,
+          startDate: n.startDate,
+          endDate: n.endDate,
+          weekNumber: n.weekNumber,
+          introMessage: content?.introMessage || null,
+          tipOfWeek: content?.tipOfWeek || null,
+          // Recettes de CETTE newsletter uniquement, dans l'ordre de position
+          recipes: n.newsletterRecipes.map(nr => nr.recipe)
+        };
+      }),
+      // Garde aussi la liste fusionnée pour la page d'accueil
       recipes: allRecipes
     });
 

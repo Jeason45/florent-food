@@ -2,19 +2,22 @@
 
 import { useState, useEffect } from "react";
 
+interface Recipe {
+  id: string;
+  title: string;
+  imageUrl: string | null;
+  category: string[];
+}
+
 interface Newsletter {
   id: string;
   subject: string;
   startDate: string;
   endDate: string;
   weekNumber: number;
-}
-
-interface Recipe {
-  id: string;
-  title: string;
-  imageUrl: string | null;
-  category: string[];
+  introMessage?: string | null;
+  tipOfWeek?: string | null;
+  recipes: Recipe[]; // Recettes de CETTE newsletter
 }
 
 export function NewsletterPreviewSection() {
@@ -32,9 +35,11 @@ export function NewsletterPreviewSection() {
       const data = await response.json();
 
       if (data.success && data.newsletters && data.newsletters.length > 0) {
-        setNewsletter(data.newsletters[0]);
-        // Prendre jusqu'à 5 recettes pour voir le layout complet
-        setRecipes(data.recipes.slice(0, 5));
+        // Prendre la dernière newsletter (la plus récente)
+        const latestNewsletter = data.newsletters[0];
+        setNewsletter(latestNewsletter);
+        // Utiliser UNIQUEMENT les recettes de CETTE newsletter
+        setRecipes(latestNewsletter.recipes || []);
       }
     } catch (error) {
       console.error('Error fetching newsletter:', error);
@@ -258,7 +263,7 @@ export function NewsletterPreviewSection() {
                 fontWeight: '300',
                 margin: 0
               }}>
-                Bonjour ! Cette semaine, je vous partage {recipes.length} créations d'exception qui vont sublimer vos tables. Des saveurs intenses, des textures parfaites, et cette touche d'élégance qui fait toute la différence.
+                {newsletter.introMessage || `Bonjour ! Cette semaine, je vous partage ${recipes.length} créations d'exception qui vont sublimer vos tables. Des saveurs intenses, des textures parfaites, et cette touche d'élégance qui fait toute la différence.`}
               </p>
               <div style={{
                 marginTop: '30px',
@@ -511,7 +516,7 @@ export function NewsletterPreviewSection() {
                 fontStyle: 'italic',
                 marginBottom: '30px'
               }}>
-                Pour une meringue parfaite, le secret réside dans la température. Un sirop à 121°C exactement.
+                {newsletter.tipOfWeek || "Pour une meringue parfaite, le secret réside dans la température. Un sirop à 121°C exactement."}
               </p>
               <div style={{
                 fontSize: '14px',

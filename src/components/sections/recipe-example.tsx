@@ -9,10 +9,14 @@ interface Recipe {
   imageUrl: string | null;
   category: string[];
   difficulty: string;
+  prepTime: number;
+  cookTime: number;
+  restTime?: number | null;
   totalTime: number;
   servings: number;
   ingredients: any[];
   steps: any[];
+  chefTips?: string | null;
 }
 
 export function RecipeExampleSection() {
@@ -28,9 +32,12 @@ export function RecipeExampleSection() {
       const response = await fetch('/api/newsletter/active');
       const data = await response.json();
 
-      if (data.success && data.recipes && data.recipes.length > 0) {
-        // Prendre la première recette
-        setRecipe(data.recipes[0]);
+      if (data.success && data.newsletters && data.newsletters.length > 0) {
+        // Prendre la première recette de la DERNIÈRE newsletter
+        const latestNewsletter = data.newsletters[0];
+        if (latestNewsletter.recipes && latestNewsletter.recipes.length > 0) {
+          setRecipe(latestNewsletter.recipes[0]);
+        }
       }
     } catch (error) {
       console.error('Error fetching recipe:', error);
@@ -91,15 +98,21 @@ export function RecipeExampleSection() {
             padding: 30px 20px !important;
           }
           .recipe-preview-meta {
-            flex-direction: column !important;
-            gap: 20px !important;
-            padding: 25px 0 !important;
+            display: flex !important;
+            flex-wrap: wrap !important;
+            justify-content: center !important;
+            gap: 15px 20px !important;
+            padding: 20px 0 !important;
+          }
+          .recipe-preview-meta > div {
+            min-width: 55px !important;
           }
           .recipe-preview-meta-value {
-            font-size: 28px !important;
+            font-size: 22px !important;
           }
           .recipe-preview-meta-label {
-            font-size: 10px !important;
+            font-size: 8px !important;
+            letter-spacing: 1px !important;
           }
           .recipe-preview-step {
             flex-direction: row !important;
@@ -116,6 +129,17 @@ export function RecipeExampleSection() {
           }
           .recipe-preview-step p {
             font-size: 14px !important;
+          }
+          .recipe-preview-chef-tips {
+            padding: 30px 20px !important;
+            margin-bottom: 30px !important;
+          }
+          .recipe-preview-chef-tips > div:first-child {
+            font-size: 9px !important;
+            padding: 6px 14px !important;
+          }
+          .recipe-preview-chef-tips p {
+            font-size: 13px !important;
           }
           .recipe-preview-footer {
             padding: 30px 0 15px !important;
@@ -253,16 +277,17 @@ export function RecipeExampleSection() {
               padding: '60px 40px',
               background: '#fff'
             }}>
-              {/* Meta Info */}
+              {/* Meta Info - Identique à la vraie page recette */}
               <div className="recipe-preview-meta" style={{
                 display: 'flex',
                 justifyContent: 'center',
-                gap: '50px',
+                gap: '40px',
                 padding: '40px 0',
                 borderBottom: '1px solid #e8e8e8',
-                marginBottom: '50px'
+                marginBottom: '50px',
+                flexWrap: 'wrap'
               }}>
-                <div style={{ textAlign: 'center' }}>
+                <div style={{ textAlign: 'center', minWidth: '70px' }}>
                   <div className="recipe-preview-meta-value" style={{
                     fontSize: '36px',
                     fontWeight: 900,
@@ -270,19 +295,61 @@ export function RecipeExampleSection() {
                     lineHeight: 1,
                     marginBottom: '12px'
                   }}>
-                    {recipe.totalTime}'
+                    {recipe.prepTime}'
                   </div>
                   <div className="recipe-preview-meta-label" style={{
-                    fontSize: '12px',
+                    fontSize: '11px',
                     color: '#999',
                     textTransform: 'uppercase',
                     letterSpacing: '2px',
                     fontWeight: 600
                   }}>
-                    Minutes
+                    Préparation
                   </div>
                 </div>
-                <div style={{ textAlign: 'center' }}>
+                <div style={{ textAlign: 'center', minWidth: '70px' }}>
+                  <div className="recipe-preview-meta-value" style={{
+                    fontSize: '36px',
+                    fontWeight: 900,
+                    color: '#D4AF37',
+                    lineHeight: 1,
+                    marginBottom: '12px'
+                  }}>
+                    {recipe.cookTime}'
+                  </div>
+                  <div className="recipe-preview-meta-label" style={{
+                    fontSize: '11px',
+                    color: '#999',
+                    textTransform: 'uppercase',
+                    letterSpacing: '2px',
+                    fontWeight: 600
+                  }}>
+                    Cuisson
+                  </div>
+                </div>
+                {recipe.restTime && recipe.restTime > 0 && (
+                  <div style={{ textAlign: 'center', minWidth: '70px' }}>
+                    <div className="recipe-preview-meta-value" style={{
+                      fontSize: '36px',
+                      fontWeight: 900,
+                      color: '#D4AF37',
+                      lineHeight: 1,
+                      marginBottom: '12px'
+                    }}>
+                      {recipe.restTime}'
+                    </div>
+                    <div className="recipe-preview-meta-label" style={{
+                      fontSize: '11px',
+                      color: '#999',
+                      textTransform: 'uppercase',
+                      letterSpacing: '2px',
+                      fontWeight: 600
+                    }}>
+                      Repos
+                    </div>
+                  </div>
+                )}
+                <div style={{ textAlign: 'center', minWidth: '70px' }}>
                   <div className="recipe-preview-meta-value" style={{
                     fontSize: '36px',
                     fontWeight: 900,
@@ -293,7 +360,7 @@ export function RecipeExampleSection() {
                     {recipe.servings}
                   </div>
                   <div className="recipe-preview-meta-label" style={{
-                    fontSize: '12px',
+                    fontSize: '11px',
                     color: '#999',
                     textTransform: 'uppercase',
                     letterSpacing: '2px',
@@ -302,7 +369,7 @@ export function RecipeExampleSection() {
                     Personnes
                   </div>
                 </div>
-                <div style={{ textAlign: 'center' }}>
+                <div style={{ textAlign: 'center', minWidth: '70px' }}>
                   <div className="recipe-preview-meta-value" style={{
                     fontSize: '28px',
                     fontWeight: 900,
@@ -313,7 +380,7 @@ export function RecipeExampleSection() {
                     {getDifficultyStars(recipe.difficulty)}
                   </div>
                   <div className="recipe-preview-meta-label" style={{
-                    fontSize: '12px',
+                    fontSize: '11px',
                     color: '#999',
                     textTransform: 'uppercase',
                     letterSpacing: '2px',
@@ -424,6 +491,43 @@ export function RecipeExampleSection() {
                   </div>
                 ))}
               </div>
+
+              {/* Astuces du Chef - comme sur la vraie page */}
+              {recipe.chefTips && (
+                <div className="recipe-preview-chef-tips" style={{
+                  background: 'linear-gradient(135deg, #faf8f5 0%, #f5f0e8 100%)',
+                  padding: '40px',
+                  borderRadius: '16px',
+                  marginBottom: '50px',
+                  border: '2px solid #D4AF37',
+                  position: 'relative'
+                }}>
+                  <div style={{
+                    position: 'absolute',
+                    top: '-15px',
+                    left: '30px',
+                    background: '#D4AF37',
+                    color: '#000',
+                    padding: '8px 20px',
+                    borderRadius: '20px',
+                    fontSize: '11px',
+                    fontWeight: 700,
+                    letterSpacing: '1px',
+                    textTransform: 'uppercase'
+                  }}>
+                    Astuces du Chef
+                  </div>
+                  <p style={{
+                    fontSize: '15px',
+                    lineHeight: 1.8,
+                    color: '#333',
+                    fontStyle: 'italic',
+                    marginTop: '8px'
+                  }}>
+                    {recipe.chefTips.length > 200 ? recipe.chefTips.substring(0, 200) + '...' : recipe.chefTips}
+                  </p>
+                </div>
+              )}
 
               {/* Footer */}
               <div className="recipe-preview-footer" style={{
