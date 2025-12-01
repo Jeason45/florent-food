@@ -48,13 +48,21 @@ export default function PrintButton() {
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
 
-      // Ouvrir le PDF dans un nouvel onglet (permet à l'utilisateur de l'ouvrir avec une app PDF)
-      window.open(url, '_blank');
+      // Détecter iOS
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
 
-      // Nettoyer l'URL après un délai (laisser le temps au navigateur de l'ouvrir)
-      setTimeout(() => {
-        window.URL.revokeObjectURL(url);
-      }, 5000);
+      if (isIOS) {
+        // iOS: ouvrir directement dans la même fenêtre (seule méthode qui fonctionne)
+        window.location.href = url;
+      } else {
+        // Android et autres: ouvrir dans un nouvel onglet
+        window.open(url, '_blank');
+
+        // Nettoyer l'URL après un délai
+        setTimeout(() => {
+          window.URL.revokeObjectURL(url);
+        }, 5000);
+      }
 
     } catch (error) {
       console.error('Erreur téléchargement PDF:', error);
