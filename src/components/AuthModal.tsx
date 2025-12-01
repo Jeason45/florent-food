@@ -383,7 +383,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
                 }}
               >
                 <p style={{ color: '#16A34A', fontSize: '18px', margin: 0, fontWeight: '600', marginBottom: '12px' }}>
-                  ✨ Email envoyé !
+                  Email envoyé !
                 </p>
                 <p style={{ color: '#2D2D2D', fontSize: '14px', margin: 0, lineHeight: '1.6', marginBottom: '8px' }}>
                   Vérifie ta boîte mail et clique sur le lien de confirmation.
