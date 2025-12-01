@@ -170,9 +170,14 @@ export default async function RecipePage({ params }: RecipePageProps) {
           }
 
           .ingredients-section > div {
-            display: grid !important;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)) !important;
-            gap: 12px !important;
+            display: flex !important;
+            flex-wrap: wrap !important;
+            gap: 20px !important;
+          }
+
+          .ingredients-section > div > .ingredient-group {
+            flex: 1 1 150px !important;
+            min-width: 0 !important;
           }
 
           /* Ingrédients liste */
