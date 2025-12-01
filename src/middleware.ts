@@ -14,19 +14,43 @@ export async function middleware(request: NextRequest) {
   // ========================================
   if (pathname.startsWith('/recettes/')) {
     const authToken = request.cookies.get('auth-token')?.value;
+    console.log('🔒 Middleware: Accès recette détecté -', pathname, '- Token:', authToken ? 'présent' : 'absent');
 
     if (!authToken) {
       // Pas de cookie → rediriger vers l'accueil avec modal d'auth
+      console.log('🚫 Middleware: Pas de token, redirection vers accueil');
       return NextResponse.redirect(new URL('/?auth=required', request.url));
     }
 
     try {
       // Vérifier le JWT
-      await jwtVerify(authToken, JWT_SECRET);
-      // Token valide → laisser passer
+      const { payload } = await jwtVerify(authToken, JWT_SECRET);
+      const subscriberId = payload.subscriberId as string;
+
+      // Vérifier que l'abonné est toujours ACTIF en BDD
+      const baseUrl = request.nextUrl.origin;
+      const verifyResponse = await fetch(`${baseUrl}/api/auth/verify-subscriber`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ subscriberId })
+      });
+
+      const { active } = await verifyResponse.json();
+
+      if (!active) {
+        // Abonné désactivé/désinscrit → supprimer cookie et rediriger
+        console.log('🚫 Middleware: Abonné non actif, redirection');
+        const response = NextResponse.redirect(new URL('/?auth=expired', request.url));
+        response.cookies.delete('auth-token');
+        return response;
+      }
+
+      // Token valide ET abonné actif → laisser passer
+      console.log('✅ Middleware: Accès autorisé pour', subscriberId);
       return NextResponse.next();
-    } catch {
+    } catch (error) {
       // Token invalide ou expiré → rediriger vers l'accueil
+      console.log('🚫 Middleware: Token invalide', error);
       const response = NextResponse.redirect(new URL('/?auth=expired', request.url));
       // Supprimer le cookie invalide
       response.cookies.delete('auth-token');
