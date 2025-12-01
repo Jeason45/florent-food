@@ -16,6 +16,47 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error' | 'pending_confirmation'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
 
+  // Fonction pour déclencher le feu d'artifice de confettis
+  const triggerConfetti = async () => {
+    const confettiModule = await import('canvas-confetti');
+    const confetti = confettiModule.default;
+    const duration = 3000;
+    const animationEnd = Date.now() + duration;
+    const defaults = {
+      startVelocity: 30,
+      spread: 360,
+      ticks: 60,
+      zIndex: 99999,
+      colors: ['#D4AF37', '#C77A4E', '#FFD700', '#FFA500', '#FF6347']
+    };
+
+    function randomInRange(min: number, max: number) {
+      return Math.random() * (max - min) + min;
+    }
+
+    const interval: NodeJS.Timeout = setInterval(function() {
+      const timeLeft = animationEnd - Date.now();
+
+      if (timeLeft <= 0) {
+        return clearInterval(interval);
+      }
+
+      const particleCount = 50 * (timeLeft / duration);
+
+      confetti({
+        ...defaults,
+        particleCount,
+        origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }
+      });
+
+      confetti({
+        ...defaults,
+        particleCount,
+        origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }
+      });
+    }, 250);
+  };
+
   if (!isOpen) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -68,6 +109,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
 
           // Afficher message de confirmation email (pas d'auto-login car statut PENDING)
           setStatus('pending_confirmation');
+          triggerConfetti();
         }
       }
     } catch (error) {
@@ -332,19 +374,22 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
             {status === 'pending_confirmation' && (
               <div
                 style={{
-                  padding: '16px',
-                  background: '#FEF3C7',
-                  border: '1px solid #FCD34D',
-                  borderRadius: '8px',
+                  padding: '20px',
+                  background: 'linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(199, 122, 78, 0.1) 100%)',
+                  border: '1px solid rgba(212, 175, 55, 0.3)',
+                  borderRadius: '12px',
                   marginBottom: '24px',
                   textAlign: 'center',
                 }}
               >
-                <p style={{ color: '#92400E', fontSize: '14px', margin: 0, fontWeight: '500', marginBottom: '8px' }}>
-                  ✉️ Vérifie ta boîte mail !
+                <p style={{ color: '#16A34A', fontSize: '18px', margin: 0, fontWeight: '600', marginBottom: '12px' }}>
+                  ✨ Email envoyé !
                 </p>
-                <p style={{ color: '#A16207', fontSize: '13px', margin: 0, lineHeight: '1.5' }}>
-                  Un email de confirmation t'a été envoyé. Clique sur le lien pour activer ton compte et accéder aux recettes.
+                <p style={{ color: '#2D2D2D', fontSize: '14px', margin: 0, lineHeight: '1.6', marginBottom: '8px' }}>
+                  Vérifie ta boîte mail et clique sur le lien de confirmation.
+                </p>
+                <p style={{ color: '#6B6B6B', fontSize: '12px', margin: 0, fontStyle: 'italic' }}>
+                  Pense à vérifier tes spams, c'est notre premier échange !
                 </p>
               </div>
             )}
