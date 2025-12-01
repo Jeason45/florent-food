@@ -73,9 +73,8 @@ export function CommunitySection() {
           height: 14px;
         }
         .collab-icon {
-          width: 44px;
-          height: 44px;
-          padding: 10px;
+          width: 28px;
+          height: 28px;
         }
         .collab-label {
           font-size: 12px;
@@ -132,9 +131,8 @@ export function CommunitySection() {
             height: 18px;
           }
           .collab-icon {
-            width: 56px;
-            height: 56px;
-            padding: 12px;
+            width: 48px;
+            height: 48px;
           }
           .collab-label {
             font-size: 16px;
@@ -204,16 +202,14 @@ export function CommunitySection() {
           <span className="collab-label" style={{ color: 'rgba(255,255,255,0.5)', letterSpacing: '2px', display: 'block', marginBottom: '15px' }}>COLLABORATIONS</span>
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
             {brands.map((b, i) => (
-              <div key={i} style={{
-                width: '48px',
-                height: '48px',
+              <div key={i} className="collab-icon" style={{
                 borderRadius: '50%',
                 background: b.bgColor,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 border: '1px solid rgba(255,255,255,0.15)',
-                padding: '12px'
+                padding: '6px'
               }}>
                 <img src={b.icon} alt={b.name} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
               </div>

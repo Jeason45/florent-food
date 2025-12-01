@@ -19,7 +19,8 @@ export function BookPromoSection() {
           text-align: center;
         }
         .book-promo-image {
-          width: 380px;
+          width: 100%;
+          max-width: 500px;
           height: auto;
           filter: drop-shadow(0 30px 60px rgba(212, 175, 55, 0.4));
           transition: transform 0.3s ease;

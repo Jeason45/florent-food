@@ -102,8 +102,8 @@ export function HeroSection({ id }: HeroSectionProps = {}) {
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=75&fm=webp&auto=format"
-          alt="Cuisine gastronomique"
+          src="/test2.jpg"
+          alt="Test 2"
           fill
           priority
           quality={75}
