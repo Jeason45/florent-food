@@ -66,33 +66,46 @@ export async function GET(request: NextRequest) {
       subscriberId: subscriber.id
     });
 
-    // Envoyer la newsletter de la semaine en cours (si elle existe)
+    // Envoyer la newsletter de la semaine en cours (si elle existe et si l'envoi auto est activé)
     try {
-      const now = new Date();
-      const currentNewsletter = await prisma.newsletter.findFirst({
-        where: {
-          status: NewsletterStatus.ACTIVE,
-          startDate: { lte: now },
-          endDate: { gte: now }
-        },
-        orderBy: { sentAt: 'desc' }
+      // Vérifier si l'envoi automatique est activé
+      const autoSendSetting = await prisma.newsletter.findFirst({
+        where: { subject: '__SETTING_AUTO_SEND_ENABLED__' }
       });
 
-      if (currentNewsletter && currentNewsletter.content) {
-        const content = currentNewsletter.content as { html?: string };
-        if (content.html) {
-          console.log('📧 Sending current week newsletter to new subscriber:', subscriber.email);
+      const autoSendContent = autoSendSetting?.content as { enabled?: boolean } | null;
+      const autoSendEnabled = autoSendContent?.enabled ?? true; // Par défaut activé
 
-          await sendEmail({
-            to: subscriber.email,
-            subject: `📬 ${currentNewsletter.subject}`,
-            htmlContent: content.html,
-            type: 'newsletter_weekly',
-            subscriberId: subscriber.id,
-            newsletterId: currentNewsletter.id
-          });
+      if (!autoSendEnabled) {
+        console.log('⏸️ Auto-send newsletter disabled - skipping for:', subscriber.email);
+      } else {
+        const now = new Date();
+        const currentNewsletter = await prisma.newsletter.findFirst({
+          where: {
+            status: NewsletterStatus.ACTIVE,
+            startDate: { lte: now },
+            endDate: { gte: now },
+            subject: { not: '__SETTING_AUTO_SEND_ENABLED__' } // Exclure le setting
+          },
+          orderBy: { sentAt: 'desc' }
+        });
 
-          console.log('✅ Current week newsletter sent to:', subscriber.email);
+        if (currentNewsletter && currentNewsletter.content) {
+          const content = currentNewsletter.content as { html?: string };
+          if (content.html) {
+            console.log('📧 Sending current week newsletter to new subscriber:', subscriber.email);
+
+            await sendEmail({
+              to: subscriber.email,
+              subject: `📬 ${currentNewsletter.subject}`,
+              htmlContent: content.html,
+              type: 'newsletter_weekly',
+              subscriberId: subscriber.id,
+              newsletterId: currentNewsletter.id
+            });
+
+            console.log('✅ Current week newsletter sent to:', subscriber.email);
+          }
         }
       }
     } catch (newsletterError) {

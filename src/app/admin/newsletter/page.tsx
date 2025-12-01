@@ -24,10 +24,48 @@ export default function NewsletterPage() {
   const router = useRouter();
   const [newsletters, setNewsletters] = useState<Newsletter[]>([]);
   const [loading, setLoading] = useState(true);
+  const [autoSendEnabled, setAutoSendEnabled] = useState(true);
+  const [autoSendLoading, setAutoSendLoading] = useState(false);
 
   useEffect(() => {
     fetchNewsletters();
+    fetchAutoSendSetting();
   }, []);
+
+  const fetchAutoSendSetting = async () => {
+    try {
+      const response = await fetch('/api/admin/settings/newsletter-auto-send');
+      const data = await response.json();
+      if (data.success) {
+        setAutoSendEnabled(data.autoSendEnabled);
+      }
+    } catch (error) {
+      console.error('Error fetching auto-send setting:', error);
+    }
+  };
+
+  const toggleAutoSend = async () => {
+    setAutoSendLoading(true);
+    try {
+      const response = await fetch('/api/admin/settings/newsletter-auto-send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ enabled: !autoSendEnabled }),
+      });
+      const data = await response.json();
+      if (data.success) {
+        setAutoSendEnabled(data.autoSendEnabled);
+        alert(data.message);
+      } else {
+        alert(`Erreur: ${data.error}`);
+      }
+    } catch (error) {
+      console.error('Error toggling auto-send:', error);
+      alert('Erreur lors du changement de paramètre');
+    } finally {
+      setAutoSendLoading(false);
+    }
+  };
 
   const fetchNewsletters = async () => {
     try {
@@ -155,6 +193,73 @@ export default function NewsletterPage() {
           >
             <span style={{ fontSize: '18px' }}>+</span>
             Nouvelle Newsletter
+          </button>
+        </div>
+
+        {/* Toggle Auto-Send */}
+        <div style={{
+          background: autoSendEnabled
+            ? 'linear-gradient(135deg, rgba(52, 211, 153, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%)'
+            : 'linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(220, 38, 38, 0.1) 100%)',
+          border: autoSendEnabled
+            ? '1px solid rgba(52, 211, 153, 0.3)'
+            : '1px solid rgba(239, 68, 68, 0.3)',
+          padding: '20px 24px',
+          borderRadius: '12px',
+          marginBottom: '24px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between'
+        }}>
+          <div>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+              marginBottom: '6px'
+            }}>
+              <span style={{ fontSize: '18px' }}>{autoSendEnabled ? '📬' : '🚫'}</span>
+              <h3 style={{
+                color: autoSendEnabled ? '#34d399' : '#ef4444',
+                fontSize: '15px',
+                fontWeight: 700,
+                margin: 0
+              }}>
+                Envoi auto aux nouveaux abonnés : {autoSendEnabled ? 'ACTIVÉ' : 'DÉSACTIVÉ'}
+              </h3>
+            </div>
+            <p style={{
+              color: 'rgba(255,255,255,0.6)',
+              fontSize: '13px',
+              margin: 0
+            }}>
+              {autoSendEnabled
+                ? 'Les nouveaux abonnés recevront automatiquement la newsletter en cours'
+                : 'Les nouveaux abonnés ne recevront PAS la newsletter en cours (mode test)'}
+            </p>
+          </div>
+          <button
+            onClick={toggleAutoSend}
+            disabled={autoSendLoading}
+            style={{
+              background: autoSendEnabled
+                ? 'rgba(239, 68, 68, 0.2)'
+                : 'rgba(52, 211, 153, 0.2)',
+              border: autoSendEnabled
+                ? '1px solid rgba(239, 68, 68, 0.4)'
+                : '1px solid rgba(52, 211, 153, 0.4)',
+              borderRadius: '10px',
+              color: autoSendEnabled ? '#ef4444' : '#34d399',
+              padding: '12px 24px',
+              fontSize: '14px',
+              fontWeight: 600,
+              cursor: autoSendLoading ? 'not-allowed' : 'pointer',
+              transition: 'all 0.3s',
+              opacity: autoSendLoading ? 0.5 : 1,
+              whiteSpace: 'nowrap'
+            }}
+          >
+            {autoSendLoading ? '⏳...' : (autoSendEnabled ? '🛑 Désactiver' : '✅ Activer')}
           </button>
         </div>
 
