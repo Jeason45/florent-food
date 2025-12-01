@@ -21,10 +21,8 @@ export function Header() {
 
   const navigation = [
     { name: "Accueil", href: "#accueil" },
-    { name: "Les Recettes", href: "#recettes" },
     { name: "Aperçu Newsletter", href: "#newsletter-preview" },
     { name: "Aperçu Recette", href: "#recipe-preview" },
-    { name: "Pourquoi s'abonner", href: "#pourquoi-sabonner" },
     { name: "À propos", href: "#a-propos" },
     { name: "Témoignages", href: "#temoignages" },
     { name: "Réseaux sociaux", href: "#reseaux-sociaux" },
