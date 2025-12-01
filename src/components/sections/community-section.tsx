@@ -96,7 +96,7 @@ export function CommunitySection() {
           padding: '25px 30px',
           marginBottom: '15px'
         }}>
-          <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.7)', fontWeight: 300, margin: 0 }}>Merci de votre confiance</p>
+          <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.9)', fontWeight: 300, margin: 0 }}>Merci de votre confiance</p>
           <div className="line" style={{ flex: 1, height: '1px', background: 'linear-gradient(90deg, rgba(212,175,55,0.5), transparent)' }}></div>
           <p style={{ fontSize: '28px', fontWeight: 600, color: '#D4AF37', margin: 0 }}>+700K</p>
         </div>
@@ -116,7 +116,7 @@ export function CommunitySection() {
             <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TikTok" className="social-icon" style={{ width: '32px', height: '32px' }} />
             <div>
               <p className="social-number" style={{ fontSize: '22px', fontWeight: 700, color: '#1a1a1a', lineHeight: 1, margin: 0 }}>467K</p>
-              <p style={{ fontSize: '10px', color: '#999', marginTop: '3px', marginBottom: 0 }}>TikTok</p>
+              <p style={{ fontSize: '10px', color: '#666', marginTop: '3px', marginBottom: 0 }}>TikTok</p>
             </div>
           </div>
 
@@ -133,7 +133,7 @@ export function CommunitySection() {
             <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram" className="social-icon" style={{ width: '32px', height: '32px' }} />
             <div>
               <p className="social-number" style={{ fontSize: '22px', fontWeight: 700, color: '#1a1a1a', lineHeight: 1, margin: 0 }}>130K</p>
-              <p style={{ fontSize: '10px', color: '#999', marginTop: '3px', marginBottom: 0 }}>Instagram</p>
+              <p style={{ fontSize: '10px', color: '#666', marginTop: '3px', marginBottom: 0 }}>Instagram</p>
             </div>
           </div>
 
@@ -150,7 +150,7 @@ export function CommunitySection() {
             <img src="https://cdn-icons-png.flaticon.com/512/174/174883.png" alt="YouTube" className="social-icon" style={{ width: '32px', height: '32px' }} />
             <div>
               <p className="social-number" style={{ fontSize: '22px', fontWeight: 700, color: '#1a1a1a', lineHeight: 1, margin: 0 }}>105K</p>
-              <p style={{ fontSize: '10px', color: '#999', marginTop: '3px', marginBottom: 0 }}>YouTube</p>
+              <p style={{ fontSize: '10px', color: '#666', marginTop: '3px', marginBottom: 0 }}>YouTube</p>
             </div>
           </div>
 
@@ -184,7 +184,7 @@ export function CommunitySection() {
             <p style={{ color: 'rgba(255,255,255,0.85)', fontSize: '13px', lineHeight: 1.8, marginBottom: '12px', marginTop: 0 }}>
               J'ai eu la chance d'être sollicité par <strong style={{ color: '#D4AF37' }}>Audi</strong> pour participer à un défi culinaire destiné à des sportifs de haut niveau. Une expérience enrichissante face à un jury d'exception : <strong style={{ color: '#fff' }}>Thierry Marx</strong> et <strong style={{ color: '#fff' }}>Jessica Préalpato</strong>. Challenge que j'ai eu l'honneur de remporter.
             </p>
-            <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '13px', lineHeight: 1.8, margin: 0 }}>
+            <p style={{ color: 'rgba(255,255,255,0.9)', fontSize: '13px', lineHeight: 1.8, margin: 0 }}>
               Aujourd'hui, je continue de partager ma passion avec vous, en rendant la cuisine accessible à tous.
             </p>
           </div>
@@ -200,11 +200,11 @@ export function CommunitySection() {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
               <Quote size={22} style={{ color: '#D4AF37', opacity: 0.5 }} />
               <div style={{ display: 'flex', gap: '6px' }}>
-                <button onClick={prevSlide} style={{ width: '28px', height: '28px', borderRadius: '50%', background: 'rgba(255,255,255,0.1)', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <ChevronLeft size={14} color="#fff" />
+                <button onClick={prevSlide} aria-label="Témoignage précédent" style={{ width: '44px', height: '44px', borderRadius: '50%', background: 'rgba(255,255,255,0.1)', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <ChevronLeft size={18} color="#fff" />
                 </button>
-                <button onClick={nextSlide} style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#D4AF37', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <ChevronRight size={14} color="#000" />
+                <button onClick={nextSlide} aria-label="Témoignage suivant" style={{ width: '44px', height: '44px', borderRadius: '50%', background: '#D4AF37', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <ChevronRight size={18} color="#000" />
                 </button>
               </div>
             </div>
@@ -217,9 +217,34 @@ export function CommunitySection() {
                 {[...Array(5)].map((_, i) => <Star key={i} size={10} fill="#D4AF37" color="#D4AF37" />)}
               </div>
             </div>
-            <div style={{ display: 'flex', gap: '4px', marginTop: '15px', justifyContent: 'center' }}>
+            <div style={{ display: 'flex', gap: '8px', marginTop: '15px', justifyContent: 'center' }}>
               {testimonials.map((_, index) => (
-                <button key={index} onClick={() => setActiveSlide(index)} style={{ width: index === activeSlide ? '16px' : '5px', height: '5px', borderRadius: '3px', background: index === activeSlide ? '#D4AF37' : 'rgba(255,255,255,0.2)', border: 'none', cursor: 'pointer', transition: 'all 0.3s' }} />
+                <button
+                  key={index}
+                  onClick={() => setActiveSlide(index)}
+                  aria-label={`Voir témoignage ${index + 1}`}
+                  style={{
+                    width: '44px',
+                    height: '44px',
+                    borderRadius: '8px',
+                    background: 'transparent',
+                    border: 'none',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: 0
+                  }}
+                >
+                  <span style={{
+                    width: index === activeSlide ? '20px' : '8px',
+                    height: '8px',
+                    borderRadius: '4px',
+                    background: index === activeSlide ? '#D4AF37' : 'rgba(255,255,255,0.3)',
+                    transition: 'all 0.3s',
+                    display: 'block'
+                  }} />
+                </button>
               ))}
             </div>
           </div>
