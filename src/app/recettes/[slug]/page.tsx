@@ -1,11 +1,44 @@
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
+import { cookies } from 'next/headers';
+import { jwtVerify } from 'jose';
 import { prisma } from '@/lib/prisma';
 import PrintButton from '@/components/PrintButton';
+
+const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || 'fallback-secret');
 
 interface RecipePageProps {
   params: Promise<{
     slug: string;
   }>;
+}
+
+// Fonction pour vérifier si l'abonné est toujours actif
+async function verifySubscriber() {
+  const cookieStore = await cookies();
+  const authToken = cookieStore.get('auth-token')?.value;
+
+  if (!authToken) {
+    return { valid: false, reason: 'no-token' };
+  }
+
+  try {
+    const { payload } = await jwtVerify(authToken, JWT_SECRET);
+    const subscriberId = payload.subscriberId as string;
+
+    // Vérifier que l'abonné est toujours ACTIF en BDD
+    const subscriber = await prisma.newsletterSubscriber.findUnique({
+      where: { id: subscriberId },
+      select: { status: true }
+    });
+
+    if (!subscriber || subscriber.status !== 'ACTIVE') {
+      return { valid: false, reason: 'not-active' };
+    }
+
+    return { valid: true };
+  } catch {
+    return { valid: false, reason: 'invalid-token' };
+  }
 }
 
 export async function generateMetadata({ params }: RecipePageProps) {
@@ -27,6 +60,12 @@ export async function generateMetadata({ params }: RecipePageProps) {
 }
 
 export default async function RecipePage({ params }: RecipePageProps) {
+  // Vérifier que l'abonné est toujours actif
+  const auth = await verifySubscriber();
+  if (!auth.valid) {
+    redirect('/?auth=expired');
+  }
+
   const { slug } = await params;
   const recipe = await prisma.recipe.findUnique({
     where: { slug },
