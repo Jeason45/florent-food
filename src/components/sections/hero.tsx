@@ -180,7 +180,7 @@ export function HeroSection({ id }: HeroSectionProps = {}) {
               </h2>
 
               <p className="text-white/80 mb-2 sm:mb-3 text-sm sm:text-[15px] leading-relaxed sm:whitespace-nowrap">
-                Rejoins les <span className="text-[#D4AF37] font-semibold">130K+ gourmands</span> et reçois <strong>5 recettes exclusives</strong> chaque semaine.
+                Rejoins les <span className="text-[#D4AF37] font-semibold">848K+ gourmands</span> et reçois <strong>5 recettes exclusives</strong> chaque semaine.
               </p>
 
               <form onSubmit={handleSubmit} className="w-full">

@@ -612,7 +612,6 @@ export function NewsletterPreviewSection() {
                 textTransform: 'uppercase',
                 margin: 0
               }}>
-                Haute Cuisine · Paris<br/>
                 <span style={{ color: '#D4AF37' }}>Se Désinscrire</span> · <span style={{ color: '#D4AF37' }}>Préférences</span>
               </p>
             </div>

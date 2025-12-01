@@ -26,12 +26,19 @@ export function Header() {
     { name: "À propos", href: "#a-propos" },
     { name: "Témoignages", href: "#temoignages" },
     { name: "Réseaux sociaux", href: "#reseaux-sociaux" },
+    { name: "Contact", href: "/contact" },
   ];
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
     setIsMobileMenuOpen(false);
 
+    // Si c'est un lien vers une page (commence par "/"), on laisse la navigation par défaut
+    if (href.startsWith('/')) {
+      return;
+    }
+
+    // Sinon c'est une ancre, on fait un scroll smooth
+    e.preventDefault();
     const targetId = href.replace('#', '');
     const element = document.getElementById(targetId);
 

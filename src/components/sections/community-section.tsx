@@ -39,6 +39,7 @@ const brands = [
   { name: "McDonald's", icon: "https://cdn.simpleicons.org/mcdonalds/ffffff", bgColor: "#FFC72C" },
   { name: "Uber Eats", icon: "https://cdn.simpleicons.org/ubereats/ffffff", bgColor: "#06C167" },
   { name: "Paramount+", icon: "https://cdn.simpleicons.org/paramountplus/ffffff", bgColor: "#0064FF" },
+  { name: "Andros Be Nut's", icon: "/benuts.png", bgColor: "transparent", noPadding: true },
 ];
 
 export function CommunitySection() {
@@ -208,10 +209,11 @@ export function CommunitySection() {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                border: '1px solid rgba(255,255,255,0.15)',
-                padding: '6px'
+                border: b.noPadding ? 'none' : '1px solid rgba(255,255,255,0.15)',
+                padding: b.noPadding ? '0' : '6px',
+                overflow: 'hidden'
               }}>
-                <img src={b.icon} alt={b.name} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                <img src={b.icon} alt={b.name} style={{ width: '100%', height: '100%', objectFit: b.noPadding ? 'cover' : 'contain' }} />
               </div>
             ))}
           </div>
