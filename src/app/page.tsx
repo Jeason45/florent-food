@@ -8,8 +8,31 @@ import { RecipeExampleSection } from "@/components/sections/recipe-example";
 import { AboutStorySection } from "@/components/sections/about-story";
 import { TestimonialsSection } from "@/components/sections/testimonials";
 import { SocialLinksSection } from "@/components/sections/social-links";
+import { AuthModal } from "@/components/AuthModal";
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
+
+// Composant séparé pour gérer l'ouverture automatique du modal d'auth
+function AuthRequired() {
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const authParam = searchParams.get('auth');
+    if (authParam === 'required' || authParam === 'expired') {
+      setShowAuthModal(true);
+      // Nettoyer l'URL
+      window.history.replaceState({}, '', '/');
+    }
+  }, [searchParams]);
+
+  return (
+    <AuthModal
+      isOpen={showAuthModal}
+      onClose={() => setShowAuthModal(false)}
+    />
+  );
+}
 
 // Composant séparé pour gérer le toast de confirmation (nécessite Suspense)
 function ConfirmationToast() {
@@ -89,6 +112,11 @@ function ConfirmationToast() {
 export default function Home() {
   return (
     <>
+      {/* Modal d'auth automatique si redirection depuis recette protégée */}
+      <Suspense fallback={null}>
+        <AuthRequired />
+      </Suspense>
+
       {/* Toast de confirmation d'inscription (wrappé dans Suspense pour useSearchParams) */}
       <Suspense fallback={null}>
         <ConfirmationToast />

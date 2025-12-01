@@ -3,6 +3,9 @@ import { prisma } from '@/lib/prisma';
 import { sendEmail } from '@/lib/emailUtils';
 import { welcomeEmail } from '@/lib/email/templates';
 import { NewsletterStatus } from '@prisma/client';
+import { SignJWT } from 'jose';
+
+const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || 'fallback-secret');
 
 export async function GET(request: NextRequest) {
   try {
@@ -97,10 +100,32 @@ export async function GET(request: NextRequest) {
       console.error('⚠️ Failed to send current week newsletter:', newsletterError);
     }
 
-    // Rediriger vers la page d'accueil avec message de succès
-    return NextResponse.redirect(
-      `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}?confirmed=true`
-    );
+    // Créer un JWT token pour auto-login
+    const authToken = await new SignJWT({
+      subscriberId: subscriber.id,
+      email: subscriber.email,
+      subscriptionType: subscriber.subscriptionType
+    })
+      .setProtectedHeader({ alg: 'HS256' })
+      .setIssuedAt()
+      .setExpirationTime('30d')
+      .sign(JWT_SECRET);
+
+    // Rediriger vers la page d'accueil avec message de succès ET cookie d'auth
+    const redirectUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}?confirmed=true`;
+    const response = NextResponse.redirect(redirectUrl);
+
+    // Ajouter le cookie d'authentification (auto-login)
+    response.cookies.set('auth-token', authToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 30 * 24 * 60 * 60 // 30 jours
+    });
+
+    console.log('🔐 Auto-login cookie set for:', subscriber.email);
+
+    return response;
 
   } catch (error) {
     console.error('❌ Error confirming subscription:', error);
