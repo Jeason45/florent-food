@@ -77,6 +77,14 @@ export function CommunitySection() {
           .community-grid-row3 {
             grid-template-columns: 1fr 1fr;
           }
+          .collab-icons {
+            grid-template-columns: repeat(4, 1fr) !important;
+            gap: 10px !important;
+          }
+          .collab-icons > div {
+            width: 36px !important;
+            height: 36px !important;
+          }
         }
       `}</style>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
@@ -154,9 +162,9 @@ export function CommunitySection() {
             boxShadow: '0 2px 20px rgba(0,0,0,0.04)'
           }}>
             <p style={{ color: '#D4AF37', fontSize: '9px', letterSpacing: '2px', marginBottom: '12px', marginTop: 0, textAlign: 'center' }}>COLLABORATIONS</p>
-            <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <div className="collab-icons" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '6px', justifyItems: 'center' }}>
               {brands.map((brand, i) => (
-                <div key={i} style={{ width: '32px', height: '32px', borderRadius: '10px', background: '#f8f8f8', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '6px' }}>
+                <div key={i} style={{ width: '28px', height: '28px', borderRadius: '8px', background: '#f8f8f8', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '5px' }}>
                   <img src={brand.icon} alt={brand.name} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                 </div>
               ))}
