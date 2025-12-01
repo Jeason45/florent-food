@@ -48,14 +48,13 @@ export default function PrintButton() {
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
 
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `Recette - Florent Food.pdf`;
-      document.body.appendChild(a);
-      a.click();
+      // Ouvrir le PDF dans un nouvel onglet (permet à l'utilisateur de l'ouvrir avec une app PDF)
+      window.open(url, '_blank');
 
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
+      // Nettoyer l'URL après un délai (laisser le temps au navigateur de l'ouvrir)
+      setTimeout(() => {
+        window.URL.revokeObjectURL(url);
+      }, 5000);
 
     } catch (error) {
       console.error('Erreur téléchargement PDF:', error);
