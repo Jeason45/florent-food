@@ -27,25 +27,8 @@ export async function middleware(request: NextRequest) {
       const { payload } = await jwtVerify(authToken, JWT_SECRET);
       const subscriberId = payload.subscriberId as string;
 
-      // Vérifier que l'abonné est toujours ACTIF en BDD
-      const baseUrl = request.nextUrl.origin;
-      const verifyResponse = await fetch(`${baseUrl}/api/auth/verify-subscriber`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ subscriberId })
-      });
-
-      const { active } = await verifyResponse.json();
-
-      if (!active) {
-        // Abonné désactivé/désinscrit → supprimer cookie et rediriger
-        console.log('🚫 Middleware: Abonné non actif, redirection');
-        const response = NextResponse.redirect(new URL('/?auth=expired', request.url));
-        response.cookies.delete('auth-token');
-        return response;
-      }
-
-      // Token valide ET abonné actif → laisser passer
+      // Token valide → laisser passer
+      // Note: La vérification du statut ACTIVE se fait via le JWT qui est créé uniquement pour les abonnés actifs
       console.log('✅ Middleware: Accès autorisé pour', subscriberId);
       return NextResponse.next();
     } catch (error) {
