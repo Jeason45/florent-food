@@ -34,9 +34,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    if (subscriber.status === 'PENDING') {
+      return NextResponse.json(
+        { error: 'Inscription en attente. Vérifie ta boîte mail pour confirmer ton inscription.' },
+        { status: 403 }
+      );
+    }
+
     if (subscriber.status !== 'ACTIVE') {
       return NextResponse.json(
-        { error: 'Abonnement non actif' },
+        { error: 'Abonnement non actif ou expiré' },
         { status: 403 }
       );
     }
