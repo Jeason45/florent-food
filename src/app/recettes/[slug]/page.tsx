@@ -335,9 +335,19 @@ export default async function RecipePage({ params }: RecipePageProps) {
             display: none !important;
           }
 
-          /* Bouton PDF - CACHER sur mobile */
+          /* Bouton PDF - Visible sur mobile aussi */
           .print-button-container {
-            display: none !important;
+            display: block !important;
+            position: fixed !important;
+            bottom: 20px !important;
+            right: 20px !important;
+            top: auto !important;
+            z-index: 100 !important;
+          }
+
+          .print-button-container .print-button {
+            padding: 10px 16px !important;
+            font-size: 11px !important;
           }
 
           /* Contenu principal mobile - COMPACT */

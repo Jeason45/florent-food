@@ -2,8 +2,13 @@ FROM node:22-alpine AS base
 
 # Install dependencies only when needed
 FROM base AS deps
-RUN apk add --no-cache libc6-compat
+# Install libc6-compat and Chromium dependencies for Puppeteer
+RUN apk add --no-cache libc6-compat chromium nss freetype harfbuzz ca-certificates ttf-freefont
 WORKDIR /app
+
+# Tell Puppeteer to use installed Chromium instead of downloading
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
 
 # Install dependencies based on the preferred package manager
 COPY package.json package-lock.json* ./
@@ -26,8 +31,13 @@ RUN npm run build
 FROM base AS runner
 WORKDIR /app
 
+# Install Chromium for Puppeteer in production
+RUN apk add --no-cache chromium nss freetype harfbuzz ca-certificates ttf-freefont
+
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
