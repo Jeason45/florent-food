@@ -6,23 +6,33 @@ import { useState } from "react";
 const testimonials = [
   {
     id: 1,
-    name: "Hinde",
-    text: "Les recettes de Florent sont incroyables ! J'ai réussi mon premier Paris-Brest grâce à ses explications claires et détaillées. Mes invités étaient bluffés !",
+    name: "@yourglamoureuse",
+    source: "YouTube",
+    text: "Ça a l'air délicieux 😍 je m'abonne direct ❤️",
   },
   {
     id: 2,
-    name: "Houda",
-    text: "Même en tant que débutante, j'ai pu suivre facilement. Les vidéos sont top et les astuces font vraiment la différence. Je recommande à 100% !",
+    name: "@martinemartincluzel9990",
+    source: "YouTube",
+    text: "Florent, faut arrêter de nous régaler comme ça. On peut pas s'empêcher de le refaire. N'empêche merci pour la recette mon grand 😘❤️👍",
   },
   {
     id: 3,
-    name: "Rudy",
-    text: "Wouaf Wouaf ! J'ai beaucoup de chance de pouvoir goûter aux restes des créations de mon chef ! Le Paris-Brest ? Même les miettes sont divines !",
+    name: "@giovanni_ttm",
+    source: "Instagram",
+    text: "Incroyable recette de gaufres, j'adore 😍",
   },
   {
     id: 4,
-    name: "Jeason",
-    text: "Des recettes accessibles avec un rendu professionnel ! Florent a su me redonner confiance en cuisine. Ses conseils sont précis et toujours justes.",
+    name: "@dudu22973",
+    source: "Instagram",
+    text: "Très bonne recette monsieur qui me donne trop envie d'y goûter 😋😋😋😋",
+  },
+  {
+    id: 5,
+    name: "@houda34",
+    source: "TikTok",
+    text: "Même en tant que débutante, j'ai pu suivre facilement. Les vidéos sont top et les astuces font vraiment la différence. Je recommande à 100% !",
   },
 ];
 
@@ -257,11 +267,14 @@ export function CommunitySection() {
                 </button>
               </div>
             </div>
-            <p style={{ color: '#444', fontSize: '15px', lineHeight: 1.9, marginBottom: '20px', marginTop: 0, fontStyle: 'italic', flex: 1 }}>
+            <p style={{ color: '#444', fontSize: '15px', lineHeight: 1.9, marginBottom: '20px', marginTop: 0, flex: 1 }}>
               "{testimonials[activeSlide].text}"
             </p>
             <div style={{ borderTop: '1px solid #eee', paddingTop: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <p style={{ color: '#1a1a1a', fontSize: '15px', fontWeight: 600, margin: 0 }}>{testimonials[activeSlide].name}</p>
+              <div>
+                <p style={{ color: '#1a1a1a', fontSize: '15px', fontWeight: 600, margin: 0 }}>{testimonials[activeSlide].name}</p>
+                <p style={{ color: '#D4AF37', fontSize: '12px', margin: '4px 0 0 0', letterSpacing: '1px' }}>{testimonials[activeSlide].source}</p>
+              </div>
               <div style={{ display: 'flex', gap: '2px' }}>
                 {[...Array(5)].map((_, i) => <Star key={i} size={12} fill="#D4AF37" color="#D4AF37" />)}
               </div>
