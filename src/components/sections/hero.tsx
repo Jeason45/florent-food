@@ -3,6 +3,14 @@
 import { useState } from "react";
 import Image from "next/image";
 
+// Styles pour l'animation shine
+const shineStyles = `
+  @keyframes shine {
+    0% { left: -100%; }
+    100% { left: 100%; }
+  }
+`;
+
 interface HeroSectionProps {
   id?: string;
 }
@@ -88,6 +96,9 @@ export function HeroSection({ id }: HeroSectionProps = {}) {
 
   return (
     <section id={id} className="relative min-h-[100svh] overflow-hidden bg-black">
+      {/* Animation CSS */}
+      <style dangerouslySetInnerHTML={{ __html: shineStyles }} />
+
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -103,12 +114,15 @@ export function HeroSection({ id }: HeroSectionProps = {}) {
       </div>
 
       {/* Card en bas - Style Mix B3 */}
-      <div className="absolute bottom-8 sm:bottom-10 left-1/2 -translate-x-1/2 z-10 w-[95%] max-w-[620px]">
+      <div className="absolute bottom-4 sm:bottom-5 left-1/2 -translate-x-1/2 z-10 w-[95%] max-w-[620px]">
         <div
           className="backdrop-blur-xl rounded-3xl border border-white/10 flex flex-col items-center justify-center text-center"
           style={{
             background: 'rgba(107, 93, 82, 0.5)',
-            padding: 'clamp(24px, 5vw, 36px)'
+            paddingLeft: 'clamp(18px, 4vw, 24px)',
+            paddingRight: 'clamp(18px, 4vw, 24px)',
+            paddingTop: 'clamp(14px, 3vw, 18px)',
+            paddingBottom: 'clamp(12px, 2vw, 14px)'
           }}
         >
           {status === "success" ? (
@@ -119,32 +133,65 @@ export function HeroSection({ id }: HeroSectionProps = {}) {
             </div>
           ) : (
             <>
-              <h2
-                className="mb-3"
+              {/* Badge 100% Gratuit avec effet Shine - Compact */}
+              <div
+                className="inline-flex items-center rounded-full relative overflow-hidden"
                 style={{
-                  fontSize: 'clamp(24px, 5vw, 32px)',
+                  background: 'linear-gradient(135deg, #D4AF37 0%, #B8860B 100%)',
+                  padding: 'clamp(5px, 1.5vw, 6px) clamp(12px, 3vw, 16px)',
+                  boxShadow: '0 2px 10px rgba(212, 175, 55, 0.35)',
+                  marginBottom: 'clamp(8px, 2vw, 10px)'
+                }}
+              >
+                {/* Shine overlay */}
+                <div
+                  className="absolute top-0 w-full h-full pointer-events-none"
+                  style={{
+                    left: '-100%',
+                    background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)',
+                    animation: 'shine 2.5s infinite'
+                  }}
+                />
+                <span
+                  className="relative z-10"
+                  style={{
+                    color: '#000',
+                    fontSize: 'clamp(9px, 2.5vw, 10px)',
+                    fontWeight: 700,
+                    letterSpacing: '0.08em',
+                    textTransform: 'uppercase'
+                  }}
+                >
+                  100% Gratuit
+                </span>
+              </div>
+
+              <h2
+                style={{
+                  fontSize: 'clamp(22px, 5vw, 32px)',
                   fontWeight: 600,
                   fontFamily: 'var(--font-cormorant), Georgia, serif',
                   lineHeight: 1.2,
-                  color: '#fff'
+                  color: '#fff',
+                  marginBottom: 'clamp(2px, 1vw, 4px)'
                 }}
               >
                 Envie de nouvelles idées recettes ?
               </h2>
 
-              <p className="text-white/80 mb-6 text-sm sm:text-base leading-relaxed">
+              <p className="text-white/80 mb-2 sm:mb-3 text-sm sm:text-[15px] leading-relaxed sm:whitespace-nowrap">
                 Rejoins les <span className="text-[#D4AF37] font-semibold">130K+ gourmands</span> et reçois <strong>5 recettes exclusives</strong> chaque semaine.
               </p>
 
               <form onSubmit={handleSubmit} className="w-full">
-                {/* Desktop: Pill form (identique à l'original) */}
+                {/* Desktop: Pill form compact */}
                 <div
                   className="hidden sm:flex items-center rounded-full w-full overflow-hidden"
                   style={{
                     background: 'rgba(0, 0, 0, 0.35)',
                     border: '1px solid rgba(212, 175, 55, 0.3)',
                     boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.2), 0 0 20px rgba(212, 175, 55, 0.1)',
-                    padding: '5px'
+                    padding: '4px'
                   }}
                 >
                   <input
@@ -156,8 +203,8 @@ export function HeroSection({ id }: HeroSectionProps = {}) {
                     disabled={status === "loading"}
                     className="flex-1 bg-transparent border-none text-white placeholder-white/40 focus:outline-none disabled:opacity-50 focus:placeholder-white/60 transition-all"
                     style={{
-                      padding: '12px 24px',
-                      fontSize: '15px',
+                      padding: '8px 18px',
+                      fontSize: '14px',
                       minWidth: 0,
                       letterSpacing: '0.02em'
                     }}
@@ -167,10 +214,10 @@ export function HeroSection({ id }: HeroSectionProps = {}) {
                     disabled={status === "loading"}
                     className="rounded-full text-white font-semibold whitespace-nowrap transition-all duration-300 disabled:opacity-70 hover:scale-[1.02] hover:shadow-xl active:scale-[0.98]"
                     style={{
-                      padding: '12px 28px',
+                      padding: '8px 22px',
                       background: 'linear-gradient(135deg, #D4AF37 0%, #B8860B 50%, #D4AF37 100%)',
                       backgroundSize: '200% 200%',
-                      fontSize: '14px',
+                      fontSize: '12px',
                       cursor: status === "loading" ? 'wait' : 'pointer',
                       boxShadow: '0 4px 15px rgba(212, 175, 55, 0.4)',
                       letterSpacing: '0.03em',
@@ -227,7 +274,7 @@ export function HeroSection({ id }: HeroSectionProps = {}) {
                   <p className="text-red-400 text-sm mt-3">{errorMessage}</p>
                 )}
 
-                <p className="text-white/40 text-[10px] mt-3 leading-tight">
+                <p className="text-white/40 text-[10px] mt-2 mb-0 leading-tight">
                   Gratuit · Sans engagement · Désinscription 1 clic<br />
                   En t'inscrivant, tu acceptes notre{' '}
                   <a
