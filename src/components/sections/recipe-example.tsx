@@ -147,6 +147,10 @@ export function RecipeExampleSection() {
           .recipe-preview-footer-title {
             font-size: 20px !important;
           }
+          .recipe-preview-ingredients-grid {
+            grid-template-columns: 1fr !important;
+            gap: 25px !important;
+          }
         }
       `}</style>
       {/* Decorative elements */}
@@ -390,7 +394,7 @@ export function RecipeExampleSection() {
                 {/* Vérifier si c'est le nouveau format avec groupes */}
                 {recipe.ingredients.length > 0 && recipe.ingredients[0] !== null && typeof recipe.ingredients[0] === 'object' && 'groupName' in recipe.ingredients[0] ? (
                   // Format avec groupes - affichés côte à côte
-                  <div style={{
+                  <div className="recipe-preview-ingredients-grid" style={{
                     display: 'grid',
                     gridTemplateColumns: `repeat(${Math.min(recipe.ingredients.length, 3)}, 1fr)`,
                     gap: '30px'
