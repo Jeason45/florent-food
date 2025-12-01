@@ -87,6 +87,13 @@ export default function CookiesPage() {
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.25rem' }}>
                     <p className="text-xs font-medium tracking-[0.15em] uppercase text-[#8B7355]">
+                      auth-token
+                    </p>
+                    <p className="text-sm font-light text-[#2A2A2A]">Authentification abonné — 30 jours</p>
+                  </div>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.25rem' }}>
+                    <p className="text-xs font-medium tracking-[0.15em] uppercase text-[#8B7355]">
                       florent_admin_session
                     </p>
                     <p className="text-sm font-light text-[#2A2A2A]">Session administrateur — 7 jours</p>
@@ -295,8 +302,13 @@ export default function CookiesPage() {
 
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem', maxWidth: '600px' }}>
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
-                <p className="text-xs font-medium tracking-[0.2em] uppercase text-[#8B7355]">Cookies essentiels</p>
-                <p className="text-base font-light text-[#2A2A2A]">12 mois maximum</p>
+                <p className="text-xs font-medium tracking-[0.2em] uppercase text-[#8B7355]">Authentification abonné</p>
+                <p className="text-base font-light text-[#2A2A2A]">30 jours</p>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
+                <p className="text-xs font-medium tracking-[0.2em] uppercase text-[#8B7355]">Session admin</p>
+                <p className="text-base font-light text-[#2A2A2A]">7 jours</p>
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
@@ -305,13 +317,8 @@ export default function CookiesPage() {
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
-                <p className="text-xs font-medium tracking-[0.2em] uppercase text-[#8B7355]">Cookies fonctionnels</p>
-                <p className="text-base font-light text-[#2A2A2A]">12 mois maximum</p>
-              </div>
-
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
-                <p className="text-xs font-medium tracking-[0.2em] uppercase text-[#8B7355]">Session admin</p>
-                <p className="text-base font-light text-[#2A2A2A]">7 jours</p>
+                <p className="text-xs font-medium tracking-[0.2em] uppercase text-[#8B7355]">Consentement cookies</p>
+                <p className="text-base font-light text-[#2A2A2A]">12 mois</p>
               </div>
             </div>
           </section>
