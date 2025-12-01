@@ -59,10 +59,18 @@ export function CommunitySection() {
           font-size: 13px;
         }
         .social-pill {
-          padding: 6px 16px 6px 6px;
+          padding: 4px 10px 4px 4px;
         }
         .social-pill span {
-          font-size: 15px;
+          font-size: 12px;
+        }
+        .social-pill-icon {
+          width: 28px;
+          height: 28px;
+        }
+        .social-pill-icon img {
+          width: 14px;
+          height: 14px;
         }
         .collab-icon {
           width: 44px;
@@ -74,6 +82,33 @@ export function CommunitySection() {
         }
         .about-label {
           font-size: 11px;
+        }
+        /* Animation Glow */
+        @keyframes glow {
+          0%, 100% { text-shadow: 0 0 5px rgba(212, 175, 55, 0.3); }
+          50% { text-shadow: 0 0 20px rgba(212, 175, 55, 0.6), 0 0 30px rgba(212, 175, 55, 0.4); }
+        }
+        .anim-glow {
+          animation: glow 2s ease-in-out infinite;
+        }
+        /* Animation Underline */
+        .anim-underline {
+          position: relative;
+          display: inline-block;
+        }
+        .anim-underline::after {
+          content: '';
+          position: absolute;
+          bottom: -5px;
+          left: 0;
+          width: 100%;
+          height: 2px;
+          background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+          animation: slideUnderline 2s ease-in-out infinite;
+        }
+        @keyframes slideUnderline {
+          0%, 100% { transform: scaleX(0.3); opacity: 0.5; }
+          50% { transform: scaleX(1); opacity: 1; }
         }
         @media (min-width: 768px) {
           .community-grid-row3 {
@@ -87,6 +122,14 @@ export function CommunitySection() {
           }
           .social-pill span {
             font-size: 20px;
+          }
+          .social-pill-icon {
+            width: 36px;
+            height: 36px;
+          }
+          .social-pill-icon img {
+            width: 18px;
+            height: 18px;
           }
           .collab-icon {
             width: 56px;
@@ -111,8 +154,8 @@ export function CommunitySection() {
           marginBottom: '15px',
           textAlign: 'center'
         }}>
-          <p className="social-links-title" style={{ color: '#D4AF37', letterSpacing: '3px', marginBottom: '25px', marginTop: 0 }}>REJOINS +848K ABONNÉS</p>
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
+          <p className="social-links-title anim-glow anim-underline" style={{ color: '#D4AF37', letterSpacing: '3px', marginBottom: '25px', marginTop: 0 }}>REJOINS +848K ABONNÉS</p>
+          <div className="social-pills-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
             {socials.map((s, i) => (
               <a
                 key={i}
@@ -126,15 +169,13 @@ export function CommunitySection() {
                   borderRadius: '50px',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '12px',
+                  gap: '8px',
                   textDecoration: 'none',
                   transition: 'all 0.3s',
                   border: '1px solid rgba(255,255,255,0.15)'
                 }}
               >
-                <div style={{
-                  width: '36px',
-                  height: '36px',
+                <div className="social-pill-icon" style={{
                   borderRadius: '50%',
                   background: s.bgColor,
                   display: 'flex',
@@ -146,10 +187,6 @@ export function CommunitySection() {
                   <img
                     src={s.darkIcon ? s.icon.replace('/ffffff', '/000000') : s.icon}
                     alt={s.name}
-                    style={{
-                      width: '18px',
-                      height: '18px'
-                    }}
                   />
                 </div>
                 <span style={{ color: '#fff', fontWeight: 600 }}>{s.count}</span>
