@@ -1,14 +1,31 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 
 export default function PrintButton() {
   const [loading, setLoading] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const pathname = usePathname();
 
-  const handleDownload = async () => {
-    // Extraire le slug de l'URL (ex: /recettes/brioche-perdue -> brioche-perdue)
+  // Détecter si on est sur mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768 || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent));
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const handleClick = async () => {
+    // Desktop: utiliser window.print() (instantané)
+    if (!isMobile) {
+      window.print();
+      return;
+    }
+
+    // Mobile: utiliser l'API Puppeteer
     const slug = pathname.split('/').pop();
 
     if (!slug) {
@@ -21,27 +38,22 @@ export default function PrintButton() {
     try {
       const response = await fetch(`/api/recettes/${slug}/pdf`, {
         method: 'GET',
-        credentials: 'include', // Important pour envoyer les cookies
+        credentials: 'include',
       });
 
       if (!response.ok) {
         throw new Error('Erreur lors de la génération du PDF');
       }
 
-      // Récupérer le blob du PDF
       const blob = await response.blob();
-
-      // Créer un URL pour le téléchargement
       const url = window.URL.createObjectURL(blob);
 
-      // Créer un lien et déclencher le téléchargement
       const a = document.createElement('a');
       a.href = url;
       a.download = `Recette - Florent Food.pdf`;
       document.body.appendChild(a);
       a.click();
 
-      // Nettoyer
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
 
@@ -55,7 +67,7 @@ export default function PrintButton() {
 
   return (
     <button
-      onClick={handleDownload}
+      onClick={handleClick}
       disabled={loading}
       className="print-button"
       style={{
