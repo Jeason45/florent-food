@@ -6,7 +6,7 @@ import { HeroSection } from "@/components/sections/hero";
 import { NewsletterPreviewSection } from "@/components/sections/newsletter-preview";
 import { RecipeExampleSection } from "@/components/sections/recipe-example";
 import { CommunitySection } from "@/components/sections/community-section";
-import { SocialLinksSection } from "@/components/sections/social-links";
+import { BookPromoSection } from "@/components/sections/book-promo";
 import { AuthModal } from "@/components/AuthModal";
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
@@ -176,7 +176,7 @@ export default function Home() {
         <div id="communaute">
           <CommunitySection />
         </div>
-        <SocialLinksSection />
+        <BookPromoSection />
       </main>
       <Footer />
     </>
