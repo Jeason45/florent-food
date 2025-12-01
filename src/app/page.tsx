@@ -128,7 +128,7 @@ export default function Home() {
         {/* Section Newsletter + Recette côte à côte sur desktop */}
         <section className="preview-grid-section" style={{
           background: 'linear-gradient(to bottom, #FFF8F0, #FFFBF7)',
-          padding: '40px 20px 80px'
+          padding: '30px 20px'
         }}>
           <style>{`
             .preview-grid {

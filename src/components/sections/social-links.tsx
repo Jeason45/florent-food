@@ -2,7 +2,7 @@
 
 export function SocialLinksSection() {
   return (
-    <section className="relative bg-gradient-to-br from-[#FFFBF7] via-[#FFF8F0] to-[#FFF5EB]" style={{ paddingTop: '2.5rem', paddingBottom: '2.5rem' }}>
+    <section className="relative bg-gradient-to-br from-[#FFFBF7] via-[#FFF8F0] to-[#FFF5EB]" style={{ padding: '30px 20px' }}>
       <div className="relative max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl 2xl:max-w-7xl px-5 sm:px-8 lg:px-12" style={{ margin: '0 auto' }}>
         <div className="text-center">
           <p className="text-xs sm:text-sm text-[var(--gris-taupe)] uppercase tracking-[0.2em] font-light mb-6 sm:mb-8">

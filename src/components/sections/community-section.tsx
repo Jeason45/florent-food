@@ -40,7 +40,7 @@ export function CommunitySection() {
   const prevSlide = () => setActiveSlide((prev) => (prev - 1 + testimonials.length) % testimonials.length);
 
   return (
-    <section className="community-section" style={{ background: '#FFFBF7', padding: '50px 20px' }}>
+    <section className="community-section" style={{ background: '#FFFBF7', padding: '10px 20px 30px' }}>
       <style>{`
         .community-grid-row1 {
           display: flex;
