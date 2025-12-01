@@ -111,33 +111,46 @@ export default async function RecipePage({ params }: RecipePageProps) {
 
           /* Hero très compact pour l'impression */
           .recipe-hero {
-            aspect-ratio: 4 / 1 !important;
-            max-height: 120px !important;
+            aspect-ratio: unset !important;
+            height: 180px !important;
+            max-height: 180px !important;
+            min-height: 180px !important;
             page-break-after: avoid;
+            position: relative !important;
+            overflow: hidden !important;
           }
 
           .recipe-hero img {
-            max-height: 120px !important;
+            height: 180px !important;
+            max-height: 180px !important;
+            object-fit: cover !important;
           }
 
           .recipe-hero-overlay {
-            padding: 10px 20px !important;
+            padding: 12px 20px !important;
+            position: absolute !important;
+            bottom: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.9) 100%) !important;
+            height: auto !important;
+            max-height: 80px !important;
           }
 
           .recipe-hero-overlay > div:first-child {
             font-size: 8px !important;
-            margin-bottom: 4px !important;
+            margin-bottom: 2px !important;
             letter-spacing: 1px !important;
           }
 
           .recipe-hero-overlay h1 {
-            font-size: 20px !important;
-            margin-bottom: 6px !important;
+            font-size: 18px !important;
+            margin-bottom: 0 !important;
             letter-spacing: 0 !important;
+            line-height: 1.2 !important;
           }
 
           .recipe-hero-overlay p {
-            font-size: 9px !important;
             display: none !important;
           }
 
