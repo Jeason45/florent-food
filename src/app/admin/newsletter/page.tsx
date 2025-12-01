@@ -328,7 +328,7 @@ export default function NewsletterPage() {
                       e.currentTarget.style.borderColor = 'rgba(52, 211, 153, 0.3)';
                     }}
                   >
-                    👁️ Voir
+                    ✏️ Modifier
                   </button>
 
                   <button

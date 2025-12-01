@@ -13,7 +13,6 @@ export default function ContactPage() {
   });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
-  const [focusedField, setFocusedField] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,243 +54,158 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FFFBF7] relative">
-      {/* Navigation */}
-      <div className="relative z-10 py-6 w-full px-6 md:px-10">
-        <Link
-          href="/"
-          className="group inline-flex items-center gap-3 text-[#8B7355] hover:text-[#C77A4E] transition-all duration-300"
-        >
-          <span className="w-10 h-10 rounded-full bg-white border border-[#E8E3D5] flex items-center justify-center group-hover:border-[#C77A4E] group-hover:bg-[#C77A4E] group-hover:text-white transition-all duration-300">
-            <ArrowLeft size={16} strokeWidth={2} />
-          </span>
-          <span className="text-sm font-medium tracking-wide">Retour</span>
-        </Link>
-      </div>
+    <div
+      className="min-h-screen relative"
+      style={{
+        background: 'linear-gradient(180deg, #FFFBF7 0%, #F5EDE4 50%, #E8DFD4 100%)',
+      }}
+    >
+      {/* Bouton retour */}
+      <Link
+        href="/"
+        className="fixed top-6 left-6 z-50 flex items-center gap-2 text-[#8B7355] hover:text-[#C77A4E] transition-colors duration-300"
+      >
+        <ArrowLeft size={20} />
+        <span className="text-sm font-light">Retour</span>
+      </Link>
 
-      {/* Hero */}
-      <section className="relative z-10 pt-6 pb-10 md:pt-10 md:pb-14 px-6 w-full" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <h1 className="font-serif text-[40px] md:text-[56px] font-light text-[#1a1a1a] leading-[1.1] mb-4 tracking-tight" style={{ textAlign: 'center' }}>
-          Me contacter
-        </h1>
-
-        <p className="text-base md:text-lg text-[#8B7355] font-light max-w-md leading-relaxed" style={{ textAlign: 'center' }}>
-          Une question, une suggestion ou une collaboration ?
-          <br />
-          Je te réponds sous <span className="text-[#C77A4E] font-medium">48h</span>.
-        </p>
-
-        <div className="mt-6 w-20 h-[2px] bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent" />
-      </section>
-
-      {/* Formulaire */}
-      <main className="relative z-10 pb-20 px-6 w-full" style={{ display: 'flex', justifyContent: 'center' }}>
-        <div className="max-w-[500px] w-full">
+      {/* Contenu centré */}
+      <div className="min-h-screen flex flex-col items-center justify-center px-6 py-20">
+        <div className="w-full max-w-[600px]">
 
           {status === 'success' ? (
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '1.5rem',
-                padding: '3rem 2rem',
-                background: '#fff',
-                borderRadius: '24px',
-                boxShadow: '0 10px 40px rgba(199, 122, 78, 0.1)',
-                border: '2px solid #C77A4E',
-              }}
-            >
-              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#C77A4E] to-[#D4AF37] flex items-center justify-center">
-                <CheckCircle size={32} className="text-white" strokeWidth={2} />
+            <div className="text-center">
+              <div className="w-24 h-24 mx-auto mb-8 rounded-full bg-[#C77A4E]/10 flex items-center justify-center">
+                <CheckCircle size={48} className="text-[#C77A4E]" />
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
-                <h2 className="font-serif text-2xl font-medium text-[#1a1a1a]">
-                  Message envoyé !
-                </h2>
-                <p className="text-base font-light text-[#666] leading-relaxed" style={{ textAlign: 'center' }}>
-                  Merci pour ton message.<br />
-                  Je te répondrai très bientôt.
-                </p>
-              </div>
+              <h2 className="font-serif text-4xl md:text-5xl text-[#1a1a1a] font-light mb-4">
+                Message envoyé !
+              </h2>
+              <p className="text-[#8B7355] text-lg font-light mb-10">
+                Merci pour ton message. Je te répondrai très bientôt.
+              </p>
               <button
                 onClick={() => setStatus('idle')}
-                className="mt-2 px-6 py-3 bg-gradient-to-r from-[#C77A4E] to-[#D4AF37] text-white text-sm font-semibold tracking-wide rounded-full hover:shadow-lg hover:shadow-[#C77A4E]/30 transition-all duration-300"
+                className="px-8 py-4 bg-[#1a1a1a] text-white font-medium rounded-lg hover:bg-[#333] transition-all duration-300"
               >
                 Envoyer un autre message
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-4">
-              {/* Card container */}
-              <div
-                style={{
-                  background: '#fff',
-                  borderRadius: '24px',
-                  padding: '1.75rem',
-                  boxShadow: '0 4px 20px rgba(0,0,0,0.04)',
-                  border: '1px solid #E8E3D5',
-                }}
-              >
-                <div className="space-y-4">
-                  {/* Row: Nom + Email */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {/* Nom */}
-                    <div className="space-y-2">
-                      <label
-                        htmlFor="name"
-                        className={`text-xs font-semibold tracking-wider uppercase transition-colors duration-300 ${
-                          focusedField === 'name' ? 'text-[#C77A4E]' : 'text-[#8B7355]'
-                        }`}
-                      >
-                        Nom
-                      </label>
-                      <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        onFocus={() => setFocusedField('name')}
-                        onBlur={() => setFocusedField(null)}
-                        required
-                        disabled={status === 'loading'}
-                        className={`w-full px-4 py-3.5 border-2 rounded-xl text-[#1a1a1a] text-[15px] font-light placeholder-[#aaa] focus:outline-none transition-all duration-300 disabled:opacity-50 ${
-                          focusedField === 'name'
-                            ? 'border-[#C77A4E] bg-[#C77A4E]/5'
-                            : 'border-[#E8E3D5] bg-[#FAFAFA] hover:border-[#D4AF37]/50'
-                        }`}
-                        placeholder="Ton nom"
-                      />
-                    </div>
-
-                    {/* Email */}
-                    <div className="space-y-2">
-                      <label
-                        htmlFor="email"
-                        className={`text-xs font-semibold tracking-wider uppercase transition-colors duration-300 ${
-                          focusedField === 'email' ? 'text-[#C77A4E]' : 'text-[#8B7355]'
-                        }`}
-                      >
-                        Email
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        onFocus={() => setFocusedField('email')}
-                        onBlur={() => setFocusedField(null)}
-                        required
-                        disabled={status === 'loading'}
-                        className={`w-full px-4 py-3.5 border-2 rounded-xl text-[#1a1a1a] text-[15px] font-light placeholder-[#aaa] focus:outline-none transition-all duration-300 disabled:opacity-50 ${
-                          focusedField === 'email'
-                            ? 'border-[#C77A4E] bg-[#C77A4E]/5'
-                            : 'border-[#E8E3D5] bg-[#FAFAFA] hover:border-[#D4AF37]/50'
-                        }`}
-                        placeholder="ton@email.com"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Objet */}
-                  <div className="space-y-2">
-                    <label
-                      htmlFor="subject"
-                      className={`text-xs font-semibold tracking-wider uppercase transition-colors duration-300 ${
-                        focusedField === 'subject' ? 'text-[#C77A4E]' : 'text-[#8B7355]'
-                      }`}
-                    >
-                      Objet
-                    </label>
-                    <input
-                      type="text"
-                      id="subject"
-                      name="subject"
-                      value={formData.subject}
-                      onChange={handleChange}
-                      onFocus={() => setFocusedField('subject')}
-                      onBlur={() => setFocusedField(null)}
-                      required
-                      disabled={status === 'loading'}
-                      className={`w-full px-4 py-3.5 border-2 rounded-xl text-[#1a1a1a] text-[15px] font-light placeholder-[#aaa] focus:outline-none transition-all duration-300 disabled:opacity-50 ${
-                        focusedField === 'subject'
-                          ? 'border-[#C77A4E] bg-[#C77A4E]/5'
-                          : 'border-[#E8E3D5] bg-[#FAFAFA] hover:border-[#D4AF37]/50'
-                      }`}
-                      placeholder="L'objet de ton message"
-                    />
-                  </div>
-
-                  {/* Message */}
-                  <div className="space-y-2">
-                    <label
-                      htmlFor="message"
-                      className={`text-xs font-semibold tracking-wider uppercase transition-colors duration-300 ${
-                        focusedField === 'message' ? 'text-[#C77A4E]' : 'text-[#8B7355]'
-                      }`}
-                    >
-                      Message
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      onFocus={() => setFocusedField('message')}
-                      onBlur={() => setFocusedField(null)}
-                      required
-                      disabled={status === 'loading'}
-                      rows={5}
-                      className={`w-full px-4 py-3.5 border-2 rounded-xl text-[#1a1a1a] text-[15px] font-light placeholder-[#aaa] focus:outline-none transition-all duration-300 resize-none disabled:opacity-50 ${
-                        focusedField === 'message'
-                          ? 'border-[#C77A4E] bg-[#C77A4E]/5'
-                          : 'border-[#E8E3D5] bg-[#FAFAFA] hover:border-[#D4AF37]/50'
-                      }`}
-                      placeholder="Écris ton message ici..."
-                    />
-                  </div>
-                </div>
+            <>
+              {/* Titre */}
+              <div className="text-center mb-12">
+                <h1 className="font-serif text-[56px] md:text-[72px] lg:text-[88px] text-[#1a1a1a] font-light leading-[0.95] tracking-tight">
+                  Contactez-moi
+                </h1>
               </div>
 
-              {/* Erreur */}
-              {status === 'error' && (
-                <div className="flex items-center gap-3 px-4 py-3 bg-red-50 border border-red-200 rounded-xl">
-                  <AlertCircle size={18} className="text-red-500 flex-shrink-0" />
-                  <p className="text-sm text-red-600">{errorMessage}</p>
+              {/* Formulaire */}
+              <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Nom */}
+                <div>
+                  <label htmlFor="name" className="block text-[#8B7355] text-xs font-medium uppercase tracking-wider mb-2">
+                    Nom *
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    disabled={status === 'loading'}
+                    className="w-full px-5 py-4 bg-white border-2 border-[#E8E3D5] rounded-xl text-[#1a1a1a] text-base font-light placeholder-[#aaa] focus:outline-none focus:border-[#C77A4E] focus:ring-2 focus:ring-[#C77A4E]/10 transition-all disabled:opacity-50"
+                    placeholder="Ton nom"
+                  />
                 </div>
-              )}
 
-              {/* Bouton */}
-              <button
-                type="submit"
-                disabled={status === 'loading'}
-                className="group w-full py-4 bg-gradient-to-r from-[#C77A4E] to-[#D4AF37] text-white text-sm font-bold tracking-wider uppercase rounded-full overflow-hidden transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-xl hover:shadow-[#C77A4E]/25 hover:scale-[1.02] active:scale-[0.98]"
-              >
-                <span className="flex items-center justify-center gap-3">
+                {/* Email */}
+                <div>
+                  <label htmlFor="email" className="block text-[#8B7355] text-xs font-medium uppercase tracking-wider mb-2">
+                    Email *
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    disabled={status === 'loading'}
+                    className="w-full px-5 py-4 bg-white border-2 border-[#E8E3D5] rounded-xl text-[#1a1a1a] text-base font-light placeholder-[#aaa] focus:outline-none focus:border-[#C77A4E] focus:ring-2 focus:ring-[#C77A4E]/10 transition-all disabled:opacity-50"
+                    placeholder="ton@email.com"
+                  />
+                </div>
+
+                {/* Objet */}
+                <div>
+                  <label htmlFor="subject" className="block text-[#8B7355] text-xs font-medium uppercase tracking-wider mb-2">
+                    Objet *
+                  </label>
+                  <input
+                    type="text"
+                    id="subject"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    required
+                    disabled={status === 'loading'}
+                    className="w-full px-5 py-4 bg-white border-2 border-[#E8E3D5] rounded-xl text-[#1a1a1a] text-base font-light placeholder-[#aaa] focus:outline-none focus:border-[#C77A4E] focus:ring-2 focus:ring-[#C77A4E]/10 transition-all disabled:opacity-50"
+                    placeholder="L'objet de ton message"
+                  />
+                </div>
+
+                {/* Message */}
+                <div>
+                  <label htmlFor="message" className="block text-[#8B7355] text-xs font-medium uppercase tracking-wider mb-2">
+                    Message *
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                    disabled={status === 'loading'}
+                    rows={6}
+                    className="w-full px-5 py-4 bg-white border-2 border-[#E8E3D5] rounded-xl text-[#1a1a1a] text-base font-light placeholder-[#aaa] focus:outline-none focus:border-[#C77A4E] focus:ring-2 focus:ring-[#C77A4E]/10 transition-all resize-none disabled:opacity-50"
+                    placeholder="Écris ton message ici..."
+                  />
+                </div>
+
+                {/* Erreur */}
+                {status === 'error' && (
+                  <div className="flex items-center gap-3 px-5 py-4 bg-red-50 rounded-xl border border-red-200">
+                    <AlertCircle size={20} className="text-red-500 flex-shrink-0" />
+                    <p className="text-red-600 text-sm">{errorMessage}</p>
+                  </div>
+                )}
+
+                {/* Bouton */}
+                <button
+                  type="submit"
+                  disabled={status === 'loading'}
+                  className="group w-full py-5 bg-gradient-to-r from-[#C77A4E] to-[#D4AF37] text-white text-base font-semibold rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 shadow-lg shadow-[#C77A4E]/20 hover:shadow-xl hover:shadow-[#D4AF37]/30 hover:scale-[1.02] active:scale-[0.98]"
+                >
                   {status === 'loading' ? (
                     <>
-                      <div className="w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin" />
-                      Envoi...
+                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      Envoi en cours...
                     </>
                   ) : (
                     <>
-                      Envoyer
-                      <Send size={16} strokeWidth={2.5} className="group-hover:translate-x-1 transition-transform duration-300" />
+                      Envoyer le message
+                      <Send size={18} className="group-hover:translate-x-1 transition-transform" />
                     </>
                   )}
-                </span>
-              </button>
-
-              <p className="text-center text-xs text-[#999] pt-1">
-                Tous les champs sont obligatoires
-              </p>
-            </form>
+                </button>
+              </form>
+            </>
           )}
 
         </div>
-      </main>
+      </div>
     </div>
   );
 }

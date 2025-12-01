@@ -4,7 +4,8 @@ import { prisma } from '@/lib/prisma';
 /**
  * Cron Job: Newsletter Rotation Hebdomadaire
  *
- * À exécuter quotidiennement (recommandé: tous les jours à 00h00 UTC)
+ * Exécution: Tous les dimanches à 9h30 (heure de Paris)
+ * Schedule: "30 8 * * 0" = 8h30 UTC = 9h30 Paris (heure d'hiver) / 10h30 Paris (heure d'été)
  *
  * Fonctionnalités:
  * 1. Archive les newsletters ACTIVE dont la date de fin est dépassée
@@ -15,7 +16,7 @@ import { prisma } from '@/lib/prisma';
  * {
  *   "crons": [{
  *     "path": "/api/cron/newsletter-rotation",
- *     "schedule": "0 0 * * *"
+ *     "schedule": "30 8 * * 0"
  *   }]
  * }
  */
