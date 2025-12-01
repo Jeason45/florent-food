@@ -5,8 +5,7 @@ import { Footer } from "@/components/layout/footer";
 import { HeroSection } from "@/components/sections/hero";
 import { NewsletterPreviewSection } from "@/components/sections/newsletter-preview";
 import { RecipeExampleSection } from "@/components/sections/recipe-example";
-import { AboutStorySection } from "@/components/sections/about-story";
-import { TestimonialsSection } from "@/components/sections/testimonials";
+import { CommunitySection } from "@/components/sections/community-section";
 import { SocialLinksSection } from "@/components/sections/social-links";
 import { AuthModal } from "@/components/AuthModal";
 import { useState, useEffect, Suspense } from "react";
@@ -126,21 +125,58 @@ export default function Home() {
       <main>
         <HeroSection id="accueil" />
 
-        <div id="newsletter-preview">
-          <NewsletterPreviewSection />
+        {/* Section Newsletter + Recette côte à côte sur desktop */}
+        <section className="preview-grid-section" style={{
+          background: 'linear-gradient(to bottom, #FFF8F0, #FFFBF7)',
+          padding: '40px 20px 80px'
+        }}>
+          <style>{`
+            .preview-grid {
+              display: grid;
+              grid-template-columns: 1fr;
+              gap: 40px;
+              max-width: 1200px;
+              margin: 0 auto;
+            }
+            @media (min-width: 1024px) {
+              .preview-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 30px;
+              }
+              .preview-grid > div {
+                height: 800px;
+                overflow-y: auto;
+                overflow-x: hidden;
+                border-radius: 16px;
+                scrollbar-width: thin;
+                scrollbar-color: #D4AF37 transparent;
+              }
+              .preview-grid > div::-webkit-scrollbar {
+                width: 6px;
+              }
+              .preview-grid > div::-webkit-scrollbar-track {
+                background: transparent;
+              }
+              .preview-grid > div::-webkit-scrollbar-thumb {
+                background: #D4AF37;
+                border-radius: 3px;
+              }
+            }
+          `}</style>
+          <div className="preview-grid">
+            <div id="newsletter-preview">
+              <NewsletterPreviewSection />
+            </div>
+            <div id="recipe-preview">
+              <RecipeExampleSection />
+            </div>
+          </div>
+        </section>
+
+        <div id="communaute">
+          <CommunitySection />
         </div>
-        <div id="recipe-preview">
-          <RecipeExampleSection />
-        </div>
-        <div id="a-propos">
-          <AboutStorySection />
-        </div>
-        <div id="temoignages">
-          <TestimonialsSection />
-        </div>
-        <div id="reseaux-sociaux">
-          <SocialLinksSection />
-        </div>
+        <SocialLinksSection />
       </main>
       <Footer />
     </>

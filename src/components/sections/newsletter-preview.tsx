@@ -68,14 +68,11 @@ export function NewsletterPreviewSection() {
   if (loading) {
     return (
       <section className="relative overflow-hidden" style={{
-        background: 'linear-gradient(to bottom, #FFF5EB, #FFFBF7)',
-        paddingTop: '80px',
-        paddingBottom: '80px'
+        background: 'transparent',
+        padding: '20px 0'
       }}>
-        <div className="relative max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl 2xl:max-w-7xl px-5 sm:px-8 lg:px-12" style={{ margin: '0 auto' }}>
-          <div className="text-center">
-            <p className="text-[var(--gris-taupe)]">Chargement de la newsletter...</p>
-          </div>
+        <div className="text-center">
+          <p className="text-[var(--gris-taupe)]">Chargement de la newsletter...</p>
         </div>
       </section>
     );
@@ -102,9 +99,9 @@ export function NewsletterPreviewSection() {
     <>
     <AuthModal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)} />
     <section className="newsletter-preview-section relative overflow-hidden" style={{
-      background: 'linear-gradient(to bottom, #FFF5EB, #FFFBF7)',
-      paddingTop: '80px',
-      paddingBottom: '80px'
+      background: 'transparent',
+      paddingTop: '0',
+      paddingBottom: '0'
     }}>
       <style>{`
         /* Mobile - même layout que desktop, tailles adaptées */

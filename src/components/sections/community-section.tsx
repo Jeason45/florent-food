@@ -1,0 +1,188 @@
+"use client";
+
+import { Quote, Star, ChevronLeft, ChevronRight } from "lucide-react";
+import { useState } from "react";
+
+const testimonials = [
+  {
+    id: 1,
+    name: "Hinde",
+    text: "Les recettes de Florent sont incroyables ! J'ai réussi mon premier Paris-Brest grâce à ses explications claires et détaillées. Mes invités étaient bluffés !",
+  },
+  {
+    id: 2,
+    name: "Houda",
+    text: "Même en tant que débutante, j'ai pu suivre facilement. Les vidéos sont top et les astuces font vraiment la différence. Je recommande à 100% !",
+  },
+  {
+    id: 3,
+    name: "Rudy",
+    text: "Wouaf Wouaf ! J'ai beaucoup de chance de pouvoir goûter aux restes des créations de mon chef ! Le Paris-Brest ? Même les miettes sont divines !",
+  },
+  {
+    id: 4,
+    name: "Jeason",
+    text: "Des recettes accessibles avec un rendu professionnel ! Florent a su me redonner confiance en cuisine. Ses conseils sont précis et toujours justes.",
+  },
+];
+
+const brands = [
+  { name: "Audi", icon: "https://cdn.simpleicons.org/audi/000000" },
+  { name: "McDonald's", icon: "https://cdn.simpleicons.org/mcdonalds/FFC72C" },
+  { name: "Uber Eats", icon: "https://cdn.simpleicons.org/ubereats/06C167" },
+  { name: "Paramount+", icon: "https://cdn.simpleicons.org/paramountplus/0064FF" },
+];
+
+export function CommunitySection() {
+  const [activeSlide, setActiveSlide] = useState(0);
+
+  const nextSlide = () => setActiveSlide((prev) => (prev + 1) % testimonials.length);
+  const prevSlide = () => setActiveSlide((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+
+  return (
+    <section style={{ background: '#FFFBF7', padding: '50px 20px' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+
+        {/* ROW 1: Merci Full Width - Ligne Dorée */}
+        <div style={{
+          background: '#1a1a1a',
+          borderRadius: '24px',
+          padding: '30px 45px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '30px',
+          marginBottom: '15px'
+        }}>
+          <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.7)', fontWeight: 300, margin: 0 }}>Merci de votre confiance</p>
+          <div style={{ flex: 1, height: '1px', background: 'linear-gradient(90deg, rgba(212,175,55,0.5), transparent)' }}></div>
+          <p style={{ fontSize: '32px', fontWeight: 600, color: '#D4AF37', margin: 0 }}>+700K</p>
+        </div>
+
+        {/* ROW 2: 4 Cards (3 réseaux + Collabs) */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '15px', marginBottom: '15px' }}>
+          {/* TikTok */}
+          <div style={{
+            background: '#fff',
+            borderRadius: '20px',
+            padding: '25px',
+            boxShadow: '0 2px 20px rgba(0,0,0,0.04)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '15px'
+          }}>
+            <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TikTok" style={{ width: '38px', height: '38px' }} />
+            <div>
+              <p style={{ fontSize: '28px', fontWeight: 700, color: '#1a1a1a', lineHeight: 1, margin: 0 }}>467K</p>
+              <p style={{ fontSize: '11px', color: '#999', marginTop: '4px', marginBottom: 0 }}>TikTok</p>
+            </div>
+          </div>
+
+          {/* Instagram */}
+          <div style={{
+            background: '#fff',
+            borderRadius: '20px',
+            padding: '25px',
+            boxShadow: '0 2px 20px rgba(0,0,0,0.04)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '15px'
+          }}>
+            <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram" style={{ width: '38px', height: '38px' }} />
+            <div>
+              <p style={{ fontSize: '28px', fontWeight: 700, color: '#1a1a1a', lineHeight: 1, margin: 0 }}>130K</p>
+              <p style={{ fontSize: '11px', color: '#999', marginTop: '4px', marginBottom: 0 }}>Instagram</p>
+            </div>
+          </div>
+
+          {/* YouTube */}
+          <div style={{
+            background: '#fff',
+            borderRadius: '20px',
+            padding: '25px',
+            boxShadow: '0 2px 20px rgba(0,0,0,0.04)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '15px'
+          }}>
+            <img src="https://cdn-icons-png.flaticon.com/512/174/174883.png" alt="YouTube" style={{ width: '38px', height: '38px' }} />
+            <div>
+              <p style={{ fontSize: '28px', fontWeight: 700, color: '#1a1a1a', lineHeight: 1, margin: 0 }}>105K</p>
+              <p style={{ fontSize: '11px', color: '#999', marginTop: '4px', marginBottom: 0 }}>YouTube</p>
+            </div>
+          </div>
+
+          {/* Collaborations */}
+          <div style={{
+            background: '#fff',
+            borderRadius: '20px',
+            padding: '25px',
+            boxShadow: '0 2px 20px rgba(0,0,0,0.04)'
+          }}>
+            <p style={{ color: '#D4AF37', fontSize: '10px', letterSpacing: '2px', marginBottom: '15px', marginTop: 0, textAlign: 'center' }}>COLLABORATIONS</p>
+            <div style={{ display: 'flex', gap: '12px', justifyContent: 'center' }}>
+              {brands.map((brand, i) => (
+                <div key={i} style={{ width: '40px', height: '40px', borderRadius: '12px', background: '#f8f8f8', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '8px' }}>
+                  <img src={brand.icon} alt={brand.name} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* ROW 3: À propos + Témoignages (50/50) */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
+          {/* À propos */}
+          <div style={{
+            background: '#1a1a1a',
+            borderRadius: '24px',
+            padding: '35px'
+          }}>
+            <p style={{ color: '#D4AF37', fontSize: '10px', letterSpacing: '3px', marginBottom: '20px', marginTop: 0 }}>À PROPOS</p>
+            <p style={{ color: 'rgba(255,255,255,0.85)', fontSize: '15px', lineHeight: 1.9, marginBottom: '15px', marginTop: 0 }}>
+              J'ai eu la chance d'être sollicité par <strong style={{ color: '#D4AF37' }}>Audi</strong> pour participer à un défi culinaire destiné à des sportifs de haut niveau. Une expérience enrichissante face à un jury d'exception : <strong style={{ color: '#fff' }}>Thierry Marx</strong> et <strong style={{ color: '#fff' }}>Jessica Préalpato</strong>. Challenge que j'ai eu l'honneur de remporter.
+            </p>
+            <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '15px', lineHeight: 1.9, margin: 0 }}>
+              Aujourd'hui, je continue de partager ma passion avec vous, en rendant la cuisine accessible à tous.
+            </p>
+          </div>
+
+          {/* Témoignages - Fond sombre */}
+          <div style={{
+            background: '#1a1a1a',
+            borderRadius: '24px',
+            padding: '35px',
+            display: 'flex',
+            flexDirection: 'column'
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+              <Quote size={28} style={{ color: '#D4AF37', opacity: 0.5 }} />
+              <div style={{ display: 'flex', gap: '8px' }}>
+                <button onClick={prevSlide} style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(255,255,255,0.1)', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <ChevronLeft size={16} color="#fff" />
+                </button>
+                <button onClick={nextSlide} style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#D4AF37', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <ChevronRight size={16} color="#000" />
+                </button>
+              </div>
+            </div>
+            <p style={{ color: 'rgba(255,255,255,0.85)', fontSize: '15px', lineHeight: 1.9, marginBottom: '20px', marginTop: 0, fontStyle: 'italic', flex: 1 }}>
+              "{testimonials[activeSlide].text}"
+            </p>
+            <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '18px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <p style={{ color: '#fff', fontSize: '14px', fontWeight: 500, margin: 0 }}>{testimonials[activeSlide].name}</p>
+              <div style={{ display: 'flex', gap: '3px' }}>
+                {[...Array(5)].map((_, i) => <Star key={i} size={12} fill="#D4AF37" color="#D4AF37" />)}
+              </div>
+            </div>
+            <div style={{ display: 'flex', gap: '5px', marginTop: '20px', justifyContent: 'center' }}>
+              {testimonials.map((_, index) => (
+                <button key={index} onClick={() => setActiveSlide(index)} style={{ width: index === activeSlide ? '18px' : '6px', height: '6px', borderRadius: '3px', background: index === activeSlide ? '#D4AF37' : 'rgba(255,255,255,0.2)', border: 'none', cursor: 'pointer', transition: 'all 0.3s' }} />
+              ))}
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  );
+}
