@@ -13,7 +13,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
   const { login } = useAuth();
   const [mode, setMode] = useState<'new' | 'existing'>('new');
   const [email, setEmail] = useState('');
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error' | 'pending_confirmation'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
 
   if (!isOpen) return null;
@@ -66,14 +66,8 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
             throw new Error(subscribeData.error || 'Erreur lors de l\'inscription');
           }
 
-          // Auto-login après inscription
-          await login(email);
-          setStatus('success');
-          setTimeout(() => {
-            onClose();
-            setEmail('');
-            setStatus('idle');
-          }, 1500);
+          // Afficher message de confirmation email (pas d'auto-login car statut PENDING)
+          setStatus('pending_confirmation');
         }
       }
     } catch (error) {
@@ -119,12 +113,11 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
             font-size: 13px !important;
           }
           .auth-modal-toggle {
-            flex-direction: column !important;
-            gap: 8px !important;
+            gap: 6px !important;
           }
           .auth-modal-toggle button {
-            padding: 10px !important;
-            font-size: 13px !important;
+            padding: 10px 8px !important;
+            font-size: 12px !important;
           }
           .auth-modal-input {
             padding: 12px 14px !important;
@@ -336,9 +329,29 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
               </div>
             )}
 
+            {status === 'pending_confirmation' && (
+              <div
+                style={{
+                  padding: '16px',
+                  background: '#FEF3C7',
+                  border: '1px solid #FCD34D',
+                  borderRadius: '8px',
+                  marginBottom: '24px',
+                  textAlign: 'center',
+                }}
+              >
+                <p style={{ color: '#92400E', fontSize: '14px', margin: 0, fontWeight: '500', marginBottom: '8px' }}>
+                  ✉️ Vérifie ta boîte mail !
+                </p>
+                <p style={{ color: '#A16207', fontSize: '13px', margin: 0, lineHeight: '1.5' }}>
+                  Un email de confirmation t'a été envoyé. Clique sur le lien pour activer ton compte et accéder aux recettes.
+                </p>
+              </div>
+            )}
+
             <button
               type="submit"
-              disabled={status === 'loading' || status === 'success'}
+              disabled={status === 'loading' || status === 'success' || status === 'pending_confirmation'}
               className="auth-modal-submit"
               style={{
                 width: '100%',
@@ -349,9 +362,9 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
                 color: '#fff',
                 fontSize: '15px',
                 fontWeight: '600',
-                cursor: status === 'loading' || status === 'success' ? 'not-allowed' : 'pointer',
+                cursor: status === 'loading' || status === 'success' || status === 'pending_confirmation' ? 'not-allowed' : 'pointer',
                 transition: 'all 0.3s',
-                opacity: status === 'loading' || status === 'success' ? 0.7 : 1,
+                opacity: status === 'loading' || status === 'success' || status === 'pending_confirmation' ? 0.7 : 1,
                 letterSpacing: '0.5px',
               }}
               onMouseEnter={(e) => {
