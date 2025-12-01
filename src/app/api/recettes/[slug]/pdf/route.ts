@@ -99,8 +99,8 @@ export async function GET(
 
     await browser.close();
 
-    // Retourner le PDF
-    return new NextResponse(pdfBuffer, {
+    // Retourner le PDF (convertir Uint8Array en Buffer pour TypeScript)
+    return new NextResponse(Buffer.from(pdfBuffer), {
       headers: {
         'Content-Type': 'application/pdf',
         'Content-Disposition': `attachment; filename="${recipe.title} - Florent Food.pdf"`,
