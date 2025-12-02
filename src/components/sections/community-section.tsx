@@ -96,7 +96,7 @@ export function CommunitySection() {
           border-radius: 14px;
           padding: 14px;
           box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-          border: 2px solid #D4AF37;
+          border: 1px solid #D4AF37;
         }
         .testimonial-card-wrapper {
           background: #fff;
@@ -106,7 +106,7 @@ export function CommunitySection() {
           flex-direction: column;
           height: 100%;
           box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-          border: 2px solid #D4AF37;
+          border: 1px solid #D4AF37;
         }
         .testimonial-card-wrapper p:first-child {
           font-size: 14px !important;

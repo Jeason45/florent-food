@@ -78,7 +78,7 @@ export function FeaturedRecipesSection() {
         </div>
 
         {/* Recipes Grid - Compact et moderne */}
-        <div className="grid grid-cols-2 gap-4 sm:gap-6 md:gap-8 lg:gap-10 mb-16 sm:mb-20 md:mb-24">
+        <div className="grid grid-cols-2 gap-2 sm:gap-4 md:gap-6 lg:gap-8 mb-12 sm:mb-16 md:mb-20">
           {featuredRecipes.map((recipe) => (
             <div
               key={recipe.id}
