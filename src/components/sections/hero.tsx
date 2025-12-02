@@ -102,8 +102,8 @@ export function HeroSection({ id }: HeroSectionProps = {}) {
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/test2.jpg"
-          alt="Test 2"
+          src="/hero-test-4.jpg"
+          alt="Hero background"
           fill
           priority
           quality={75}

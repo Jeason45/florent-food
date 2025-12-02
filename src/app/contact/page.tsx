@@ -59,7 +59,7 @@ export default function ContactPage() {
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/test2.jpg"
+          src="/hero-test-4.jpg"
           alt="Background"
           fill
           priority
