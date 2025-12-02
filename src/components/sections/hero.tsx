@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 
 // Styles pour l'animation shine
 const shineStyles = `
@@ -99,17 +98,33 @@ export function HeroSection({ id }: HeroSectionProps = {}) {
       {/* Animation CSS */}
       <style dangerouslySetInnerHTML={{ __html: shineStyles }} />
 
-      {/* Background Image */}
+      {/* Background Image - Responsive avec images optimisées */}
       <div className="absolute inset-0 z-0">
-        <Image
-          src="/hero-test-4.jpg"
-          alt="Hero background"
-          fill
-          priority
-          quality={75}
-          sizes="100vw"
-          className="object-cover object-center"
-        />
+        {/* Image mobile (< 768px) */}
+        <picture>
+          <source
+            media="(max-width: 767px)"
+            srcSet="/hero-mobile.jpg"
+          />
+          <source
+            media="(min-width: 768px)"
+            srcSet="/hero-optimized.jpg"
+          />
+          <img
+            src="/hero-optimized.jpg"
+            alt="Hero background"
+            fetchPriority="high"
+            decoding="async"
+            style={{
+              position: 'absolute',
+              inset: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              objectPosition: 'center'
+            }}
+          />
+        </picture>
         <div className="absolute inset-0 bg-black/30" />
       </div>
 
