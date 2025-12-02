@@ -47,12 +47,12 @@ export default function MentionsLegalesPage() {
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem', width: '100%' }}>
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
                 <p className="text-xs font-medium tracking-[0.2em] uppercase text-[#8B7355]">Nom</p>
-                <p className="text-base font-light text-[#2A2A2A]">Florent Carivenc</p>
+                <p className="text-base font-light text-[#2A2A2A]">Florent cmt</p>
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
                 <p className="text-xs font-medium tracking-[0.2em] uppercase text-[#8B7355]">Statut</p>
-                <p className="text-base font-light text-[#2A2A2A]">Auto-entrepreneur</p>
+                <p className="text-base font-light text-[#2A2A2A]">Entrepreneur individuel</p>
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
@@ -63,8 +63,8 @@ export default function MentionsLegalesPage() {
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
                 <p className="text-xs font-medium tracking-[0.2em] uppercase text-[#8B7355]">Adresse</p>
                 <p className="text-base font-light text-[#2A2A2A] leading-relaxed" style={{ textAlign: 'center' }}>
-                  15 rue des cresses, Maison 245<br />
-                  34110 Vic la Gardiole, France
+                  229 rue Saint-Honoré<br />
+                  75001 Paris, France
                 </p>
               </div>
 
@@ -89,7 +89,7 @@ export default function MentionsLegalesPage() {
             </h2>
 
             <p className="text-base font-light text-[#2A2A2A] leading-relaxed" style={{ textAlign: 'center' }}>
-              Le directeur de la publication du site est Florent Carivenc.
+              Le directeur de la publication du site est Florent cmt.
             </p>
           </section>
 
@@ -207,7 +207,7 @@ export default function MentionsLegalesPage() {
 
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
                 <p className="text-xs font-medium tracking-[0.2em] uppercase text-[#8B7355]">Photographies</p>
-                <p className="text-base font-light text-[#2A2A2A]">Florent Carivenc & Cloudinary</p>
+                <p className="text-base font-light text-[#2A2A2A]">Florent cmt & Cloudinary</p>
               </div>
             </div>
           </section>
