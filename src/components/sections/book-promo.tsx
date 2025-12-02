@@ -78,45 +78,26 @@ export function BookPromoSection() {
           .book-promo-container {
             flex-direction: row;
             text-align: left;
-            gap: 40px;
+            gap: 80px;
           }
           .book-promo-image {
-            width: 45%;
-            max-width: 450px;
-            flex-shrink: 0;
+            width: 650px;
           }
           .book-promo-content {
             align-items: flex-start;
-            flex: 1;
-            min-width: 0;
           }
           .book-promo-title {
             font-size: 42px;
           }
         }
-        @media (min-width: 1024px) {
-          .book-promo-container {
-            gap: 60px;
-          }
-          .book-promo-image {
-            width: 50%;
-            max-width: 550px;
-          }
-        }
       `}</style>
 
       <div className="book-promo-container">
-        <picture>
-          <source srcSet="/livre-florent.webp" type="image/webp" />
-          <img
-            src="/livre-florent.png"
-            alt="Les Recettes de Florent - Le livre"
-            className="book-promo-image"
-            loading="lazy"
-            width="500"
-            height="281"
-          />
-        </picture>
+        <img
+          src="/livre-florent.png"
+          alt="Les Recettes de Florent - Le livre"
+          className="book-promo-image"
+        />
 
         <div className="book-promo-content">
           <p className="book-promo-badge">MON PREMIER LIVRE</p>

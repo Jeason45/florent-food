@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import { AuthModal } from "@/components/AuthModal";
-import { optimizeCloudinaryUrl } from "@/lib/cloudinary";
 
 interface Recipe {
   id: string;
@@ -298,11 +297,8 @@ export function NewsletterPreviewSection() {
                 style={{ position: 'relative', height: '450px', cursor: 'pointer' }}
               >
                 <img
-                  src={optimizeCloudinaryUrl(featuredRecipe.imageUrl, { width: 800, height: 450 }) || 'https://images.unsplash.com/photo-1546548970-71785318a17b?w=800&q=80'}
+                  src={featuredRecipe.imageUrl || 'https://images.unsplash.com/photo-1546548970-71785318a17b?w=1200&q=80'}
                   alt={featuredRecipe.title}
-                  loading="lazy"
-                  width="800"
-                  height="450"
                   style={{
                     width: '100%',
                     height: '100%',
@@ -404,11 +400,8 @@ export function NewsletterPreviewSection() {
                         }}
                       >
                         <img
-                          src={optimizeCloudinaryUrl(recipe1.imageUrl, { width: 600, height: 400 }) || 'https://images.unsplash.com/photo-1546548970-71785318a17b?w=600&q=80'}
+                          src={recipe1.imageUrl || 'https://images.unsplash.com/photo-1546548970-71785318a17b?w=1200&q=80'}
                           alt={recipe1.title}
-                          loading="lazy"
-                          width="600"
-                          height="400"
                           style={{
                             width: '100%',
                             height: '100%',
@@ -465,11 +458,8 @@ export function NewsletterPreviewSection() {
                           }}
                         >
                           <img
-                            src={optimizeCloudinaryUrl(recipe1.imageUrl, { width: 400, height: 280 }) || 'https://images.unsplash.com/photo-1546548970-71785318a17b?w=400&q=80'}
+                            src={recipe1.imageUrl || 'https://images.unsplash.com/photo-1546548970-71785318a17b?w=600&q=80'}
                             alt={recipe1.title}
-                            loading="lazy"
-                            width="400"
-                            height="280"
                             style={{
                               width: '100%',
                               height: '100%',
@@ -519,11 +509,8 @@ export function NewsletterPreviewSection() {
                             }}
                           >
                             <img
-                              src={optimizeCloudinaryUrl(recipe2.imageUrl, { width: 400, height: 280 }) || 'https://images.unsplash.com/photo-1546548970-71785318a17b?w=400&q=80'}
+                              src={recipe2.imageUrl || 'https://images.unsplash.com/photo-1546548970-71785318a17b?w=600&q=80'}
                               alt={recipe2.title}
-                              loading="lazy"
-                              width="400"
-                              height="280"
                               style={{
                                 width: '100%',
                                 height: '100%',

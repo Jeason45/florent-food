@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 
 // Styles pour l'animation shine
 const shineStyles = `
@@ -98,48 +99,17 @@ export function HeroSection({ id }: HeroSectionProps = {}) {
       {/* Animation CSS */}
       <style dangerouslySetInnerHTML={{ __html: shineStyles }} />
 
-      {/* Background Image - Responsive avec WebP et fallback */}
+      {/* Background Image */}
       <div className="absolute inset-0 z-0">
-        <picture>
-          {/* WebP mobile */}
-          <source
-            media="(max-width: 767px)"
-            srcSet="/hero-mobile.webp"
-            type="image/webp"
-          />
-          {/* WebP desktop */}
-          <source
-            media="(min-width: 768px)"
-            srcSet="/hero-optimized.webp"
-            type="image/webp"
-          />
-          {/* Fallback JPG mobile */}
-          <source
-            media="(max-width: 767px)"
-            srcSet="/hero-mobile.jpg"
-            type="image/jpeg"
-          />
-          {/* Fallback JPG desktop */}
-          <source
-            media="(min-width: 768px)"
-            srcSet="/hero-optimized.jpg"
-            type="image/jpeg"
-          />
-          <img
-            src="/hero-optimized.jpg"
-            alt="Hero background"
-            fetchPriority="high"
-            decoding="async"
-            style={{
-              position: 'absolute',
-              inset: 0,
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              objectPosition: 'center'
-            }}
-          />
-        </picture>
+        <Image
+          src="/hero-test-4.jpg"
+          alt="Hero background"
+          fill
+          priority
+          quality={75}
+          sizes="100vw"
+          className="object-cover object-center"
+        />
         <div className="absolute inset-0 bg-black/30" />
       </div>
 
