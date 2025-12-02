@@ -98,17 +98,32 @@ export function HeroSection({ id }: HeroSectionProps = {}) {
       {/* Animation CSS */}
       <style dangerouslySetInnerHTML={{ __html: shineStyles }} />
 
-      {/* Background Image - Responsive avec images optimisées */}
+      {/* Background Image - Responsive avec WebP et fallback */}
       <div className="absolute inset-0 z-0">
-        {/* Image mobile (< 768px) */}
         <picture>
+          {/* WebP mobile */}
+          <source
+            media="(max-width: 767px)"
+            srcSet="/hero-mobile.webp"
+            type="image/webp"
+          />
+          {/* WebP desktop */}
+          <source
+            media="(min-width: 768px)"
+            srcSet="/hero-optimized.webp"
+            type="image/webp"
+          />
+          {/* Fallback JPG mobile */}
           <source
             media="(max-width: 767px)"
             srcSet="/hero-mobile.jpg"
+            type="image/jpeg"
           />
+          {/* Fallback JPG desktop */}
           <source
             media="(min-width: 768px)"
             srcSet="/hero-optimized.jpg"
+            type="image/jpeg"
           />
           <img
             src="/hero-optimized.jpg"

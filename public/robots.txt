@@ -1,0 +1,11 @@
+# Robots.txt for Florent Food
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://florentfood.fr/sitemap.xml
+
+# Blocage des pages admin et API
+Disallow: /admin/
+Disallow: /api/
+Disallow: /_next/

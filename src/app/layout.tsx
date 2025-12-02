@@ -66,18 +66,20 @@ export default function RootLayout({
   return (
     <html lang="fr" className="scroll-smooth">
       <head>
-        {/* Préchargement image hero pour améliorer LCP */}
+        {/* Préchargement image hero WebP pour améliorer LCP */}
         <link
           rel="preload"
           as="image"
-          href="/hero-mobile.jpg"
+          href="/hero-mobile.webp"
+          type="image/webp"
           media="(max-width: 767px)"
           fetchPriority="high"
         />
         <link
           rel="preload"
           as="image"
-          href="/hero-optimized.jpg"
+          href="/hero-optimized.webp"
+          type="image/webp"
           media="(min-width: 768px)"
           fetchPriority="high"
         />

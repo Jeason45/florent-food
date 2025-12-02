@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { optimizeCloudinaryUrl } from "@/lib/cloudinary";
 
 interface Recipe {
   id: string;
@@ -203,8 +204,11 @@ export function RecipeExampleSection() {
               background: '#000'
             }}>
               <img
-                src={recipe.imageUrl || 'https://images.unsplash.com/photo-1546548970-71785318a17b?w=1200&q=80'}
+                src={optimizeCloudinaryUrl(recipe.imageUrl, { width: 800, height: 450 }) || 'https://images.unsplash.com/photo-1546548970-71785318a17b?w=800&q=80'}
                 alt={recipe.title}
+                loading="lazy"
+                width="800"
+                height="450"
                 style={{
                   width: '100%',
                   height: '100%',

@@ -93,11 +93,17 @@ export function BookPromoSection() {
       `}</style>
 
       <div className="book-promo-container">
-        <img
-          src="/livre-florent.png"
-          alt="Les Recettes de Florent - Le livre"
-          className="book-promo-image"
-        />
+        <picture>
+          <source srcSet="/livre-florent.webp" type="image/webp" />
+          <img
+            src="/livre-florent.png"
+            alt="Les Recettes de Florent - Le livre"
+            className="book-promo-image"
+            loading="lazy"
+            width="500"
+            height="281"
+          />
+        </picture>
 
         <div className="book-promo-content">
           <p className="book-promo-badge">MON PREMIER LIVRE</p>
