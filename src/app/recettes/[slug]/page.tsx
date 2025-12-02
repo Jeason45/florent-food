@@ -3,6 +3,7 @@ import { cookies } from 'next/headers';
 import { jwtVerify } from 'jose';
 import { prisma } from '@/lib/prisma';
 import PrintButton from '@/components/PrintButton';
+import YouTubeButton from '@/components/YouTubeButton';
 
 const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || 'fallback-secret');
 
@@ -705,14 +706,18 @@ export default async function RecipePage({ params }: RecipePageProps) {
             <path d="M19 12H5M12 19l-7-7 7-7"/>
           </svg>
         </a>
-        {/* Bouton Télécharger PDF en haut à droite */}
+        {/* Boutons en haut à droite */}
         <div className="print-button-container" style={{
           position: 'absolute',
           top: '24px',
           right: '24px',
-          zIndex: 10
+          zIndex: 10,
+          display: 'flex',
+          alignItems: 'center',
+          gap: '12px'
         }}>
           <PrintButton />
+          {recipe.videoUrl && <YouTubeButton videoUrl={recipe.videoUrl} />}
         </div>
         {recipe.imageUrl && (
           <img

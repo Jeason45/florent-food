@@ -53,6 +53,7 @@ export async function PUT(
       ingredients,
       steps,
       chefTips,
+      videoUrl,
       visibility,
       status,
     } = body;
@@ -76,6 +77,7 @@ export async function PUT(
         ingredients,
         steps,
         chefTips: chefTips || null,
+        videoUrl: videoUrl || null,
         visibility,
         status,
         publishedAt: status === 'PUBLISHED' ? new Date() : null,

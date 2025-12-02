@@ -29,6 +29,7 @@ export default function EditRecipePage() {
   ]);
   const [visibility, setVisibility] = useState('FREE');
   const [chefTips, setChefTips] = useState('');
+  const [videoUrl, setVideoUrl] = useState('');
   const [status, setStatus] = useState('DRAFT');
   const [uploading, setUploading] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -71,6 +72,7 @@ export default function EditRecipePage() {
         );
         setVisibility(recipe.visibility);
         setChefTips(recipe.chefTips || '');
+        setVideoUrl(recipe.videoUrl || '');
         setStatus(recipe.status);
       }
     } catch (error) {
@@ -199,6 +201,7 @@ export default function EditRecipePage() {
           ingredients: filteredGroups,
           steps: filteredSteps,
           chefTips: chefTips.trim() || null,
+          videoUrl: videoUrl.trim() || null,
           visibility,
           status: newStatus,
         }),
@@ -919,6 +922,46 @@ export default function EditRecipePage() {
             />
             <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginTop: '12px' }}>
               💡 Ces astuces seront affichées en bas de la recette pour aider les lecteurs
+            </p>
+          </div>
+
+          {/* Lien YouTube */}
+          <div style={{
+            background: 'rgba(255,255,255,0.05)',
+            padding: '30px',
+            borderRadius: '16px',
+            border: '1px solid rgba(255,255,255,0.1)'
+          }}>
+            <label style={{
+              display: 'block',
+              fontSize: '13px',
+              fontWeight: 600,
+              color: '#FF0000',
+              marginBottom: '12px',
+              textTransform: 'uppercase',
+              letterSpacing: '1px'
+            }}>
+              <span style={{ marginRight: '8px' }}>▶</span>
+              Lien YouTube
+            </label>
+            <input
+              type="url"
+              value={videoUrl}
+              onChange={(e) => setVideoUrl(e.target.value)}
+              placeholder="https://www.youtube.com/watch?v=..."
+              style={{
+                width: '100%',
+                padding: '14px 16px',
+                background: 'rgba(255,255,255,0.05)',
+                border: '1px solid rgba(255,255,255,0.1)',
+                borderRadius: '10px',
+                color: '#fff',
+                fontSize: '15px',
+                outline: 'none'
+              }}
+            />
+            <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginTop: '12px' }}>
+              🎬 Ajoute le lien vers ta vidéo YouTube pour cette recette. Un bouton "Voir la vidéo" apparaîtra sur la page de la recette.
             </p>
           </div>
 
