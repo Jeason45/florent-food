@@ -385,3 +385,28 @@ model MailLog {
   @@index([sentAt])
   @@map("mail_logs")
 }
+
+// ==================================
+// 10. CONTACT_MESSAGES (Messages de contact)
+// ==================================
+model ContactMessage {
+  id        String        @id @default(uuid())
+  name      String
+  email     String
+  subject   String
+  message   String        @db.Text
+  status    MessageStatus @default(UNREAD)
+  createdAt DateTime      @default(now()) @map("created_at")
+  readAt    DateTime?     @map("read_at")
+  repliedAt DateTime?     @map("replied_at")
+
+  @@index([status])
+  @@index([createdAt(sort: Desc)])
+  @@map("contact_messages")
+}
+
+enum MessageStatus {
+  UNREAD  @map("unread")
+  READ    @map("read")
+  REPLIED @map("replied")
+}

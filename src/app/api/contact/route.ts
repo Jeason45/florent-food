@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { sendEmail } from "@/lib/email/config";
+import { prisma } from "@/lib/prisma";
 
 const SUBJECTS_MAP: Record<string, string> = {
   question: "Question sur une recette",
@@ -32,6 +33,16 @@ export async function POST(request: Request) {
     }
 
     const subjectText = SUBJECTS_MAP[subject] || subject;
+
+    // Sauvegarder le message en BDD
+    await prisma.contactMessage.create({
+      data: {
+        name,
+        email,
+        subject: subjectText,
+        message,
+      },
+    });
 
     // Envoyer l'email à Florent
     const result = await sendEmail({
