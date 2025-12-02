@@ -108,7 +108,7 @@ export function HeroSection({ id }: HeroSectionProps = {}) {
           priority
           quality={75}
           sizes="100vw"
-          className="object-cover object-center"
+          className="object-cover object-top sm:object-center"
         />
         <div className="absolute inset-0 bg-black/30" />
       </div>
