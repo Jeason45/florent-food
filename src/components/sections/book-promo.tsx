@@ -78,16 +78,29 @@ export function BookPromoSection() {
           .book-promo-container {
             flex-direction: row;
             text-align: left;
-            gap: 80px;
+            gap: 40px;
           }
           .book-promo-image {
-            width: 650px;
+            width: 45%;
+            max-width: 450px;
+            flex-shrink: 0;
           }
           .book-promo-content {
             align-items: flex-start;
+            flex: 1;
+            min-width: 0;
           }
           .book-promo-title {
             font-size: 42px;
+          }
+        }
+        @media (min-width: 1024px) {
+          .book-promo-container {
+            gap: 60px;
+          }
+          .book-promo-image {
+            width: 50%;
+            max-width: 550px;
           }
         }
       `}</style>
