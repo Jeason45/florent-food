@@ -1,10 +1,52 @@
 'use client';
 
+import { useState, useEffect } from 'react';
+
 interface YouTubeButtonProps {
   videoUrl: string;
 }
 
 export default function YouTubeButton({ videoUrl }: YouTubeButtonProps) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Style mobile: bouton circulaire compact
+  if (isMobile) {
+    return (
+      <a
+        href={videoUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="youtube-button"
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '44px',
+          height: '44px',
+          background: '#FF0000',
+          borderRadius: '50%',
+          textDecoration: 'none',
+          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
+          transition: 'all 0.3s ease',
+        }}
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff">
+          <polygon points="5,3 19,12 5,21"/>
+        </svg>
+      </a>
+    );
+  }
+
+  // Style desktop: bouton avec texte et glassmorphism
   return (
     <a
       href={videoUrl}
