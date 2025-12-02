@@ -23,15 +23,19 @@ export function AboutStorySection() {
 
           <div className="max-w-5xl space-y-5 sm:space-y-6 md:space-y-8 text-base sm:text-lg md:text-xl lg:text-2xl text-[var(--gris-taupe)] leading-relaxed font-light" style={{ margin: '0 auto', marginTop: '0.75rem' }}>
             <p style={{ textAlign: 'center' }}>
-              J'ai eu la chance de participer à un défi culinaire organisé par <strong className="font-medium text-[var(--noir-luxe)]">Audi</strong>, devant <strong className="font-medium text-[var(--noir-luxe)]">Thierry Marx</strong> et <strong className="font-medium text-[var(--noir-luxe)]">Jessica Préalpato</strong>, élue meilleure pâtissière du monde en 2019.
+              Vous m'avez peut-être déjà croisé sur vos écrans, avec mon accent chantant du Sud de la France et mon enthousiasme communicatif : je m'appelle <strong className="font-medium text-[var(--noir-luxe)]">Florent</strong>, j'ai 26 ans et je suis créateur de contenu culinaire de <strong className="font-medium text-[var(--noir-luxe)]">Montpellier</strong>.
             </p>
 
             <p style={{ textAlign: 'center' }}>
-              J'ai également collaboré avec des marques comme <strong className="font-medium text-[var(--noir-luxe)]">McDonald's</strong>, <strong className="font-medium text-[var(--noir-luxe)]">Uber Eats</strong> et <strong className="font-medium text-[var(--noir-luxe)]">Paramount</strong>.
+              Au fil de cette aventure, j'ai eu la chance de vivre des expériences incroyables. Parmi elles, être sollicité par <strong className="font-medium text-[var(--noir-luxe)]">Audi</strong> pour participer à un défi culinaire destiné à des sportifs de haut niveau. Une expérience enrichissante face à un jury d'exception : <strong className="font-medium text-[var(--noir-luxe)]">Thierry Marx</strong> et <strong className="font-medium text-[var(--noir-luxe)]">Jessica Préalpato</strong>. Challenge que j'ai eu l'honneur de remporter.
             </p>
 
             <p style={{ textAlign: 'center' }}>
-              Ce qui m'anime au quotidien, c'est simple : partager des recettes accessibles et transmettre ma passion pour la cuisine.
+              Cette passion m'a également poussé à aller plus loin. J'ai eu l'opportunité de concrétiser mon amour pour la cuisine en publiant mon premier livre de recettes. Chaque recette est accompagnée d'un QR code permettant d'accéder directement à la vidéo explicative, pour une expérience culinaire encore plus vivante et immersive. Vous trouverez le lien pour vous le procurer en bas de cette page.
+            </p>
+
+            <p style={{ textAlign: 'center' }}>
+              Mais au fond, tout ça part d'une seule chose : depuis toujours, je suis un gourmand assumé, amoureux de la bonne cuisine, du partage et des moments conviviaux ! Aujourd'hui, je continue de partager ma passion avec vous, en rendant la cuisine accessible à tous.
             </p>
           </div>
         </div>

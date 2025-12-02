@@ -1,7 +1,6 @@
 "use client";
 
-import { Quote, Star, ChevronLeft, ChevronRight } from "lucide-react";
-import { useState } from "react";
+import { Quote, Star } from "lucide-react";
 
 const testimonials = [
   {
@@ -28,12 +27,6 @@ const testimonials = [
     source: "Instagram",
     text: "Très bonne recette monsieur qui me donne trop envie d'y goûter 😋😋😋😋",
   },
-  {
-    id: 5,
-    name: "@houda34",
-    source: "TikTok",
-    text: "Même en tant que débutante, j'ai pu suivre facilement. Les vidéos sont top et les astuces font vraiment la différence. Je recommande à 100% !",
-  },
 ];
 
 const socials = [
@@ -53,17 +46,22 @@ const brands = [
 ];
 
 export function CommunitySection() {
-  const [activeSlide, setActiveSlide] = useState(0);
-
-  const nextSlide = () => setActiveSlide((prev) => (prev + 1) % testimonials.length);
-  const prevSlide = () => setActiveSlide((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-
   return (
     <section className="community-section" style={{ background: '#FFFBF7', padding: '10px 20px 30px' }}>
       <style>{`
         .community-grid-row3 {
-          display: grid;
-          grid-template-columns: 1fr;
+          display: flex;
+          flex-direction: column;
+          gap: 15px;
+        }
+        .about-testimonials-row {
+          display: flex;
+          flex-direction: column;
+          gap: 15px;
+        }
+        .testimonials-stack {
+          display: flex;
+          flex-direction: column;
           gap: 15px;
         }
         .social-links-title {
@@ -120,9 +118,34 @@ export function CommunitySection() {
           0%, 100% { transform: scaleX(0.3); opacity: 0.5; }
           50% { transform: scaleX(1); opacity: 1; }
         }
+        .testimonials-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 15px;
+        }
         @media (min-width: 768px) {
-          .community-grid-row3 {
-            grid-template-columns: 1fr 1fr;
+          .about-testimonials-row {
+            flex-direction: row;
+            align-items: stretch;
+          }
+          .about-testimonials-row > .about-card {
+            flex: 1;
+          }
+          .about-testimonials-row > .testimonials-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+          }
+          .testimonials-stack {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+          }
+          .testimonials-stack > div {
+            flex: 1;
+          }
+          .testimonials-grid {
+            grid-template-columns: repeat(2, 1fr);
           }
           .social-links-title {
             font-size: 18px;
@@ -229,87 +252,66 @@ export function CommunitySection() {
           </div>
         </div>
 
-        {/* ROW 3: À propos + Témoignages (50/50) - Fond clair */}
+        {/* ROW 3: À propos + Témoignages */}
         <div className="community-grid-row3">
           {/* À propos */}
           <div style={{
             background: '#fff',
             borderRadius: '20px',
             padding: '30px',
-            boxShadow: '0 4px 20px rgba(0,0,0,0.05)'
+            boxShadow: '0 4px 20px rgba(0,0,0,0.05)',
+            border: '2px solid #D4AF37'
           }}>
-            <p className="about-label" style={{ color: '#D4AF37', letterSpacing: '3px', marginBottom: '20px', marginTop: 0 }}>À PROPOS</p>
+            <p style={{ color: '#D4AF37', letterSpacing: '3px', marginBottom: '20px', marginTop: 0, fontSize: '16px', fontWeight: 600 }}>À PROPOS</p>
             <p style={{ color: '#444', fontSize: '15px', lineHeight: 1.9, marginBottom: '15px', marginTop: 0 }}>
-              J'ai eu la chance d'être sollicité par <strong style={{ color: '#D4AF37' }}>Audi</strong> pour participer à un défi culinaire destiné à des sportifs de haut niveau. Une expérience enrichissante face à un jury d'exception : <strong style={{ color: '#1a1a1a' }}>Thierry Marx</strong> et <strong style={{ color: '#1a1a1a' }}>Jessica Préalpato</strong>. Challenge que j'ai eu l'honneur de remporter.
+              Vous m'avez peut-être déjà croisé sur vos écrans, avec mon accent chantant du Sud de la France et mon enthousiasme communicatif : je m'appelle <strong style={{ color: '#1a1a1a' }}>Florent</strong>, j'ai 26 ans et je suis créateur de contenu culinaire de <strong style={{ color: '#1a1a1a' }}>Montpellier</strong>.
+            </p>
+            <p style={{ color: '#444', fontSize: '15px', lineHeight: 1.9, marginBottom: '15px', marginTop: 0 }}>
+              Au fil de cette aventure, j'ai eu la chance de vivre des expériences incroyables. Parmi elles, être sollicité par <strong style={{ color: '#D4AF37' }}>Audi</strong> pour participer à un défi culinaire destiné à des sportifs de haut niveau. Une expérience enrichissante face à un jury d'exception : <strong style={{ color: '#1a1a1a' }}>Thierry Marx</strong> et <strong style={{ color: '#1a1a1a' }}>Jessica Préalpato</strong>. Challenge que j'ai eu l'honneur de remporter.
+            </p>
+            <p style={{ color: '#444', fontSize: '15px', lineHeight: 1.9, marginBottom: '15px', marginTop: 0 }}>
+              Cette passion m'a également poussé à aller plus loin. J'ai eu l'opportunité de concrétiser mon amour pour la cuisine en publiant mon premier livre de recettes. Chaque recette est accompagnée d'un QR code permettant d'accéder directement à la vidéo explicative, pour une expérience culinaire encore plus vivante et immersive. Vous trouverez le lien pour vous le procurer en bas de cette page.
             </p>
             <p style={{ color: '#333', fontSize: '15px', lineHeight: 1.9, margin: 0 }}>
-              Aujourd'hui, je continue de partager ma passion avec vous, en rendant la cuisine accessible à tous.
+              Mais au fond, tout ça part d'une seule chose : depuis toujours, je suis un gourmand assumé, amoureux de la bonne cuisine, du partage et des moments conviviaux ! Aujourd'hui, je continue de partager ma passion avec vous, en rendant la cuisine accessible à tous.
             </p>
           </div>
 
-          {/* Témoignages - Fond clair */}
-          <div style={{
-            background: '#fff',
-            borderRadius: '20px',
-            padding: '30px',
-            display: 'flex',
-            flexDirection: 'column',
-            boxShadow: '0 4px 20px rgba(0,0,0,0.05)'
-          }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+          {/* Témoignages */}
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '25px' }}>
               <Quote size={26} style={{ color: '#D4AF37', opacity: 0.5 }} />
-              <div style={{ display: 'flex', gap: '6px' }}>
-                <button onClick={prevSlide} aria-label="Témoignage précédent" style={{ width: '44px', height: '44px', borderRadius: '50%', background: '#f5f5f5', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <ChevronLeft size={18} color="#1a1a1a" />
-                </button>
-                <button onClick={nextSlide} aria-label="Témoignage suivant" style={{ width: '44px', height: '44px', borderRadius: '50%', background: '#D4AF37', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <ChevronRight size={18} color="#000" />
-                </button>
-              </div>
+              <p style={{ color: '#D4AF37', letterSpacing: '3px', margin: 0, fontSize: '16px', fontWeight: 600 }}>TÉMOIGNAGES</p>
             </div>
-            <p style={{ color: '#444', fontSize: '15px', lineHeight: 1.9, marginBottom: '20px', marginTop: 0, flex: 1 }}>
-              "{testimonials[activeSlide].text}"
-            </p>
-            <div style={{ borderTop: '1px solid #eee', paddingTop: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div>
-                <p style={{ color: '#1a1a1a', fontSize: '15px', fontWeight: 600, margin: 0 }}>{testimonials[activeSlide].name}</p>
-                <p style={{ color: '#D4AF37', fontSize: '12px', margin: '4px 0 0 0', letterSpacing: '1px' }}>{testimonials[activeSlide].source}</p>
-              </div>
-              <div style={{ display: 'flex', gap: '2px' }}>
-                {[...Array(5)].map((_, i) => <Star key={i} size={12} fill="#D4AF37" color="#D4AF37" />)}
-              </div>
-            </div>
-            <div style={{ display: 'flex', gap: '8px', marginTop: '15px', justifyContent: 'center' }}>
-              {testimonials.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setActiveSlide(index)}
-                  aria-label={`Voir témoignage ${index + 1}`}
-                  style={{
-                    width: '44px',
-                    height: '44px',
-                    borderRadius: '8px',
-                    background: 'transparent',
-                    border: 'none',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: 0
-                  }}
-                >
-                  <span style={{
-                    width: index === activeSlide ? '20px' : '8px',
-                    height: '8px',
-                    borderRadius: '4px',
-                    background: index === activeSlide ? '#D4AF37' : '#ddd',
-                    transition: 'all 0.3s',
-                    display: 'block'
-                  }} />
-                </button>
+            <div className="testimonials-grid">
+              {testimonials.map((testimonial, index) => (
+                <div key={index} style={{
+                  background: '#fff',
+                  borderRadius: '20px',
+                  padding: '30px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  height: '100%',
+                  boxShadow: '0 4px 20px rgba(0,0,0,0.05)',
+                  border: '2px solid #D4AF37'
+                }}>
+                  <p style={{ color: '#444', fontSize: '15px', lineHeight: 1.9, marginBottom: '20px', marginTop: 0, flex: 1 }}>
+                    "{testimonial.text}"
+                  </p>
+                  <div style={{ borderTop: '1px solid #eee', paddingTop: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div>
+                      <p style={{ color: '#1a1a1a', fontSize: '14px', fontWeight: 600, margin: 0 }}>{testimonial.name}</p>
+                      <p style={{ color: '#D4AF37', fontSize: '11px', margin: '4px 0 0 0', letterSpacing: '1px' }}>{testimonial.source}</p>
+                    </div>
+                    <div style={{ display: 'flex', gap: '2px' }}>
+                      {[...Array(5)].map((_, i) => <Star key={i} size={10} fill="#D4AF37" color="#D4AF37" />)}
+                    </div>
+                  </div>
+                </div>
               ))}
             </div>
           </div>
+
         </div>
 
       </div>
