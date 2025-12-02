@@ -65,6 +65,23 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr" className="scroll-smooth">
+      <head>
+        {/* Préchargement image hero pour améliorer LCP */}
+        <link
+          rel="preload"
+          as="image"
+          href="/hero-mobile.jpg"
+          media="(max-width: 767px)"
+          fetchPriority="high"
+        />
+        <link
+          rel="preload"
+          as="image"
+          href="/hero-optimized.jpg"
+          media="(min-width: 768px)"
+          fetchPriority="high"
+        />
+      </head>
       <body className={`${inter.variable} ${cormorant.variable} antialiased`}>
         <GoogleAnalytics />
         <AuthProvider>
