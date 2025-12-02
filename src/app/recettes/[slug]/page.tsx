@@ -90,16 +90,17 @@ export default async function RecipePage({ params }: RecipePageProps) {
         @media print {
           @page {
             size: A4;
-            margin: 8mm;
+            margin: 0;
           }
 
           body {
+            padding: 8mm !important;
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
           }
 
-          /* Masquer header, footer, navigation, bouton impression */
-          header, footer, nav, .print-button, .print-button-container {
+          /* Masquer header, footer, navigation, boutons */
+          header, footer, nav, .print-button, .print-button-container, .back-button {
             display: none !important;
           }
 
@@ -304,10 +305,151 @@ export default async function RecipePage({ params }: RecipePageProps) {
             margin-top: 5px !important;
           }
         }
+
+        /* ===========================================
+           STYLES IMPRESSION MOBILE - Marges réduites + polices agrandies
+           =========================================== */
+        @media print and (max-width: 768px) {
+          @page {
+            size: A4;
+            margin: 0;
+          }
+
+          body {
+            padding: 5mm !important;
+          }
+
+          /* Hero compact mobile print */
+          .recipe-hero {
+            height: 150px !important;
+            max-height: 150px !important;
+          }
+
+          .recipe-hero img {
+            height: 150px !important;
+          }
+
+          .recipe-hero-overlay {
+            padding: 10px 15px !important;
+          }
+
+          .recipe-hero-overlay h1 {
+            font-size: 16px !important;
+          }
+
+          /* Meta info mobile print */
+          .recipe-meta {
+            padding: 6px 0 !important;
+            gap: 12px !important;
+          }
+
+          .recipe-meta > div > div:first-child {
+            font-size: 14px !important;
+          }
+
+          .recipe-meta > div > div:last-child {
+            font-size: 6px !important;
+          }
+
+          /* Contenu mobile print */
+          .recipe-content {
+            padding: 8px 10px !important;
+          }
+
+          /* Section titres mobile print */
+          .section-title {
+            font-size: 10px !important;
+            margin-bottom: 6px !important;
+          }
+
+          /* Ingrédients mobile print - POLICES AGRANDIES */
+          .ingredient-group h3 {
+            font-size: 11px !important;
+            margin-bottom: 3px !important;
+          }
+
+          .ingredients-list li {
+            font-size: 10px !important;
+            padding: 3px 0 3px 10px !important;
+            line-height: 1.4 !important;
+          }
+
+          .ingredients-list li span {
+            width: 3px !important;
+            height: 3px !important;
+            top: 7px !important;
+          }
+
+          /* Étapes mobile print - POLICES AGRANDIES */
+          .recipe-step {
+            padding: 6px 8px !important;
+            margin-bottom: 5px !important;
+            gap: 8px !important;
+          }
+
+          .recipe-step-number {
+            font-size: 16px !important;
+            min-width: 25px !important;
+          }
+
+          .recipe-step h3 {
+            font-size: 11px !important;
+            margin-bottom: 2px !important;
+          }
+
+          .recipe-step p {
+            font-size: 10px !important;
+            line-height: 1.5 !important;
+          }
+
+          /* Astuces du Chef mobile print */
+          .recipe-chef-tips {
+            padding: 12px 15px !important;
+            margin-top: 8px !important;
+          }
+
+          .recipe-chef-tips > div:first-child {
+            font-size: 7px !important;
+            padding: 3px 10px !important;
+            top: -8px !important;
+          }
+
+          .recipe-chef-tips p {
+            font-size: 10px !important;
+            line-height: 1.5 !important;
+          }
+
+          /* Footer mobile print */
+          .recipe-footer {
+            padding: 6px 0 !important;
+          }
+
+          .recipe-footer > div:first-child {
+            font-size: 10px !important;
+          }
+
+          .recipe-footer > div:last-child {
+            font-size: 6px !important;
+          }
+        }
+
         /* ===========================================
            STYLES MOBILE RESPONSIVE - COMPACT
            =========================================== */
         @media (max-width: 768px) {
+          /* Bouton retour mobile - plus petit */
+          .back-button {
+            width: 36px !important;
+            height: 36px !important;
+            top: 16px !important;
+            left: 16px !important;
+          }
+
+          .back-button svg {
+            width: 18px !important;
+            height: 18px !important;
+          }
+
           /* Hero section mobile */
           .recipe-hero {
             aspect-ratio: 4 / 3 !important;
@@ -528,6 +670,41 @@ export default async function RecipePage({ params }: RecipePageProps) {
         overflow: 'hidden',
         background: '#000'
       }}>
+        {/* Bouton Retour en haut à gauche */}
+        <a
+          href="/"
+          className="back-button"
+          style={{
+            position: 'absolute',
+            top: '24px',
+            left: '24px',
+            zIndex: 10,
+            width: '44px',
+            height: '44px',
+            borderRadius: '50%',
+            background: 'rgba(0, 0, 0, 0.5)',
+            backdropFilter: 'blur(10px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#fff',
+            textDecoration: 'none',
+            transition: 'background 0.2s ease'
+          }}
+        >
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+        </a>
         {/* Bouton Télécharger PDF en haut à droite */}
         <div className="print-button-container" style={{
           position: 'absolute',

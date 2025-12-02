@@ -200,14 +200,9 @@ export default function MentionsLegalesPage() {
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem', width: '100%' }}>
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
                 <p className="text-xs font-medium tracking-[0.2em] uppercase text-[#8B7355]">Conception</p>
-                <a
-                  href="https://jldigitalstudio.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-base font-light text-[#C77A4E] hover:text-[#8B7355] transition-colors duration-300"
-                >
-                  JLDS — Jeason Lemoine
-                </a>
+                <span className="text-base font-light text-[#C77A4E]">
+                  JL Studio — Jeason Lemoine
+                </span>
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>

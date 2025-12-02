@@ -24,19 +24,12 @@ export function Footer() {
           </div>
 
           {/* Copyright - centré */}
-          <div className="flex flex-row items-center gap-6 sm:gap-8 text-sm text-white/50 font-light">
+          <div className="flex flex-row items-center gap-6 sm:gap-8 text-sm text-white/50 font-light" style={{ marginTop: '-1rem' }}>
             <p>© {currentYear} Florent Food</p>
             <span className="hidden sm:block">•</span>
             <p>
               Conçu par{" "}
-              <a
-                href="https://jldigitalstudio.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#D4AF37] hover:text-white transition-colors"
-              >
-                JLDS
-              </a>
+              <span className="text-[#D4AF37]">JL Studio</span>
             </p>
           </div>
         </div>

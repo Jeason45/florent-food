@@ -225,20 +225,20 @@ export function NewsletterPreviewSection() {
             {/* HERO - Gradient Gold (identique à l'email) */}
             <div className="newsletter-preview-hero" style={{
               position: 'relative',
-              height: '500px',
+              height: '380px',
               background: 'linear-gradient(135deg, #D4AF37 0%, #C77A4E 100%)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               textAlign: 'center',
-              padding: '60px 40px'
+              padding: '40px 40px'
             }}>
               <div>
                 <div style={{
                   fontSize: '11px',
                   letterSpacing: '3px',
                   color: 'rgba(0,0,0,0.6)',
-                  marginBottom: '20px',
+                  marginBottom: '15px',
                   textTransform: 'uppercase'
                 }}>
                   Édition du {formatDate(newsletter.startDate)}
@@ -249,7 +249,7 @@ export function NewsletterPreviewSection() {
                   fontWeight: '900',
                   letterSpacing: '-1px',
                   lineHeight: '1.1',
-                  marginBottom: '20px',
+                  marginBottom: '15px',
                   textTransform: 'uppercase'
                 }}>
                   Saveurs<br/>d'Exception
