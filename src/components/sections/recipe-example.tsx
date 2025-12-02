@@ -589,7 +589,7 @@ export function RecipeExampleSection() {
                   color: '#999',
                   letterSpacing: '1px'
                 }}>
-                  Haute Cuisine · Paris
+                  Haute Cuisine · L'Art de la Gourmandise
                 </div>
               </div>
             </div>

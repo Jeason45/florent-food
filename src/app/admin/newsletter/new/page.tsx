@@ -291,7 +291,7 @@ export default function NewNewsletterPage() {
           FLORENT FOOD
         </div>
         <p style="font-size: 11px; color: #666; line-height: 2; letter-spacing: 1px; text-transform: uppercase; margin: 0;">
-          Haute Cuisine · Paris<br>
+          Haute Cuisine · L'Art de la Gourmandise<br>
           <a href="#" style="color: #D4AF37; text-decoration: none;">Se Désinscrire</a> ·
           <a href="#" style="color: #D4AF37; text-decoration: none;">Préférences</a>
         </p>
