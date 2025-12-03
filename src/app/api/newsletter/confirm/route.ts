@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { sendEmail } from '@/lib/emailUtils';
 import { welcomeEmail } from '@/lib/email/templates';
-import { NewsletterStatus } from '@prisma/client';
 import { SignJWT } from 'jose';
 
 const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || 'fallback-secret');
@@ -65,53 +64,6 @@ export async function GET(request: NextRequest) {
       type: 'newsletter_welcome',
       subscriberId: subscriber.id
     });
-
-    // Envoyer la newsletter de la semaine en cours (si elle existe et si l'envoi auto est activé)
-    try {
-      // Vérifier si l'envoi automatique est activé
-      const autoSendSetting = await prisma.newsletter.findFirst({
-        where: { subject: '__SETTING_AUTO_SEND_ENABLED__' }
-      });
-
-      const autoSendContent = autoSendSetting?.content as { enabled?: boolean } | null;
-      const autoSendEnabled = autoSendContent?.enabled ?? true; // Par défaut activé
-
-      if (!autoSendEnabled) {
-        console.log('⏸️ Auto-send newsletter disabled - skipping for:', subscriber.email);
-      } else {
-        const now = new Date();
-        const currentNewsletter = await prisma.newsletter.findFirst({
-          where: {
-            status: NewsletterStatus.ACTIVE,
-            startDate: { lte: now },
-            endDate: { gte: now },
-            subject: { not: '__SETTING_AUTO_SEND_ENABLED__' } // Exclure le setting
-          },
-          orderBy: { sentAt: 'desc' }
-        });
-
-        if (currentNewsletter && currentNewsletter.content) {
-          const content = currentNewsletter.content as { html?: string };
-          if (content.html) {
-            console.log('📧 Sending current week newsletter to new subscriber:', subscriber.email);
-
-            await sendEmail({
-              to: subscriber.email,
-              subject: `📬 ${currentNewsletter.subject}`,
-              htmlContent: content.html,
-              type: 'newsletter_weekly',
-              subscriberId: subscriber.id,
-              newsletterId: currentNewsletter.id
-            });
-
-            console.log('✅ Current week newsletter sent to:', subscriber.email);
-          }
-        }
-      }
-    } catch (newsletterError) {
-      // Ne pas bloquer la confirmation si l'envoi de la newsletter échoue
-      console.error('⚠️ Failed to send current week newsletter:', newsletterError);
-    }
 
     // Créer un JWT token pour auto-login
     const authToken = await new SignJWT({

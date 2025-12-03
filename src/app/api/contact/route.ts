@@ -44,9 +44,9 @@ export async function POST(request: Request) {
       },
     });
 
-    // Envoyer l'email à Florent
+    // Envoyer l'email à Florent (2 adresses)
     const result = await sendEmail({
-      to: "contact.florentfood@gmail.com",
+      to: ["contact.florentfood@gmail.com", "florentcmtpro@gmail.com"],
       subject: `[Florent Food] ${subjectText} - de ${name}`,
       html: `
         <!DOCTYPE html>
