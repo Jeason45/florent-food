@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { sendEmail } from '@/lib/emailUtils';
 import { welcomeEmail } from '@/lib/email/templates';
+import { NewsletterStatus } from '@prisma/client';
 import { SignJWT } from 'jose';
 
 const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || 'fallback-secret');
@@ -64,6 +65,40 @@ export async function GET(request: NextRequest) {
       type: 'newsletter_welcome',
       subscriberId: subscriber.id
     });
+
+    // Envoyer la newsletter en cours (si elle existe)
+    try {
+      const now = new Date();
+      const currentNewsletter = await prisma.newsletter.findFirst({
+        where: {
+          status: NewsletterStatus.ACTIVE,
+          startDate: { lte: now },
+          endDate: { gte: now }
+        },
+        orderBy: { sentAt: 'desc' }
+      });
+
+      if (currentNewsletter && currentNewsletter.content) {
+        const content = currentNewsletter.content as { html?: string };
+        if (content.html) {
+          console.log('📧 Envoi de la newsletter en cours au nouvel abonné:', subscriber.email);
+
+          await sendEmail({
+            to: subscriber.email,
+            subject: `📬 ${currentNewsletter.subject}`,
+            htmlContent: content.html,
+            type: 'newsletter_weekly',
+            subscriberId: subscriber.id,
+            newsletterId: currentNewsletter.id
+          });
+
+          console.log('✅ Newsletter en cours envoyée à:', subscriber.email);
+        }
+      }
+    } catch (newsletterError) {
+      // Ne pas bloquer la confirmation si l'envoi de la newsletter échoue
+      console.error('⚠️ Erreur envoi newsletter en cours:', newsletterError);
+    }
 
     // Créer un JWT token pour auto-login
     const authToken = await new SignJWT({
