@@ -14,7 +14,7 @@ export async function PATCH(
     const newsletter = await prisma.newsletter.findUnique({
       where: { id },
       include: {
-        recipes: {
+        newsletterRecipes: {
           include: {
             recipe: true
           },
@@ -69,7 +69,7 @@ export async function PATCH(
 
       if (subscribers.length > 0) {
         // Récupérer les recettes pour générer le HTML
-        const recipes = newsletter.recipes.map(nr => nr.recipe);
+        const recipes = newsletter.newsletterRecipes.map(nr => nr.recipe);
         const featuredRecipe = recipes[0];
         const secondaryRecipes = recipes.slice(1);
 
