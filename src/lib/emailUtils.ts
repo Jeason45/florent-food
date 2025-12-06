@@ -1,23 +1,28 @@
 /**
  * Email Utilities for Florent Food
- * Handles email sending with Nodemailer and logging
+ * Handles email sending with Resend (primary) and Nodemailer/Gmail (fallback)
  */
 
+import { Resend } from 'resend';
 import nodemailer from 'nodemailer';
 import { prisma } from '@/lib/prisma';
 
-// SMTP Configuration
+// Resend Configuration (Primary)
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
+const RESEND_FROM_EMAIL = 'Florent Food <contact@florentfood.fr>';
+
+// Gmail SMTP Configuration (Fallback)
 const SMTP_CONFIG = {
   host: process.env.SMTP_HOST || 'smtp.gmail.com',
   port: parseInt(process.env.SMTP_PORT || '587'),
-  secure: process.env.SMTP_SECURE === 'true', // true for 465, false for other ports
+  secure: process.env.SMTP_SECURE === 'true',
   auth: {
     user: process.env.GMAIL_USER || '',
     pass: process.env.GMAIL_APP_PASSWORD || ''
   }
 };
 
-// Create reusable transporter
+// Create reusable transporter for Gmail fallback
 let transporter: nodemailer.Transporter | null = null;
 
 function getTransporter(): nodemailer.Transporter {
@@ -52,7 +57,75 @@ export interface SendEmailResult {
 }
 
 /**
+ * Send email via Resend (primary) or Gmail (fallback)
+ */
+async function sendViaResend(params: {
+  to: string | string[];
+  subject: string;
+  htmlContent?: string;
+  textContent?: string;
+}): Promise<{ success: boolean; messageId?: string; error?: string }> {
+  if (!resend) {
+    return { success: false, error: 'Resend not configured' };
+  }
+
+  try {
+    const { data, error } = await resend.emails.send({
+      from: RESEND_FROM_EMAIL,
+      to: Array.isArray(params.to) ? params.to : [params.to],
+      subject: params.subject,
+      html: params.htmlContent || '',
+      text: params.textContent,
+    });
+
+    if (error) {
+      return { success: false, error: error.message };
+    }
+
+    return { success: true, messageId: data?.id };
+  } catch (error) {
+    return { success: false, error: error instanceof Error ? error.message : 'Resend error' };
+  }
+}
+
+/**
+ * Send email via Gmail SMTP (fallback)
+ */
+async function sendViaGmail(params: {
+  to: string | string[];
+  cc?: string | string[];
+  bcc?: string | string[];
+  subject: string;
+  htmlContent?: string;
+  textContent?: string;
+  attachments?: Array<{ filename: string; path?: string; href?: string }>;
+}): Promise<{ success: boolean; messageId?: string; error?: string }> {
+  if (!SMTP_CONFIG.auth.user || !SMTP_CONFIG.auth.pass) {
+    return { success: false, error: 'Gmail SMTP not configured' };
+  }
+
+  try {
+    const transporter = getTransporter();
+    const info = await transporter.sendMail({
+      from: `Florent Food <${SMTP_CONFIG.auth.user}>`,
+      to: Array.isArray(params.to) ? params.to.join(', ') : params.to,
+      cc: params.cc ? (Array.isArray(params.cc) ? params.cc.join(', ') : params.cc) : undefined,
+      bcc: params.bcc ? (Array.isArray(params.bcc) ? params.bcc.join(', ') : params.bcc) : undefined,
+      subject: params.subject,
+      html: params.htmlContent,
+      text: params.textContent,
+      attachments: params.attachments
+    });
+
+    return { success: true, messageId: info.messageId };
+  } catch (error) {
+    return { success: false, error: error instanceof Error ? error.message : 'Gmail error' };
+  }
+}
+
+/**
  * Send email and log to database
+ * Uses Resend as primary, Gmail as fallback
  */
 export async function sendEmail(params: SendEmailParams): Promise<SendEmailResult> {
   try {
@@ -70,11 +143,28 @@ export async function sendEmail(params: SendEmailParams): Promise<SendEmailResul
       sentBy
     } = params;
 
-    // Validate SMTP configuration
-    if (!SMTP_CONFIG.auth.user || !SMTP_CONFIG.auth.pass) {
-      console.warn('⚠️  SMTP not configured. Set GMAIL_USER and GMAIL_APP_PASSWORD env variables.');
+    let result: { success: boolean; messageId?: string; error?: string };
+    let provider = 'resend';
 
-      // Log to database even if not sent
+    // Try Resend first (primary)
+    if (resend) {
+      console.log('📧 Sending via Resend...');
+      result = await sendViaResend({ to, subject, htmlContent, textContent });
+
+      // If Resend fails, try Gmail as fallback
+      if (!result.success && SMTP_CONFIG.auth.user && SMTP_CONFIG.auth.pass) {
+        console.log('⚠️ Resend failed, trying Gmail fallback...');
+        provider = 'gmail';
+        result = await sendViaGmail({ to, cc, bcc, subject, htmlContent, textContent, attachments });
+      }
+    } else if (SMTP_CONFIG.auth.user && SMTP_CONFIG.auth.pass) {
+      // No Resend, use Gmail directly
+      console.log('📧 Sending via Gmail...');
+      provider = 'gmail';
+      result = await sendViaGmail({ to, cc, bcc, subject, htmlContent, textContent, attachments });
+    } else {
+      // No email service configured
+      console.warn('⚠️ No email service configured');
       const mailLog = await prisma.mailLog.create({
         data: {
           type,
@@ -88,34 +178,17 @@ export async function sendEmail(params: SendEmailParams): Promise<SendEmailResul
           subscriberId,
           newsletterId,
           status: 'failed',
-          error: 'SMTP not configured',
+          error: 'No email service configured',
           sentBy
         }
       });
 
       return {
         success: false,
-        error: 'SMTP not configured',
+        error: 'No email service configured',
         mailLogId: mailLog.id
       };
     }
-
-    const transporter = getTransporter();
-
-    // Prepare email options
-    const mailOptions: nodemailer.SendMailOptions = {
-      from: `Florent Food <${SMTP_CONFIG.auth.user}>`,
-      to: Array.isArray(to) ? to.join(', ') : to,
-      cc: cc ? (Array.isArray(cc) ? cc.join(', ') : cc) : undefined,
-      bcc: bcc ? (Array.isArray(bcc) ? bcc.join(', ') : bcc) : undefined,
-      subject,
-      html: htmlContent,
-      text: textContent,
-      attachments
-    };
-
-    // Send email
-    const info = await transporter.sendMail(mailOptions);
 
     // Log to database
     const mailLog = await prisma.mailLog.create({
@@ -130,17 +203,23 @@ export async function sendEmail(params: SendEmailParams): Promise<SendEmailResul
         attachments: attachments || [],
         subscriberId,
         newsletterId,
-        status: 'sent',
+        status: result.success ? 'sent' : 'failed',
+        error: result.error || null,
         sentBy
       }
     });
 
-    console.log('✅ Email sent successfully:', info.messageId);
+    if (result.success) {
+      console.log(`✅ Email sent via ${provider}:`, result.messageId);
+    } else {
+      console.error(`❌ Email failed via ${provider}:`, result.error);
+    }
 
     return {
-      success: true,
-      messageId: info.messageId,
-      mailLogId: mailLog.id
+      success: result.success,
+      messageId: result.messageId,
+      mailLogId: mailLog.id,
+      error: result.error
     };
   } catch (error) {
     console.error('❌ Error sending email:', error);
