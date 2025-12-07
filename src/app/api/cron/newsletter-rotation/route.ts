@@ -75,9 +75,12 @@ export async function GET(request: NextRequest) {
     }
 
     // ============================================
-    // 2. ACTIVER les newsletters SCHEDULED dont la date est atteinte
+    // 2. ACTIVER et ENVOYER les newsletters
+    // Priorité: D'abord SCHEDULED, sinon ACTIVE (sans doublon)
     // ============================================
-    const scheduledNewsletters = await prisma.newsletter.findMany({
+
+    // D'abord, chercher les newsletters SCHEDULED
+    let newslettersToProcess = await prisma.newsletter.findMany({
       where: {
         status: 'SCHEDULED',
         startDate: {
@@ -96,7 +99,36 @@ export async function GET(request: NextRequest) {
       }
     });
 
-    for (const newsletter of scheduledNewsletters) {
+    // Si aucune SCHEDULED, chercher les newsletters ACTIVE dont la startDate est atteinte
+    if (newslettersToProcess.length === 0) {
+      newslettersToProcess = await prisma.newsletter.findMany({
+        where: {
+          status: 'ACTIVE',
+          startDate: {
+            lte: today
+          },
+          endDate: {
+            gte: today
+          }
+        },
+        include: {
+          newsletterRecipes: {
+            include: {
+              recipe: true
+            },
+            orderBy: {
+              position: 'asc'
+            }
+          }
+        }
+      });
+
+      if (newslettersToProcess.length > 0) {
+        console.log(`📧 Aucune newsletter SCHEDULED, utilisation de ${newslettersToProcess.length} newsletter(s) ACTIVE`);
+      }
+    }
+
+    for (const newsletter of newslettersToProcess) {
       try {
         // Récupérer les données du contenu
         const content = newsletter.content as {
@@ -140,7 +172,9 @@ export async function GET(request: NextRequest) {
           recipes
         });
 
-        // Mettre à jour le statut à ACTIVE
+        // Mettre à jour le statut à ACTIVE (seulement si SCHEDULED)
+        // Si déjà ACTIVE, on met juste à jour le HTML et sentAt
+        const isScheduled = newsletter.status === 'SCHEDULED';
         await prisma.newsletter.update({
           where: { id: newsletter.id },
           data: {
@@ -152,6 +186,8 @@ export async function GET(request: NextRequest) {
             }
           }
         });
+
+        console.log(`📧 Newsletter ${isScheduled ? 'SCHEDULED → ACTIVE' : 'ACTIVE'}: ${newsletter.subject}`);
 
         // Envoyer les emails à tous les abonnés
         let successCount = 0;
