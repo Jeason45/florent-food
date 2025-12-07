@@ -43,7 +43,8 @@ export async function GET(request: NextRequest) {
         confirmedAt: true,
         totalOpens: true,
         totalClicks: true,
-        lastOpenedAt: true
+        lastOpenedAt: true,
+        confirmToken: true
       }
     });
 

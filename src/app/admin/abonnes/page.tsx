@@ -15,6 +15,7 @@ interface Subscriber {
   totalOpens: number;
   totalClicks: number;
   lastOpenedAt: string | null;
+  confirmToken: string | null;
 }
 
 export default function AbonnesAdminPage() {
@@ -77,6 +78,26 @@ export default function AbonnesAdminPage() {
       fetchSubscribers();
     } catch (error) {
       console.error('Error updating subscriber:', error);
+    }
+  };
+
+  const handleManualConfirm = async (confirmToken: string, email: string) => {
+    if (!confirm(`Valider manuellement le compte de ${email} ?`)) return;
+
+    try {
+      // Appeler la même API que le lien de confirmation dans l'email
+      const res = await fetch(`/api/newsletter/confirm?token=${confirmToken}`);
+
+      if (res.redirected || res.ok) {
+        alert(`✅ Compte de ${email} validé avec succès !`);
+        fetchSubscribers();
+      } else {
+        const data = await res.json();
+        alert(`❌ Erreur: ${data.error || 'Échec de la validation'}`);
+      }
+    } catch (error) {
+      console.error('Error confirming subscriber:', error);
+      alert('❌ Erreur lors de la validation');
     }
   };
 
@@ -369,7 +390,32 @@ export default function AbonnesAdminPage() {
                         </div>
                       </td>
                       <td style={{ padding: '16px', textAlign: 'center' }}>
-                        <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
+                        <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', flexWrap: 'wrap' }}>
+                          {/* Bouton Valider manuellement - uniquement pour les PENDING avec token */}
+                          {sub.status === 'PENDING' && sub.confirmToken && (
+                            <button
+                              onClick={() => handleManualConfirm(sub.confirmToken!, sub.email)}
+                              style={{
+                                padding: '6px 12px',
+                                background: 'rgba(16, 185, 129, 0.2)',
+                                border: '1px solid rgba(16, 185, 129, 0.4)',
+                                borderRadius: '6px',
+                                color: '#10b981',
+                                fontSize: '12px',
+                                fontWeight: 600,
+                                cursor: 'pointer',
+                                transition: 'all 0.2s'
+                              }}
+                              onMouseOver={(e) => {
+                                e.currentTarget.style.background = 'rgba(16, 185, 129, 0.3)';
+                              }}
+                              onMouseOut={(e) => {
+                                e.currentTarget.style.background = 'rgba(16, 185, 129, 0.2)';
+                              }}
+                            >
+                              ✓ Valider
+                            </button>
+                          )}
                           <button
                             onClick={() => handleToggleType(sub.id, sub.subscriptionType)}
                             style={{
