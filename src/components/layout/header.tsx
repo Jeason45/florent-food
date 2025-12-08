@@ -26,11 +26,17 @@ export function Header() {
     { name: "À propos", href: "#a-propos" },
     { name: "Témoignages", href: "#temoignages" },
     { name: "Réseaux sociaux", href: "#reseaux-sociaux" },
+    { name: "Mon Livre", href: "https://www.dashbook.fr/project/les-recettes-de-florent", external: true },
     { name: "Contact", href: "/contact" },
   ];
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string, external?: boolean) => {
     setIsMobileMenuOpen(false);
+
+    // Si c'est un lien externe, on laisse le comportement par défaut (ouverture dans un nouvel onglet)
+    if (external) {
+      return;
+    }
 
     // Si c'est un lien vers une page (commence par "/"), on laisse la navigation par défaut
     if (href.startsWith('/')) {
@@ -100,15 +106,29 @@ export function Header() {
 
             <div className="text-center space-y-8 sm:space-y-10" onClick={(e) => e.stopPropagation()}>
               {navigation.map((item, index) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className="block font-serif text-3xl sm:text-4xl md:text-5xl font-light text-white hover:text-[#D4AF37] transition-colors tracking-tight"
-                  onClick={(e) => handleNavClick(e, item.href)}
-                  style={{ animationDelay: `${index * 50}ms` }}
-                >
-                  {item.name}
-                </Link>
+                item.external ? (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block font-serif text-3xl sm:text-4xl md:text-5xl font-light text-white hover:text-[#D4AF37] transition-colors tracking-tight"
+                    onClick={(e) => handleNavClick(e, item.href, item.external)}
+                    style={{ animationDelay: `${index * 50}ms` }}
+                  >
+                    {item.name}
+                  </a>
+                ) : (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className="block font-serif text-3xl sm:text-4xl md:text-5xl font-light text-white hover:text-[#D4AF37] transition-colors tracking-tight"
+                    onClick={(e) => handleNavClick(e, item.href)}
+                    style={{ animationDelay: `${index * 50}ms` }}
+                  >
+                    {item.name}
+                  </Link>
+                )
               ))}
               <div className="pt-8 border-t border-white/10 mt-12">
                 <Link
