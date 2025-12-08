@@ -255,7 +255,7 @@ export function CommunitySection() {
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
 
         {/* Social Links - Fond sombre */}
-        <div style={{
+        <div id="reseaux-sociaux" style={{
           background: '#1a1a1a',
           borderRadius: '20px',
           padding: '30px 20px',
@@ -331,7 +331,7 @@ export function CommunitySection() {
         {/* ROW 3: À propos + Témoignages */}
         <div className="community-grid-row3">
           {/* À propos */}
-          <div className="about-card-wrapper">
+          <div id="a-propos" className="about-card-wrapper">
             <p style={{ color: '#D4AF37', letterSpacing: '3px', marginBottom: '15px', marginTop: 0, fontSize: '14px', fontWeight: 600 }}>À PROPOS</p>
             <p style={{ color: '#444', fontSize: '14px', lineHeight: 1.8, marginBottom: '12px', marginTop: 0 }}>
               Vous m'avez peut-être déjà croisé sur vos écrans, avec mon accent chantant du Sud de la France et mon enthousiasme communicatif : je m'appelle <strong style={{ color: '#1a1a1a' }}>Florent</strong>, j'ai 26 ans et je suis créateur de contenu culinaire de <strong style={{ color: '#1a1a1a' }}>Montpellier</strong>.
@@ -348,7 +348,7 @@ export function CommunitySection() {
           </div>
 
           {/* Témoignages */}
-          <div>
+          <div id="temoignages">
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '25px', marginTop: '25px' }}>
               <Quote size={26} style={{ color: '#D4AF37', opacity: 0.5 }} />
               <p style={{ color: '#D4AF37', letterSpacing: '3px', margin: 0, fontSize: '16px', fontWeight: 600 }}>TÉMOIGNAGES</p>
