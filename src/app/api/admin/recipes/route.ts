@@ -64,13 +64,21 @@ export async function POST(request: NextRequest) {
       tags,
     } = body;
 
-    // Generate slug from title
-    const slug = title
+    // Generate base slug from title
+    const baseSlug = title
       .toLowerCase()
       .normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '')
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/^-+|-+$/g, '');
+
+    // Check if slug already exists and make it unique if needed
+    let slug = baseSlug;
+    let counter = 1;
+    while (await prisma.recipe.findUnique({ where: { slug } })) {
+      slug = `${baseSlug}-${counter}`;
+      counter++;
+    }
 
     // Calcul du temps total (prep + cuisson + repos)
     const totalTime = parseInt(prepTime) + parseInt(cookTime) + (restTime ? parseInt(restTime) : 0);
