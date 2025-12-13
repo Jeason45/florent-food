@@ -44,11 +44,27 @@ export async function GET(request: NextRequest) {
         totalOpens: true,
         totalClicks: true,
         lastOpenedAt: true,
-        confirmToken: true
+        confirmToken: true,
+        _count: {
+          select: {
+            newsletterEvents: {
+              where: {
+                eventType: 'SENT'
+              }
+            }
+          }
+        }
       }
     });
 
-    return NextResponse.json(subscribers);
+    // Transformer les données pour inclure newslettersReceived
+    const subscribersWithCount = subscribers.map(sub => ({
+      ...sub,
+      newslettersReceived: sub._count?.newsletterEvents || 0,
+      _count: undefined
+    }));
+
+    return NextResponse.json(subscribersWithCount);
   } catch (error) {
     console.error('Error fetching subscribers:', error);
     return NextResponse.json(

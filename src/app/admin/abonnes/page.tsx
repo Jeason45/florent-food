@@ -16,6 +16,7 @@ interface Subscriber {
   totalClicks: number;
   lastOpenedAt: string | null;
   confirmToken: string | null;
+  newslettersReceived: number;
 }
 
 export default function AbonnesAdminPage() {
@@ -330,6 +331,9 @@ export default function AbonnesAdminPage() {
                       Inscrit le
                     </th>
                     <th style={{ padding: '16px', textAlign: 'center', color: 'rgba(255,255,255,0.6)', fontSize: '12px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                      NL reçues
+                    </th>
+                    <th style={{ padding: '16px', textAlign: 'center', color: 'rgba(255,255,255,0.6)', fontSize: '12px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                       Engagement
                     </th>
                     <th style={{ padding: '16px', textAlign: 'center', color: 'rgba(255,255,255,0.6)', fontSize: '12px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
@@ -383,6 +387,19 @@ export default function AbonnesAdminPage() {
                       </td>
                       <td style={{ padding: '16px', color: 'rgba(255,255,255,0.7)', fontSize: '14px' }}>
                         {new Date(sub.subscribedAt).toLocaleDateString('fr-FR')}
+                      </td>
+                      <td style={{ padding: '16px', textAlign: 'center' }}>
+                        <span style={{
+                          display: 'inline-block',
+                          padding: '4px 12px',
+                          borderRadius: '12px',
+                          fontSize: '13px',
+                          fontWeight: 600,
+                          background: 'rgba(99, 102, 241, 0.2)',
+                          color: '#818cf8'
+                        }}>
+                          {sub.newslettersReceived}
+                        </span>
                       </td>
                       <td style={{ padding: '16px', textAlign: 'center', color: 'rgba(255,255,255,0.7)', fontSize: '14px' }}>
                         <div style={{ fontSize: '12px' }}>

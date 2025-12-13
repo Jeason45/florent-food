@@ -186,27 +186,6 @@ export default function NewNewsletterPage() {
       </tr>
     ` : '';
 
-    const premiumCTAHTML = sendTo !== 'PREMIUM' ? `
-      <tr>
-        <td style="background: linear-gradient(135deg, #D4AF37 0%, #C77A4E 100%); padding: 70px 60px; text-align: center;">
-          <div style="display: inline-block; background: #000; color: #D4AF37; padding: 8px 24px; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 30px; font-weight: 700;">
-            Exclusif Premium
-          </div>
-          <h3 style="font-size: 42px; color: #000; font-weight: 900; margin-bottom: 20px; text-transform: uppercase; letter-spacing: -1px;">
-            Rejoignez<br>l'Élite Culinaire
-          </h3>
-          <p style="font-size: 16px; color: rgba(0,0,0,0.8); line-height: 1.6; margin-bottom: 40px; max-width: 500px; margin-left: auto; margin-right: auto;">
-            Accédez à notre bibliothèque complète de recettes d'exception,
-            masterclass en vidéo HD, et techniques de chef. Une expérience
-            gastronomique sans compromis.
-          </p>
-          <a href="${baseUrl}/premium" style="display: inline-block; background: #000; color: #D4AF37; padding: 18px 50px; text-decoration: none; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700;">
-            Devenir Membre Premium
-          </a>
-        </td>
-      </tr>
-    ` : '';
-
     return `
 <!DOCTYPE html>
 <html lang="fr">
@@ -281,8 +260,6 @@ export default function NewNewsletterPage() {
     ` : ''}
 
     ${quoteHTML}
-
-    ${premiumCTAHTML}
 
     <!-- Footer -->
     <tr>
