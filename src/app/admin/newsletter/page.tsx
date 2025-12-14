@@ -17,6 +17,8 @@ interface Newsletter {
   scheduledFor: string | null;
   sentAt: string | null;
   createdAt: string;
+  isVisibleOnSite: boolean;
+  isActiveForNewSubscribers: boolean;
 }
 
 export default function NewsletterPage() {
@@ -43,9 +45,8 @@ export default function NewsletterPage() {
     }
   };
 
-  const handleToggleVisibility = async (id: string, currentStatus: string) => {
-    const isCurrentlyVisible = currentStatus === 'ACTIVE';
-    const action = isCurrentlyVisible ? 'retirer du site' : 'publier sur le site';
+  const handleToggleVisibility = async (id: string, isCurrentlyVisible: boolean) => {
+    const action = isCurrentlyVisible ? 'retirer du site' : 'afficher sur le site';
 
     if (!confirm(`Êtes-vous sûr de vouloir ${action} cette newsletter ?`)) return;
 
@@ -63,6 +64,30 @@ export default function NewsletterPage() {
     } catch (error) {
       console.error('Error toggling visibility:', error);
       alert('Erreur lors du changement de visibilité');
+    }
+  };
+
+  const handleToggleActiveForNew = async (id: string, isCurrentlyActive: boolean) => {
+    const action = isCurrentlyActive
+      ? 'désactiver pour les nouveaux inscrits'
+      : 'activer pour les nouveaux inscrits (remplacera la newsletter active actuelle)';
+
+    if (!confirm(`Êtes-vous sûr de vouloir ${action} ?`)) return;
+
+    try {
+      const response = await fetch(`/api/admin/newsletter/${id}/toggle-active-for-new`, {
+        method: 'PATCH',
+      });
+      const data = await response.json();
+      if (data.success) {
+        fetchNewsletters();
+        alert(data.message);
+      } else {
+        alert(`Erreur: ${data.error}`);
+      }
+    } catch (error) {
+      console.error('Error toggling active for new:', error);
+      alert('Erreur lors du changement');
     }
   };
 
@@ -331,21 +356,23 @@ export default function NewsletterPage() {
                     ✏️ Modifier
                   </button>
 
+                  {/* Bouton Visibilité Site */}
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      handleToggleVisibility(newsletter.id, newsletter.status);
+                      handleToggleVisibility(newsletter.id, newsletter.isVisibleOnSite);
                     }}
+                    title={newsletter.isVisibleOnSite ? 'Masquer du site' : 'Afficher sur le site'}
                     style={{
-                      background: newsletter.status === 'ACTIVE'
+                      background: newsletter.isVisibleOnSite
                         ? 'rgba(251, 191, 36, 0.1)'
                         : 'rgba(99, 102, 241, 0.1)',
-                      border: newsletter.status === 'ACTIVE'
+                      border: newsletter.isVisibleOnSite
                         ? '1px solid rgba(251, 191, 36, 0.3)'
                         : '1px solid rgba(99, 102, 241, 0.3)',
                       borderRadius: '8px',
-                      color: newsletter.status === 'ACTIVE' ? '#fbbf24' : '#6366f1',
-                      padding: '10px 20px',
+                      color: newsletter.isVisibleOnSite ? '#fbbf24' : '#6366f1',
+                      padding: '10px 16px',
                       fontSize: '13px',
                       fontWeight: 600,
                       cursor: 'pointer',
@@ -355,7 +382,7 @@ export default function NewsletterPage() {
                       transition: 'all 0.3s'
                     }}
                     onMouseOver={(e) => {
-                      if (newsletter.status === 'ACTIVE') {
+                      if (newsletter.isVisibleOnSite) {
                         e.currentTarget.style.background = 'rgba(251, 191, 36, 0.2)';
                         e.currentTarget.style.borderColor = 'rgba(251, 191, 36, 0.5)';
                       } else {
@@ -364,7 +391,7 @@ export default function NewsletterPage() {
                       }
                     }}
                     onMouseOut={(e) => {
-                      if (newsletter.status === 'ACTIVE') {
+                      if (newsletter.isVisibleOnSite) {
                         e.currentTarget.style.background = 'rgba(251, 191, 36, 0.1)';
                         e.currentTarget.style.borderColor = 'rgba(251, 191, 36, 0.3)';
                       } else {
@@ -373,7 +400,54 @@ export default function NewsletterPage() {
                       }
                     }}
                   >
-                    {newsletter.status === 'ACTIVE' ? '👁️‍🗨️ Masquer' : '🌐 Publier'}
+                    {newsletter.isVisibleOnSite ? '👁️ Site' : '🙈 Site'}
+                  </button>
+
+                  {/* Bouton Activer pour nouveaux inscrits */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleToggleActiveForNew(newsletter.id, newsletter.isActiveForNewSubscribers);
+                    }}
+                    title={newsletter.isActiveForNewSubscribers ? 'Désactiver pour les nouveaux' : 'Activer pour les nouveaux inscrits'}
+                    style={{
+                      background: newsletter.isActiveForNewSubscribers
+                        ? 'rgba(52, 211, 153, 0.1)'
+                        : 'rgba(156, 163, 175, 0.1)',
+                      border: newsletter.isActiveForNewSubscribers
+                        ? '1px solid rgba(52, 211, 153, 0.3)'
+                        : '1px solid rgba(156, 163, 175, 0.3)',
+                      borderRadius: '8px',
+                      color: newsletter.isActiveForNewSubscribers ? '#34d399' : '#9ca3af',
+                      padding: '10px 16px',
+                      fontSize: '13px',
+                      fontWeight: 600,
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                      transition: 'all 0.3s'
+                    }}
+                    onMouseOver={(e) => {
+                      if (newsletter.isActiveForNewSubscribers) {
+                        e.currentTarget.style.background = 'rgba(52, 211, 153, 0.2)';
+                        e.currentTarget.style.borderColor = 'rgba(52, 211, 153, 0.5)';
+                      } else {
+                        e.currentTarget.style.background = 'rgba(156, 163, 175, 0.2)';
+                        e.currentTarget.style.borderColor = 'rgba(156, 163, 175, 0.5)';
+                      }
+                    }}
+                    onMouseOut={(e) => {
+                      if (newsletter.isActiveForNewSubscribers) {
+                        e.currentTarget.style.background = 'rgba(52, 211, 153, 0.1)';
+                        e.currentTarget.style.borderColor = 'rgba(52, 211, 153, 0.3)';
+                      } else {
+                        e.currentTarget.style.background = 'rgba(156, 163, 175, 0.1)';
+                        e.currentTarget.style.borderColor = 'rgba(156, 163, 175, 0.3)';
+                      }
+                    }}
+                  >
+                    {newsletter.isActiveForNewSubscribers ? '🔔 Nouveaux' : '🔕 Nouveaux'}
                   </button>
 
                   <button

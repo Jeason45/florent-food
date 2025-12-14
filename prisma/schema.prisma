@@ -183,6 +183,10 @@ model Newsletter {
   endDate           DateTime?        @map("end_date") @db.Date
   weekNumber        Int?             @map("week_number") // Numéro de semaine (optionnel)
 
+  // Contrôles de visibilité et d'envoi (séparés du statut)
+  isVisibleOnSite          Boolean @default(true) @map("is_visible_on_site") // Visible sur le site web
+  isActiveForNewSubscribers Boolean @default(false) @map("is_active_for_new_subscribers") // Envoyée aux nouveaux inscrits
+
   scheduledAt       DateTime?        @map("scheduled_at")
   sentAt            DateTime?        @map("sent_at")
   recipientsCount   Int              @default(0) @map("recipients_count")

@@ -66,14 +66,11 @@ export async function GET(request: NextRequest) {
       subscriberId: subscriber.id
     });
 
-    // Envoyer la newsletter en cours (si elle existe)
+    // Envoyer la newsletter destinée aux nouveaux inscrits (si elle existe)
     try {
-      const now = new Date();
       const currentNewsletter = await prisma.newsletter.findFirst({
         where: {
-          status: NewsletterStatus.ACTIVE,
-          startDate: { lte: now },
-          endDate: { gte: now }
+          isActiveForNewSubscribers: true // Newsletter spécifiquement désignée pour les nouveaux inscrits
         },
         include: {
           newsletterRecipes: {
@@ -136,7 +133,7 @@ export async function GET(request: NextRequest) {
           console.log('⚠️ Pas de recettes dans la newsletter, impossible de générer le HTML');
         }
       } else {
-        console.log('ℹ️ Pas de newsletter active en cours');
+        console.log('ℹ️ Pas de newsletter configurée pour les nouveaux inscrits');
       }
     } catch (newsletterError) {
       // Ne pas bloquer la confirmation si l'envoi de la newsletter échoue

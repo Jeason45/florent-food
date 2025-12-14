@@ -21,7 +21,9 @@ export async function GET(request: NextRequest) {
         content: true,
         startDate: true,
         endDate: true,
-        weekNumber: true
+        weekNumber: true,
+        isVisibleOnSite: true,
+        isActiveForNewSubscribers: true
       }
     });
 
@@ -43,7 +45,9 @@ export async function GET(request: NextRequest) {
         createdAt: n.createdAt,
         startDate: n.startDate,
         endDate: n.endDate,
-        weekNumber: n.weekNumber
+        weekNumber: n.weekNumber,
+        isVisibleOnSite: n.isVisibleOnSite,
+        isActiveForNewSubscribers: n.isActiveForNewSubscribers
       }))
     });
   } catch (error) {
