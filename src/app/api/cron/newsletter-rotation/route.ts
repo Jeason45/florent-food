@@ -3,6 +3,9 @@ import { prisma } from '@/lib/prisma';
 import { sendEmail } from '@/lib/emailUtils';
 import { SubscriberStatus, SubscriptionType } from '@prisma/client';
 
+// Utilitaire pour éviter le rate limiting de Resend
+const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
 /**
  * Cron Job: Newsletter Rotation Hebdomadaire
  *
@@ -212,6 +215,9 @@ export async function GET(request: NextRequest) {
             } else {
               failureCount++;
             }
+
+            // Délai de 300ms entre chaque envoi pour éviter le rate limiting de Resend
+            await sleep(300);
           } catch (error) {
             console.error(`Failed to send to ${subscriber.email}:`, error);
             failureCount++;
