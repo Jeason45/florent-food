@@ -163,7 +163,7 @@ export function baseEmailTemplate({
       <div class="social-links">
         <a href="https://instagram.com/florentfood" target="_blank">Instagram</a>
         <a href="https://tiktok.com/@florentfood" target="_blank">TikTok</a>
-        <a href="https://youtube.com/florentfood" target="_blank">YouTube</a>
+        <a href="https://www.youtube.com/@FlorentYtb" target="_blank">YouTube</a>
       </div>
 
       <p style="margin: 20px 0 10px 0;">
@@ -219,7 +219,7 @@ export function welcomeEmail(firstName?: string, email?: string): string {
                 </a>
               </td>
               <td style="padding: 0 15px;">
-                <a href="https://youtube.com/florentfood" target="_blank" style="text-decoration: none;">
+                <a href="https://www.youtube.com/@FlorentYtb" target="_blank" style="text-decoration: none;">
                   <img src="https://cdn-icons-png.flaticon.com/512/174/174883.png" alt="YouTube" width="32" height="32" style="display: block;">
                 </a>
               </td>
