@@ -102,6 +102,35 @@ export default function AbonnesAdminPage() {
     }
   };
 
+  const [sendingNewsletter, setSendingNewsletter] = useState<string | null>(null);
+
+  const handleSendNewsletter = async (subscriberId: string, email: string) => {
+    if (!confirm(`Envoyer la newsletter active à ${email} ?`)) return;
+
+    setSendingNewsletter(subscriberId);
+    try {
+      const res = await fetch('/api/admin/subscribers/send-newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ subscriberId })
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        alert(`✅ Newsletter "${data.newsletterSubject}" envoyée à ${email}`);
+        fetchSubscribers();
+      } else {
+        alert(`❌ Erreur: ${data.error}`);
+      }
+    } catch (error) {
+      console.error('Error sending newsletter:', error);
+      alert('❌ Erreur lors de l\'envoi');
+    } finally {
+      setSendingNewsletter(null);
+    }
+  };
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'ACTIVE': return '#10b981';
@@ -431,6 +460,35 @@ export default function AbonnesAdminPage() {
                               }}
                             >
                               ✓ Valider
+                            </button>
+                          )}
+                          {/* Bouton Envoyer Newsletter - uniquement pour les ACTIVE */}
+                          {sub.status === 'ACTIVE' && (
+                            <button
+                              onClick={() => handleSendNewsletter(sub.id, sub.email)}
+                              disabled={sendingNewsletter === sub.id}
+                              style={{
+                                padding: '6px 12px',
+                                background: 'rgba(59, 130, 246, 0.2)',
+                                border: '1px solid rgba(59, 130, 246, 0.4)',
+                                borderRadius: '6px',
+                                color: '#3b82f6',
+                                fontSize: '12px',
+                                fontWeight: 600,
+                                cursor: sendingNewsletter === sub.id ? 'wait' : 'pointer',
+                                transition: 'all 0.2s',
+                                opacity: sendingNewsletter === sub.id ? 0.6 : 1
+                              }}
+                              onMouseOver={(e) => {
+                                if (sendingNewsletter !== sub.id) {
+                                  e.currentTarget.style.background = 'rgba(59, 130, 246, 0.3)';
+                                }
+                              }}
+                              onMouseOut={(e) => {
+                                e.currentTarget.style.background = 'rgba(59, 130, 246, 0.2)';
+                              }}
+                            >
+                              {sendingNewsletter === sub.id ? '⏳ Envoi...' : '📧 Envoyer NL'}
                             </button>
                           )}
                           <button
