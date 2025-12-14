@@ -47,9 +47,10 @@ export async function GET(request: NextRequest) {
         confirmToken: true,
         _count: {
           select: {
-            newsletterEvents: {
+            mailLogs: {
               where: {
-                eventType: 'SENT'
+                type: 'newsletter_weekly',
+                status: 'sent'
               }
             }
           }
@@ -60,7 +61,7 @@ export async function GET(request: NextRequest) {
     // Transformer les données pour inclure newslettersReceived
     const subscribersWithCount = subscribers.map(sub => ({
       ...sub,
-      newslettersReceived: sub._count?.newsletterEvents || 0,
+      newslettersReceived: sub._count?.mailLogs || 0,
       _count: undefined
     }));
 
