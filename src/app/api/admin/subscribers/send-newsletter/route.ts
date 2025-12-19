@@ -3,11 +3,13 @@ import { prisma } from '@/lib/prisma';
 import { sendEmail } from '@/lib/emailUtils';
 
 /**
- * Envoyer manuellement la newsletter active à un abonné spécifique
+ * Envoyer manuellement une newsletter à un abonné spécifique
+ * Si newsletterId est fourni, envoie cette newsletter spécifique
+ * Sinon, envoie la newsletter active pour les nouveaux inscrits
  */
 export async function POST(request: NextRequest) {
   try {
-    const { subscriberId } = await request.json();
+    const { subscriberId, newsletterId } = await request.json();
 
     if (!subscriberId) {
       return NextResponse.json(
@@ -28,28 +30,55 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Récupérer la newsletter active pour les nouveaux inscrits
-    const newsletter = await prisma.newsletter.findFirst({
-      where: {
-        isActiveForNewSubscribers: true
-      },
-      include: {
-        newsletterRecipes: {
-          include: {
-            recipe: true
-          },
-          orderBy: {
-            position: 'asc'
+    // Récupérer la newsletter (spécifique ou active)
+    let newsletter;
+
+    if (newsletterId) {
+      // Newsletter spécifique demandée
+      newsletter = await prisma.newsletter.findUnique({
+        where: { id: newsletterId },
+        include: {
+          newsletterRecipes: {
+            include: {
+              recipe: true
+            },
+            orderBy: {
+              position: 'asc'
+            }
           }
         }
-      }
-    });
+      });
 
-    if (!newsletter) {
-      return NextResponse.json(
-        { success: false, error: 'Aucune newsletter active pour les nouveaux inscrits. Activez une newsletter avec le bouton 🔔 Nouveaux.' },
-        { status: 404 }
-      );
+      if (!newsletter) {
+        return NextResponse.json(
+          { success: false, error: 'Newsletter introuvable' },
+          { status: 404 }
+        );
+      }
+    } else {
+      // Fallback: newsletter active pour les nouveaux inscrits
+      newsletter = await prisma.newsletter.findFirst({
+        where: {
+          isActiveForNewSubscribers: true
+        },
+        include: {
+          newsletterRecipes: {
+            include: {
+              recipe: true
+            },
+            orderBy: {
+              position: 'asc'
+            }
+          }
+        }
+      });
+
+      if (!newsletter) {
+        return NextResponse.json(
+          { success: false, error: 'Aucune newsletter active. Sélectionnez une newsletter à envoyer.' },
+          { status: 404 }
+        );
+      }
     }
 
     // Récupérer ou générer le HTML

@@ -19,6 +19,14 @@ interface Subscriber {
   newslettersReceived: number;
 }
 
+interface Newsletter {
+  id: string;
+  subject: string;
+  status: string;
+  createdAt: string;
+  isActiveForNewSubscribers: boolean;
+}
+
 export default function AbonnesAdminPage() {
   const { sidebarWidth } = useSidebar();
   const [subscribers, setSubscribers] = useState<Subscriber[]>([]);
@@ -26,6 +34,11 @@ export default function AbonnesAdminPage() {
   const [statusFilter, setStatusFilter] = useState('all');
   const [typeFilter, setTypeFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
+
+  // États pour le modal de sélection de newsletter
+  const [newsletters, setNewsletters] = useState<Newsletter[]>([]);
+  const [showNewsletterModal, setShowNewsletterModal] = useState(false);
+  const [selectedSubscriber, setSelectedSubscriber] = useState<Subscriber | null>(null);
 
   const fetchSubscribers = async () => {
     setLoading(true);
@@ -46,7 +59,20 @@ export default function AbonnesAdminPage() {
 
   useEffect(() => {
     fetchSubscribers();
+    fetchNewsletters();
   }, [statusFilter, typeFilter]);
+
+  const fetchNewsletters = async () => {
+    try {
+      const res = await fetch('/api/admin/newsletter');
+      const data = await res.json();
+      if (data.success) {
+        setNewsletters(data.newsletters);
+      }
+    } catch (error) {
+      console.error('Error fetching newsletters:', error);
+    }
+  };
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -104,21 +130,33 @@ export default function AbonnesAdminPage() {
 
   const [sendingNewsletter, setSendingNewsletter] = useState<string | null>(null);
 
-  const handleSendNewsletter = async (subscriberId: string, email: string) => {
-    if (!confirm(`Envoyer la newsletter active à ${email} ?`)) return;
+  // Ouvre le modal pour choisir une newsletter
+  const openNewsletterModal = (subscriber: Subscriber) => {
+    setSelectedSubscriber(subscriber);
+    setShowNewsletterModal(true);
+  };
 
-    setSendingNewsletter(subscriberId);
+  // Envoie la newsletter sélectionnée
+  const handleSendNewsletter = async (newsletterId: string) => {
+    if (!selectedSubscriber) return;
+
+    setSendingNewsletter(selectedSubscriber.id);
+    setShowNewsletterModal(false);
+
     try {
       const res = await fetch('/api/admin/subscribers/send-newsletter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ subscriberId })
+        body: JSON.stringify({
+          subscriberId: selectedSubscriber.id,
+          newsletterId
+        })
       });
 
       const data = await res.json();
 
       if (data.success) {
-        alert(`✅ Newsletter "${data.newsletterSubject}" envoyée à ${email}`);
+        alert(`✅ Newsletter "${data.newsletterSubject}" envoyée à ${selectedSubscriber.email}`);
         fetchSubscribers();
       } else {
         alert(`❌ Erreur: ${data.error}`);
@@ -128,6 +166,7 @@ export default function AbonnesAdminPage() {
       alert('❌ Erreur lors de l\'envoi');
     } finally {
       setSendingNewsletter(null);
+      setSelectedSubscriber(null);
     }
   };
 
@@ -465,7 +504,7 @@ export default function AbonnesAdminPage() {
                           {/* Bouton Envoyer Newsletter - uniquement pour les ACTIVE */}
                           {sub.status === 'ACTIVE' && (
                             <button
-                              onClick={() => handleSendNewsletter(sub.id, sub.email)}
+                              onClick={() => openNewsletterModal(sub)}
                               disabled={sendingNewsletter === sub.id}
                               style={{
                                 padding: '6px 12px',
@@ -541,6 +580,141 @@ export default function AbonnesAdminPage() {
                   ))}
                 </tbody>
               </table>
+            </div>
+          </div>
+        )}
+
+        {/* Modal de sélection de newsletter */}
+        {showNewsletterModal && selectedSubscriber && (
+          <div
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              background: 'rgba(0, 0, 0, 0.8)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 1000
+            }}
+            onClick={() => setShowNewsletterModal(false)}
+          >
+            <div
+              style={{
+                background: 'linear-gradient(135deg, #1a1f2e 0%, #0f1318 100%)',
+                borderRadius: '16px',
+                border: '1px solid rgba(255,255,255,0.1)',
+                padding: '32px',
+                maxWidth: '500px',
+                width: '90%',
+                maxHeight: '80vh',
+                overflow: 'auto'
+              }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div style={{ marginBottom: '24px' }}>
+                <h3 style={{ color: '#fff', fontSize: '20px', fontWeight: 700, marginBottom: '8px' }}>
+                  Choisir une newsletter
+                </h3>
+                <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '14px' }}>
+                  Envoyer à : <span style={{ color: '#3b82f6' }}>{selectedSubscriber.email}</span>
+                </p>
+              </div>
+
+              {newsletters.length === 0 ? (
+                <p style={{ color: 'rgba(255,255,255,0.5)', textAlign: 'center', padding: '20px' }}>
+                  Aucune newsletter disponible
+                </p>
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                  {newsletters.map((nl) => (
+                    <button
+                      key={nl.id}
+                      onClick={() => handleSendNewsletter(nl.id)}
+                      style={{
+                        background: nl.isActiveForNewSubscribers
+                          ? 'rgba(52, 211, 153, 0.15)'
+                          : 'rgba(255,255,255,0.05)',
+                        border: nl.isActiveForNewSubscribers
+                          ? '1px solid rgba(52, 211, 153, 0.4)'
+                          : '1px solid rgba(255,255,255,0.1)',
+                        borderRadius: '12px',
+                        padding: '16px',
+                        cursor: 'pointer',
+                        textAlign: 'left',
+                        transition: 'all 0.2s'
+                      }}
+                      onMouseOver={(e) => {
+                        e.currentTarget.style.background = nl.isActiveForNewSubscribers
+                          ? 'rgba(52, 211, 153, 0.25)'
+                          : 'rgba(255,255,255,0.1)';
+                        e.currentTarget.style.borderColor = nl.isActiveForNewSubscribers
+                          ? 'rgba(52, 211, 153, 0.6)'
+                          : 'rgba(59, 130, 246, 0.5)';
+                      }}
+                      onMouseOut={(e) => {
+                        e.currentTarget.style.background = nl.isActiveForNewSubscribers
+                          ? 'rgba(52, 211, 153, 0.15)'
+                          : 'rgba(255,255,255,0.05)';
+                        e.currentTarget.style.borderColor = nl.isActiveForNewSubscribers
+                          ? 'rgba(52, 211, 153, 0.4)'
+                          : 'rgba(255,255,255,0.1)';
+                      }}
+                    >
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '12px' }}>
+                        <div style={{ flex: 1 }}>
+                          <div style={{ color: '#fff', fontSize: '15px', fontWeight: 600, marginBottom: '4px' }}>
+                            {nl.subject}
+                          </div>
+                          <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '12px' }}>
+                            Créée le {new Date(nl.createdAt).toLocaleDateString('fr-FR')}
+                          </div>
+                        </div>
+                        {nl.isActiveForNewSubscribers && (
+                          <span style={{
+                            background: 'rgba(52, 211, 153, 0.2)',
+                            color: '#34d399',
+                            padding: '4px 8px',
+                            borderRadius: '6px',
+                            fontSize: '10px',
+                            fontWeight: 600,
+                            whiteSpace: 'nowrap'
+                          }}>
+                            Active
+                          </span>
+                        )}
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              <button
+                onClick={() => setShowNewsletterModal(false)}
+                style={{
+                  marginTop: '24px',
+                  width: '100%',
+                  padding: '12px',
+                  background: 'rgba(255,255,255,0.1)',
+                  border: '1px solid rgba(255,255,255,0.2)',
+                  borderRadius: '8px',
+                  color: '#fff',
+                  fontSize: '14px',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  transition: 'all 0.2s'
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.background = 'rgba(255,255,255,0.15)';
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
+                }}
+              >
+                Annuler
+              </button>
             </div>
           </div>
         )}
