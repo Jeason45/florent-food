@@ -497,7 +497,7 @@ export default function EditNewsletterPage() {
                   opacity: saving ? 0.5 : 1
                 }}
               >
-                💾 Sauvegarder
+                💾 Sauvegarder en brouillon
               </button>
               {newsletter.status !== 'ACTIVE' && (
                 <button
@@ -536,7 +536,7 @@ export default function EditNewsletterPage() {
                   opacity: saving ? 0.5 : 1
                 }}
               >
-                {saving ? '⏳ Sauvegarde...' : '✅ Activer'}
+                {saving ? '⏳ Sauvegarde...' : '💾 Sauvegarder (Actif)'}
               </button>
             </div>
           </div>

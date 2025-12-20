@@ -4,10 +4,28 @@ interface Recipe {
   url: string;
 }
 
+/**
+ * Convertit une URL Cloudinary pour forcer le format JPEG (compatible email)
+ * Les formats AVIF et WebP ne sont pas supportés par la plupart des clients email
+ */
+function toEmailSafeImageUrl(url: string): string {
+  if (!url || !url.includes('res.cloudinary.com')) {
+    return url;
+  }
+
+  // Insérer f_jpg,q_auto après /upload/ pour forcer le format JPEG
+  const parts = url.split('/upload/');
+  if (parts.length === 2) {
+    return `${parts[0]}/upload/f_jpg,q_auto/${parts[1]}`;
+  }
+
+  return url;
+}
+
 export function generateWeeklyNewsletter(recipes: Recipe[]): string {
   const recipesHTML = recipes.map(recipe => `
     <div style="margin-bottom: 24px; border-radius: 12px; overflow: hidden; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-      <img src="${recipe.imageUrl || 'https://images.unsplash.com/photo-1546548970-71785318a17b?w=600&q=80'}" alt="${recipe.title}" style="width: 100%; height: 200px; object-fit: cover; display: block; border: 0;">
+      <img src="${toEmailSafeImageUrl(recipe.imageUrl) || 'https://images.unsplash.com/photo-1546548970-71785318a17b?w=600&q=80'}" alt="${recipe.title}" style="width: 100%; height: 200px; object-fit: cover; display: block; border: 0;">
       <div style="padding: 20px;">
         <h3 style="margin: 0 0 12px 0; color: #D4AF37; font-size: 20px; font-weight: 600;">${recipe.title}</h3>
         <a href="${recipe.url}" style="color: #C77A4E; text-decoration: none; font-weight: 600; display: inline-block;">

@@ -17,6 +17,24 @@ interface NewsletterData {
   dateString: string;
 }
 
+/**
+ * Convertit une URL Cloudinary pour forcer le format JPEG (compatible email)
+ * Les formats AVIF et WebP ne sont pas supportés par la plupart des clients email
+ */
+function toEmailSafeImageUrl(url: string): string {
+  if (!url || !url.includes('res.cloudinary.com')) {
+    return url;
+  }
+
+  // Insérer f_jpg,q_auto après /upload/ pour forcer le format JPEG
+  const parts = url.split('/upload/');
+  if (parts.length === 2) {
+    return `${parts[0]}/upload/f_jpg,q_auto/${parts[1]}`;
+  }
+
+  return url;
+}
+
 export function generateNewsletterMagazineLuxe(data: NewsletterData, isFreeTier: boolean = true): string {
   const baseUrl = process.env.NEXT_PUBLIC_URL || 'http://localhost:3001';
 
@@ -41,7 +59,7 @@ export function generateNewsletterMagazineLuxe(data: NewsletterData, isFreeTier:
               <table width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
                   <td style="position: relative;">
-                    <img src="${recipe1.imageUrl}" alt="${recipe1.title}" style="width: 100%; height: 300px; object-fit: cover; display: block;">
+                    <img src="${toEmailSafeImageUrl(recipe1.imageUrl)}" alt="${recipe1.title}" style="width: 100%; height: 300px; object-fit: cover; display: block;">
                     <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 30px; background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.9) 100%);">
                       <h3 style="font-size: 24px; color: #fff; font-weight: 700; margin: 0 0 8px 0;">
                         ${recipe1.title}
@@ -64,7 +82,7 @@ export function generateNewsletterMagazineLuxe(data: NewsletterData, isFreeTier:
               <table width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
                   <td style="position: relative;">
-                    <img src="${recipe1.imageUrl}" alt="${recipe1.title}" style="width: 100%; height: 280px; object-fit: cover; display: block;">
+                    <img src="${toEmailSafeImageUrl(recipe1.imageUrl)}" alt="${recipe1.title}" style="width: 100%; height: 280px; object-fit: cover; display: block;">
                     <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 25px; background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.9) 100%);">
                       <h3 style="font-size: 20px; color: #fff; font-weight: 700; margin: 0 0 8px 0;">
                         ${recipe1.title}
@@ -82,7 +100,7 @@ export function generateNewsletterMagazineLuxe(data: NewsletterData, isFreeTier:
               <table width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
                   <td style="position: relative;">
-                    <img src="${recipe2.imageUrl}" alt="${recipe2.title}" style="width: 100%; height: 280px; object-fit: cover; display: block;">
+                    <img src="${toEmailSafeImageUrl(recipe2.imageUrl)}" alt="${recipe2.title}" style="width: 100%; height: 280px; object-fit: cover; display: block;">
                     <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 25px; background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.9) 100%);">
                       <h3 style="font-size: 20px; color: #fff; font-weight: 700; margin: 0 0 8px 0;">
                         ${recipe2.title}
@@ -184,7 +202,7 @@ export function generateNewsletterMagazineLuxe(data: NewsletterData, isFreeTier:
     <!-- Featured Recipe -->
     <tr>
       <td style="background: #fff; margin-top: 2px; padding: 0; position: relative;">
-        <img src="${data.featuredRecipe.imageUrl}" alt="${data.featuredRecipe.title}" style="width: 100%; height: 450px; object-fit: cover; display: block;">
+        <img src="${toEmailSafeImageUrl(data.featuredRecipe.imageUrl)}" alt="${data.featuredRecipe.title}" style="width: 100%; height: 450px; object-fit: cover; display: block;">
         <div style="padding: 50px; background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.8) 100%); position: absolute; bottom: 0; left: 0; right: 0;">
           <div style="font-size: 80px; font-weight: 900; color: #D4AF37; line-height: 1; margin-bottom: 10px; opacity: 0.3;">
             01

@@ -170,6 +170,27 @@ export async function POST(request: NextRequest) {
   }
 }
 
+/**
+ * Optimise une URL Cloudinary pour les emails
+ * - Convertit en JPEG (compatible tous clients email)
+ * - Réduit la qualité à 80%
+ * - Limite la largeur à 800px
+ * Cela réduit drastiquement la taille (ex: 1.9MB -> 100KB)
+ */
+function optimizeImageForEmail(url: string | null | undefined): string {
+  if (!url) return 'https://images.unsplash.com/photo-1546548970-71785318a17b?w=600&q=80';
+
+  // Si c'est une URL Cloudinary, ajouter les transformations
+  if (url.includes('res.cloudinary.com') && url.includes('/upload/')) {
+    const parts = url.split('/upload/');
+    if (parts.length === 2) {
+      return `${parts[0]}/upload/f_jpg,q_80,w_800/${parts[1]}`;
+    }
+  }
+
+  return url;
+}
+
 // Fonction pour générer le HTML de la newsletter
 function generateNewsletterHTML({
   subject,
@@ -198,8 +219,7 @@ function generateNewsletterHTML({
     const recipe2 = secondaryRecipes[i + 1];
 
     const getImageUrl = (recipe: any) => {
-      if (!recipe?.imageUrl) return 'https://images.unsplash.com/photo-1546548970-71785318a17b?w=600&q=80';
-      return recipe.imageUrl.startsWith('http') ? recipe.imageUrl : `${baseUrl}${recipe.imageUrl}`;
+      return optimizeImageForEmail(recipe?.imageUrl);
     };
 
     const recipeCard = (recipe: any, index: number) => `
@@ -249,10 +269,8 @@ function generateNewsletterHTML({
     </tr>
   ` : '';
 
-  // Générer l'URL de l'image featured
-  const featuredImageUrl = featuredRecipe.imageUrl?.startsWith('http')
-    ? featuredRecipe.imageUrl
-    : `${baseUrl}${featuredRecipe.imageUrl || ''}`;
+  // Générer l'URL de l'image featured (optimisée pour email)
+  const featuredImageUrl = optimizeImageForEmail(featuredRecipe.imageUrl);
 
   return `
 <!DOCTYPE html>

@@ -20,28 +20,51 @@ export async function PATCH(
       );
     }
 
-    // Basculer isVisibleOnSite (indépendant du statut)
-    const newVisibility = !newsletter.isVisibleOnSite;
+    // Si on veut activer la visibilité de cette newsletter
+    if (!newsletter.isVisibleOnSite) {
+      // D'abord désactiver toutes les autres newsletters visibles
+      await prisma.newsletter.updateMany({
+        where: {
+          isVisibleOnSite: true,
+          id: { not: id }
+        },
+        data: {
+          isVisibleOnSite: false
+        }
+      });
 
-    // Mettre à jour
-    await prisma.newsletter.update({
-      where: { id },
-      data: {
-        isVisibleOnSite: newVisibility
-      }
-    });
+      // Activer celle-ci
+      await prisma.newsletter.update({
+        where: { id },
+        data: {
+          isVisibleOnSite: true
+        }
+      });
 
-    const actionMessage = newVisibility
-      ? 'Les recettes de cette newsletter sont maintenant visibles sur le site'
-      : 'Les recettes de cette newsletter ont été retirées du site';
+      console.log(`✅ Newsletter ${id} activée pour le site (autres désactivées)`);
 
-    console.log(`✅ Newsletter ${id} visibilité changée: ${newsletter.isVisibleOnSite} → ${newVisibility}`);
+      return NextResponse.json({
+        success: true,
+        message: 'Cette newsletter est maintenant visible sur le site (les autres ont été masquées)',
+        isVisibleOnSite: true
+      });
+    } else {
+      // Désactiver cette newsletter
+      await prisma.newsletter.update({
+        where: { id },
+        data: {
+          isVisibleOnSite: false
+        }
+      });
 
-    return NextResponse.json({
-      success: true,
-      message: actionMessage,
-      isVisibleOnSite: newVisibility
-    });
+      console.log(`✅ Newsletter ${id} masquée du site`);
+
+      return NextResponse.json({
+        success: true,
+        message: 'Cette newsletter a été masquée du site',
+        isVisibleOnSite: false
+      });
+    }
   } catch (error) {
     console.error('❌ Error toggling newsletter visibility:', error);
     return NextResponse.json(

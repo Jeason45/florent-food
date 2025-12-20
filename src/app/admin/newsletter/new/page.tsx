@@ -485,46 +485,10 @@ export default function NewNewsletterPage() {
               👁️ Prévisualiser
             </button>
             <button
-              onClick={handleSaveDraft}
-              disabled={saving}
-              style={{
-                background: 'rgba(99, 102, 241, 0.2)',
-                border: '1px solid rgba(99, 102, 241, 0.4)',
-                borderRadius: '10px',
-                color: '#818cf8',
-                padding: '12px 24px',
-                fontSize: '14px',
-                fontWeight: 600,
-                cursor: saving ? 'not-allowed' : 'pointer',
-                transition: 'all 0.3s',
-                opacity: saving ? 0.5 : 1
-              }}
-            >
-              💾 Enregistrer brouillon
-            </button>
-            <button
               onClick={handleSchedule}
               disabled={saving}
               style={{
-                background: 'rgba(251, 191, 36, 0.2)',
-                border: '1px solid rgba(251, 191, 36, 0.4)',
-                borderRadius: '10px',
-                color: '#fbbf24',
-                padding: '12px 24px',
-                fontSize: '14px',
-                fontWeight: 600,
-                cursor: saving ? 'not-allowed' : 'pointer',
-                transition: 'all 0.3s',
-                opacity: saving ? 0.5 : 1
-              }}
-            >
-              📆 Programmer
-            </button>
-            <button
-              onClick={handleActivateAndSend}
-              disabled={saving}
-              style={{
-                background: 'linear-gradient(135deg, #34d399 0%, #10b981 100%)',
+                background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
                 border: 'none',
                 borderRadius: '10px',
                 color: '#000',
@@ -533,11 +497,11 @@ export default function NewNewsletterPage() {
                 fontWeight: 700,
                 cursor: saving ? 'not-allowed' : 'pointer',
                 transition: 'all 0.3s',
-                boxShadow: '0 4px 16px rgba(52, 211, 153, 0.3)',
+                boxShadow: '0 4px 16px rgba(251, 191, 36, 0.3)',
                 opacity: saving ? 0.5 : 1
               }}
             >
-              {saving ? '⏳ Envoi...' : '🚀 Activer & Envoyer'}
+              {saving ? '⏳ Programmation...' : '📆 Programmer'}
             </button>
           </div>
         </div>
