@@ -377,6 +377,9 @@ model MailLog {
   status      String    @default("sent") // "sent", "delivered", "opened", "clicked", "bounced", "failed"
   error       String?
 
+  // Provider utilisé
+  provider    String    @default("resend") // "resend" ou "gmail"
+
   // Métadonnées
   sentBy      String?   @map("sent_by")
 
@@ -413,4 +416,52 @@ enum MessageStatus {
   UNREAD  @map("unread")
   READ    @map("read")
   REPLIED @map("replied")
+}
+
+// ==================================
+// 11. EMAIL_QUEUE (File d'attente emails - quota Resend)
+// ==================================
+model EmailQueue {
+  id           String          @id @default(uuid())
+
+  // Destinataire et contenu
+  to           String
+  subject      String
+  htmlContent  String?         @db.Text @map("html_content")
+  textContent  String?         @db.Text @map("text_content")
+
+  // Type et contexte
+  type         String          // "newsletter_welcome", "newsletter_weekly", etc.
+
+  // Relations optionnelles (pour tracking)
+  subscriberId String?         @map("subscriber_id")
+  newsletterId String?         @map("newsletter_id")
+
+  // Statut de la file d'attente
+  status       EmailQueueStatus @default(PENDING)
+  priority     Int              @default(0) // Plus élevé = plus prioritaire
+
+  // Planification
+  scheduledFor DateTime         @map("scheduled_for") // Date à laquelle envoyer
+  attempts     Int              @default(0) // Nombre de tentatives
+  lastAttempt  DateTime?        @map("last_attempt")
+  error        String?
+
+  // Métadonnées
+  sentBy       String?          @map("sent_by")
+  processedAt  DateTime?        @map("processed_at")
+  createdAt    DateTime         @default(now()) @map("created_at")
+
+  @@index([status])
+  @@index([scheduledFor])
+  @@index([priority(sort: Desc)])
+  @@map("email_queue")
+}
+
+enum EmailQueueStatus {
+  PENDING    @map("pending")    // En attente d'envoi
+  PROCESSING @map("processing") // En cours de traitement
+  SENT       @map("sent")       // Envoyé avec succès
+  FAILED     @map("failed")     // Échec après plusieurs tentatives
+  CANCELLED  @map("cancelled")  // Annulé
 }

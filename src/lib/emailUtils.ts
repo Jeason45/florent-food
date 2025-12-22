@@ -1,15 +1,24 @@
 /**
  * Email Utilities for Florent Food
  * Handles email sending with Resend (primary) and Nodemailer/Gmail (fallback)
+ *
+ * Quota Management:
+ * - Resend free plan: 100 emails/day
+ * - If quota reached: emails are queued for next day
+ * - Gmail is only used as fallback for technical errors (not for quota)
  */
 
 import { Resend } from 'resend';
 import nodemailer from 'nodemailer';
 import { prisma } from '@/lib/prisma';
+import { EmailQueueStatus } from '@prisma/client';
 
 // Resend Configuration (Primary)
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 const RESEND_FROM_EMAIL = 'Florent Food <contact@florentfood.fr>';
+
+// Quota Configuration
+const RESEND_DAILY_LIMIT = 100;
 
 // Gmail SMTP Configuration (Fallback)
 const SMTP_CONFIG = {
@@ -30,6 +39,99 @@ function getTransporter(): nodemailer.Transporter {
     transporter = nodemailer.createTransport(SMTP_CONFIG);
   }
   return transporter;
+}
+
+// ==================================
+// QUOTA MANAGEMENT
+// ==================================
+
+/**
+ * Get the start of today in UTC
+ */
+function getTodayStart(): Date {
+  const now = new Date();
+  return new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 0, 0, 0, 0));
+}
+
+/**
+ * Get the start of tomorrow in UTC
+ */
+function getTomorrowStart(): Date {
+  const today = getTodayStart();
+  return new Date(today.getTime() + 24 * 60 * 60 * 1000);
+}
+
+/**
+ * Count emails sent via Resend today
+ */
+export async function getResendEmailsSentToday(): Promise<number> {
+  const todayStart = getTodayStart();
+  const tomorrowStart = getTomorrowStart();
+
+  const count = await prisma.mailLog.count({
+    where: {
+      provider: 'resend',
+      status: 'sent',
+      sentAt: {
+        gte: todayStart,
+        lt: tomorrowStart,
+      },
+    },
+  });
+
+  return count;
+}
+
+/**
+ * Get remaining Resend quota for today
+ */
+export async function getResendQuotaRemaining(): Promise<number> {
+  const sentToday = await getResendEmailsSentToday();
+  return Math.max(0, RESEND_DAILY_LIMIT - sentToday);
+}
+
+/**
+ * Check if we have enough quota to send a batch of emails
+ */
+export async function hasEnoughQuota(emailCount: number): Promise<boolean> {
+  const remaining = await getResendQuotaRemaining();
+  return remaining >= emailCount;
+}
+
+/**
+ * Add email to queue for later sending
+ */
+export async function queueEmail(params: {
+  to: string;
+  subject: string;
+  htmlContent?: string;
+  textContent?: string;
+  type: string;
+  subscriberId?: string;
+  newsletterId?: string;
+  priority?: number;
+  scheduledFor?: Date;
+  sentBy?: string;
+}): Promise<{ queued: true; queueId: string }> {
+  const queueEntry = await prisma.emailQueue.create({
+    data: {
+      to: params.to,
+      subject: params.subject,
+      htmlContent: params.htmlContent,
+      textContent: params.textContent,
+      type: params.type,
+      subscriberId: params.subscriberId,
+      newsletterId: params.newsletterId,
+      priority: params.priority || 0,
+      scheduledFor: params.scheduledFor || getTomorrowStart(),
+      sentBy: params.sentBy,
+      status: EmailQueueStatus.PENDING,
+    },
+  });
+
+  console.log(`📬 Email queued for ${params.scheduledFor || 'tomorrow'}: ${params.to} - ${params.subject}`);
+
+  return { queued: true, queueId: queueEntry.id };
 }
 
 export interface SendEmailParams {
@@ -53,7 +155,10 @@ export interface SendEmailResult {
   success: boolean;
   messageId?: string;
   mailLogId?: string;
+  queueId?: string;
+  queued?: boolean;
   error?: string;
+  provider?: 'resend' | 'gmail' | 'queued';
 }
 
 /**
@@ -125,9 +230,12 @@ async function sendViaGmail(params: {
 
 /**
  * Send email and log to database
- * Uses Resend as primary, Gmail as fallback
+ * Uses Resend as primary with quota management
+ * - If quota available: send via Resend
+ * - If quota exhausted: queue for tomorrow
+ * - Gmail only used for technical failures (not quota)
  */
-export async function sendEmail(params: SendEmailParams): Promise<SendEmailResult> {
+export async function sendEmail(params: SendEmailParams & { forceQueue?: boolean }): Promise<SendEmailResult> {
   try {
     const {
       to,
@@ -140,26 +248,85 @@ export async function sendEmail(params: SendEmailParams): Promise<SendEmailResul
       subscriberId,
       newsletterId,
       type,
-      sentBy
+      sentBy,
+      forceQueue = false
     } = params;
 
+    // Check if we should queue this email (quota management)
+    if (resend && !forceQueue) {
+      const quotaRemaining = await getResendQuotaRemaining();
+
+      if (quotaRemaining < 1) {
+        console.log(`📬 Quota exhausted (${quotaRemaining} remaining), queuing email for tomorrow...`);
+
+        const queueResult = await queueEmail({
+          to: Array.isArray(to) ? to[0] : to, // Queue only supports single recipient
+          subject,
+          htmlContent,
+          textContent,
+          type,
+          subscriberId,
+          newsletterId,
+          sentBy,
+        });
+
+        return {
+          success: true,
+          queued: true,
+          queueId: queueResult.queueId,
+          provider: 'queued',
+        };
+      }
+
+      console.log(`📧 Quota OK (${quotaRemaining} remaining), sending via Resend...`);
+    }
+
     let result: { success: boolean; messageId?: string; error?: string };
-    let provider = 'resend';
+    let provider: 'resend' | 'gmail' = 'resend';
 
     // Try Resend first (primary)
     if (resend) {
-      console.log('📧 Sending via Resend...');
       result = await sendViaResend({ to, subject, htmlContent, textContent });
 
-      // If Resend fails, try Gmail as fallback
-      if (!result.success && SMTP_CONFIG.auth.user && SMTP_CONFIG.auth.pass) {
-        console.log('⚠️ Resend failed, trying Gmail fallback...');
-        provider = 'gmail';
-        result = await sendViaGmail({ to, cc, bcc, subject, htmlContent, textContent, attachments });
+      // If Resend fails with a TECHNICAL error (not quota), try Gmail as fallback
+      // Quota errors are handled above, so this is for API errors, network issues, etc.
+      if (!result.success) {
+        const isQuotaError = result.error?.toLowerCase().includes('rate limit') ||
+                            result.error?.toLowerCase().includes('quota') ||
+                            result.error?.toLowerCase().includes('limit exceeded');
+
+        if (isQuotaError) {
+          // Queue instead of falling back to Gmail
+          console.log(`📬 Resend quota error detected, queuing email...`);
+          const queueResult = await queueEmail({
+            to: Array.isArray(to) ? to[0] : to,
+            subject,
+            htmlContent,
+            textContent,
+            type,
+            subscriberId,
+            newsletterId,
+            sentBy,
+          });
+
+          return {
+            success: true,
+            queued: true,
+            queueId: queueResult.queueId,
+            provider: 'queued',
+          };
+        }
+
+        // Technical error: try Gmail fallback
+        if (SMTP_CONFIG.auth.user && SMTP_CONFIG.auth.pass) {
+          console.log('⚠️ Resend technical error, trying Gmail fallback...');
+          provider = 'gmail';
+          result = await sendViaGmail({ to, cc, bcc, subject, htmlContent, textContent, attachments });
+        }
       }
     } else if (SMTP_CONFIG.auth.user && SMTP_CONFIG.auth.pass) {
-      // No Resend, use Gmail directly
-      console.log('📧 Sending via Gmail...');
+      // No Resend configured, use Gmail directly
+      console.log('📧 Sending via Gmail (no Resend configured)...');
       provider = 'gmail';
       result = await sendViaGmail({ to, cc, bcc, subject, htmlContent, textContent, attachments });
     } else {
@@ -178,6 +345,7 @@ export async function sendEmail(params: SendEmailParams): Promise<SendEmailResul
           subscriberId,
           newsletterId,
           status: 'failed',
+          provider: 'resend',
           error: 'No email service configured',
           sentBy
         }
@@ -204,6 +372,7 @@ export async function sendEmail(params: SendEmailParams): Promise<SendEmailResul
         subscriberId,
         newsletterId,
         status: result.success ? 'sent' : 'failed',
+        provider,
         error: result.error || null,
         sentBy
       }
@@ -219,6 +388,7 @@ export async function sendEmail(params: SendEmailParams): Promise<SendEmailResul
       success: result.success,
       messageId: result.messageId,
       mailLogId: mailLog.id,
+      provider,
       error: result.error
     };
   } catch (error) {
@@ -239,6 +409,7 @@ export async function sendEmail(params: SendEmailParams): Promise<SendEmailResul
           subscriberId: params.subscriberId,
           newsletterId: params.newsletterId,
           status: 'failed',
+          provider: 'resend',
           error: error instanceof Error ? error.message : 'Unknown error',
           sentBy: params.sentBy
         }
@@ -270,4 +441,198 @@ export async function testEmailConnection(): Promise<boolean> {
     console.error('❌ SMTP connection failed:', error);
     return false;
   }
+}
+
+// ==================================
+// QUEUE PROCESSING
+// ==================================
+
+/**
+ * Process pending emails from the queue
+ * Called by cron job daily
+ */
+export async function processEmailQueue(): Promise<{
+  processed: number;
+  sent: number;
+  failed: number;
+  remaining: number;
+}> {
+  const now = new Date();
+
+  // Get pending emails that are scheduled for now or earlier
+  const pendingEmails = await prisma.emailQueue.findMany({
+    where: {
+      status: EmailQueueStatus.PENDING,
+      scheduledFor: {
+        lte: now,
+      },
+    },
+    orderBy: [
+      { priority: 'desc' },
+      { createdAt: 'asc' },
+    ],
+  });
+
+  console.log(`📬 Processing email queue: ${pendingEmails.length} emails pending`);
+
+  let processed = 0;
+  let sent = 0;
+  let failed = 0;
+
+  for (const queuedEmail of pendingEmails) {
+    // Check quota before each send
+    const quotaRemaining = await getResendQuotaRemaining();
+
+    if (quotaRemaining < 1) {
+      console.log(`📬 Quota exhausted, stopping queue processing. ${pendingEmails.length - processed} emails remaining.`);
+      break;
+    }
+
+    // Mark as processing
+    await prisma.emailQueue.update({
+      where: { id: queuedEmail.id },
+      data: {
+        status: EmailQueueStatus.PROCESSING,
+        lastAttempt: now,
+        attempts: { increment: 1 },
+      },
+    });
+
+    try {
+      // Send the email (with internal flag to prevent re-queueing)
+      const result = await sendViaResend({
+        to: queuedEmail.to,
+        subject: queuedEmail.subject,
+        htmlContent: queuedEmail.htmlContent || undefined,
+        textContent: queuedEmail.textContent || undefined,
+      });
+
+      if (result.success) {
+        // Mark as sent and log to MailLog
+        await prisma.emailQueue.update({
+          where: { id: queuedEmail.id },
+          data: {
+            status: EmailQueueStatus.SENT,
+            processedAt: new Date(),
+          },
+        });
+
+        // Create MailLog entry
+        await prisma.mailLog.create({
+          data: {
+            type: queuedEmail.type,
+            subject: queuedEmail.subject,
+            to: queuedEmail.to,
+            htmlContent: queuedEmail.htmlContent,
+            textContent: queuedEmail.textContent,
+            subscriberId: queuedEmail.subscriberId,
+            newsletterId: queuedEmail.newsletterId,
+            status: 'sent',
+            provider: 'resend',
+            sentBy: queuedEmail.sentBy,
+          },
+        });
+
+        sent++;
+        console.log(`✅ Queue: Sent to ${queuedEmail.to}`);
+      } else {
+        // Check if it's a quota error (reschedule) or other error (fail)
+        const isQuotaError = result.error?.toLowerCase().includes('rate limit') ||
+                            result.error?.toLowerCase().includes('quota');
+
+        if (isQuotaError) {
+          // Reschedule for tomorrow
+          await prisma.emailQueue.update({
+            where: { id: queuedEmail.id },
+            data: {
+              status: EmailQueueStatus.PENDING,
+              scheduledFor: getTomorrowStart(),
+              error: result.error,
+            },
+          });
+          console.log(`📬 Queue: Rescheduled ${queuedEmail.to} for tomorrow (quota)`);
+        } else if (queuedEmail.attempts >= 3) {
+          // Max attempts reached, mark as failed
+          await prisma.emailQueue.update({
+            where: { id: queuedEmail.id },
+            data: {
+              status: EmailQueueStatus.FAILED,
+              error: result.error,
+              processedAt: new Date(),
+            },
+          });
+          failed++;
+          console.error(`❌ Queue: Failed permanently for ${queuedEmail.to} after 3 attempts`);
+        } else {
+          // Retry later
+          await prisma.emailQueue.update({
+            where: { id: queuedEmail.id },
+            data: {
+              status: EmailQueueStatus.PENDING,
+              scheduledFor: new Date(now.getTime() + 60 * 60 * 1000), // Retry in 1 hour
+              error: result.error,
+            },
+          });
+          console.log(`🔄 Queue: Will retry ${queuedEmail.to} in 1 hour`);
+        }
+      }
+    } catch (error) {
+      // Unexpected error
+      await prisma.emailQueue.update({
+        where: { id: queuedEmail.id },
+        data: {
+          status: EmailQueueStatus.PENDING,
+          error: error instanceof Error ? error.message : 'Unknown error',
+        },
+      });
+      console.error(`❌ Queue: Error processing ${queuedEmail.to}:`, error);
+    }
+
+    processed++;
+  }
+
+  // Count remaining
+  const remaining = await prisma.emailQueue.count({
+    where: {
+      status: EmailQueueStatus.PENDING,
+    },
+  });
+
+  console.log(`📬 Queue processing complete: ${sent} sent, ${failed} failed, ${remaining} remaining`);
+
+  return { processed, sent, failed, remaining };
+}
+
+/**
+ * Get queue statistics
+ */
+export async function getQueueStats(): Promise<{
+  pending: number;
+  processing: number;
+  sent: number;
+  failed: number;
+  quotaRemaining: number;
+  quotaUsedToday: number;
+}> {
+  const [pending, processing, sentToday, failed, quotaUsedToday] = await Promise.all([
+    prisma.emailQueue.count({ where: { status: EmailQueueStatus.PENDING } }),
+    prisma.emailQueue.count({ where: { status: EmailQueueStatus.PROCESSING } }),
+    prisma.emailQueue.count({
+      where: {
+        status: EmailQueueStatus.SENT,
+        processedAt: { gte: getTodayStart() },
+      },
+    }),
+    prisma.emailQueue.count({ where: { status: EmailQueueStatus.FAILED } }),
+    getResendEmailsSentToday(),
+  ]);
+
+  return {
+    pending,
+    processing,
+    sent: sentToday,
+    failed,
+    quotaRemaining: Math.max(0, RESEND_DAILY_LIMIT - quotaUsedToday),
+    quotaUsedToday,
+  };
 }

@@ -45,6 +45,7 @@ export async function GET(request: NextRequest) {
       archived: 0,
       activated: 0,
       emailsSent: 0,
+      emailsQueued: 0,
       emailsFailed: 0,
       errors: [] as string[]
     };
@@ -194,6 +195,7 @@ export async function GET(request: NextRequest) {
 
         // Envoyer les emails à tous les abonnés
         let successCount = 0;
+        let queuedCount = 0;
         let failureCount = 0;
 
         for (const subscriber of subscribers) {
@@ -211,7 +213,13 @@ export async function GET(request: NextRequest) {
             });
 
             if (result.success) {
-              successCount++;
+              if (result.queued) {
+                // Email mis en file d'attente (quota Resend atteint)
+                queuedCount++;
+              } else {
+                // Email réellement envoyé
+                successCount++;
+              }
             } else {
               failureCount++;
             }
@@ -234,9 +242,10 @@ export async function GET(request: NextRequest) {
 
         results.activated++;
         results.emailsSent += successCount;
+        results.emailsQueued += queuedCount;
         results.emailsFailed += failureCount;
 
-        console.log(`✅ Newsletter activée et envoyée: ${newsletter.subject} (ID: ${newsletter.id}) - ${successCount} envois réussis, ${failureCount} échecs`);
+        console.log(`✅ Newsletter activée et envoyée: ${newsletter.subject} (ID: ${newsletter.id}) - ${successCount} envoyés, ${queuedCount} en file d'attente, ${failureCount} échecs`);
 
       } catch (error) {
         console.error(`❌ Erreur activation newsletter ${newsletter.id}:`, error);
@@ -254,6 +263,7 @@ export async function GET(request: NextRequest) {
         newslettersArchived: results.archived,
         newslettersActivated: results.activated,
         emailsSent: results.emailsSent,
+        emailsQueued: results.emailsQueued,
         emailsFailed: results.emailsFailed,
         totalProcessed: results.archived + results.activated,
         errors: results.errors
