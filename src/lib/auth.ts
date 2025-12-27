@@ -25,7 +25,7 @@ export async function getSession() {
 export const ADMIN_USERS = [
   {
     email: 'jeason.lemoine@gmail.com',
-    passwordHash: '$2b$10$SVHx2NGfav6I8Z6bGwmxx.LQK7xxwg19d//7iRrLjZhYf8Tb4aE3e',
+    passwordHash: '$2b$10$pDLdHewSpqxX0F1YK0a/Xu1H.OBSVCqiN1tBNXIX5x7Q1thtGmkZW',
   },
   {
     email: 'florentcmtpro@gmail.com',
