@@ -1,14 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { NewsletterStatus } from '@prisma/client';
 
 export async function GET(request: NextRequest) {
   try {
-    // Récupérer TOUTES les newsletters ACTIVE ET visibles sur le site
+    // Récupérer TOUTES les newsletters visibles sur le site (peu importe le statut)
     const activeNewsletters = await prisma.newsletter.findMany({
       where: {
-        status: NewsletterStatus.ACTIVE,
-        isVisibleOnSite: true // Seulement celles visibles sur le site
+        isVisibleOnSite: true // Seulement celles marquées comme visibles sur le site
       },
       include: {
         newsletterRecipes: {
