@@ -55,9 +55,9 @@ export default function ParametresPage() {
       return;
     }
 
-    // Vérifier la taille (max 10MB)
-    if (file.size > 10 * 1024 * 1024) {
-      setMessage({ type: 'error', text: 'L\'image ne doit pas dépasser 10MB' });
+    // Vérifier la taille (max 20MB - sera compressée automatiquement)
+    if (file.size > 20 * 1024 * 1024) {
+      setMessage({ type: 'error', text: 'L\'image ne doit pas dépasser 20MB' });
       return;
     }
 
@@ -65,9 +65,10 @@ export default function ParametresPage() {
     setMessage(null);
 
     try {
-      // Upload vers Cloudinary via l'API existante
+      // Upload vers Cloudinary via l'API avec optimisation automatique
       const formData = new FormData();
       formData.append('file', file);
+      formData.append('type', 'hero'); // Type hero = optimisation pour images grand format
 
       const uploadRes = await fetch('/api/upload', {
         method: 'POST',
@@ -79,6 +80,11 @@ export default function ParametresPage() {
       if (!uploadData.success) {
         throw new Error(uploadData.error || 'Erreur lors de l\'upload');
       }
+
+      // Afficher les infos d'optimisation
+      const originalSizeMB = (uploadData.originalSize / (1024 * 1024)).toFixed(2);
+      console.log(`Image uploadée: ${originalSizeMB}MB (optimisée automatiquement)`);
+
 
       // Prévisualiser l'image
       setPreviewUrl(uploadData.url);
@@ -111,7 +117,7 @@ export default function ParametresPage() {
         }
       }));
 
-      setMessage({ type: 'success', text: 'Image mise à jour avec succès !' });
+      setMessage({ type: 'success', text: 'Image mise à jour et optimisée automatiquement !' });
     } catch (error) {
       console.error('Error uploading image:', error);
       setMessage({
@@ -371,7 +377,9 @@ export default function ParametresPage() {
                 marginTop: '16px',
                 lineHeight: 1.5
               }}>
-                Formats acceptés : JPG, PNG, WebP. Taille maximale : 10MB.
+                Formats acceptés : JPG, PNG, WebP. Taille maximale : 20MB.
+                <br />
+                L'image sera automatiquement optimisée (max 1920px, compression qualité).
                 <br />
                 Dimensions recommandées : 1920x1080px ou plus (ratio 16:9).
               </p>
