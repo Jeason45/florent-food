@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 
 // Styles pour l'animation shine
@@ -15,10 +15,28 @@ interface HeroSectionProps {
   id?: string;
 }
 
+// Image hero par défaut (fallback)
+const DEFAULT_HERO_IMAGE = "/hero-test-4.jpg";
+
 export function HeroSection({ id }: HeroSectionProps = {}) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [heroImage, setHeroImage] = useState<string>(DEFAULT_HERO_IMAGE);
+
+  // Récupérer l'image hero dynamique depuis l'API
+  useEffect(() => {
+    fetch("/api/settings/hero")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.imageUrl) {
+          setHeroImage(data.imageUrl);
+        }
+      })
+      .catch(() => {
+        // En cas d'erreur, garder l'image par défaut
+      });
+  }, []);
 
   // Fonction pour déclencher le feu d'artifice de confettis
   const triggerConfetti = async () => {
@@ -102,7 +120,7 @@ export function HeroSection({ id }: HeroSectionProps = {}) {
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/hero-test-4.jpg"
+          src={heroImage}
           alt="Hero background"
           fill
           priority

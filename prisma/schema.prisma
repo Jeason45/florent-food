@@ -465,3 +465,19 @@ enum EmailQueueStatus {
   FAILED     @map("failed")     // Échec après plusieurs tentatives
   CANCELLED  @map("cancelled")  // Annulé
 }
+
+// ==================================
+// 12. SITE_SETTINGS (Paramètres du site)
+// ==================================
+model SiteSetting {
+  id        String   @id @default(uuid())
+  key       String   @unique
+  value     String   @db.Text
+  type      String   @default("string") // "string", "image", "json", "boolean"
+  label     String?  // Label pour l'affichage admin
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([key])
+  @@map("site_settings")
+}
