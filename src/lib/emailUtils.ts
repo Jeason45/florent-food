@@ -62,6 +62,24 @@ function getTomorrowStart(): Date {
 }
 
 /**
+ * Get the next queue processing time (tomorrow at 8:30 UTC = 9:30 Paris time)
+ * This matches the cron schedule: "30 8 * * *"
+ */
+function getNextQueueProcessingTime(): Date {
+  const now = new Date();
+  const tomorrow = new Date(Date.UTC(
+    now.getUTCFullYear(),
+    now.getUTCMonth(),
+    now.getUTCDate() + 1,
+    8,  // 8 hours UTC
+    30, // 30 minutes
+    0,
+    0
+  ));
+  return tomorrow;
+}
+
+/**
  * Count emails sent via Resend today
  */
 export async function getResendEmailsSentToday(): Promise<number> {
@@ -113,6 +131,8 @@ export async function queueEmail(params: {
   scheduledFor?: Date;
   sentBy?: string;
 }): Promise<{ queued: true; queueId: string }> {
+  const scheduledFor = params.scheduledFor || getNextQueueProcessingTime();
+
   const queueEntry = await prisma.emailQueue.create({
     data: {
       to: params.to,
@@ -123,13 +143,13 @@ export async function queueEmail(params: {
       subscriberId: params.subscriberId,
       newsletterId: params.newsletterId,
       priority: params.priority || 0,
-      scheduledFor: params.scheduledFor || getTomorrowStart(),
+      scheduledFor,
       sentBy: params.sentBy,
       status: EmailQueueStatus.PENDING,
     },
   });
 
-  console.log(`📬 Email queued for ${params.scheduledFor || 'tomorrow'}: ${params.to} - ${params.subject}`);
+  console.log(`📬 Email queued for ${scheduledFor.toISOString()} (9:30 Paris time): ${params.to} - ${params.subject}`);
 
   return { queued: true, queueId: queueEntry.id };
 }
@@ -578,16 +598,16 @@ export async function processEmailQueue(): Promise<{
                             result.error?.toLowerCase().includes('quota');
 
         if (isQuotaError) {
-          // Reschedule for tomorrow
+          // Reschedule for tomorrow at 9:30 Paris time
           await prisma.emailQueue.update({
             where: { id: queuedEmail.id },
             data: {
               status: EmailQueueStatus.PENDING,
-              scheduledFor: getTomorrowStart(),
+              scheduledFor: getNextQueueProcessingTime(),
               error: result.error,
             },
           });
-          console.log(`📬 Queue: Rescheduled ${queuedEmail.to} for tomorrow (quota)`);
+          console.log(`📬 Queue: Rescheduled ${queuedEmail.to} for tomorrow at 9:30 Paris time (quota)`);
         } else if (queuedEmail.attempts >= 3) {
           // Max attempts reached, mark as failed
           await prisma.emailQueue.update({

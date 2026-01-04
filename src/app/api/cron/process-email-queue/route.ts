@@ -4,8 +4,8 @@ import { processEmailQueue, getQueueStats } from '@/lib/emailUtils';
 /**
  * Cron Job: Process Email Queue
  *
- * Exécution: Tous les jours à 00:05 UTC (1h05 Paris heure d'hiver, 2h05 heure d'été)
- * Schedule: "5 0 * * *"
+ * Exécution: Tous les jours à 08:30 UTC (9h30 Paris heure d'hiver, 10h30 heure d'été)
+ * Schedule: "30 8 * * *"
  *
  * Fonctionnalités:
  * - Traite les emails en file d'attente (quota Resend dépassé la veille)
@@ -16,7 +16,7 @@ import { processEmailQueue, getQueueStats } from '@/lib/emailUtils';
  * {
  *   "crons": [{
  *     "path": "/api/cron/process-email-queue",
- *     "schedule": "5 0 * * *"
+ *     "schedule": "30 8 * * *"
  *   }]
  * }
  */
