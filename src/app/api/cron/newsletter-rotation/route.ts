@@ -103,9 +103,17 @@ export async function GET(request: NextRequest) {
       }
     });
 
-    // Si aucune SCHEDULED, chercher les newsletters ACTIVE dont la startDate est atteinte
+    // Si aucune SCHEDULED, chercher UNE newsletter ACTIVE qui n'a PAS déjà été envoyée cette semaine
     if (newslettersToProcess.length === 0) {
-      newslettersToProcess = await prisma.newsletter.findMany({
+      // Calculer le début de la semaine (lundi)
+      const startOfWeek = new Date(today);
+      const dayOfWeek = startOfWeek.getDay();
+      const diff = dayOfWeek === 0 ? -6 : 1 - dayOfWeek; // Si dimanche (0), on recule de 6 jours, sinon on va au lundi
+      startOfWeek.setDate(startOfWeek.getDate() + diff);
+      startOfWeek.setHours(0, 0, 0, 0);
+
+      // Chercher les newsletters ACTIVE qui n'ont PAS été envoyées depuis le début de la semaine
+      const activeNewsletters = await prisma.newsletter.findMany({
         where: {
           status: 'ACTIVE',
           startDate: {
@@ -113,7 +121,13 @@ export async function GET(request: NextRequest) {
           },
           endDate: {
             gte: today
-          }
+          },
+          OR: [
+            // Newsletter jamais envoyée
+            { sentAt: null },
+            // Newsletter envoyée AVANT cette semaine
+            { sentAt: { lt: startOfWeek } }
+          ]
         },
         include: {
           newsletterRecipes: {
@@ -124,11 +138,16 @@ export async function GET(request: NextRequest) {
               position: 'asc'
             }
           }
-        }
+        },
+        take: 1 // On ne prend qu'une seule newsletter à la fois
       });
 
+      newslettersToProcess = activeNewsletters;
+
       if (newslettersToProcess.length > 0) {
-        console.log(`📧 Aucune newsletter SCHEDULED, utilisation de ${newslettersToProcess.length} newsletter(s) ACTIVE`);
+        console.log(`📧 Aucune newsletter SCHEDULED, utilisation de 1 newsletter ACTIVE non envoyée cette semaine`);
+      } else {
+        console.log(`ℹ️ Aucune newsletter à envoyer (toutes les ACTIVE ont déjà été envoyées cette semaine)`);
       }
     }
 
@@ -156,10 +175,28 @@ export async function GET(request: NextRequest) {
           subscriberFilter.subscriptionType = SubscriptionType.PREMIUM;
         }
 
-        // Récupérer les abonnés
-        const subscribers = await prisma.newsletterSubscriber.findMany({
-          where: subscriberFilter
+        // Récupérer les abonnés qui N'ONT PAS déjà reçu cette newsletter
+        const alreadySentSubscriberIds = await prisma.newsletterSubscriberDelivery.findMany({
+          where: {
+            newsletterId: newsletter.id
+          },
+          select: {
+            subscriberId: true
+          }
         });
+
+        const alreadySentIds = alreadySentSubscriberIds.map(d => d.subscriberId);
+
+        const subscribers = await prisma.newsletterSubscriber.findMany({
+          where: {
+            ...subscriberFilter,
+            id: {
+              notIn: alreadySentIds // Exclure ceux qui ont déjà reçu cette newsletter
+            }
+          }
+        });
+
+        console.log(`📧 Newsletter ${newsletter.subject}: ${subscribers.length} nouveaux destinataires (${alreadySentIds.length} déjà reçu)`);
 
         // Générer le HTML de la newsletter
         const recipes = newsletter.newsletterRecipes.map(nr => nr.recipe);

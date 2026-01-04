@@ -60,9 +60,10 @@ model NewsletterSubscriber {
   updatedAt          DateTime                @updatedAt @map("updated_at")
 
   // Relations
-  newsletterEvents NewsletterEvent[]
-  automationQueue  AutomationQueue[]
-  mailLogs         MailLog[]
+  newsletterEvents    NewsletterEvent[]
+  automationQueue     AutomationQueue[]
+  mailLogs            MailLog[]
+  newsletterDeliveries NewsletterSubscriberDelivery[]
 
   @@index([email])
   @@index([status])
@@ -197,9 +198,10 @@ model Newsletter {
   updatedAt         DateTime         @updatedAt @map("updated_at")
 
   // Relations
-  newsletterEvents  NewsletterEvent[]
-  mailLogs          MailLog[]
-  newsletterRecipes NewsletterRecipe[]
+  newsletterEvents    NewsletterEvent[]
+  mailLogs            MailLog[]
+  newsletterRecipes   NewsletterRecipe[]
+  newsletterDeliveries NewsletterSubscriberDelivery[]
 
   @@index([status])
   @@index([type])
@@ -467,7 +469,53 @@ enum EmailQueueStatus {
 }
 
 // ==================================
-// 12. SITE_SETTINGS (Paramètres du site)
+// 12. NEWSLETTER_SUBSCRIBER_DELIVERY (Tracking envois newsletters par abonné)
+// ==================================
+model NewsletterSubscriberDelivery {
+  id           String    @id @default(uuid())
+
+  // Relations
+  subscriberId String    @map("subscriber_id")
+  subscriber   NewsletterSubscriber @relation(fields: [subscriberId], references: [id], onDelete: Cascade)
+
+  newsletterId String    @map("newsletter_id")
+  newsletter   Newsletter @relation(fields: [newsletterId], references: [id], onDelete: Cascade)
+
+  // Statut de la livraison
+  status       DeliveryStatus @default(SENT)
+
+  // Tracking
+  sentAt       DateTime  @default(now()) @map("sent_at")
+  deliveredAt  DateTime? @map("delivered_at")
+  openedAt     DateTime? @map("opened_at")
+  clickedAt    DateTime? @map("clicked_at")
+
+  // Métadonnées
+  mailLogId    String?   @map("mail_log_id") // Référence au MailLog si besoin
+  provider     String?   // "resend", "gmail", "queued"
+  error        String?
+
+  createdAt    DateTime  @default(now()) @map("created_at")
+
+  @@unique([subscriberId, newsletterId]) // Un abonné ne peut recevoir qu'une fois la même newsletter
+  @@index([subscriberId])
+  @@index([newsletterId])
+  @@index([sentAt])
+  @@index([status])
+  @@map("newsletter_subscriber_deliveries")
+}
+
+enum DeliveryStatus {
+  SENT      @map("sent")
+  DELIVERED @map("delivered")
+  OPENED    @map("opened")
+  CLICKED   @map("clicked")
+  BOUNCED   @map("bounced")
+  FAILED    @map("failed")
+}
+
+// ==================================
+// 13. SITE_SETTINGS (Paramètres du site)
 // ==================================
 model SiteSetting {
   id        String   @id @default(uuid())

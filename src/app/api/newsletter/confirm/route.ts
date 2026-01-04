@@ -86,6 +86,20 @@ export async function GET(request: NextRequest) {
       });
 
       if (currentNewsletter) {
+        // Vérifier si cet abonné a déjà reçu cette newsletter (anti-doublon)
+        const alreadyReceived = await prisma.newsletterSubscriberDelivery.findUnique({
+          where: {
+            subscriberId_newsletterId: {
+              subscriberId: subscriber.id,
+              newsletterId: currentNewsletter.id
+            }
+          }
+        });
+
+        if (alreadyReceived) {
+          console.log(`⚠️ Newsletter ${currentNewsletter.subject} déjà envoyée à ${subscriber.email}, skip`);
+          // On ne renvoie pas, on passe directement à la redirection
+        } else {
         const content = currentNewsletter.content as {
           html?: string;
           introMessage?: string;
@@ -132,6 +146,7 @@ export async function GET(request: NextRequest) {
         } else {
           console.log('⚠️ Pas de recettes dans la newsletter, impossible de générer le HTML');
         }
+        } // Fin du else (anti-doublon)
       } else {
         console.log('ℹ️ Pas de newsletter configurée pour les nouveaux inscrits');
       }

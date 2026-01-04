@@ -378,6 +378,25 @@ export async function sendEmail(params: SendEmailParams & { forceQueue?: boolean
       }
     });
 
+    // Log newsletter delivery for tracking (anti-doublon)
+    if (result.success && subscriberId && newsletterId && type.includes('newsletter')) {
+      try {
+        await prisma.newsletterSubscriberDelivery.create({
+          data: {
+            subscriberId,
+            newsletterId,
+            status: 'SENT',
+            mailLogId: mailLog.id,
+            provider,
+          }
+        });
+        console.log(`📬 Newsletter delivery logged: ${newsletterId} → ${subscriberId}`);
+      } catch (deliveryError) {
+        // Si erreur (doublon par exemple), on log mais on n'échoue pas l'envoi
+        console.warn('⚠️ Failed to log newsletter delivery (may be duplicate):', deliveryError);
+      }
+    }
+
     if (result.success) {
       console.log(`✅ Email sent via ${provider}:`, result.messageId);
     } else {
@@ -518,7 +537,7 @@ export async function processEmailQueue(): Promise<{
         });
 
         // Create MailLog entry
-        await prisma.mailLog.create({
+        const mailLog = await prisma.mailLog.create({
           data: {
             type: queuedEmail.type,
             subject: queuedEmail.subject,
@@ -532,6 +551,24 @@ export async function processEmailQueue(): Promise<{
             sentBy: queuedEmail.sentBy,
           },
         });
+
+        // Log newsletter delivery for tracking (anti-doublon)
+        if (queuedEmail.subscriberId && queuedEmail.newsletterId && queuedEmail.type.includes('newsletter')) {
+          try {
+            await prisma.newsletterSubscriberDelivery.create({
+              data: {
+                subscriberId: queuedEmail.subscriberId,
+                newsletterId: queuedEmail.newsletterId,
+                status: 'SENT',
+                mailLogId: mailLog.id,
+                provider: 'resend',
+              }
+            });
+            console.log(`📬 Queue: Newsletter delivery logged: ${queuedEmail.newsletterId} → ${queuedEmail.subscriberId}`);
+          } catch (deliveryError) {
+            console.warn('⚠️ Queue: Failed to log newsletter delivery (may be duplicate):', deliveryError);
+          }
+        }
 
         sent++;
         console.log(`✅ Queue: Sent to ${queuedEmail.to}`);

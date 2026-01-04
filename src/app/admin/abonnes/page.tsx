@@ -2,6 +2,7 @@
 
 import AdminSidebar from '@/components/admin/AdminSidebar';
 import { useSidebar } from '@/components/admin/SidebarContext';
+import SubscriberHistoryModal from '@/components/admin/SubscriberHistoryModal';
 import { useEffect, useState } from 'react';
 
 interface Subscriber {
@@ -39,6 +40,10 @@ export default function AbonnesAdminPage() {
   const [newsletters, setNewsletters] = useState<Newsletter[]>([]);
   const [showNewsletterModal, setShowNewsletterModal] = useState(false);
   const [selectedSubscriber, setSelectedSubscriber] = useState<Subscriber | null>(null);
+
+  // États pour le modal d'historique
+  const [showHistoryModal, setShowHistoryModal] = useState(false);
+  const [historySubscriberId, setHistorySubscriberId] = useState<string | null>(null);
 
   const fetchSubscribers = async () => {
     setLoading(true);
@@ -530,6 +535,32 @@ export default function AbonnesAdminPage() {
                               {sendingNewsletter === sub.id ? '⏳ Envoi...' : '📧 Envoyer NL'}
                             </button>
                           )}
+                          {/* Bouton Historique */}
+                          <button
+                            onClick={() => {
+                              setHistorySubscriberId(sub.id);
+                              setShowHistoryModal(true);
+                            }}
+                            style={{
+                              padding: '6px 12px',
+                              background: 'rgba(139, 92, 246, 0.2)',
+                              border: '1px solid rgba(139, 92, 246, 0.4)',
+                              borderRadius: '6px',
+                              color: '#8b5cf6',
+                              fontSize: '12px',
+                              fontWeight: 600,
+                              cursor: 'pointer',
+                              transition: 'all 0.2s'
+                            }}
+                            onMouseOver={(e) => {
+                              e.currentTarget.style.background = 'rgba(139, 92, 246, 0.3)';
+                            }}
+                            onMouseOut={(e) => {
+                              e.currentTarget.style.background = 'rgba(139, 92, 246, 0.2)';
+                            }}
+                          >
+                            📊 Historique
+                          </button>
                           <button
                             onClick={() => handleToggleType(sub.id, sub.subscriptionType)}
                             style={{
@@ -717,6 +748,17 @@ export default function AbonnesAdminPage() {
               </button>
             </div>
           </div>
+        )}
+
+        {/* Modal Historique Abonné */}
+        {showHistoryModal && historySubscriberId && (
+          <SubscriberHistoryModal
+            subscriberId={historySubscriberId}
+            onClose={() => {
+              setShowHistoryModal(false);
+              setHistorySubscriberId(null);
+            }}
+          />
         )}
       </div>
     </div>
