@@ -74,6 +74,7 @@ export default function NewsletterPage() {
   const [loadingManagement, setLoadingManagement] = useState(false);
   const [activeTab, setActiveTab] = useState<'list' | 'management'>('list');
   const [expandedNewsletter, setExpandedNewsletter] = useState<string | null>(null);
+  const [searchTerms, setSearchTerms] = useState<Map<string, string>>(new Map());
 
   useEffect(() => {
     fetchNewsletters();
@@ -187,6 +188,24 @@ export default function NewsletterPage() {
       hour: '2-digit',
       minute: '2-digit'
     });
+  };
+
+  const handleSearchChange = (newsletterId: string, value: string) => {
+    setSearchTerms(prev => {
+      const newMap = new Map(prev);
+      newMap.set(newsletterId, value);
+      return newMap;
+    });
+  };
+
+  const filterBySearch = (item: { email: string; firstName: string | null }, newsletterId: string) => {
+    const searchTerm = searchTerms.get(newsletterId)?.toLowerCase() || '';
+    if (!searchTerm) return true;
+
+    const email = item.email?.toLowerCase() || '';
+    const firstName = item.firstName?.toLowerCase() || '';
+
+    return email.includes(searchTerm) || firstName.includes(searchTerm);
   };
 
   return (
@@ -770,208 +789,270 @@ export default function NewsletterPage() {
                   {/* Expanded Details */}
                   {expandedNewsletter === data.newsletter.id && (
                     <div style={{ padding: '24px' }}>
+                      {/* Search Bar */}
+                      <div style={{ marginBottom: '24px' }}>
+                        <input
+                          type="text"
+                          placeholder="🔍 Rechercher par email ou prénom..."
+                          value={searchTerms.get(data.newsletter.id) || ''}
+                          onChange={(e) => handleSearchChange(data.newsletter.id, e.target.value)}
+                          style={{
+                            width: '100%',
+                            padding: '12px 16px',
+                            background: 'rgba(255,255,255,0.05)',
+                            border: '1px solid rgba(255,255,255,0.1)',
+                            borderRadius: '8px',
+                            color: '#fff',
+                            fontSize: '14px',
+                            outline: 'none',
+                            transition: 'all 0.3s'
+                          }}
+                          onFocus={(e) => {
+                            e.currentTarget.style.background = 'rgba(255,255,255,0.08)';
+                            e.currentTarget.style.borderColor = '#34d399';
+                            e.currentTarget.style.boxShadow = '0 0 0 3px rgba(52, 211, 153, 0.1)';
+                          }}
+                          onBlur={(e) => {
+                            e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
+                            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)';
+                            e.currentTarget.style.boxShadow = 'none';
+                          }}
+                        />
+                      </div>
+
                       {/* Section: Abonnés qui ont reçu */}
                       <div style={{ marginBottom: '32px' }}>
-                        <h4 style={{
-                          color: '#34d399',
-                          fontSize: '16px',
-                          fontWeight: 600,
-                          marginBottom: '16px',
-                          textTransform: 'uppercase',
-                          letterSpacing: '0.5px'
-                        }}>
-                          ✅ Abonnés qui ont reçu ({data.received.length})
-                        </h4>
-                        {data.received.length === 0 ? (
-                          <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '14px', fontStyle: 'italic' }}>
-                            Aucun abonné n'a encore reçu cette newsletter
-                          </p>
-                        ) : (
-                          <div style={{
-                            background: 'rgba(255,255,255,0.02)',
-                            borderRadius: '8px',
-                            maxHeight: '300px',
-                            overflowY: 'auto'
-                          }}>
-                            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                              <thead style={{ position: 'sticky', top: 0, background: 'rgba(0,0,0,0.5)' }}>
-                                <tr>
-                                  <th style={{ padding: '12px', textAlign: 'left', color: 'rgba(255,255,255,0.6)', fontSize: '12px', fontWeight: 600 }}>Email</th>
-                                  <th style={{ padding: '12px', textAlign: 'left', color: 'rgba(255,255,255,0.6)', fontSize: '12px', fontWeight: 600 }}>Statut</th>
-                                  <th style={{ padding: '12px', textAlign: 'center', color: 'rgba(255,255,255,0.6)', fontSize: '12px', fontWeight: 600 }}>Envoyé</th>
-                                  <th style={{ padding: '12px', textAlign: 'center', color: 'rgba(255,255,255,0.6)', fontSize: '12px', fontWeight: 600 }}>Ouvert</th>
-                                  <th style={{ padding: '12px', textAlign: 'center', color: 'rgba(255,255,255,0.6)', fontSize: '12px', fontWeight: 600 }}>Cliqué</th>
-                                  <th style={{ padding: '12px', textAlign: 'center', color: 'rgba(255,255,255,0.6)', fontSize: '12px', fontWeight: 600 }}>Provider</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                {data.received.map((recipient, idx) => (
-                                  <tr key={recipient.id} style={{
-                                    borderTop: idx > 0 ? '1px solid rgba(255,255,255,0.05)' : 'none'
-                                  }}>
-                                    <td style={{ padding: '12px', color: '#fff', fontSize: '13px' }}>
-                                      {recipient.firstName ? `${recipient.firstName} (${recipient.email})` : recipient.email}
-                                    </td>
-                                    <td style={{ padding: '12px', fontSize: '12px' }}>
-                                      <span style={{
-                                        padding: '4px 8px',
-                                        borderRadius: '6px',
-                                        background: recipient.subscriberStatus === 'ACTIVE' ? 'rgba(16, 185, 129, 0.2)' : 'rgba(156, 163, 175, 0.2)',
-                                        color: recipient.subscriberStatus === 'ACTIVE' ? '#10b981' : '#9ca3af',
-                                        fontSize: '11px',
-                                        fontWeight: 600
-                                      }}>
-                                        {recipient.subscriberStatus || 'N/A'}
-                                      </span>
-                                    </td>
-                                    <td style={{ padding: '12px', textAlign: 'center', color: 'rgba(255,255,255,0.7)', fontSize: '12px' }}>
-                                      {new Date(recipient.sentAt).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' })}
-                                    </td>
-                                    <td style={{ padding: '12px', textAlign: 'center', fontSize: '12px' }}>
-                                      {recipient.openedAt ? '✅' : '—'}
-                                    </td>
-                                    <td style={{ padding: '12px', textAlign: 'center', fontSize: '12px' }}>
-                                      {recipient.clickedAt ? '✅' : '—'}
-                                    </td>
-                                    <td style={{ padding: '12px', textAlign: 'center', color: 'rgba(255,255,255,0.5)', fontSize: '11px' }}>
-                                      {recipient.provider || '—'}
-                                    </td>
-                                  </tr>
-                                ))}
-                              </tbody>
-                            </table>
-                          </div>
-                        )}
+                        {(() => {
+                          const filteredReceived = data.received.filter(r => filterBySearch(r, data.newsletter.id));
+                          return (
+                            <>
+                              <h4 style={{
+                                color: '#34d399',
+                                fontSize: '16px',
+                                fontWeight: 600,
+                                marginBottom: '16px',
+                                textTransform: 'uppercase',
+                                letterSpacing: '0.5px'
+                              }}>
+                                ✅ Abonnés qui ont reçu ({filteredReceived.length}{filteredReceived.length !== data.received.length ? ` / ${data.received.length}` : ''})
+                              </h4>
+                              {filteredReceived.length === 0 ? (
+                                <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '14px', fontStyle: 'italic' }}>
+                                  {data.received.length === 0
+                                    ? "Aucun abonné n'a encore reçu cette newsletter"
+                                    : "Aucun résultat pour cette recherche"
+                                  }
+                                </p>
+                              ) : (
+                                <div style={{
+                                  background: 'rgba(255,255,255,0.02)',
+                                  borderRadius: '8px',
+                                  maxHeight: '300px',
+                                  overflowY: 'auto'
+                                }}>
+                                  <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                                    <thead style={{ position: 'sticky', top: 0, background: 'rgba(0,0,0,0.5)' }}>
+                                      <tr>
+                                        <th style={{ padding: '12px', textAlign: 'left', color: 'rgba(255,255,255,0.6)', fontSize: '12px', fontWeight: 600 }}>Email</th>
+                                        <th style={{ padding: '12px', textAlign: 'left', color: 'rgba(255,255,255,0.6)', fontSize: '12px', fontWeight: 600 }}>Statut</th>
+                                        <th style={{ padding: '12px', textAlign: 'center', color: 'rgba(255,255,255,0.6)', fontSize: '12px', fontWeight: 600 }}>Envoyé</th>
+                                        <th style={{ padding: '12px', textAlign: 'center', color: 'rgba(255,255,255,0.6)', fontSize: '12px', fontWeight: 600 }}>Ouvert</th>
+                                        <th style={{ padding: '12px', textAlign: 'center', color: 'rgba(255,255,255,0.6)', fontSize: '12px', fontWeight: 600 }}>Cliqué</th>
+                                        <th style={{ padding: '12px', textAlign: 'center', color: 'rgba(255,255,255,0.6)', fontSize: '12px', fontWeight: 600 }}>Provider</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      {filteredReceived.map((recipient, idx) => (
+                                        <tr key={recipient.id} style={{
+                                          borderTop: idx > 0 ? '1px solid rgba(255,255,255,0.05)' : 'none'
+                                        }}>
+                                          <td style={{ padding: '12px', color: '#fff', fontSize: '13px' }}>
+                                            {recipient.firstName ? `${recipient.firstName} (${recipient.email})` : recipient.email}
+                                          </td>
+                                          <td style={{ padding: '12px', fontSize: '12px' }}>
+                                            <span style={{
+                                              padding: '4px 8px',
+                                              borderRadius: '6px',
+                                              background: recipient.subscriberStatus === 'ACTIVE' ? 'rgba(16, 185, 129, 0.2)' : 'rgba(156, 163, 175, 0.2)',
+                                              color: recipient.subscriberStatus === 'ACTIVE' ? '#10b981' : '#9ca3af',
+                                              fontSize: '11px',
+                                              fontWeight: 600
+                                            }}>
+                                              {recipient.subscriberStatus || 'N/A'}
+                                            </span>
+                                          </td>
+                                          <td style={{ padding: '12px', textAlign: 'center', color: 'rgba(255,255,255,0.7)', fontSize: '12px' }}>
+                                            {new Date(recipient.sentAt).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' })}
+                                          </td>
+                                          <td style={{ padding: '12px', textAlign: 'center', fontSize: '12px' }}>
+                                            {recipient.openedAt ? '✅' : '—'}
+                                          </td>
+                                          <td style={{ padding: '12px', textAlign: 'center', fontSize: '12px' }}>
+                                            {recipient.clickedAt ? '✅' : '—'}
+                                          </td>
+                                          <td style={{ padding: '12px', textAlign: 'center', color: 'rgba(255,255,255,0.5)', fontSize: '11px' }}>
+                                            {recipient.provider || '—'}
+                                          </td>
+                                        </tr>
+                                      ))}
+                                    </tbody>
+                                  </table>
+                                </div>
+                              )}
+                            </>
+                          );
+                        })()}
                       </div>
 
                       {/* Section: File d'attente */}
                       <div style={{ marginBottom: '32px' }}>
-                        <h4 style={{
-                          color: '#fbbf24',
-                          fontSize: '16px',
-                          fontWeight: 600,
-                          marginBottom: '16px',
-                          textTransform: 'uppercase',
-                          letterSpacing: '0.5px'
-                        }}>
-                          ⏳ File d'attente ({data.queued.length})
-                        </h4>
-                        {data.queued.length === 0 ? (
-                          <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '14px', fontStyle: 'italic' }}>
-                            Aucun email en attente pour cette newsletter
-                          </p>
-                        ) : (
-                          <div style={{
-                            background: 'rgba(255,255,255,0.02)',
-                            borderRadius: '8px',
-                            maxHeight: '300px',
-                            overflowY: 'auto'
-                          }}>
-                            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                              <thead style={{ position: 'sticky', top: 0, background: 'rgba(0,0,0,0.5)' }}>
-                                <tr>
-                                  <th style={{ padding: '12px', textAlign: 'left', color: 'rgba(255,255,255,0.6)', fontSize: '12px', fontWeight: 600 }}>Email</th>
-                                  <th style={{ padding: '12px', textAlign: 'left', color: 'rgba(255,255,255,0.6)', fontSize: '12px', fontWeight: 600 }}>Statut</th>
-                                  <th style={{ padding: '12px', textAlign: 'center', color: 'rgba(255,255,255,0.6)', fontSize: '12px', fontWeight: 600 }}>Programmé pour</th>
-                                  <th style={{ padding: '12px', textAlign: 'center', color: 'rgba(255,255,255,0.6)', fontSize: '12px', fontWeight: 600 }}>Tentatives</th>
-                                  <th style={{ padding: '12px', textAlign: 'center', color: 'rgba(255,255,255,0.6)', fontSize: '12px', fontWeight: 600 }}>Priorité</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                {data.queued.map((queued, idx) => (
-                                  <tr key={queued.id} style={{
-                                    borderTop: idx > 0 ? '1px solid rgba(255,255,255,0.05)' : 'none'
-                                  }}>
-                                    <td style={{ padding: '12px', color: '#fff', fontSize: '13px' }}>
-                                      {queued.firstName ? `${queued.firstName} (${queued.email})` : queued.email}
-                                    </td>
-                                    <td style={{ padding: '12px', fontSize: '12px' }}>
-                                      <span style={{
-                                        padding: '4px 8px',
-                                        borderRadius: '6px',
-                                        background: queued.subscriberStatus === 'ACTIVE' ? 'rgba(16, 185, 129, 0.2)' : 'rgba(156, 163, 175, 0.2)',
-                                        color: queued.subscriberStatus === 'ACTIVE' ? '#10b981' : '#9ca3af',
-                                        fontSize: '11px',
-                                        fontWeight: 600
-                                      }}>
-                                        {queued.subscriberStatus || 'N/A'}
-                                      </span>
-                                    </td>
-                                    <td style={{ padding: '12px', textAlign: 'center', color: 'rgba(255,255,255,0.7)', fontSize: '12px' }}>
-                                      {queued.scheduledFor ? formatDate(queued.scheduledFor) : '—'}
-                                    </td>
-                                    <td style={{ padding: '12px', textAlign: 'center', color: 'rgba(255,255,255,0.7)', fontSize: '12px' }}>
-                                      {queued.attempts}
-                                    </td>
-                                    <td style={{ padding: '12px', textAlign: 'center', color: 'rgba(255,255,255,0.7)', fontSize: '12px' }}>
-                                      {queued.priority}
-                                    </td>
-                                  </tr>
-                                ))}
-                              </tbody>
-                            </table>
-                          </div>
-                        )}
+                        {(() => {
+                          const filteredQueued = data.queued.filter(q => filterBySearch(q, data.newsletter.id));
+                          return (
+                            <>
+                              <h4 style={{
+                                color: '#fbbf24',
+                                fontSize: '16px',
+                                fontWeight: 600,
+                                marginBottom: '16px',
+                                textTransform: 'uppercase',
+                                letterSpacing: '0.5px'
+                              }}>
+                                ⏳ File d'attente ({filteredQueued.length}{filteredQueued.length !== data.queued.length ? ` / ${data.queued.length}` : ''})
+                              </h4>
+                              {filteredQueued.length === 0 ? (
+                                <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '14px', fontStyle: 'italic' }}>
+                                  {data.queued.length === 0
+                                    ? "Aucun email en attente pour cette newsletter"
+                                    : "Aucun résultat pour cette recherche"
+                                  }
+                                </p>
+                              ) : (
+                                <div style={{
+                                  background: 'rgba(255,255,255,0.02)',
+                                  borderRadius: '8px',
+                                  maxHeight: '300px',
+                                  overflowY: 'auto'
+                                }}>
+                                  <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                                    <thead style={{ position: 'sticky', top: 0, background: 'rgba(0,0,0,0.5)' }}>
+                                      <tr>
+                                        <th style={{ padding: '12px', textAlign: 'left', color: 'rgba(255,255,255,0.6)', fontSize: '12px', fontWeight: 600 }}>Email</th>
+                                        <th style={{ padding: '12px', textAlign: 'left', color: 'rgba(255,255,255,0.6)', fontSize: '12px', fontWeight: 600 }}>Statut</th>
+                                        <th style={{ padding: '12px', textAlign: 'center', color: 'rgba(255,255,255,0.6)', fontSize: '12px', fontWeight: 600 }}>Programmé pour</th>
+                                        <th style={{ padding: '12px', textAlign: 'center', color: 'rgba(255,255,255,0.6)', fontSize: '12px', fontWeight: 600 }}>Tentatives</th>
+                                        <th style={{ padding: '12px', textAlign: 'center', color: 'rgba(255,255,255,0.6)', fontSize: '12px', fontWeight: 600 }}>Priorité</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      {filteredQueued.map((queued, idx) => (
+                                        <tr key={queued.id} style={{
+                                          borderTop: idx > 0 ? '1px solid rgba(255,255,255,0.05)' : 'none'
+                                        }}>
+                                          <td style={{ padding: '12px', color: '#fff', fontSize: '13px' }}>
+                                            {queued.firstName ? `${queued.firstName} (${queued.email})` : queued.email}
+                                          </td>
+                                          <td style={{ padding: '12px', fontSize: '12px' }}>
+                                            <span style={{
+                                              padding: '4px 8px',
+                                              borderRadius: '6px',
+                                              background: queued.subscriberStatus === 'ACTIVE' ? 'rgba(16, 185, 129, 0.2)' : 'rgba(156, 163, 175, 0.2)',
+                                              color: queued.subscriberStatus === 'ACTIVE' ? '#10b981' : '#9ca3af',
+                                              fontSize: '11px',
+                                              fontWeight: 600
+                                            }}>
+                                              {queued.subscriberStatus || 'N/A'}
+                                            </span>
+                                          </td>
+                                          <td style={{ padding: '12px', textAlign: 'center', color: 'rgba(255,255,255,0.7)', fontSize: '12px' }}>
+                                            {queued.scheduledFor ? formatDate(queued.scheduledFor) : '—'}
+                                          </td>
+                                          <td style={{ padding: '12px', textAlign: 'center', color: 'rgba(255,255,255,0.7)', fontSize: '12px' }}>
+                                            {queued.attempts}
+                                          </td>
+                                          <td style={{ padding: '12px', textAlign: 'center', color: 'rgba(255,255,255,0.7)', fontSize: '12px' }}>
+                                            {queued.priority}
+                                          </td>
+                                        </tr>
+                                      ))}
+                                    </tbody>
+                                  </table>
+                                </div>
+                              )}
+                            </>
+                          );
+                        })()}
                       </div>
 
                       {/* Section: Doublons */}
-                      {data.duplicates.length > 0 && (
-                        <div>
-                          <h4 style={{
-                            color: '#ef4444',
-                            fontSize: '16px',
-                            fontWeight: 600,
-                            marginBottom: '16px',
-                            textTransform: 'uppercase',
-                            letterSpacing: '0.5px'
-                          }}>
-                            ⚠️ Doublons détectés ({data.duplicates.length})
-                          </h4>
-                          <div style={{
-                            background: 'rgba(239, 68, 68, 0.05)',
-                            border: '1px solid rgba(239, 68, 68, 0.2)',
-                            borderRadius: '8px',
-                            padding: '16px'
-                          }}>
-                            {data.duplicates.map((dup, idx) => (
-                              <div
-                                key={dup.subscriberId}
-                                style={{
-                                  padding: '12px',
-                                  borderTop: idx > 0 ? '1px solid rgba(239, 68, 68, 0.1)' : 'none',
-                                  display: 'flex',
-                                  justifyContent: 'space-between',
-                                  alignItems: 'center'
-                                }}
-                              >
-                                <div>
-                                  <div style={{ color: '#fff', fontSize: '14px', fontWeight: 600, marginBottom: '4px' }}>
-                                    {dup.firstName ? `${dup.firstName} (${dup.email})` : dup.email}
+                      {(() => {
+                        const filteredDuplicates = data.duplicates.filter(d => filterBySearch(d, data.newsletter.id));
+                        if (filteredDuplicates.length === 0 && data.duplicates.length === 0) return null;
+
+                        return (
+                          <div>
+                            <h4 style={{
+                              color: '#ef4444',
+                              fontSize: '16px',
+                              fontWeight: 600,
+                              marginBottom: '16px',
+                              textTransform: 'uppercase',
+                              letterSpacing: '0.5px'
+                            }}>
+                              ⚠️ Doublons détectés ({filteredDuplicates.length}{filteredDuplicates.length !== data.duplicates.length ? ` / ${data.duplicates.length}` : ''})
+                            </h4>
+                            {filteredDuplicates.length === 0 ? (
+                              <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '14px', fontStyle: 'italic' }}>
+                                Aucun résultat pour cette recherche
+                              </p>
+                            ) : (
+                              <div style={{
+                                background: 'rgba(239, 68, 68, 0.05)',
+                                border: '1px solid rgba(239, 68, 68, 0.2)',
+                                borderRadius: '8px',
+                                padding: '16px'
+                              }}>
+                                {filteredDuplicates.map((dup, idx) => (
+                                  <div
+                                    key={dup.subscriberId}
+                                    style={{
+                                      padding: '12px',
+                                      borderTop: idx > 0 ? '1px solid rgba(239, 68, 68, 0.1)' : 'none',
+                                      display: 'flex',
+                                      justifyContent: 'space-between',
+                                      alignItems: 'center'
+                                    }}
+                                  >
+                                    <div>
+                                      <div style={{ color: '#fff', fontSize: '14px', fontWeight: 600, marginBottom: '4px' }}>
+                                        {dup.firstName ? `${dup.firstName} (${dup.email})` : dup.email}
+                                      </div>
+                                      <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '12px' }}>
+                                        {dup.sendDates.map((date, i) => (
+                                          <span key={i}>
+                                            {i > 0 && ' • '}
+                                            {new Date(date).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' })}
+                                          </span>
+                                        ))}
+                                      </div>
+                                    </div>
+                                    <div style={{
+                                      padding: '6px 12px',
+                                      borderRadius: '8px',
+                                      background: 'rgba(239, 68, 68, 0.2)',
+                                      color: '#ef4444',
+                                      fontSize: '13px',
+                                      fontWeight: 700
+                                    }}>
+                                      {dup.count}x
+                                    </div>
                                   </div>
-                                  <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '12px' }}>
-                                    {dup.sendDates.map((date, i) => (
-                                      <span key={i}>
-                                        {i > 0 && ' • '}
-                                        {new Date(date).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' })}
-                                      </span>
-                                    ))}
-                                  </div>
-                                </div>
-                                <div style={{
-                                  padding: '6px 12px',
-                                  borderRadius: '8px',
-                                  background: 'rgba(239, 68, 68, 0.2)',
-                                  color: '#ef4444',
-                                  fontSize: '13px',
-                                  fontWeight: 700
-                                }}>
-                                  {dup.count}x
-                                </div>
+                                ))}
                               </div>
-                            ))}
+                            )}
                           </div>
-                        </div>
-                      )}
+                        );
+                      })()}
                     </div>
                   )}
                 </div>
