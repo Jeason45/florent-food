@@ -407,9 +407,6 @@ export default function AbonnesAdminPage() {
                       NL reçues
                     </th>
                     <th style={{ padding: '16px', textAlign: 'center', color: 'rgba(255,255,255,0.6)', fontSize: '12px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                      Engagement
-                    </th>
-                    <th style={{ padding: '16px', textAlign: 'center', color: 'rgba(255,255,255,0.6)', fontSize: '12px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                       Actions
                     </th>
                   </tr>
@@ -473,11 +470,6 @@ export default function AbonnesAdminPage() {
                         }}>
                           {sub.newslettersReceived}
                         </span>
-                      </td>
-                      <td style={{ padding: '16px', textAlign: 'center', color: 'rgba(255,255,255,0.7)', fontSize: '14px' }}>
-                        <div style={{ fontSize: '12px' }}>
-                          📧 {sub.totalOpens} · 🔗 {sub.totalClicks}
-                        </div>
                       </td>
                       <td style={{ padding: '16px', textAlign: 'center' }}>
                         <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', flexWrap: 'wrap' }}>
