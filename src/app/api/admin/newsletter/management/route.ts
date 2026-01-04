@@ -56,20 +56,32 @@ export async function GET(request: NextRequest) {
             newsletterId: newsletter.id,
             status: 'PENDING'
           },
-          include: {
-            subscriber: {
-              select: {
-                id: true,
-                email: true,
-                firstName: true,
-                status: true,
-              }
-            }
-          },
           orderBy: {
             scheduledFor: 'asc'
           }
         });
+
+        // Récupérer les données des abonnés pour les emails en file d'attente
+        const queuedSubscriberIds = queuedEmails
+          .map(q => q.subscriberId)
+          .filter((id): id is string => id !== null);
+
+        const queuedSubscribers = await prisma.newsletterSubscriber.findMany({
+          where: {
+            id: { in: queuedSubscriberIds }
+          },
+          select: {
+            id: true,
+            email: true,
+            firstName: true,
+            status: true,
+          }
+        });
+
+        // Créer un Map pour un accès rapide aux données des abonnés
+        const subscriberMap = new Map(
+          queuedSubscribers.map(sub => [sub.id, sub])
+        );
 
         // 3. Détecter les doublons (même subscriberId avec plusieurs envois)
         const emailsBySubscriber = new Map<string, typeof receivedLogs>();
@@ -121,16 +133,19 @@ export async function GET(request: NextRequest) {
             clickedAt: log.clickedAt,
             provider: log.provider,
           })),
-          queued: queuedEmails.map(q => ({
-            id: q.id,
-            subscriberId: q.subscriberId,
-            email: q.subscriber?.email || q.to,
-            firstName: q.subscriber?.firstName,
-            subscriberStatus: q.subscriber?.status,
-            scheduledFor: q.scheduledFor,
-            attempts: q.attempts,
-            priority: q.priority,
-          })),
+          queued: queuedEmails.map(q => {
+            const subscriber = q.subscriberId ? subscriberMap.get(q.subscriberId) : null;
+            return {
+              id: q.id,
+              subscriberId: q.subscriberId,
+              email: subscriber?.email || q.to,
+              firstName: subscriber?.firstName,
+              subscriberStatus: subscriber?.status,
+              scheduledFor: q.scheduledFor,
+              attempts: q.attempts,
+              priority: q.priority,
+            };
+          }),
           duplicates,
           stats: {
             totalReceived: receivedLogs.length,
