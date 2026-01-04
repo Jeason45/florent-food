@@ -40,23 +40,28 @@ export async function GET(
       );
     }
 
-    // Récupérer toutes les newsletters reçues avec tracking
-    const newsletterDeliveries = await prisma.newsletterSubscriberDelivery.findMany({
+    // Récupérer toutes les newsletters envoyées (depuis mailLogs pour avoir l'historique complet)
+    const newsletterMailLogs = await prisma.mailLog.findMany({
       where: {
-        subscriberId
-      },
-      include: {
-        newsletter: {
-          select: {
-            id: true,
-            subject: true,
-            type: true,
-            sentAt: true,
-          }
-        }
+        subscriberId,
+        type: 'newsletter_weekly',
+        status: 'sent'
       },
       orderBy: {
         sentAt: 'desc'
+      },
+      select: {
+        id: true,
+        type: true,
+        subject: true,
+        status: true,
+        sentAt: true,
+        deliveredAt: true,
+        openedAt: true,
+        clickedAt: true,
+        provider: true,
+        error: true,
+        newsletterId: true,
       }
     });
 
@@ -104,15 +109,15 @@ export async function GET(
 
     // Calculer des statistiques
     const stats = {
-      totalNewslettersReceived: newsletterDeliveries.length,
+      totalNewslettersReceived: newsletterMailLogs.length,
       totalEmailsSent: mailLogs.length,
       totalOpens: subscriber.totalOpens,
       totalClicks: subscriber.totalClicks,
-      openRate: newsletterDeliveries.length > 0
-        ? Math.round((newsletterDeliveries.filter(d => d.openedAt).length / newsletterDeliveries.length) * 100)
+      openRate: newsletterMailLogs.length > 0
+        ? Math.round((newsletterMailLogs.filter(d => d.openedAt).length / newsletterMailLogs.length) * 100)
         : 0,
-      clickRate: newsletterDeliveries.length > 0
-        ? Math.round((newsletterDeliveries.filter(d => d.clickedAt).length / newsletterDeliveries.length) * 100)
+      clickRate: newsletterMailLogs.length > 0
+        ? Math.round((newsletterMailLogs.filter(d => d.clickedAt).length / newsletterMailLogs.length) * 100)
         : 0,
       lastActivity: subscriber.lastOpenedAt || subscriber.subscribedAt,
     };
@@ -120,18 +125,18 @@ export async function GET(
     return NextResponse.json({
       subscriber,
       stats,
-      newsletterDeliveries: newsletterDeliveries.map(d => ({
-        id: d.id,
-        newsletterId: d.newsletterId,
-        newsletterSubject: d.newsletter.subject,
-        newsletterType: d.newsletter.type,
-        status: d.status,
-        sentAt: d.sentAt,
-        deliveredAt: d.deliveredAt,
-        openedAt: d.openedAt,
-        clickedAt: d.clickedAt,
-        provider: d.provider,
-        error: d.error,
+      newsletterDeliveries: newsletterMailLogs.map(log => ({
+        id: log.id,
+        newsletterId: log.newsletterId || '',
+        newsletterSubject: log.subject,
+        newsletterType: log.type,
+        status: log.status,
+        sentAt: log.sentAt,
+        deliveredAt: log.deliveredAt,
+        openedAt: log.openedAt,
+        clickedAt: log.clickedAt,
+        provider: log.provider,
+        error: log.error,
       })),
       mailLogs: mailLogs.map(log => ({
         id: log.id,
