@@ -261,8 +261,8 @@ export async function GET(request: NextRequest) {
               failureCount++;
             }
 
-            // Délai de 300ms entre chaque envoi pour éviter le rate limiting de Resend
-            await sleep(300);
+            // Délai de 800ms entre chaque envoi pour éviter le rate limiting de Resend (2 emails/sec max)
+            await sleep(800);
           } catch (error) {
             console.error(`Failed to send to ${subscriber.email}:`, error);
             failureCount++;

@@ -592,6 +592,9 @@ export async function processEmailQueue(): Promise<{
 
         sent++;
         console.log(`✅ Queue: Sent to ${queuedEmail.to}`);
+
+        // Délai de 800ms entre chaque envoi pour éviter le rate limiting de Resend (2 emails/sec max)
+        await new Promise(resolve => setTimeout(resolve, 800));
       } else {
         // Check if it's a quota error (reschedule) or other error (fail)
         const isQuotaError = result.error?.toLowerCase().includes('rate limit') ||
