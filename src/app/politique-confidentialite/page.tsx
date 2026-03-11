@@ -69,8 +69,8 @@ export default function PolitiqueConfidentialitePage() {
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
                 <p className="text-xs font-medium tracking-[0.2em] uppercase text-[#8B7355]">Adresse</p>
                 <p className="text-base font-light text-[#2A2A2A] leading-relaxed" style={{ textAlign: 'center' }}>
-                  15 rue des cresses, Maison 245<br />
-                  34110 Vic la Gardiole, France
+                  229 rue Saint-Honoré<br />
+                  75001 Paris, France
                 </p>
               </div>
 
