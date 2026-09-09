@@ -25,6 +25,11 @@ RUN npx prisma generate
 
 # Build Next.js
 ENV NEXT_TELEMETRY_DISABLED=1
+# Les NEXT_PUBLIC_* se figent AU BUILD : sans cet ARG, les « Build
+# Variables » de Coolify n'atteignent pas le bundle navigateur (vécu :
+# Sentry navigateur inerte, Umami mort sur apps/web du 05 au 09/09).
+ARG NEXT_PUBLIC_SENTRY_DSN
+ENV NEXT_PUBLIC_SENTRY_DSN=$NEXT_PUBLIC_SENTRY_DSN
 RUN npm run build
 
 # Production image, copy all the files and run next
