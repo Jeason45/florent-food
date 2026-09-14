@@ -4,6 +4,7 @@ import "./globals.css";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import CookieConsent from "@/components/CookieConsent";
 import { AuthProvider } from "@/contexts/AuthContext";
+import OpenReplay from "@/components/OpenReplay";
 
 // Fonte serif premium pour les titres
 const cormorant = Cormorant_Garamond({
@@ -66,6 +67,7 @@ export default function RootLayout({
   return (
     <html lang="fr" className="scroll-smooth">
       <body className={`${inter.variable} ${cormorant.variable} antialiased`}>
+        <OpenReplay />
         <GoogleAnalytics />
         <AuthProvider>
           {children}
