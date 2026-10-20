@@ -9,6 +9,19 @@ export async function register() {
       dsn: process.env.SENTRY_DSN,
       environment: process.env.NODE_ENV,
       tracesSampleRate: 0,
+      beforeSend(event) {
+        // Bug connu de Next.js : des bots envoient des POST avec un en-tête
+        // next-action forgé (ex. "cachefn") vers des routes inexistantes.
+        // Next.js échoue alors à rendre sa page 404 en RSC et lève cette
+        // InvariantError — ce n'est pas un bug de l'application, on l'ignore
+        // pour ne pas polluer la boîte noire avec du bruit de scan.
+        const isNextRscInvariant = event.exception?.values?.some(
+          (value) =>
+            value.type === 'InvariantError' &&
+            value.value?.includes('Expected RSC response')
+        )
+        return isNextRscInvariant ? null : event
+      },
     })
   }
 }
